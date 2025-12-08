@@ -14,6 +14,7 @@ LaserConvert is a .NET tool that reads IGES CAD files, detects the thin (≈ 3
 Clone this repository
 Install .NET 10 SDK (if not already installed)
 Build the project using `dotnet build` (or use Visual Studio)
+In Plasticity, build your model out of solids all approximately 3 mm thick, then export as IGES.
 Run the tool with `LaserConvert.exe <input.iges> <output.svg>`
 
 ### Warning

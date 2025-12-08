@@ -1,11 +1,21 @@
-﻿using System;
-using System.IO;
-using System.Text;
-using System.Globalization;
-using System.Collections.Generic;
-using System.Linq;
+﻿/*
+LaserConvert: IGES to SVG 2D Outline Converter
+------------------------------------------------
+This tool reads IGES CAD files, detects the thin (≈ 3 mm) extrusion axis using PCA, rotates each solid into its footprint plane, and outputs clean 2D SVG outlines for laser cutting. 
+It preserves lines and arcs, and is designed for workflows with Glowforge and other laser cutters. Built on IxMilia.Iges (MIT licensed).
+
+Usage:
+    LaserConvert <input.igs> <output.svg>
+
+Features:
+- Parses IGES files using IxMilia.Iges
+- Detects sheet thickness axis via PCA
+- Projects geometry into footprint plane
+- Outputs SVG with lines and arcs
+*/
 using IxMilia.Iges;
 using IxMilia.Iges.Entities;
+using System.Text;
 
 namespace LaserConvert
 {
@@ -14,6 +24,9 @@ namespace LaserConvert
         struct Vec3 { public double X, Y, Z; public Vec3(double x, double y, double z) { X = x; Y = y; Z = z; } }
         struct Vec2 { public double X, Y; public Vec2(double x, double y) { X = x; Y = y; } }
 
+        /// <summary>
+        /// Entry point. Loads IGES file, detects thickness axis, projects geometry into 2D, and writes SVG output.
+        /// </summary>
         static void Main(string[] args)
         {
             if (args.Length < 2)
@@ -110,15 +123,51 @@ namespace LaserConvert
         }
 
         // ---------- Geometry helpers ----------
+
+        /// <summary>
+        /// Adds two Vec3 vectors.
+        /// </summary>
         static Vec3 Add(Vec3 a, Vec3 b) => new Vec3(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
+
+        /// <summary>
+        /// Subtracts vector b from vector a.
+        /// </summary>
         static Vec3 Sub(Vec3 a, Vec3 b) => new Vec3(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
+
+        /// <summary>
+        /// Scales a Vec3 vector by scalar s.
+        /// </summary>
         static Vec3 Scale(Vec3 a, double s) => new Vec3(a.X * s, a.Y * s, a.Z * s);
+
+        /// <summary>
+        /// Computes the dot product of two Vec3 vectors.
+        /// </summary>
         static double Dot(Vec3 a, Vec3 b) => a.X * b.X + a.Y * b.Y + a.Z * b.Z;
+
+        /// <summary>
+        /// Computes the cross product of two Vec3 vectors.
+        /// </summary>
         static Vec3 Cross(Vec3 a, Vec3 b) => new Vec3(a.Y * b.Z - a.Z * b.Y, a.Z * b.X - a.X * b.Z, a.X * b.Y - a.Y * b.X);
+
+        /// <summary>
+        /// Returns the Euclidean norm (length) of a Vec3 vector.
+        /// </summary>
         static double Norm(Vec3 a) => Math.Sqrt(Dot(a, a));
+
+        /// <summary>
+        /// Returns the normalized (unit) vector of a Vec3.
+        /// </summary>
         static Vec3 Normalize(Vec3 a) { var n = Norm(a); return n > 1e-12 ? Scale(a, 1.0 / n) : new Vec3(0, 0, 0); }
+
+        /// <summary>
+        /// Computes the mean (centroid) of a list of Vec3 points.
+        /// </summary>
         static Vec3 Mean(List<Vec3> pts) { var sum = new Vec3(0, 0, 0); foreach (var p in pts) sum = Add(sum, p); return Scale(sum, 1.0 / pts.Count); }
 
+        /// <summary>
+        /// Performs PCA to find the principal axes of the point cloud.
+        /// Returns axes ordered by descending variance.
+        /// </summary>
         static Vec3[] PCAAxes(List<Vec3> pts, Vec3 c)
         {
             double xx = 0, xy = 0, xz = 0, yy = 0, yz = 0, zz = 0;
@@ -134,6 +183,9 @@ namespace LaserConvert
             return axes.Zip(vars, (a, v) => (a, v)).OrderByDescending(t => t.v).Select(t => t.a).ToArray();
         }
 
+        /// <summary>
+        /// Power iteration to find principal axis of covariance matrix.
+        /// </summary>
         static Vec3 PowerIter(double xx, double xy, double xz, double yy, double yz, double zz, Vec3 v)
         {
             var w = v;
@@ -147,18 +199,27 @@ namespace LaserConvert
             return w;
         }
 
+        /// <summary>
+        /// Orthogonalizes vector v against given basis vectors.
+        /// </summary>
         static Vec3 Orthogonalize(Vec3 v, params Vec3[] bases)
         {
             foreach (var b in bases) v = Sub(v, Scale(b, Dot(v, b)));
             return Normalize(v);
         }
 
+        /// <summary>
+        /// Computes variance of points along axis a.
+        /// </summary>
         static double VarianceAlong(List<Vec3> pts, Vec3 c, Vec3 a)
         {
             double s = 0; foreach (var p in pts) { var d = Sub(p, c); var t = Dot(d, a); s += t * t; }
             return s / pts.Count;
         }
 
+        /// <summary>
+        /// Returns min and max projection of points along axis a.
+        /// </summary>
         static (double min, double max) RangeAlong(List<Vec3> pts, Vec3 c, Vec3 a)
         {
             double min = double.PositiveInfinity, max = double.NegativeInfinity;
@@ -166,12 +227,18 @@ namespace LaserConvert
             return (min, max);
         }
 
+        /// <summary>
+        /// Returns the extent (max - min) of points along axis a.
+        /// </summary>
         static double AxisExtent(List<Vec3> pts, Vec3 c, Vec3 a)
         {
             var r = RangeAlong(pts, c, a);
             return r.max - r.min;
         }
 
+        /// <summary>
+        /// Picks the axis closest to the expected thickness, or the smallest axis as fallback.
+        /// </summary>
         static int PickThicknessAxis(double[] extents, double thickness, double tol)
         {
             int closestIdx = 0;
@@ -202,6 +269,9 @@ namespace LaserConvert
             return minIdx;
         }
 
+        /// <summary>
+        /// Returns orthonormal basis (u, v) for the footprint plane, excluding thickness axis.
+        /// </summary>
         static (Vec3 u, Vec3 v) OrthonormalPlaneBasis(Vec3[] axes, int thicknessIdx)
         {
             // w = thickness axis; build u,v spanning the footprint plane
