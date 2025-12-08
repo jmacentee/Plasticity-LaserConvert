@@ -57,30 +57,6 @@ namespace LaserConvert
 
 
 
-
-            // 1. Build a map from entity number to entity
-            var deToEntity = igesFile.Entities.ToDictionary(e => e.EntityNumber);
-
-            // 2. Find all group (type 504) entities
-            var groups = igesFile.Entities.Where(e => e.EntityType == 504).ToList();
-
-            foreach (var group in groups)
-            {
-                // 3. Get group name (if available)
-                string groupName = group.EntityLabel;
-
-                // 4. Get referenced geometry (parse parameters for entity numbers)
-                // This depends on how IxMilia exposes the group members
-                // Example: if group.Parameters is a list of entity numbers
-                var pointers = group.Parameters; // You may need to parse this
-                var groupEntities = pointers
-                    .Select(ptr => deToEntity.TryGetValue(ptr, out var ent) ? ent : null)
-                    .Where(ent => ent is IgesLine || ent is IgesCircularArc)
-                    .ToList();
-
-                Console.WriteLine($"Group: {groupName}, Entities: {groupEntities.Count}");
-            }
-
             return;
 
             var sb = new StringBuilder();
