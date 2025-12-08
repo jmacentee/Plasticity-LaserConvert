@@ -1,0 +1,3 @@
+[submodule "external/iges"]
+	path = external/iges
+	url = https://github.com/jmacentee/iges.git
