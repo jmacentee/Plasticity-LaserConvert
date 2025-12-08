@@ -25,7 +25,17 @@ namespace LaserConvert
         struct Vec2 { public double X, Y; public Vec2(double x, double y) { X = x; Y = y; } }
 
         /// <summary>
+        /// Projects a 3D point into the 2D footprint plane using the given centroid and axes.
+        /// </summary>
+        static Vec2 Project(Vec3 p, Vec3 centroid, Vec3 u, Vec3 v)
+        {
+            var d = Sub(p, centroid);
+            return new Vec2(Dot(d, u), Dot(d, v));
+        }
+
+        /// <summary>
         /// Entry point. Loads IGES file, detects thickness axis, projects geometry into 2D, and writes SVG output.
+        /// Groups lines/arcs by IGES Group entities.
         /// </summary>
         static void Main(string[] args)
         {
@@ -38,136 +48,159 @@ namespace LaserConvert
             var inputPath = args[0];
             var outputPath = args[1];
 
-            var points = new List<Vec3>();
-            var lines = new List<(Vec3 p1, Vec3 p2)>();
-            var arcs = new List<(Vec3 center, Vec3 start, Vec3 end)>();
-
-            // Load IGES file
             var igesFile = IgesFile.Load(inputPath);
 
-            foreach (var entity in igesFile.Entities)
+            foreach (IgesEntity entity in igesFile.Entities)
             {
-                if (entity is IgesLine line)
+                Console.WriteLine($"Entity ID: {entity.EntityLabel}, Type: {entity.EntityType}");
+            }
+
+            return;
+
+            var sb = new StringBuilder();
+            sb.AppendLine("<svg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='black' stroke-width='0.1'>");
+
+            // Find all IgesGroup entities (solids)
+            var groups = igesFile.Entities.OfType<IgesCubicSolid>().ToList();
+            var usedEntities = new HashSet<IgesEntity>();
+            int totalLines = 0, totalArcs = 0;
+
+            foreach (var group in groups)
+            {
+                string groupName = $"solid_{group.Comment}";
+                //var groupName = string.IsNullOrWhiteSpace(group.Name) ? $"solid_{group.EntityId}" : group.Name.Trim();
+                var groupPoints = new List<Vec3>();
+                var groupLines = new List<(Vec3 p1, Vec3 p2)>();
+                var groupArcs = new List<(Vec3 center, Vec3 start, Vec3 end)>();
+
+                //foreach (var entRef in group.EntityReferences)
+                //{
+                //    var ent = entRef.Entity;
+                //    if (ent is IgesLine line)
+                //    {
+                //        var p1 = new Vec3(line.P1.X, line.P1.Y, line.P1.Z);
+                //        var p2 = new Vec3(line.P2.X, line.P2.Y, line.P2.Z);
+                //        groupLines.Add((p1, p2));
+                //        groupPoints.Add(p1);
+                //        groupPoints.Add(p2);
+                //        usedEntities.Add(ent);
+                //        totalLines++;
+                //    }
+                //    else if (ent is IgesCircularArc arc)
+                //    {
+                //        var c = new Vec3(arc.Center.X, arc.Center.Y, arc.Center.Z);
+                //        var sp = new Vec3(arc.StartPoint.X, arc.StartPoint.Y, arc.StartPoint.Z);
+                //        var ep = new Vec3(arc.EndPoint.X, arc.EndPoint.Y, arc.EndPoint.Z);
+                //        groupArcs.Add((c, sp, ep));
+                //        groupPoints.Add(c);
+                //        groupPoints.Add(sp);
+                //        groupPoints.Add(ep);
+                //        usedEntities.Add(ent);
+                //        totalArcs++;
+                //    }
+                //}
+                if (groupPoints.Count == 0) continue;
+                var centroid = Mean(groupPoints);
+                var axes = PCAAxes(groupPoints, centroid);
+                var extents = axes.Select(a => AxisExtent(groupPoints, centroid, a)).ToArray();
+                int thicknessIdx = PickThicknessAxis(extents, 3.0, 0.5);
+                var w = axes[thicknessIdx];
+                var (u, v) = OrthonormalPlaneBasis(axes, thicknessIdx);
+                sb.AppendLine($"<g id='{groupName.Replace("'", "_")}'>");
+                foreach (var l in groupLines)
+                {
+                    var p1 = Project(l.p1, centroid, u, v);
+                    var p2 = Project(l.p2, centroid, u, v);
+                    sb.AppendLine($"<line x1='{p1.X}' y1='{p1.Y}' x2='{p2.X}' y2='{p2.Y}' />");
+                }
+                foreach (var a in groupArcs)
+                {
+                    var c2 = Project(a.center, centroid, u, v);
+                    var sp2 = Project(a.start, centroid, u, v);
+                    var ep2 = Project(a.end, centroid, u, v);
+                    double r = Math.Sqrt(Math.Pow(sp2.X - c2.X, 2) + Math.Pow(sp2.Y - c2.Y, 2));
+                    double startAngle = Math.Atan2(sp2.Y - c2.Y, sp2.X - c2.X);
+                    double endAngle = Math.Atan2(ep2.Y - c2.Y, ep2.X - c2.X);
+                    int largeArc = (Math.Abs(endAngle - startAngle) > Math.PI) ? 1 : 0;
+                    int sweep = (endAngle > startAngle) ? 1 : 0;
+                    sb.AppendLine($"<path d='M {sp2.X} {sp2.Y} A {r} {r} 0 {largeArc} {sweep} {ep2.X} {ep2.Y}' />");
+                }
+                sb.AppendLine("</g>");
+            }
+
+            // Handle ungrouped entities as fallback
+            var ungroupedPoints = new List<Vec3>();
+            var ungroupedLines = new List<(Vec3 p1, Vec3 p2)>();
+            var ungroupedArcs = new List<(Vec3 center, Vec3 start, Vec3 end)>();
+            foreach (var ent in igesFile.Entities)
+            {
+                if (usedEntities.Contains(ent)) continue;
+                if (ent is IgesLine line)
                 {
                     var p1 = new Vec3(line.P1.X, line.P1.Y, line.P1.Z);
                     var p2 = new Vec3(line.P2.X, line.P2.Y, line.P2.Z);
-                    lines.Add((p1, p2));
-                    points.Add(p1);
-                    points.Add(p2);
+                    ungroupedLines.Add((p1, p2));
+                    ungroupedPoints.Add(p1);
+                    ungroupedPoints.Add(p2);
+                    totalLines++;
                 }
-                else if (entity is IgesCircularArc arc)
+                else if (ent is IgesCircularArc arc)
                 {
                     var c = new Vec3(arc.Center.X, arc.Center.Y, arc.Center.Z);
                     var sp = new Vec3(arc.StartPoint.X, arc.StartPoint.Y, arc.StartPoint.Z);
                     var ep = new Vec3(arc.EndPoint.X, arc.EndPoint.Y, arc.EndPoint.Z);
-                    arcs.Add((c, sp, ep));
-                    points.Add(c);
-                    points.Add(sp);
-                    points.Add(ep);
+                    ungroupedArcs.Add((c, sp, ep));
+                    ungroupedPoints.Add(c);
+                    ungroupedPoints.Add(sp);
+                    ungroupedPoints.Add(ep);
+                    totalArcs++;
                 }
-                // optionally: handle IgesBSplineCurve, etc.
             }
-
-            if (points.Count == 0)
+            if (ungroupedPoints.Count > 0)
             {
-                Console.WriteLine("No geometry found.");
-                return;
-            }
-
-            // PCA to detect thickness axis
-            var centroid = Mean(points);
-            var axes = PCAAxes(points, centroid);
-            var extents = axes.Select(a => AxisExtent(points, centroid, a)).ToArray();
-            int thicknessIdx = PickThicknessAxis(extents, 3.0, 0.5);
-
-            var w = axes[thicknessIdx];
-            var (u, v) = OrthonormalPlaneBasis(axes, thicknessIdx);
-
-            Vec2 Project(Vec3 p)
-            {
-                var d = Sub(p, centroid);
-                return new Vec2(Dot(d, u), Dot(d, v));
-            }
-
-            // Build SVG
-            var sb = new StringBuilder();
-            sb.AppendLine("<svg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='black' stroke-width='0.1'>");
-
-            foreach (var l in lines)
-            {
-                var p1 = Project(l.p1);
-                var p2 = Project(l.p2);
-                sb.AppendLine($"<line x1='{p1.X}' y1='{p1.Y}' x2='{p2.X}' y2='{p2.Y}' />");
-            }
-
-            foreach (var a in arcs)
-            {
-                var c2 = Project(a.center);
-                var sp2 = Project(a.start);
-                var ep2 = Project(a.end);
-
-                double r = Math.Sqrt(Math.Pow(sp2.X - c2.X, 2) + Math.Pow(sp2.Y - c2.Y, 2));
-                double startAngle = Math.Atan2(sp2.Y - c2.Y, sp2.X - c2.X);
-                double endAngle = Math.Atan2(ep2.Y - c2.Y, ep2.X - c2.X);
-
-                int largeArc = (Math.Abs(endAngle - startAngle) > Math.PI) ? 1 : 0;
-                int sweep = (endAngle > startAngle) ? 1 : 0;
-
-                sb.AppendLine($"<path d='M {sp2.X} {sp2.Y} A {r} {r} 0 {largeArc} {sweep} {ep2.X} {ep2.Y}' />");
+                var centroid = Mean(ungroupedPoints);
+                var axes = PCAAxes(ungroupedPoints, centroid);
+                var extents = axes.Select(a => AxisExtent(ungroupedPoints, centroid, a)).ToArray();
+                int thicknessIdx = PickThicknessAxis(extents, 3.0, 0.5);
+                var w = axes[thicknessIdx];
+                var (u, v) = OrthonormalPlaneBasis(axes, thicknessIdx);
+                sb.AppendLine("<g id='ungrouped'>");
+                foreach (var l in ungroupedLines)
+                {
+                    var p1 = Project(l.p1, centroid, u, v);
+                    var p2 = Project(l.p2, centroid, u, v);
+                    sb.AppendLine($"<line x1='{p1.X}' y1='{p1.Y}' x2='{p2.X}' y2='{p2.Y}' />");
+                }
+                foreach (var a in ungroupedArcs)
+                {
+                    var c2 = Project(a.center, centroid, u, v);
+                    var sp2 = Project(a.start, centroid, u, v);
+                    var ep2 = Project(a.end, centroid, u, v);
+                    double r = Math.Sqrt(Math.Pow(sp2.X - c2.X, 2) + Math.Pow(sp2.Y - c2.Y, 2));
+                    double startAngle = Math.Atan2(sp2.Y - c2.Y, sp2.X - c2.X);
+                    double endAngle = Math.Atan2(ep2.Y - c2.Y, ep2.X - c2.X);
+                    int largeArc = (Math.Abs(endAngle - startAngle) > Math.PI) ? 1 : 0;
+                    int sweep = (endAngle > startAngle) ? 1 : 0;
+                    sb.AppendLine($"<path d='M {sp2.X} {sp2.Y} A {r} {r} 0 {largeArc} {sweep} {ep2.X} {ep2.Y}' />");
+                }
+                sb.AppendLine("</g>");
             }
 
             sb.AppendLine("</svg>");
             File.WriteAllText(outputPath, sb.ToString());
-
-            Console.WriteLine($"Projected {lines.Count} lines and {arcs.Count} arcs into 2D outline → {outputPath}");
+            Console.WriteLine($"Projected {totalLines} lines and {totalArcs} arcs into 2D outline → {outputPath}");
         }
 
         // ---------- Geometry helpers ----------
 
-        /// <summary>
-        /// Adds two Vec3 vectors.
-        /// </summary>
         static Vec3 Add(Vec3 a, Vec3 b) => new Vec3(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
-
-        /// <summary>
-        /// Subtracts vector b from vector a.
-        /// </summary>
         static Vec3 Sub(Vec3 a, Vec3 b) => new Vec3(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
-
-        /// <summary>
-        /// Scales a Vec3 vector by scalar s.
-        /// </summary>
         static Vec3 Scale(Vec3 a, double s) => new Vec3(a.X * s, a.Y * s, a.Z * s);
-
-        /// <summary>
-        /// Computes the dot product of two Vec3 vectors.
-        /// </summary>
         static double Dot(Vec3 a, Vec3 b) => a.X * b.X + a.Y * b.Y + a.Z * b.Z;
-
-        /// <summary>
-        /// Computes the cross product of two Vec3 vectors.
-        /// </summary>
         static Vec3 Cross(Vec3 a, Vec3 b) => new Vec3(a.Y * b.Z - a.Z * b.Y, a.Z * b.X - a.X * b.Z, a.X * b.Y - a.Y * b.X);
-
-        /// <summary>
-        /// Returns the Euclidean norm (length) of a Vec3 vector.
-        /// </summary>
         static double Norm(Vec3 a) => Math.Sqrt(Dot(a, a));
-
-        /// <summary>
-        /// Returns the normalized (unit) vector of a Vec3.
-        /// </summary>
         static Vec3 Normalize(Vec3 a) { var n = Norm(a); return n > 1e-12 ? Scale(a, 1.0 / n) : new Vec3(0, 0, 0); }
-
-        /// <summary>
-        /// Computes the mean (centroid) of a list of Vec3 points.
-        /// </summary>
         static Vec3 Mean(List<Vec3> pts) { var sum = new Vec3(0, 0, 0); foreach (var p in pts) sum = Add(sum, p); return Scale(sum, 1.0 / pts.Count); }
-
-        /// <summary>
-        /// Performs PCA to find the principal axes of the point cloud.
-        /// Returns axes ordered by descending variance.
-        /// </summary>
         static Vec3[] PCAAxes(List<Vec3> pts, Vec3 c)
         {
             double xx = 0, xy = 0, xz = 0, yy = 0, yz = 0, zz = 0;
@@ -182,10 +215,6 @@ namespace LaserConvert
             var vars = axes.Select(a => VarianceAlong(pts, c, a)).ToArray();
             return axes.Zip(vars, (a, v) => (a, v)).OrderByDescending(t => t.v).Select(t => t.a).ToArray();
         }
-
-        /// <summary>
-        /// Power iteration to find principal axis of covariance matrix.
-        /// </summary>
         static Vec3 PowerIter(double xx, double xy, double xz, double yy, double yz, double zz, Vec3 v)
         {
             var w = v;
@@ -198,47 +227,27 @@ namespace LaserConvert
             }
             return w;
         }
-
-        /// <summary>
-        /// Orthogonalizes vector v against given basis vectors.
-        /// </summary>
         static Vec3 Orthogonalize(Vec3 v, params Vec3[] bases)
         {
             foreach (var b in bases) v = Sub(v, Scale(b, Dot(v, b)));
             return Normalize(v);
         }
-
-        /// <summary>
-        /// Computes variance of points along axis a.
-        /// </summary>
         static double VarianceAlong(List<Vec3> pts, Vec3 c, Vec3 a)
         {
             double s = 0; foreach (var p in pts) { var d = Sub(p, c); var t = Dot(d, a); s += t * t; }
             return s / pts.Count;
         }
-
-        /// <summary>
-        /// Returns min and max projection of points along axis a.
-        /// </summary>
         static (double min, double max) RangeAlong(List<Vec3> pts, Vec3 c, Vec3 a)
         {
             double min = double.PositiveInfinity, max = double.NegativeInfinity;
             foreach (var p in pts) { var t = Dot(Sub(p, c), a); if (t < min) min = t; if (t > max) max = t; }
             return (min, max);
         }
-
-        /// <summary>
-        /// Returns the extent (max - min) of points along axis a.
-        /// </summary>
         static double AxisExtent(List<Vec3> pts, Vec3 c, Vec3 a)
         {
             var r = RangeAlong(pts, c, a);
             return r.max - r.min;
         }
-
-        /// <summary>
-        /// Picks the axis closest to the expected thickness, or the smallest axis as fallback.
-        /// </summary>
         static int PickThicknessAxis(double[] extents, double thickness, double tol)
         {
             int closestIdx = 0;
@@ -255,7 +264,6 @@ namespace LaserConvert
             if (bestDiff <= tol)
                 return closestIdx;
 
-            // Fallback: smallest axis is assumed thickness
             double minVal = extents[0];
             int minIdx = 0;
             for (int i = 1; i < 3; i++)
@@ -268,13 +276,8 @@ namespace LaserConvert
             }
             return minIdx;
         }
-
-        /// <summary>
-        /// Returns orthonormal basis (u, v) for the footprint plane, excluding thickness axis.
-        /// </summary>
         static (Vec3 u, Vec3 v) OrthonormalPlaneBasis(Vec3[] axes, int thicknessIdx)
         {
-            // w = thickness axis; build u,v spanning the footprint plane
             var w = axes[thicknessIdx];
             var others = new List<Vec3>();
             for (int i = 0; i < 3; i++)
@@ -283,7 +286,6 @@ namespace LaserConvert
             var u = Normalize(others[0]);
             var v = Normalize(Cross(w, u));
 
-            // Ensure orthogonality
             if (Norm(v) < 1e-9)
             {
                 u = Normalize(Cross(v, w));
