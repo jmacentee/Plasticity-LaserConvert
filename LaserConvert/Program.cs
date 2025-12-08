@@ -50,15 +50,42 @@ namespace LaserConvert
 
             var igesFile = IgesFile.Load(inputPath);
 
-            //foreach (IgesEntity entity in igesFile.Entities)
-            //{
-            //    Console.WriteLine($"Entity ID: {entity.EntityLabel}, Type: {entity.EntityType}, AssociatedEntities.Count: {entity.AssociatedEntities.Count}");
-            //}
-
-            //return;
-
             var sb = new StringBuilder();
             sb.AppendLine("<svg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='black' stroke-width='0.1'>");
+
+            // --- Collect all points from all lines/arcs (grouped and ungrouped) ---
+            var allPoints = new List<Vec3>();
+            var allEntities = new List<IgesEntity>();
+            foreach (var ent in igesFile.Entities)
+            {
+                if (ent is IgesLine line)
+                {
+                    allPoints.Add(new Vec3(line.P1.X, line.P1.Y, line.P1.Z));
+                    allPoints.Add(new Vec3(line.P2.X, line.P2.Y, line.P2.Z));
+                    allEntities.Add(ent);
+                }
+                else if (ent is IgesCircularArc arc)
+                {
+                    allPoints.Add(new Vec3(arc.Center.X, arc.Center.Y, arc.Center.Z));
+                    allPoints.Add(new Vec3(arc.StartPoint.X, arc.StartPoint.Y, arc.StartPoint.Z));
+                    allPoints.Add(new Vec3(arc.EndPoint.X, arc.EndPoint.Y, arc.EndPoint.Z));
+                    allEntities.Add(ent);
+                }
+            }
+            if (allPoints.Count == 0)
+            {
+                sb.AppendLine("</svg>");
+                File.WriteAllText(outputPath, sb.ToString());
+                Console.WriteLine("No geometry found.");
+                return;
+            }
+            // --- Compute global centroid and axes ---
+            var globalCentroid = Mean(allPoints);
+            var globalAxes = PCAAxes(allPoints, globalCentroid);
+            var globalExtents = globalAxes.Select(a => AxisExtent(allPoints, globalCentroid, a)).ToArray();
+            int globalThicknessIdx = PickThicknessAxis(globalExtents, 3.0, 0.5);
+            var globalW = globalAxes[globalThicknessIdx];
+            var (globalU, globalV) = OrthonormalPlaneBasis(globalAxes, globalThicknessIdx);
 
             // Find all IgesGroup entities (solids)
             var groups = igesFile.Entities.OfType<IgesGroup>().ToList();
@@ -68,7 +95,6 @@ namespace LaserConvert
             foreach (var group in groups)
             {
                 string groupName = group.EntityLabel ?? $"group_{groups.IndexOf(group)}";
-                var groupPoints = new List<Vec3>();
                 var groupLines = new List<(Vec3 p1, Vec3 p2)>();
                 var groupArcs = new List<(Vec3 center, Vec3 start, Vec3 end)>();
 
@@ -79,8 +105,6 @@ namespace LaserConvert
                         var p1 = new Vec3(line.P1.X, line.P1.Y, line.P1.Z);
                         var p2 = new Vec3(line.P2.X, line.P2.Y, line.P2.Z);
                         groupLines.Add((p1, p2));
-                        groupPoints.Add(p1);
-                        groupPoints.Add(p2);
                         usedEntities.Add(ent);
                         totalLines++;
                     }
@@ -90,32 +114,23 @@ namespace LaserConvert
                         var sp = new Vec3(arc.StartPoint.X, arc.StartPoint.Y, arc.StartPoint.Z);
                         var ep = new Vec3(arc.EndPoint.X, arc.EndPoint.Y, arc.EndPoint.Z);
                         groupArcs.Add((c, sp, ep));
-                        groupPoints.Add(c);
-                        groupPoints.Add(sp);
-                        groupPoints.Add(ep);
                         usedEntities.Add(ent);
                         totalArcs++;
                     }
                 }
-                if (groupPoints.Count == 0) continue;
-                var centroid = Mean(groupPoints);
-                var axes = PCAAxes(groupPoints, centroid);
-                var extents = axes.Select(a => AxisExtent(groupPoints, centroid, a)).ToArray();
-                int thicknessIdx = PickThicknessAxis(extents, 3.0, 0.5);
-                var w = axes[thicknessIdx];
-                var (u, v) = OrthonormalPlaneBasis(axes, thicknessIdx);
+                if (groupLines.Count == 0 && groupArcs.Count == 0) continue;
                 sb.AppendLine($"<g id='{groupName.Replace("'", "_")}'>");
                 foreach (var l in groupLines)
                 {
-                    var p1 = Project(l.p1, centroid, u, v);
-                    var p2 = Project(l.p2, centroid, u, v);
+                    var p1 = Project(l.p1, globalCentroid, globalU, globalV);
+                    var p2 = Project(l.p2, globalCentroid, globalU, globalV);
                     sb.AppendLine($"<line x1='{p1.X}' y1='{p1.Y}' x2='{p2.X}' y2='{p2.Y}' />");
                 }
                 foreach (var a in groupArcs)
                 {
-                    var c2 = Project(a.center, centroid, u, v);
-                    var sp2 = Project(a.start, centroid, u, v);
-                    var ep2 = Project(a.end, centroid, u, v);
+                    var c2 = Project(a.center, globalCentroid, globalU, globalV);
+                    var sp2 = Project(a.start, globalCentroid, globalU, globalV);
+                    var ep2 = Project(a.end, globalCentroid, globalU, globalV);
                     double r = Math.Sqrt(Math.Pow(sp2.X - c2.X, 2) + Math.Pow(sp2.Y - c2.Y, 2));
                     double startAngle = Math.Atan2(sp2.Y - c2.Y, sp2.X - c2.X);
                     double endAngle = Math.Atan2(ep2.Y - c2.Y, ep2.X - c2.X);
@@ -127,7 +142,6 @@ namespace LaserConvert
             }
 
             // Handle ungrouped entities as fallback
-            var ungroupedPoints = new List<Vec3>();
             var ungroupedLines = new List<(Vec3 p1, Vec3 p2)>();
             var ungroupedArcs = new List<(Vec3 center, Vec3 start, Vec3 end)>();
             foreach (var ent in igesFile.Entities)
@@ -138,8 +152,6 @@ namespace LaserConvert
                     var p1 = new Vec3(line.P1.X, line.P1.Y, line.P1.Z);
                     var p2 = new Vec3(line.P2.X, line.P2.Y, line.P2.Z);
                     ungroupedLines.Add((p1, p2));
-                    ungroupedPoints.Add(p1);
-                    ungroupedPoints.Add(p2);
                     totalLines++;
                 }
                 else if (ent is IgesCircularArc arc)
@@ -148,32 +160,23 @@ namespace LaserConvert
                     var sp = new Vec3(arc.StartPoint.X, arc.StartPoint.Y, arc.StartPoint.Z);
                     var ep = new Vec3(arc.EndPoint.X, arc.EndPoint.Y, arc.EndPoint.Z);
                     ungroupedArcs.Add((c, sp, ep));
-                    ungroupedPoints.Add(c);
-                    ungroupedPoints.Add(sp);
-                    ungroupedPoints.Add(ep);
                     totalArcs++;
                 }
             }
-            if (ungroupedPoints.Count > 0)
+            if (ungroupedLines.Count > 0 || ungroupedArcs.Count > 0)
             {
-                var centroid = Mean(ungroupedPoints);
-                var axes = PCAAxes(ungroupedPoints, centroid);
-                var extents = axes.Select(a => AxisExtent(ungroupedPoints, centroid, a)).ToArray();
-                int thicknessIdx = PickThicknessAxis(extents, 3.0, 0.5);
-                var w = axes[thicknessIdx];
-                var (u, v) = OrthonormalPlaneBasis(axes, thicknessIdx);
                 sb.AppendLine("<g id='ungrouped'>");
                 foreach (var l in ungroupedLines)
                 {
-                    var p1 = Project(l.p1, centroid, u, v);
-                    var p2 = Project(l.p2, centroid, u, v);
+                    var p1 = Project(l.p1, globalCentroid, globalU, globalV);
+                    var p2 = Project(l.p2, globalCentroid, globalU, globalV);
                     sb.AppendLine($"<line x1='{p1.X}' y1='{p1.Y}' x2='{p2.X}' y2='{p2.Y}' />");
                 }
                 foreach (var a in ungroupedArcs)
                 {
-                    var c2 = Project(a.center, centroid, u, v);
-                    var sp2 = Project(a.start, centroid, u, v);
-                    var ep2 = Project(a.end, centroid, u, v);
+                    var c2 = Project(a.center, globalCentroid, globalU, globalV);
+                    var sp2 = Project(a.start, globalCentroid, globalU, globalV);
+                    var ep2 = Project(a.end, globalCentroid, globalU, globalV);
                     double r = Math.Sqrt(Math.Pow(sp2.X - c2.X, 2) + Math.Pow(sp2.Y - c2.Y, 2));
                     double startAngle = Math.Atan2(sp2.Y - c2.Y, sp2.X - c2.X);
                     double endAngle = Math.Atan2(ep2.Y - c2.Y, ep2.X - c2.X);
