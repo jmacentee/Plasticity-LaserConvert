@@ -119,8 +119,8 @@ namespace LaserConvert
                 // Only count geometry entities for output
                 var geometryEntities = group.AssociatedEntities.Where(e => e is IgesLine || e is IgesCircularArc).ToList();
                 Console.WriteLine($"Group {groupName} has {geometryEntities.Count} geometry entities.");
-                foreach (var ent in geometryEntities)
-                    Console.WriteLine($" Entity type: {ent.EntityType}, label: {ent.EntityLabel}");
+                //foreach (var ent in geometryEntities)
+                //    Console.WriteLine($" Entity type: {ent.EntityType}, label: {ent.EntityLabel}");
 
                 foreach (var ent in geometryEntities)
                 {
@@ -151,61 +151,74 @@ namespace LaserConvert
                 var groupExtents = groupAxes.Select(a => AxisExtent(groupPoints, groupCentroid, a)).ToArray();
                 int thicknessIdx = PickThicknessAxis(groupExtents, 3.0, 0.5);
                 var thicknessAxis = groupAxes[thicknessIdx];
-                var (u, v) = OrthonormalPlaneBasis(groupAxes, thicknessIdx);
 
-                var thicknessRange = RangeAlong(groupPoints, groupCentroid, thicknessAxis);
-                double thicknessValue = Math.Abs(thicknessRange.max - thicknessRange.min);
-                double thicknessPlane = thicknessRange.min + thicknessValue / 2.0;
-                double tol = 0.2;
+                var thicknessCoords = groupPoints.Select(p => Dot(Sub(p, groupCentroid), thicknessAxis)).ToList();
+                double minCoord = thicknessCoords.Min();
+                double maxCoord = thicknessCoords.Max();
+                double tol = 1.0; // Try 1.0 or 2.0 for initial testing
 
-                // --- Filter lines to those in the footprint plane ---
+                // Count points near min and max
+                int minCount = thicknessCoords.Count(c => Math.Abs(c - minCoord) < tol);
+                int maxCount = thicknessCoords.Count(c => Math.Abs(c - maxCoord) < tol);
+                double targetCoord = minCount >= maxCount ? minCoord : maxCoord;
+
+                // Filter lines to those in the footprint plane
                 var footprintLines = groupLines
                     .Where(l =>
-                        Math.Abs(Dot(Sub(l.p1, groupCentroid), thicknessAxis) - thicknessPlane) < tol &&
-                        Math.Abs(Dot(Sub(l.p2, groupCentroid), thicknessAxis) - thicknessPlane) < tol)
+                        Math.Abs(Dot(Sub(l.p1, groupCentroid), thicknessAxis) - targetCoord) < tol &&
+                        Math.Abs(Dot(Sub(l.p2, groupCentroid), thicknessAxis) - targetCoord) < tol)
                     .ToList();
 
-                // --- Deduplicate lines (order-independent) ---
-                var unique = new HashSet<(double, double, double, double)>();
-                var dedupedLines = new List<(Vec3 p1, Vec3 p2)>();
-                foreach (var l in footprintLines)
-                {
-                    var key = l.p1.X < l.p2.X || (l.p1.X == l.p2.X && l.p1.Y <= l.p2.Y)
-                        ? (l.p1.X, l.p1.Y, l.p2.X, l.p2.Y)
-                        : (l.p2.X, l.p2.Y, l.p1.X, l.p1.Y);
-                    if (unique.Add(key))
-                        dedupedLines.Add(l);
-                }
-
-                // --- Filter arcs to those in the footprint plane ---
-                var dedupedArcs = groupArcs
-                    .Where(a =>
-                        Math.Abs(Dot(Sub(a.center, groupCentroid), thicknessAxis) - thicknessPlane) < tol &&
-                        Math.Abs(Dot(Sub(a.start, groupCentroid), thicknessAxis) - thicknessPlane) < tol &&
-                        Math.Abs(Dot(Sub(a.end, groupCentroid), thicknessAxis) - thicknessPlane) < tol)
+                // Filter for min plane
+                var minPlaneLines = groupLines
+                    .Where(l =>
+                        Math.Abs(Dot(Sub(l.p1, groupCentroid), thicknessAxis) - minCoord) < tol &&
+                        Math.Abs(Dot(Sub(l.p2, groupCentroid), thicknessAxis) - minCoord) < tol)
                     .ToList();
 
-                if (dedupedLines.Count == 0 && dedupedArcs.Count == 0) continue;
-                sb.AppendLine($"<g id='{groupName.Replace("'", "_")}'>");
-                foreach (var l in dedupedLines)
+                // Filter for max plane
+                var maxPlaneLines = groupLines
+                    .Where(l =>
+                        Math.Abs(Dot(Sub(l.p1, groupCentroid), thicknessAxis) - maxCoord) < tol &&
+                        Math.Abs(Dot(Sub(l.p2, groupCentroid), thicknessAxis) - maxCoord) < tol)
+                    .ToList();
+
+                // Deduplicate within each plane
+                List<(Vec3 p1, Vec3 p2)> Dedup(List<(Vec3 p1, Vec3 p2)> lines)
                 {
-                    var p1 = Project(l.p1, groupCentroid, u, v);
-                    var p2 = Project(l.p2, groupCentroid, u, v);
-                    sb.AppendLine($"<line x1='{p1.X}' y1='{p1.Y}' x2='{p2.X}' y2='{p2.Y}' />");
+                    var unique = new HashSet<(double, double, double, double)>();
+                    var deduped = new List<(Vec3 p1, Vec3 p2)>();
+                    foreach (var l in lines)
+                    {
+                        var key = l.p1.X < l.p2.X || (l.p1.X == l.p2.X && l.p1.Y <= l.p2.Y)
+                            ? (l.p1.X, l.p1.Y, l.p2.X, l.p2.Y)
+                            : (l.p2.X, l.p2.Y, l.p1.X, l.p1.Y);
+                        if (unique.Add(key))
+                            deduped.Add(l);
+                    }
+                    return deduped;
                 }
-                foreach (var a in dedupedArcs)
+
+                var dedupMin = Dedup(minPlaneLines);
+                var dedupMax = Dedup(maxPlaneLines);
+
+                // Output only the largest set
+                var outputLines = dedupMin.Count >= dedupMax.Count ? dedupMin : dedupMax;
+
+                Console.WriteLine($"Group {groupName}: outputting {outputLines.Count} lines from {(dedupMin.Count >= dedupMax.Count ? "min" : "max")} plane.");
+
+                if (outputLines.Count > 0)
                 {
-                    var c2 = Project(a.center, groupCentroid, u, v);
-                    var sp2 = Project(a.start, groupCentroid, u, v);
-                    var ep2 = Project(a.end, groupCentroid, u, v);
-                    double r = Math.Sqrt(Math.Pow(sp2.X - c2.X, 2) + Math.Pow(sp2.Y - c2.Y, 2));
-                    double startAngle = Math.Atan2(sp2.Y - c2.Y, sp2.X - c2.X);
-                    double endAngle = Math.Atan2(ep2.Y - c2.Y, ep2.X - c2.X);
-                    int largeArc = (Math.Abs(endAngle - startAngle) > Math.PI) ? 1 : 0;
-                    int sweep = (endAngle > startAngle) ? 1 : 0;
-                    sb.AppendLine($"<path d='M {sp2.X} {sp2.Y} A {r} {r} 0 {largeArc} {sweep} {ep2.X} {ep2.Y}' />");
+                    sb.AppendLine($"<g id='{groupName.Replace("'", "_")}'>");
+                    foreach (var l in outputLines)
+                    {
+                        var p1 = Project(l.p1, globalCentroid, globalU, globalV);
+                        var p2 = Project(l.p2, globalCentroid, globalU, globalV);
+                        if (p1.X != p2.X || p1.Y != p2.Y)
+                            sb.AppendLine($"<line x1='{p1.X}' y1='{p1.Y}' x2='{p2.X}' y2='{p2.Y}' />");
+                    }
+                    sb.AppendLine("</g>");
                 }
-                sb.AppendLine("</g>");
             }
 
             // Handle ungrouped entities as fallback
