@@ -1,0 +1,1897 @@
+IgesGroup.FromParameters: parameters.Count=64
+  param[0]: '12'
+  param[1]: '5'
+  param[2]: '1'
+  param[3]: '1'
+  param[4]: '1'
+  param[5]: '2'
+  param[6]: '7'
+  param[7]: '1'
+  param[8]: '1'
+  param[9]: '1'
+  param[10]: '3'
+  param[11]: '9'
+  param[12]: '1'
+  param[13]: '3'
+  param[14]: '1'
+  param[15]: '4'
+  param[16]: '11'
+  param[17]: '1'
+  param[18]: '4'
+  param[19]: '1'
+  param[20]: '2'
+  param[21]: '13'
+  param[22]: '1'
+  param[23]: '5'
+  param[24]: '1'
+  param[25]: '6'
+  param[26]: '15'
+  param[27]: '1'
+  param[28]: '7'
+  param[29]: '1'
+  param[30]: '6'
+  param[31]: '17'
+  param[32]: '1'
+  param[33]: '8'
+  param[34]: '1'
+  param[35]: '7'
+  param[36]: '19'
+  param[37]: '1'
+  param[38]: '8'
+  param[39]: '1'
+  param[40]: '5'
+  param[41]: '21'
+  param[42]: '1'
+  param[43]: '7'
+  param[44]: '1'
+  param[45]: '1'
+  param[46]: '23'
+  param[47]: '1'
+  param[48]: '2'
+  param[49]: '1'
+  param[50]: '8'
+  param[51]: '25'
+  param[52]: '1'
+  param[53]: '3'
+  param[54]: '1'
+  param[55]: '6'
+  param[56]: '27'
+  param[57]: '1'
+  param[58]: '5'
+  param[59]: '1'
+  param[60]: '4'
+  param[61]: '0'
+  param[62]: '1'
+  param[63]: '31'
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 1
+  Trying to bind DE index: 1
+  Trying to bind DE index: 1
+  Trying to bind DE index: 2
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 1
+  Trying to bind DE index: 1
+  Trying to bind DE index: 1
+  Trying to bind DE index: 3
+    Bound entity: Property label: 
+  Trying to bind DE index: 9
+    Bound entity: Line label: 
+  Trying to bind DE index: 1
+  Trying to bind DE index: 3
+    Bound entity: Property label: 
+  Trying to bind DE index: 1
+  Trying to bind DE index: 4
+  Trying to bind DE index: 11
+    Bound entity: Line label: 
+  Trying to bind DE index: 1
+  Trying to bind DE index: 4
+  Trying to bind DE index: 1
+  Trying to bind DE index: 2
+  Trying to bind DE index: 13
+    Bound entity: Line label: 
+  Trying to bind DE index: 1
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 1
+  Trying to bind DE index: 6
+  Trying to bind DE index: 15
+    Bound entity: Line label: 
+  Trying to bind DE index: 1
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 1
+  Trying to bind DE index: 6
+  Trying to bind DE index: 17
+    Bound entity: Line label: 
+  Trying to bind DE index: 1
+  Trying to bind DE index: 8
+  Trying to bind DE index: 1
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 19
+    Bound entity: Line label: 
+  Trying to bind DE index: 1
+  Trying to bind DE index: 8
+  Trying to bind DE index: 1
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 21
+    Bound entity: Line label: 
+  Trying to bind DE index: 1
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 1
+  Trying to bind DE index: 1
+  Trying to bind DE index: 23
+    Bound entity: Line label: 
+  Trying to bind DE index: 1
+  Trying to bind DE index: 2
+  Trying to bind DE index: 1
+  Trying to bind DE index: 8
+  Trying to bind DE index: 25
+    Bound entity: Line label: 
+  Trying to bind DE index: 1
+  Trying to bind DE index: 3
+    Bound entity: Property label: 
+  Trying to bind DE index: 1
+  Trying to bind DE index: 6
+  Trying to bind DE index: 27
+    Bound entity: Line label: 
+  Trying to bind DE index: 1
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 1
+  Trying to bind DE index: 4
+  Trying to bind DE index: 0
+  Trying to bind DE index: 1
+  Trying to bind DE index: 31
+IgesGroup.FromParameters: processed 63 parameters, found 21 entities (expected 12)
+IgesGroup.FromParameters: parameters.Count=64
+  param[0]: '12'
+  param[1]: '115'
+  param[2]: '111'
+  param[3]: '1'
+  param[4]: '111'
+  param[5]: '2'
+  param[6]: '117'
+  param[7]: '111'
+  param[8]: '1'
+  param[9]: '111'
+  param[10]: '3'
+  param[11]: '119'
+  param[12]: '111'
+  param[13]: '3'
+  param[14]: '111'
+  param[15]: '4'
+  param[16]: '121'
+  param[17]: '111'
+  param[18]: ' 4'
+  param[19]: '111'
+  param[20]: '2'
+  param[21]: '123'
+  param[22]: '111'
+  param[23]: '5'
+  param[24]: '111'
+  param[25]: '6'
+  param[26]: '125'
+  param[27]: '111'
+  param[28]: '7'
+  param[29]: '111'
+  param[30]: '6'
+  param[31]: '127'
+  param[32]: '111'
+  param[33]: '8'
+  param[34]: '111'
+  param[35]: '7'
+  param[36]: '129'
+  param[37]: '111'
+  param[38]: '8'
+  param[39]: '111'
+  param[40]: '5'
+  param[41]: '131'
+  param[42]: '111'
+  param[43]: '7'
+  param[44]: '111'
+  param[45]: '1'
+  param[46]: '133'
+  param[47]: '111'
+  param[48]: '2'
+  param[49]: '111'
+  param[50]: '8'
+  param[51]: '135'
+  param[52]: '111'
+  param[53]: '3'
+  param[54]: '111'
+  param[55]: '6'
+  param[56]: '137'
+  param[57]: '111'
+  param[58]: '5'
+  param[59]: '111'
+  param[60]: '4'
+  param[61]: '0'
+  param[62]: '1'
+  param[63]: '141'
+  Trying to bind DE index: 115
+    Bound entity: Line label: 
+  Trying to bind DE index: 111
+  Trying to bind DE index: 1
+  Trying to bind DE index: 111
+  Trying to bind DE index: 2
+  Trying to bind DE index: 117
+    Bound entity: Line label: 
+  Trying to bind DE index: 111
+  Trying to bind DE index: 1
+  Trying to bind DE index: 111
+  Trying to bind DE index: 3
+    Bound entity: Property label: 
+  Trying to bind DE index: 119
+    Bound entity: Line label: 
+  Trying to bind DE index: 111
+  Trying to bind DE index: 3
+    Bound entity: Property label: 
+  Trying to bind DE index: 111
+  Trying to bind DE index: 4
+  Trying to bind DE index: 121
+    Bound entity: Line label: 
+  Trying to bind DE index: 111
+  Trying to bind DE index: 4
+  Trying to bind DE index: 111
+  Trying to bind DE index: 2
+  Trying to bind DE index: 123
+    Bound entity: Line label: 
+  Trying to bind DE index: 111
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 111
+  Trying to bind DE index: 6
+  Trying to bind DE index: 125
+    Bound entity: Line label: 
+  Trying to bind DE index: 111
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 111
+  Trying to bind DE index: 6
+  Trying to bind DE index: 127
+    Bound entity: Line label: 
+  Trying to bind DE index: 111
+  Trying to bind DE index: 8
+  Trying to bind DE index: 111
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 129
+    Bound entity: Line label: 
+  Trying to bind DE index: 111
+  Trying to bind DE index: 8
+  Trying to bind DE index: 111
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 131
+    Bound entity: Line label: 
+  Trying to bind DE index: 111
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 111
+  Trying to bind DE index: 1
+  Trying to bind DE index: 133
+    Bound entity: Line label: 
+  Trying to bind DE index: 111
+  Trying to bind DE index: 2
+  Trying to bind DE index: 111
+  Trying to bind DE index: 8
+  Trying to bind DE index: 135
+    Bound entity: Line label: 
+  Trying to bind DE index: 111
+  Trying to bind DE index: 3
+    Bound entity: Property label: 
+  Trying to bind DE index: 111
+  Trying to bind DE index: 6
+  Trying to bind DE index: 137
+    Bound entity: Line label: 
+  Trying to bind DE index: 111
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 111
+  Trying to bind DE index: 4
+  Trying to bind DE index: 0
+  Trying to bind DE index: 1
+  Trying to bind DE index: 141
+IgesGroup.FromParameters: processed 63 parameters, found 21 entities (expected 12)
+IgesGroup.FromParameters: parameters.Count=64
+  param[0]: '12'
+  param[1]: '225'
+  param[2]: '221'
+  param[3]: '1'
+  param[4]: '221'
+  param[5]: '2'
+  param[6]: '227'
+  param[7]: '221'
+  param[8]: '3'
+  param[9]: '221'
+  param[10]: '1'
+  param[11]: '229'
+  param[12]: '221'
+  param[13]: '3'
+  param[14]: '221'
+  param[15]: '4'
+  param[16]: '231'
+  param[17]: '221'
+  param[18]: ' 4'
+  param[19]: '221'
+  param[20]: '2'
+  param[21]: '233'
+  param[22]: '221'
+  param[23]: '5'
+  param[24]: '221'
+  param[25]: '1'
+  param[26]: '235'
+  param[27]: '221'
+  param[28]: '6'
+  param[29]: '221'
+  param[30]: '5'
+  param[31]: '237'
+  param[32]: '221'
+  param[33]: '6'
+  param[34]: '221'
+  param[35]: '3'
+  param[36]: '239'
+  param[37]: '221'
+  param[38]: '7'
+  param[39]: '221'
+  param[40]: '5'
+  param[41]: '241'
+  param[42]: '221'
+  param[43]: '8'
+  param[44]: '221'
+  param[45]: '7'
+  param[46]: '243'
+  param[47]: '221'
+  param[48]: '8'
+  param[49]: '221'
+  param[50]: '6'
+  param[51]: '245'
+  param[52]: '221'
+  param[53]: '2'
+  param[54]: '221'
+  param[55]: '7'
+  param[56]: '247'
+  param[57]: '221'
+  param[58]: '4'
+  param[59]: '221'
+  param[60]: '8'
+  param[61]: '0'
+  param[62]: '1'
+  param[63]: '251'
+  Trying to bind DE index: 225
+    Bound entity: Line label: 
+  Trying to bind DE index: 221
+  Trying to bind DE index: 1
+  Trying to bind DE index: 221
+  Trying to bind DE index: 2
+  Trying to bind DE index: 227
+    Bound entity: Line label: 
+  Trying to bind DE index: 221
+  Trying to bind DE index: 3
+    Bound entity: Property label: 
+  Trying to bind DE index: 221
+  Trying to bind DE index: 1
+  Trying to bind DE index: 229
+    Bound entity: Line label: 
+  Trying to bind DE index: 221
+  Trying to bind DE index: 3
+    Bound entity: Property label: 
+  Trying to bind DE index: 221
+  Trying to bind DE index: 4
+  Trying to bind DE index: 231
+    Bound entity: Line label: 
+  Trying to bind DE index: 221
+  Trying to bind DE index: 4
+  Trying to bind DE index: 221
+  Trying to bind DE index: 2
+  Trying to bind DE index: 233
+    Bound entity: Line label: 
+  Trying to bind DE index: 221
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 221
+  Trying to bind DE index: 1
+  Trying to bind DE index: 235
+    Bound entity: Line label: 
+  Trying to bind DE index: 221
+  Trying to bind DE index: 6
+  Trying to bind DE index: 221
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 237
+    Bound entity: Line label: 
+  Trying to bind DE index: 221
+  Trying to bind DE index: 6
+  Trying to bind DE index: 221
+  Trying to bind DE index: 3
+    Bound entity: Property label: 
+  Trying to bind DE index: 239
+    Bound entity: Line label: 
+  Trying to bind DE index: 221
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 221
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 241
+    Bound entity: Line label: 
+  Trying to bind DE index: 221
+  Trying to bind DE index: 8
+  Trying to bind DE index: 221
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 243
+    Bound entity: Line label: 
+  Trying to bind DE index: 221
+  Trying to bind DE index: 8
+  Trying to bind DE index: 221
+  Trying to bind DE index: 6
+  Trying to bind DE index: 245
+    Bound entity: Line label: 
+  Trying to bind DE index: 221
+  Trying to bind DE index: 2
+  Trying to bind DE index: 221
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 247
+    Bound entity: Line label: 
+  Trying to bind DE index: 221
+  Trying to bind DE index: 4
+  Trying to bind DE index: 221
+  Trying to bind DE index: 8
+  Trying to bind DE index: 0
+  Trying to bind DE index: 1
+  Trying to bind DE index: 251
+IgesGroup.FromParameters: processed 63 parameters, found 21 entities (expected 12)
+IgesGroup.FromParameters: parameters.Count=64
+  param[0]: '12'
+  param[1]: '335'
+  param[2]: '331'
+  param[3]: '1'
+  param[4]: '331'
+  param[5]: '2'
+  param[6]: '337'
+  param[7]: '331'
+  param[8]: '3'
+  param[9]: '331'
+  param[10]: '1'
+  param[11]: '339'
+  param[12]: '331'
+  param[13]: '3'
+  param[14]: '331'
+  param[15]: '4'
+  param[16]: '341'
+  param[17]: '331'
+  param[18]: ' 4'
+  param[19]: '331'
+  param[20]: '2'
+  param[21]: '343'
+  param[22]: '331'
+  param[23]: '1'
+  param[24]: '331'
+  param[25]: '5'
+  param[26]: '345'
+  param[27]: '331'
+  param[28]: '6'
+  param[29]: '331'
+  param[30]: '5'
+  param[31]: '347'
+  param[32]: '331'
+  param[33]: '3'
+  param[34]: '331'
+  param[35]: '6'
+  param[36]: '349'
+  param[37]: '331'
+  param[38]: '7'
+  param[39]: '331'
+  param[40]: '5'
+  param[41]: '351'
+  param[42]: '331'
+  param[43]: '8'
+  param[44]: '331'
+  param[45]: '7'
+  param[46]: '353'
+  param[47]: '331'
+  param[48]: '8'
+  param[49]: '331'
+  param[50]: '6'
+  param[51]: '355'
+  param[52]: '331'
+  param[53]: '2'
+  param[54]: '331'
+  param[55]: '7'
+  param[56]: '357'
+  param[57]: '331'
+  param[58]: '4'
+  param[59]: '331'
+  param[60]: '8'
+  param[61]: '0'
+  param[62]: '1'
+  param[63]: '361'
+  Trying to bind DE index: 335
+    Bound entity: Line label: 
+  Trying to bind DE index: 331
+  Trying to bind DE index: 1
+  Trying to bind DE index: 331
+  Trying to bind DE index: 2
+  Trying to bind DE index: 337
+    Bound entity: Line label: 
+  Trying to bind DE index: 331
+  Trying to bind DE index: 3
+    Bound entity: Property label: 
+  Trying to bind DE index: 331
+  Trying to bind DE index: 1
+  Trying to bind DE index: 339
+    Bound entity: Line label: 
+  Trying to bind DE index: 331
+  Trying to bind DE index: 3
+    Bound entity: Property label: 
+  Trying to bind DE index: 331
+  Trying to bind DE index: 4
+  Trying to bind DE index: 341
+    Bound entity: Line label: 
+  Trying to bind DE index: 331
+  Trying to bind DE index: 4
+  Trying to bind DE index: 331
+  Trying to bind DE index: 2
+  Trying to bind DE index: 343
+    Bound entity: Line label: 
+  Trying to bind DE index: 331
+  Trying to bind DE index: 1
+  Trying to bind DE index: 331
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 345
+    Bound entity: Line label: 
+  Trying to bind DE index: 331
+  Trying to bind DE index: 6
+  Trying to bind DE index: 331
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 347
+    Bound entity: Line label: 
+  Trying to bind DE index: 331
+  Trying to bind DE index: 3
+    Bound entity: Property label: 
+  Trying to bind DE index: 331
+  Trying to bind DE index: 6
+  Trying to bind DE index: 349
+    Bound entity: Line label: 
+  Trying to bind DE index: 331
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 331
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 351
+    Bound entity: Line label: 
+  Trying to bind DE index: 331
+  Trying to bind DE index: 8
+  Trying to bind DE index: 331
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 353
+    Bound entity: Line label: 
+  Trying to bind DE index: 331
+  Trying to bind DE index: 8
+  Trying to bind DE index: 331
+  Trying to bind DE index: 6
+  Trying to bind DE index: 355
+    Bound entity: Line label: 
+  Trying to bind DE index: 331
+  Trying to bind DE index: 2
+  Trying to bind DE index: 331
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 357
+    Bound entity: Line label: 
+  Trying to bind DE index: 331
+  Trying to bind DE index: 4
+  Trying to bind DE index: 331
+  Trying to bind DE index: 8
+  Trying to bind DE index: 0
+  Trying to bind DE index: 1
+  Trying to bind DE index: 361
+IgesGroup.FromParameters: processed 63 parameters, found 21 entities (expected 12)
+IgesGroup.FromParameters: parameters.Count=64
+  param[0]: '12'
+  param[1]: '445'
+  param[2]: '441'
+  param[3]: '1'
+  param[4]: '441'
+  param[5]: '2'
+  param[6]: '447'
+  param[7]: '441'
+  param[8]: '3'
+  param[9]: '441'
+  param[10]: '2'
+  param[11]: '449'
+  param[12]: '441'
+  param[13]: '4'
+  param[14]: '441'
+  param[15]: '3'
+  param[16]: '451'
+  param[17]: '441'
+  param[18]: ' 4'
+  param[19]: '441'
+  param[20]: '1'
+  param[21]: '453'
+  param[22]: '441'
+  param[23]: '2'
+  param[24]: '441'
+  param[25]: '5'
+  param[26]: '455'
+  param[27]: '441'
+  param[28]: '6'
+  param[29]: '441'
+  param[30]: '5'
+  param[31]: '457'
+  param[32]: '441'
+  param[33]: '3'
+  param[34]: '441'
+  param[35]: '6'
+  param[36]: '459'
+  param[37]: '441'
+  param[38]: '5'
+  param[39]: '441'
+  param[40]: '7'
+  param[41]: '461'
+  param[42]: '441'
+  param[43]: '8'
+  param[44]: '441'
+  param[45]: '7'
+  param[46]: '463'
+  param[47]: '441'
+  param[48]: '6'
+  param[49]: '441'
+  param[50]: '8'
+  param[51]: '465'
+  param[52]: '441'
+  param[53]: '7'
+  param[54]: '441'
+  param[55]: '1'
+  param[56]: '467'
+  param[57]: '441'
+  param[58]: '8'
+  param[59]: '441'
+  param[60]: '4'
+  param[61]: '0'
+  param[62]: '1'
+  param[63]: '471'
+  Trying to bind DE index: 445
+    Bound entity: Line label: 
+  Trying to bind DE index: 441
+  Trying to bind DE index: 1
+  Trying to bind DE index: 441
+  Trying to bind DE index: 2
+  Trying to bind DE index: 447
+    Bound entity: Line label: 
+  Trying to bind DE index: 441
+  Trying to bind DE index: 3
+    Bound entity: Property label: 
+  Trying to bind DE index: 441
+  Trying to bind DE index: 2
+  Trying to bind DE index: 449
+    Bound entity: Line label: 
+  Trying to bind DE index: 441
+  Trying to bind DE index: 4
+  Trying to bind DE index: 441
+  Trying to bind DE index: 3
+    Bound entity: Property label: 
+  Trying to bind DE index: 451
+    Bound entity: Line label: 
+  Trying to bind DE index: 441
+  Trying to bind DE index: 4
+  Trying to bind DE index: 441
+  Trying to bind DE index: 1
+  Trying to bind DE index: 453
+    Bound entity: Line label: 
+  Trying to bind DE index: 441
+  Trying to bind DE index: 2
+  Trying to bind DE index: 441
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 455
+    Bound entity: Line label: 
+  Trying to bind DE index: 441
+  Trying to bind DE index: 6
+  Trying to bind DE index: 441
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 457
+    Bound entity: Line label: 
+  Trying to bind DE index: 441
+  Trying to bind DE index: 3
+    Bound entity: Property label: 
+  Trying to bind DE index: 441
+  Trying to bind DE index: 6
+  Trying to bind DE index: 459
+    Bound entity: Line label: 
+  Trying to bind DE index: 441
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 441
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 461
+    Bound entity: Line label: 
+  Trying to bind DE index: 441
+  Trying to bind DE index: 8
+  Trying to bind DE index: 441
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 463
+    Bound entity: Line label: 
+  Trying to bind DE index: 441
+  Trying to bind DE index: 6
+  Trying to bind DE index: 441
+  Trying to bind DE index: 8
+  Trying to bind DE index: 465
+    Bound entity: Line label: 
+  Trying to bind DE index: 441
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 441
+  Trying to bind DE index: 1
+  Trying to bind DE index: 467
+    Bound entity: Line label: 
+  Trying to bind DE index: 441
+  Trying to bind DE index: 8
+  Trying to bind DE index: 441
+  Trying to bind DE index: 4
+  Trying to bind DE index: 0
+  Trying to bind DE index: 1
+  Trying to bind DE index: 471
+IgesGroup.FromParameters: processed 63 parameters, found 21 entities (expected 12)
+IgesGroup.FromParameters: parameters.Count=63
+  param[0]: '12'
+  param[1]: '553'
+  param[2]: '551'
+  param[3]: '1'
+  param[4]: '551'
+  param[5]: '2'
+  param[6]: '555'
+  param[7]: '551'
+  param[8]: '3'
+  param[9]: '551'
+  param[10]: '1'
+  param[11]: '557'
+  param[12]: '551'
+  param[13]: '4'
+  param[14]: '551'
+  param[15]: '3'
+  param[16]: '559'
+  param[17]: '551'
+  param[18]: ' 2'
+  param[19]: '551'
+  param[20]: '4'
+  param[21]: '561'
+  param[22]: '551'
+  param[23]: '5'
+  param[24]: '551'
+  param[25]: '1'
+  param[26]: '563'
+  param[27]: '551'
+  param[28]: '6'
+  param[29]: '551'
+  param[30]: '2'
+  param[31]: '565'
+  param[32]: '551'
+  param[33]: '6'
+  param[34]: '551'
+  param[35]: '5'
+  param[36]: '567'
+  param[37]: '551'
+  param[38]: '7'
+  param[39]: '551'
+  param[40]: '4'
+  param[41]: '569'
+  param[42]: '551'
+  param[43]: '7'
+  param[44]: '551'
+  param[45]: '6'
+  param[46]: '571'
+  param[47]: '551'
+  param[48]: '8'
+  param[49]: '551'
+  param[50]: '3'
+  param[51]: '573'
+  param[52]: '551'
+  param[53]: '8'
+  param[54]: '551'
+  param[55]: '7'
+  param[56]: '575'
+  param[57]: '551'
+  param[58]: '5'
+  param[59]: '551'
+  param[60]: '8'
+  param[61]: '0'
+  param[62]: '0'
+  Trying to bind DE index: 553
+    Bound entity: Line label: 
+  Trying to bind DE index: 551
+  Trying to bind DE index: 1
+  Trying to bind DE index: 551
+  Trying to bind DE index: 2
+  Trying to bind DE index: 555
+    Bound entity: Line label: 
+  Trying to bind DE index: 551
+  Trying to bind DE index: 3
+    Bound entity: Property label: 
+  Trying to bind DE index: 551
+  Trying to bind DE index: 1
+  Trying to bind DE index: 557
+    Bound entity: Line label: 
+  Trying to bind DE index: 551
+  Trying to bind DE index: 4
+  Trying to bind DE index: 551
+  Trying to bind DE index: 3
+    Bound entity: Property label: 
+  Trying to bind DE index: 559
+    Bound entity: Line label: 
+  Trying to bind DE index: 551
+  Trying to bind DE index: 2
+  Trying to bind DE index: 551
+  Trying to bind DE index: 4
+  Trying to bind DE index: 561
+    Bound entity: Line label: 
+  Trying to bind DE index: 551
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 551
+  Trying to bind DE index: 1
+  Trying to bind DE index: 563
+    Bound entity: Line label: 
+  Trying to bind DE index: 551
+  Trying to bind DE index: 6
+  Trying to bind DE index: 551
+  Trying to bind DE index: 2
+  Trying to bind DE index: 565
+    Bound entity: Line label: 
+  Trying to bind DE index: 551
+  Trying to bind DE index: 6
+  Trying to bind DE index: 551
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 567
+    Bound entity: Line label: 
+  Trying to bind DE index: 551
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 551
+  Trying to bind DE index: 4
+  Trying to bind DE index: 569
+    Bound entity: Line label: 
+  Trying to bind DE index: 551
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 551
+  Trying to bind DE index: 6
+  Trying to bind DE index: 571
+    Bound entity: Line label: 
+  Trying to bind DE index: 551
+  Trying to bind DE index: 8
+  Trying to bind DE index: 551
+  Trying to bind DE index: 3
+    Bound entity: Property label: 
+  Trying to bind DE index: 573
+    Bound entity: Line label: 
+  Trying to bind DE index: 551
+  Trying to bind DE index: 8
+  Trying to bind DE index: 551
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 575
+    Bound entity: Line label: 
+  Trying to bind DE index: 551
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 551
+  Trying to bind DE index: 8
+  Trying to bind DE index: 0
+  Trying to bind DE index: 0
+IgesGroup.FromParameters: processed 62 parameters, found 21 entities (expected 12)
+IgesGroup.FromParameters: parameters.Count=63
+  param[0]: '12'
+  param[1]: '657'
+  param[2]: '655'
+  param[3]: '1'
+  param[4]: '655'
+  param[5]: '2'
+  param[6]: '659'
+  param[7]: '655'
+  param[8]: '3'
+  param[9]: '655'
+  param[10]: '1'
+  param[11]: '661'
+  param[12]: '655'
+  param[13]: '4'
+  param[14]: '655'
+  param[15]: '3'
+  param[16]: '663'
+  param[17]: '655'
+  param[18]: ' 2'
+  param[19]: '655'
+  param[20]: '4'
+  param[21]: '665'
+  param[22]: '655'
+  param[23]: '5'
+  param[24]: '655'
+  param[25]: '1'
+  param[26]: '667'
+  param[27]: '655'
+  param[28]: '6'
+  param[29]: '655'
+  param[30]: '2'
+  param[31]: '669'
+  param[32]: '655'
+  param[33]: '6'
+  param[34]: '655'
+  param[35]: '5'
+  param[36]: '671'
+  param[37]: '655'
+  param[38]: '7'
+  param[39]: '655'
+  param[40]: '4'
+  param[41]: '673'
+  param[42]: '655'
+  param[43]: '7'
+  param[44]: '655'
+  param[45]: '6'
+  param[46]: '675'
+  param[47]: '655'
+  param[48]: '8'
+  param[49]: '655'
+  param[50]: '3'
+  param[51]: '677'
+  param[52]: '655'
+  param[53]: '8'
+  param[54]: '655'
+  param[55]: '7'
+  param[56]: '679'
+  param[57]: '655'
+  param[58]: '5'
+  param[59]: '655'
+  param[60]: '8'
+  param[61]: '0'
+  param[62]: '0'
+  Trying to bind DE index: 657
+    Bound entity: Line label: 
+  Trying to bind DE index: 655
+  Trying to bind DE index: 1
+  Trying to bind DE index: 655
+  Trying to bind DE index: 2
+  Trying to bind DE index: 659
+    Bound entity: Line label: 
+  Trying to bind DE index: 655
+  Trying to bind DE index: 3
+    Bound entity: Property label: 
+  Trying to bind DE index: 655
+  Trying to bind DE index: 1
+  Trying to bind DE index: 661
+    Bound entity: Line label: 
+  Trying to bind DE index: 655
+  Trying to bind DE index: 4
+  Trying to bind DE index: 655
+  Trying to bind DE index: 3
+    Bound entity: Property label: 
+  Trying to bind DE index: 663
+    Bound entity: Line label: 
+  Trying to bind DE index: 655
+  Trying to bind DE index: 2
+  Trying to bind DE index: 655
+  Trying to bind DE index: 4
+  Trying to bind DE index: 665
+    Bound entity: Line label: 
+  Trying to bind DE index: 655
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 655
+  Trying to bind DE index: 1
+  Trying to bind DE index: 667
+    Bound entity: Line label: 
+  Trying to bind DE index: 655
+  Trying to bind DE index: 6
+  Trying to bind DE index: 655
+  Trying to bind DE index: 2
+  Trying to bind DE index: 669
+    Bound entity: Line label: 
+  Trying to bind DE index: 655
+  Trying to bind DE index: 6
+  Trying to bind DE index: 655
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 671
+    Bound entity: Line label: 
+  Trying to bind DE index: 655
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 655
+  Trying to bind DE index: 4
+  Trying to bind DE index: 673
+    Bound entity: Line label: 
+  Trying to bind DE index: 655
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 655
+  Trying to bind DE index: 6
+  Trying to bind DE index: 675
+    Bound entity: Line label: 
+  Trying to bind DE index: 655
+  Trying to bind DE index: 8
+  Trying to bind DE index: 655
+  Trying to bind DE index: 3
+    Bound entity: Property label: 
+  Trying to bind DE index: 677
+    Bound entity: Line label: 
+  Trying to bind DE index: 655
+  Trying to bind DE index: 8
+  Trying to bind DE index: 655
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 679
+    Bound entity: Line label: 
+  Trying to bind DE index: 655
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 655
+  Trying to bind DE index: 8
+  Trying to bind DE index: 0
+  Trying to bind DE index: 0
+IgesGroup.FromParameters: processed 62 parameters, found 21 entities (expected 12)
+IgesGroup.FromParameters: parameters.Count=63
+  param[0]: '12'
+  param[1]: '761'
+  param[2]: '759'
+  param[3]: '1'
+  param[4]: '759'
+  param[5]: '2'
+  param[6]: '763'
+  param[7]: '759'
+  param[8]: '3'
+  param[9]: '759'
+  param[10]: '1'
+  param[11]: '765'
+  param[12]: '759'
+  param[13]: '4'
+  param[14]: '759'
+  param[15]: '3'
+  param[16]: '767'
+  param[17]: '759'
+  param[18]: ' 2'
+  param[19]: '759'
+  param[20]: '4'
+  param[21]: '769'
+  param[22]: '759'
+  param[23]: '5'
+  param[24]: '759'
+  param[25]: '1'
+  param[26]: '771'
+  param[27]: '759'
+  param[28]: '6'
+  param[29]: '759'
+  param[30]: '2'
+  param[31]: '773'
+  param[32]: '759'
+  param[33]: '6'
+  param[34]: '759'
+  param[35]: '5'
+  param[36]: '775'
+  param[37]: '759'
+  param[38]: '7'
+  param[39]: '759'
+  param[40]: '4'
+  param[41]: '777'
+  param[42]: '759'
+  param[43]: '7'
+  param[44]: '759'
+  param[45]: '6'
+  param[46]: '779'
+  param[47]: '759'
+  param[48]: '8'
+  param[49]: '759'
+  param[50]: '3'
+  param[51]: '781'
+  param[52]: '759'
+  param[53]: '8'
+  param[54]: '759'
+  param[55]: '7'
+  param[56]: '783'
+  param[57]: '759'
+  param[58]: '5'
+  param[59]: '759'
+  param[60]: '8'
+  param[61]: '0'
+  param[62]: '0'
+  Trying to bind DE index: 761
+    Bound entity: Line label: 
+  Trying to bind DE index: 759
+  Trying to bind DE index: 1
+  Trying to bind DE index: 759
+  Trying to bind DE index: 2
+  Trying to bind DE index: 763
+    Bound entity: Line label: 
+  Trying to bind DE index: 759
+  Trying to bind DE index: 3
+    Bound entity: Property label: 
+  Trying to bind DE index: 759
+  Trying to bind DE index: 1
+  Trying to bind DE index: 765
+    Bound entity: Line label: 
+  Trying to bind DE index: 759
+  Trying to bind DE index: 4
+  Trying to bind DE index: 759
+  Trying to bind DE index: 3
+    Bound entity: Property label: 
+  Trying to bind DE index: 767
+    Bound entity: Line label: 
+  Trying to bind DE index: 759
+  Trying to bind DE index: 2
+  Trying to bind DE index: 759
+  Trying to bind DE index: 4
+  Trying to bind DE index: 769
+    Bound entity: Line label: 
+  Trying to bind DE index: 759
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 759
+  Trying to bind DE index: 1
+  Trying to bind DE index: 771
+    Bound entity: Line label: 
+  Trying to bind DE index: 759
+  Trying to bind DE index: 6
+  Trying to bind DE index: 759
+  Trying to bind DE index: 2
+  Trying to bind DE index: 773
+    Bound entity: Line label: 
+  Trying to bind DE index: 759
+  Trying to bind DE index: 6
+  Trying to bind DE index: 759
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 775
+    Bound entity: Line label: 
+  Trying to bind DE index: 759
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 759
+  Trying to bind DE index: 4
+  Trying to bind DE index: 777
+    Bound entity: Line label: 
+  Trying to bind DE index: 759
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 759
+  Trying to bind DE index: 6
+  Trying to bind DE index: 779
+    Bound entity: Line label: 
+  Trying to bind DE index: 759
+  Trying to bind DE index: 8
+  Trying to bind DE index: 759
+  Trying to bind DE index: 3
+    Bound entity: Property label: 
+  Trying to bind DE index: 781
+    Bound entity: Line label: 
+  Trying to bind DE index: 759
+  Trying to bind DE index: 8
+  Trying to bind DE index: 759
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 783
+    Bound entity: Line label: 
+  Trying to bind DE index: 759
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 759
+  Trying to bind DE index: 8
+  Trying to bind DE index: 0
+  Trying to bind DE index: 0
+IgesGroup.FromParameters: processed 62 parameters, found 21 entities (expected 12)
+IgesGroup.FromParameters: parameters.Count=63
+  param[0]: '12'
+  param[1]: '865'
+  param[2]: '863'
+  param[3]: '1'
+  param[4]: '863'
+  param[5]: '2'
+  param[6]: '867'
+  param[7]: '863'
+  param[8]: '3'
+  param[9]: '863'
+  param[10]: '1'
+  param[11]: '869'
+  param[12]: '863'
+  param[13]: '4'
+  param[14]: '863'
+  param[15]: '3'
+  param[16]: '871'
+  param[17]: '863'
+  param[18]: ' 2'
+  param[19]: '863'
+  param[20]: '4'
+  param[21]: '873'
+  param[22]: '863'
+  param[23]: '5'
+  param[24]: '863'
+  param[25]: '1'
+  param[26]: '875'
+  param[27]: '863'
+  param[28]: '6'
+  param[29]: '863'
+  param[30]: '2'
+  param[31]: '877'
+  param[32]: '863'
+  param[33]: '6'
+  param[34]: '863'
+  param[35]: '5'
+  param[36]: '879'
+  param[37]: '863'
+  param[38]: '7'
+  param[39]: '863'
+  param[40]: '4'
+  param[41]: '881'
+  param[42]: '863'
+  param[43]: '7'
+  param[44]: '863'
+  param[45]: '6'
+  param[46]: '883'
+  param[47]: '863'
+  param[48]: '8'
+  param[49]: '863'
+  param[50]: '3'
+  param[51]: '885'
+  param[52]: '863'
+  param[53]: '8'
+  param[54]: '863'
+  param[55]: '7'
+  param[56]: '887'
+  param[57]: '863'
+  param[58]: '5'
+  param[59]: '863'
+  param[60]: '8'
+  param[61]: '0'
+  param[62]: '0'
+  Trying to bind DE index: 865
+    Bound entity: Line label: 
+  Trying to bind DE index: 863
+  Trying to bind DE index: 1
+  Trying to bind DE index: 863
+  Trying to bind DE index: 2
+  Trying to bind DE index: 867
+    Bound entity: Line label: 
+  Trying to bind DE index: 863
+  Trying to bind DE index: 3
+    Bound entity: Property label: 
+  Trying to bind DE index: 863
+  Trying to bind DE index: 1
+  Trying to bind DE index: 869
+    Bound entity: Line label: 
+  Trying to bind DE index: 863
+  Trying to bind DE index: 4
+  Trying to bind DE index: 863
+  Trying to bind DE index: 3
+    Bound entity: Property label: 
+  Trying to bind DE index: 871
+    Bound entity: Line label: 
+  Trying to bind DE index: 863
+  Trying to bind DE index: 2
+  Trying to bind DE index: 863
+  Trying to bind DE index: 4
+  Trying to bind DE index: 873
+    Bound entity: Line label: 
+  Trying to bind DE index: 863
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 863
+  Trying to bind DE index: 1
+  Trying to bind DE index: 875
+    Bound entity: Line label: 
+  Trying to bind DE index: 863
+  Trying to bind DE index: 6
+  Trying to bind DE index: 863
+  Trying to bind DE index: 2
+  Trying to bind DE index: 877
+    Bound entity: Line label: 
+  Trying to bind DE index: 863
+  Trying to bind DE index: 6
+  Trying to bind DE index: 863
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 879
+    Bound entity: Line label: 
+  Trying to bind DE index: 863
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 863
+  Trying to bind DE index: 4
+  Trying to bind DE index: 881
+    Bound entity: Line label: 
+  Trying to bind DE index: 863
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 863
+  Trying to bind DE index: 6
+  Trying to bind DE index: 883
+    Bound entity: Line label: 
+  Trying to bind DE index: 863
+  Trying to bind DE index: 8
+  Trying to bind DE index: 863
+  Trying to bind DE index: 3
+    Bound entity: Property label: 
+  Trying to bind DE index: 885
+    Bound entity: Line label: 
+  Trying to bind DE index: 863
+  Trying to bind DE index: 8
+  Trying to bind DE index: 863
+  Trying to bind DE index: 7
+    Bound entity: Line label: 
+  Trying to bind DE index: 887
+    Bound entity: Line label: 
+  Trying to bind DE index: 863
+  Trying to bind DE index: 5
+    Bound entity: Line label: 
+  Trying to bind DE index: 863
+  Trying to bind DE index: 8
+  Trying to bind DE index: 0
+  Trying to bind DE index: 0
+IgesGroup.FromParameters: processed 62 parameters, found 21 entities (expected 12)
+    DE index 1 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 2 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 4 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 4 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 2 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 6 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 6 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 8 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 8 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 2 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 8 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 6 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 4 did not resolve to an entity.
+    DE index 0 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    Bound entity: Property label: 
+    DE index 111 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 111 did not resolve to an entity.
+    DE index 2 did not resolve to an entity.
+    DE index 111 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 111 did not resolve to an entity.
+    DE index 111 did not resolve to an entity.
+    DE index 111 did not resolve to an entity.
+    DE index 4 did not resolve to an entity.
+    DE index 111 did not resolve to an entity.
+    DE index 4 did not resolve to an entity.
+    DE index 111 did not resolve to an entity.
+    DE index 2 did not resolve to an entity.
+    DE index 111 did not resolve to an entity.
+    DE index 111 did not resolve to an entity.
+    DE index 6 did not resolve to an entity.
+    DE index 111 did not resolve to an entity.
+    DE index 111 did not resolve to an entity.
+    DE index 6 did not resolve to an entity.
+    DE index 111 did not resolve to an entity.
+    DE index 8 did not resolve to an entity.
+    DE index 111 did not resolve to an entity.
+    DE index 111 did not resolve to an entity.
+    DE index 8 did not resolve to an entity.
+    DE index 111 did not resolve to an entity.
+    DE index 111 did not resolve to an entity.
+    DE index 111 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 111 did not resolve to an entity.
+    DE index 2 did not resolve to an entity.
+    DE index 111 did not resolve to an entity.
+    DE index 8 did not resolve to an entity.
+    DE index 111 did not resolve to an entity.
+    DE index 111 did not resolve to an entity.
+    DE index 6 did not resolve to an entity.
+    DE index 111 did not resolve to an entity.
+    DE index 111 did not resolve to an entity.
+    DE index 4 did not resolve to an entity.
+    DE index 0 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    Bound entity: Property label: 
+    DE index 221 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 221 did not resolve to an entity.
+    DE index 2 did not resolve to an entity.
+    DE index 221 did not resolve to an entity.
+    DE index 221 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 221 did not resolve to an entity.
+    DE index 221 did not resolve to an entity.
+    DE index 4 did not resolve to an entity.
+    DE index 221 did not resolve to an entity.
+    DE index 4 did not resolve to an entity.
+    DE index 221 did not resolve to an entity.
+    DE index 2 did not resolve to an entity.
+    DE index 221 did not resolve to an entity.
+    DE index 221 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 221 did not resolve to an entity.
+    DE index 6 did not resolve to an entity.
+    DE index 221 did not resolve to an entity.
+    DE index 221 did not resolve to an entity.
+    DE index 6 did not resolve to an entity.
+    DE index 221 did not resolve to an entity.
+    DE index 221 did not resolve to an entity.
+    DE index 221 did not resolve to an entity.
+    DE index 221 did not resolve to an entity.
+    DE index 8 did not resolve to an entity.
+    DE index 221 did not resolve to an entity.
+    DE index 221 did not resolve to an entity.
+    DE index 8 did not resolve to an entity.
+    DE index 221 did not resolve to an entity.
+    DE index 6 did not resolve to an entity.
+    DE index 221 did not resolve to an entity.
+    DE index 2 did not resolve to an entity.
+    DE index 221 did not resolve to an entity.
+    DE index 221 did not resolve to an entity.
+    DE index 4 did not resolve to an entity.
+    DE index 221 did not resolve to an entity.
+    DE index 8 did not resolve to an entity.
+    DE index 0 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    Bound entity: Property label: 
+    DE index 331 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 331 did not resolve to an entity.
+    DE index 2 did not resolve to an entity.
+    DE index 331 did not resolve to an entity.
+    DE index 331 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 331 did not resolve to an entity.
+    DE index 331 did not resolve to an entity.
+    DE index 4 did not resolve to an entity.
+    DE index 331 did not resolve to an entity.
+    DE index 4 did not resolve to an entity.
+    DE index 331 did not resolve to an entity.
+    DE index 2 did not resolve to an entity.
+    DE index 331 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 331 did not resolve to an entity.
+    DE index 331 did not resolve to an entity.
+    DE index 6 did not resolve to an entity.
+    DE index 331 did not resolve to an entity.
+    DE index 331 did not resolve to an entity.
+    DE index 331 did not resolve to an entity.
+    DE index 6 did not resolve to an entity.
+    DE index 331 did not resolve to an entity.
+    DE index 331 did not resolve to an entity.
+    DE index 331 did not resolve to an entity.
+    DE index 8 did not resolve to an entity.
+    DE index 331 did not resolve to an entity.
+    DE index 331 did not resolve to an entity.
+    DE index 8 did not resolve to an entity.
+    DE index 331 did not resolve to an entity.
+    DE index 6 did not resolve to an entity.
+    DE index 331 did not resolve to an entity.
+    DE index 2 did not resolve to an entity.
+    DE index 331 did not resolve to an entity.
+    DE index 331 did not resolve to an entity.
+    DE index 4 did not resolve to an entity.
+    DE index 331 did not resolve to an entity.
+    DE index 8 did not resolve to an entity.
+    DE index 0 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    Bound entity: Property label: 
+    DE index 441 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 441 did not resolve to an entity.
+    DE index 2 did not resolve to an entity.
+    DE index 441 did not resolve to an entity.
+    DE index 441 did not resolve to an entity.
+    DE index 2 did not resolve to an entity.
+    DE index 441 did not resolve to an entity.
+    DE index 4 did not resolve to an entity.
+    DE index 441 did not resolve to an entity.
+    DE index 441 did not resolve to an entity.
+    DE index 4 did not resolve to an entity.
+    DE index 441 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 441 did not resolve to an entity.
+    DE index 2 did not resolve to an entity.
+    DE index 441 did not resolve to an entity.
+    DE index 441 did not resolve to an entity.
+    DE index 6 did not resolve to an entity.
+    DE index 441 did not resolve to an entity.
+    DE index 441 did not resolve to an entity.
+    DE index 441 did not resolve to an entity.
+    DE index 6 did not resolve to an entity.
+    DE index 441 did not resolve to an entity.
+    DE index 441 did not resolve to an entity.
+    DE index 441 did not resolve to an entity.
+    DE index 8 did not resolve to an entity.
+    DE index 441 did not resolve to an entity.
+    DE index 441 did not resolve to an entity.
+    DE index 6 did not resolve to an entity.
+    DE index 441 did not resolve to an entity.
+    DE index 8 did not resolve to an entity.
+    DE index 441 did not resolve to an entity.
+    DE index 441 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 441 did not resolve to an entity.
+    DE index 8 did not resolve to an entity.
+    DE index 441 did not resolve to an entity.
+    DE index 4 did not resolve to an entity.
+    DE index 0 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    Bound entity: Property label: 
+    DE index 551 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 551 did not resolve to an entity.
+    DE index 2 did not resolve to an entity.
+    DE index 551 did not resolve to an entity.
+    DE index 551 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 551 did not resolve to an entity.
+    DE index 4 did not resolve to an entity.
+    DE index 551 did not resolve to an entity.
+    DE index 551 did not resolve to an entity.
+    DE index 2 did not resolve to an entity.
+    DE index 551 did not resolve to an entity.
+    DE index 4 did not resolve to an entity.
+    DE index 551 did not resolve to an entity.
+    DE index 551 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 551 did not resolve to an entity.
+    DE index 6 did not resolve to an entity.
+    DE index 551 did not resolve to an entity.
+    DE index 2 did not resolve to an entity.
+    DE index 551 did not resolve to an entity.
+    DE index 6 did not resolve to an entity.
+    DE index 551 did not resolve to an entity.
+    DE index 551 did not resolve to an entity.
+    DE index 551 did not resolve to an entity.
+    DE index 4 did not resolve to an entity.
+    DE index 551 did not resolve to an entity.
+    DE index 551 did not resolve to an entity.
+    DE index 6 did not resolve to an entity.
+    DE index 551 did not resolve to an entity.
+    DE index 8 did not resolve to an entity.
+    DE index 551 did not resolve to an entity.
+    DE index 551 did not resolve to an entity.
+    DE index 8 did not resolve to an entity.
+    DE index 551 did not resolve to an entity.
+    DE index 551 did not resolve to an entity.
+    DE index 551 did not resolve to an entity.
+    DE index 8 did not resolve to an entity.
+    DE index 0 did not resolve to an entity.
+    DE index 0 did not resolve to an entity.
+    DE index 655 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 655 did not resolve to an entity.
+    DE index 2 did not resolve to an entity.
+    DE index 655 did not resolve to an entity.
+    DE index 655 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 655 did not resolve to an entity.
+    DE index 4 did not resolve to an entity.
+    DE index 655 did not resolve to an entity.
+    DE index 655 did not resolve to an entity.
+    DE index 2 did not resolve to an entity.
+    DE index 655 did not resolve to an entity.
+    DE index 4 did not resolve to an entity.
+    DE index 655 did not resolve to an entity.
+    DE index 655 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 655 did not resolve to an entity.
+    DE index 6 did not resolve to an entity.
+    DE index 655 did not resolve to an entity.
+    DE index 2 did not resolve to an entity.
+    DE index 655 did not resolve to an entity.
+    DE index 6 did not resolve to an entity.
+    DE index 655 did not resolve to an entity.
+    DE index 655 did not resolve to an entity.
+    DE index 655 did not resolve to an entity.
+    DE index 4 did not resolve to an entity.
+    DE index 655 did not resolve to an entity.
+    DE index 655 did not resolve to an entity.
+    DE index 6 did not resolve to an entity.
+    DE index 655 did not resolve to an entity.
+    DE index 8 did not resolve to an entity.
+    DE index 655 did not resolve to an entity.
+    DE index 655 did not resolve to an entity.
+    DE index 8 did not resolve to an entity.
+    DE index 655 did not resolve to an entity.
+    DE index 655 did not resolve to an entity.
+    DE index 655 did not resolve to an entity.
+    DE index 8 did not resolve to an entity.
+    DE index 0 did not resolve to an entity.
+    DE index 0 did not resolve to an entity.
+    DE index 759 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 759 did not resolve to an entity.
+    DE index 2 did not resolve to an entity.
+    DE index 759 did not resolve to an entity.
+    DE index 759 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 759 did not resolve to an entity.
+    DE index 4 did not resolve to an entity.
+    DE index 759 did not resolve to an entity.
+    DE index 759 did not resolve to an entity.
+    DE index 2 did not resolve to an entity.
+    DE index 759 did not resolve to an entity.
+    DE index 4 did not resolve to an entity.
+    DE index 759 did not resolve to an entity.
+    DE index 759 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 759 did not resolve to an entity.
+    DE index 6 did not resolve to an entity.
+    DE index 759 did not resolve to an entity.
+    DE index 2 did not resolve to an entity.
+    DE index 759 did not resolve to an entity.
+    DE index 6 did not resolve to an entity.
+    DE index 759 did not resolve to an entity.
+    DE index 759 did not resolve to an entity.
+    DE index 759 did not resolve to an entity.
+    DE index 4 did not resolve to an entity.
+    DE index 759 did not resolve to an entity.
+    DE index 759 did not resolve to an entity.
+    DE index 6 did not resolve to an entity.
+    DE index 759 did not resolve to an entity.
+    DE index 8 did not resolve to an entity.
+    DE index 759 did not resolve to an entity.
+    DE index 759 did not resolve to an entity.
+    DE index 8 did not resolve to an entity.
+    DE index 759 did not resolve to an entity.
+    DE index 759 did not resolve to an entity.
+    DE index 759 did not resolve to an entity.
+    DE index 8 did not resolve to an entity.
+    DE index 0 did not resolve to an entity.
+    DE index 0 did not resolve to an entity.
+    DE index 863 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 863 did not resolve to an entity.
+    DE index 2 did not resolve to an entity.
+    DE index 863 did not resolve to an entity.
+    DE index 863 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 863 did not resolve to an entity.
+    DE index 4 did not resolve to an entity.
+    DE index 863 did not resolve to an entity.
+    DE index 863 did not resolve to an entity.
+    DE index 2 did not resolve to an entity.
+    DE index 863 did not resolve to an entity.
+    DE index 4 did not resolve to an entity.
+    DE index 863 did not resolve to an entity.
+    DE index 863 did not resolve to an entity.
+    DE index 1 did not resolve to an entity.
+    DE index 863 did not resolve to an entity.
+    DE index 6 did not resolve to an entity.
+    DE index 863 did not resolve to an entity.
+    DE index 2 did not resolve to an entity.
+    DE index 863 did not resolve to an entity.
+    DE index 6 did not resolve to an entity.
+    DE index 863 did not resolve to an entity.
+    DE index 863 did not resolve to an entity.
+    DE index 863 did not resolve to an entity.
+    DE index 4 did not resolve to an entity.
+    DE index 863 did not resolve to an entity.
+    DE index 863 did not resolve to an entity.
+    DE index 6 did not resolve to an entity.
+    DE index 863 did not resolve to an entity.
+    DE index 8 did not resolve to an entity.
+    DE index 863 did not resolve to an entity.
+    DE index 863 did not resolve to an entity.
+    DE index 8 did not resolve to an entity.
+    DE index 863 did not resolve to an entity.
+    DE index 863 did not resolve to an entity.
+    DE index 863 did not resolve to an entity.
+    DE index 8 did not resolve to an entity.
+    DE index 0 did not resolve to an entity.
+    DE index 0 did not resolve to an entity.
+No raw parameter field found for group Extruded.
+Group Extruded has 18 geometry entities.
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+No raw parameter field found for group Extruded.
+Group Extruded has 18 geometry entities.
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+No raw parameter field found for group Extruded.
+Group Extruded has 18 geometry entities.
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+No raw parameter field found for group Extruded.
+Group Extruded has 18 geometry entities.
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+No raw parameter field found for group Extruded.
+Group Extruded has 18 geometry entities.
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+No raw parameter field found for group Box.003.
+Group Box.003 has 18 geometry entities.
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+No raw parameter field found for group Box.005.
+Group Box.005 has 18 geometry entities.
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+No raw parameter field found for group Box.004.
+Group Box.004 has 18 geometry entities.
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+No raw parameter field found for group JASONBOX.
+Group JASONBOX has 18 geometry entities.
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+ Entity type: Line, label: 
+Projected 162 lines and 0 arcs into 2D outline  C:\Users\jdm\OneDrive\Documents\art\glowforge\big box\big box v3f.svg

@@ -98,14 +98,37 @@ namespace LaserConvert
                 var groupLines = new List<(Vec3 p1, Vec3 p2)>();
                 var groupArcs = new List<(Vec3 center, Vec3 start, Vec3 end)>();
 
-                foreach (var ent in group.AssociatedEntities)
+                // DEBUG: Print raw group parameters
+                var groupType = group.GetType();
+                var paramField = groupType.GetField("_parameters", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                if (paramField != null)
+                {
+                    var rawParams = paramField.GetValue(group) as System.Collections.IEnumerable;
+                    Console.WriteLine($"Raw parameters for group {groupName}:");
+                    if (rawParams != null)
+                    {
+                        foreach (var p in rawParams)
+                            Console.WriteLine($"  {p}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"No raw parameter field found for group {groupName}.");
+                }
+
+                // Only count geometry entities for output
+                var geometryEntities = group.AssociatedEntities.Where(e => e is IgesLine || e is IgesCircularArc).ToList();
+                Console.WriteLine($"Group {groupName} has {geometryEntities.Count} geometry entities.");
+                foreach (var ent in geometryEntities)
+                    Console.WriteLine($" Entity type: {ent.EntityType}, label: {ent.EntityLabel}");
+
+                foreach (var ent in geometryEntities)
                 {
                     if (ent is IgesLine line)
                     {
                         var p1 = new Vec3(line.P1.X, line.P1.Y, line.P1.Z);
                         var p2 = new Vec3(line.P2.X, line.P2.Y, line.P2.Z);
                         groupLines.Add((p1, p2));
-                        usedEntities.Add(ent);
                         totalLines++;
                     }
                     else if (ent is IgesCircularArc arc)
@@ -114,9 +137,9 @@ namespace LaserConvert
                         var sp = new Vec3(arc.StartPoint.X, arc.StartPoint.Y, arc.StartPoint.Z);
                         var ep = new Vec3(arc.EndPoint.X, arc.EndPoint.Y, arc.EndPoint.Z);
                         groupArcs.Add((c, sp, ep));
-                        usedEntities.Add(ent);
                         totalArcs++;
                     }
+                    usedEntities.Add(ent);
                 }
                 if (groupLines.Count == 0 && groupArcs.Count == 0) continue;
                 sb.AppendLine($"<g id='{groupName.Replace("'", "_")}'>");
