@@ -1,3 +1,0 @@
-[submodule "external/iges"]
-	path = external/iges
-	url = https://github.com/ixmilia/iges.git
