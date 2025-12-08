@@ -141,19 +141,63 @@ namespace LaserConvert
                     }
                     usedEntities.Add(ent);
                 }
-                if (groupLines.Count == 0 && groupArcs.Count == 0) continue;
-                sb.AppendLine($"<g id='{groupName.Replace("'", "_")}'>");
-                foreach (var l in groupLines)
+
+                // --- PCA and thickness axis for this group ---
+                var groupPoints = groupLines.SelectMany(l => new[] { l.p1, l.p2 }).ToList();
+                if (groupPoints.Count == 0) continue;
+
+                var groupCentroid = Mean(groupPoints);
+                var groupAxes = PCAAxes(groupPoints, groupCentroid);
+                var groupExtents = groupAxes.Select(a => AxisExtent(groupPoints, groupCentroid, a)).ToArray();
+                int thicknessIdx = PickThicknessAxis(groupExtents, 3.0, 0.5);
+                var thicknessAxis = groupAxes[thicknessIdx];
+                var (u, v) = OrthonormalPlaneBasis(groupAxes, thicknessIdx);
+
+                var thicknessRange = RangeAlong(groupPoints, groupCentroid, thicknessAxis);
+                double thicknessValue = Math.Abs(thicknessRange.max - thicknessRange.min);
+                double thicknessPlane = thicknessRange.min + thicknessValue / 2.0;
+                double tol = 0.2;
+
+                // --- Filter lines to those in the footprint plane ---
+                var footprintLines = groupLines
+                    .Where(l =>
+                        Math.Abs(Dot(Sub(l.p1, groupCentroid), thicknessAxis) - thicknessPlane) < tol &&
+                        Math.Abs(Dot(Sub(l.p2, groupCentroid), thicknessAxis) - thicknessPlane) < tol)
+                    .ToList();
+
+                // --- Deduplicate lines (order-independent) ---
+                var unique = new HashSet<(double, double, double, double)>();
+                var dedupedLines = new List<(Vec3 p1, Vec3 p2)>();
+                foreach (var l in footprintLines)
                 {
-                    var p1 = Project(l.p1, globalCentroid, globalU, globalV);
-                    var p2 = Project(l.p2, globalCentroid, globalU, globalV);
+                    var key = l.p1.X < l.p2.X || (l.p1.X == l.p2.X && l.p1.Y <= l.p2.Y)
+                        ? (l.p1.X, l.p1.Y, l.p2.X, l.p2.Y)
+                        : (l.p2.X, l.p2.Y, l.p1.X, l.p1.Y);
+                    if (unique.Add(key))
+                        dedupedLines.Add(l);
+                }
+
+                // --- Filter arcs to those in the footprint plane ---
+                var dedupedArcs = groupArcs
+                    .Where(a =>
+                        Math.Abs(Dot(Sub(a.center, groupCentroid), thicknessAxis) - thicknessPlane) < tol &&
+                        Math.Abs(Dot(Sub(a.start, groupCentroid), thicknessAxis) - thicknessPlane) < tol &&
+                        Math.Abs(Dot(Sub(a.end, groupCentroid), thicknessAxis) - thicknessPlane) < tol)
+                    .ToList();
+
+                if (dedupedLines.Count == 0 && dedupedArcs.Count == 0) continue;
+                sb.AppendLine($"<g id='{groupName.Replace("'", "_")}'>");
+                foreach (var l in dedupedLines)
+                {
+                    var p1 = Project(l.p1, groupCentroid, u, v);
+                    var p2 = Project(l.p2, groupCentroid, u, v);
                     sb.AppendLine($"<line x1='{p1.X}' y1='{p1.Y}' x2='{p2.X}' y2='{p2.Y}' />");
                 }
-                foreach (var a in groupArcs)
+                foreach (var a in dedupedArcs)
                 {
-                    var c2 = Project(a.center, globalCentroid, globalU, globalV);
-                    var sp2 = Project(a.start, globalCentroid, globalU, globalV);
-                    var ep2 = Project(a.end, globalCentroid, globalU, globalV);
+                    var c2 = Project(a.center, groupCentroid, u, v);
+                    var sp2 = Project(a.start, groupCentroid, u, v);
+                    var ep2 = Project(a.end, groupCentroid, u, v);
                     double r = Math.Sqrt(Math.Pow(sp2.X - c2.X, 2) + Math.Pow(sp2.Y - c2.Y, 2));
                     double startAngle = Math.Atan2(sp2.Y - c2.Y, sp2.X - c2.X);
                     double endAngle = Math.Atan2(ep2.Y - c2.Y, ep2.X - c2.X);
