@@ -52,7 +52,33 @@ namespace LaserConvert
 
             foreach (IgesEntity entity in igesFile.Entities)
             {
-                Console.WriteLine($"Entity ID: {entity.EntityLabel}, Type: {entity.EntityType}");
+                Console.WriteLine($"Entity ID: {entity.EntityLabel}, Type: {entity.EntityType}, AssociatedEntities.Count: {entity.AssociatedEntities.Count}");
+            }
+
+
+
+
+            // 1. Build a map from entity number to entity
+            var deToEntity = igesFile.Entities.ToDictionary(e => e.EntityNumber);
+
+            // 2. Find all group (type 504) entities
+            var groups = igesFile.Entities.Where(e => e.EntityType == 504).ToList();
+
+            foreach (var group in groups)
+            {
+                // 3. Get group name (if available)
+                string groupName = group.EntityLabel;
+
+                // 4. Get referenced geometry (parse parameters for entity numbers)
+                // This depends on how IxMilia exposes the group members
+                // Example: if group.Parameters is a list of entity numbers
+                var pointers = group.Parameters; // You may need to parse this
+                var groupEntities = pointers
+                    .Select(ptr => deToEntity.TryGetValue(ptr, out var ent) ? ent : null)
+                    .Where(ent => ent is IgesLine || ent is IgesCircularArc)
+                    .ToList();
+
+                Console.WriteLine($"Group: {groupName}, Entities: {groupEntities.Count}");
             }
 
             return;
@@ -61,44 +87,44 @@ namespace LaserConvert
             sb.AppendLine("<svg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='black' stroke-width='0.1'>");
 
             // Find all IgesGroup entities (solids)
-            var groups = igesFile.Entities.OfType<IgesCubicSolid>().ToList();
+            var groups = igesFile.Entities.OfType<IgesManifestSolidBRepObject>().ToList();
             var usedEntities = new HashSet<IgesEntity>();
             int totalLines = 0, totalArcs = 0;
 
             foreach (var group in groups)
             {
-                string groupName = $"solid_{group.Comment}";
-                //var groupName = string.IsNullOrWhiteSpace(group.Name) ? $"solid_{group.EntityId}" : group.Name.Trim();
+                string groupName = group.EntityLabel;
+                
                 var groupPoints = new List<Vec3>();
                 var groupLines = new List<(Vec3 p1, Vec3 p2)>();
                 var groupArcs = new List<(Vec3 center, Vec3 start, Vec3 end)>();
 
-                //foreach (var entRef in group.EntityReferences)
-                //{
-                //    var ent = entRef.Entity;
-                //    if (ent is IgesLine line)
-                //    {
-                //        var p1 = new Vec3(line.P1.X, line.P1.Y, line.P1.Z);
-                //        var p2 = new Vec3(line.P2.X, line.P2.Y, line.P2.Z);
-                //        groupLines.Add((p1, p2));
-                //        groupPoints.Add(p1);
-                //        groupPoints.Add(p2);
-                //        usedEntities.Add(ent);
-                //        totalLines++;
-                //    }
-                //    else if (ent is IgesCircularArc arc)
-                //    {
-                //        var c = new Vec3(arc.Center.X, arc.Center.Y, arc.Center.Z);
-                //        var sp = new Vec3(arc.StartPoint.X, arc.StartPoint.Y, arc.StartPoint.Z);
-                //        var ep = new Vec3(arc.EndPoint.X, arc.EndPoint.Y, arc.EndPoint.Z);
-                //        groupArcs.Add((c, sp, ep));
-                //        groupPoints.Add(c);
-                //        groupPoints.Add(sp);
-                //        groupPoints.Add(ep);
-                //        usedEntities.Add(ent);
-                //        totalArcs++;
-                //    }
-                //}
+                foreach (var entRef in group.AssociatedEntities)
+                {
+                    var ent = entRef;
+                    if (ent is IgesLine line)
+                    {
+                        var p1 = new Vec3(line.P1.X, line.P1.Y, line.P1.Z);
+                        var p2 = new Vec3(line.P2.X, line.P2.Y, line.P2.Z);
+                        groupLines.Add((p1, p2));
+                        groupPoints.Add(p1);
+                        groupPoints.Add(p2);
+                        usedEntities.Add(ent);
+                        totalLines++;
+                    }
+                    else if (ent is IgesCircularArc arc)
+                    {
+                        var c = new Vec3(arc.Center.X, arc.Center.Y, arc.Center.Z);
+                        var sp = new Vec3(arc.StartPoint.X, arc.StartPoint.Y, arc.StartPoint.Z);
+                        var ep = new Vec3(arc.EndPoint.X, arc.EndPoint.Y, arc.EndPoint.Z);
+                        groupArcs.Add((c, sp, ep));
+                        groupPoints.Add(c);
+                        groupPoints.Add(sp);
+                        groupPoints.Add(ep);
+                        usedEntities.Add(ent);
+                        totalArcs++;
+                    }
+                }
                 if (groupPoints.Count == 0) continue;
                 var centroid = Mean(groupPoints);
                 var axes = PCAAxes(groupPoints, centroid);
