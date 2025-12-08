@@ -50,34 +50,30 @@ namespace LaserConvert
 
             var igesFile = IgesFile.Load(inputPath);
 
-            foreach (IgesEntity entity in igesFile.Entities)
-            {
-                Console.WriteLine($"Entity ID: {entity.EntityLabel}, Type: {entity.EntityType}, AssociatedEntities.Count: {entity.AssociatedEntities.Count}");
-            }
+            //foreach (IgesEntity entity in igesFile.Entities)
+            //{
+            //    Console.WriteLine($"Entity ID: {entity.EntityLabel}, Type: {entity.EntityType}, AssociatedEntities.Count: {entity.AssociatedEntities.Count}");
+            //}
 
-
-
-            return;
+            //return;
 
             var sb = new StringBuilder();
             sb.AppendLine("<svg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='black' stroke-width='0.1'>");
 
             // Find all IgesGroup entities (solids)
-            var groups = igesFile.Entities.OfType<IgesManifestSolidBRepObject>().ToList();
+            var groups = igesFile.Entities.OfType<IgesGroup>().ToList();
             var usedEntities = new HashSet<IgesEntity>();
             int totalLines = 0, totalArcs = 0;
 
             foreach (var group in groups)
             {
-                string groupName = group.EntityLabel;
-                
+                string groupName = group.EntityLabel ?? $"group_{groups.IndexOf(group)}";
                 var groupPoints = new List<Vec3>();
                 var groupLines = new List<(Vec3 p1, Vec3 p2)>();
                 var groupArcs = new List<(Vec3 center, Vec3 start, Vec3 end)>();
 
-                foreach (var entRef in group.AssociatedEntities)
+                foreach (var ent in group.AssociatedEntities)
                 {
-                    var ent = entRef;
                     if (ent is IgesLine line)
                     {
                         var p1 = new Vec3(line.P1.X, line.P1.Y, line.P1.Z);
