@@ -86,15 +86,15 @@ namespace LaserConvert
             var svg = new SvgBuilder(mm: true);
             foreach (var solid in solids)
             {
-                var (profileFace, profilePlane) = FindProfileFaceAndPlane(solid);
+                var (profileFace, profilePlane, minSep) = FindProfileFaceAndPlane(solid);
+                string solidName = GetEntityName(solid);
                 if (profileFace is null || profilePlane is null)
                 {
-                    Console.WriteLine($"Skipping solid (no 3 mm face pair found): {GetEntityName(solid)}");
+                    var sepMsg = minSep.HasValue ? $" (min separation: {minSep.Value:0.###} mm)" : "";
+                    Console.WriteLine($"Skipping solid (no 3 mm face pair found): {solidName}{sepMsg}");
                     continue;
                 }
-
-                var groupName = GetEntityName(solid);
-                svg.BeginGroup(groupName);
+                svg.BeginGroup(solidName);
 
                 // 3) Extract loops (outer + inner) from the chosen face and project to 2D.
                 //    Loops reference edges; edges are built from curve entities: lines, arcs, splines, composites.
@@ -145,23 +145,43 @@ namespace LaserConvert
             {
                 case IgesEntityType.Plane:
                     var p = (IgesPlane)surface;
-                    // Plane equation: Ax + By + Cz = D
                     var n = new Vec3(p.PlaneCoefficientA, p.PlaneCoefficientB, p.PlaneCoefficientC);
-                    // Pick a point on the plane: D*n/|n|^2
                     var len2 = n.X * n.X + n.Y * n.Y + n.Z * n.Z;
                     var o = (len2 > 1e-12) ? (p.PlaneCoefficientD / len2) * n : new Vec3(0, 0, 0);
                     plane = (o, Normalize(n));
                     return true;
-                // TODO: Add other plane-like types (e.g., 190, 191, etc.)
+                case IgesEntityType.PlaneSurface:
+                    var ps = (IgesPlaneSurface)surface;
+                    if (ps.Point != null && ps.Normal != null)
+                    {
+                        var origin = new Vec3(ps.Point.X, ps.Point.Y, ps.Point.Z);
+                        var normal = new Vec3(ps.Normal.X, ps.Normal.Y, ps.Normal.Z);
+                        plane = (origin, Normalize(normal));
+                        return true;
+                    }
+                    return false;
+                // Add other plane-like types (e.g., 190, 192, 194, 196, 198)
+                case IgesEntityType.RightCircularCylindricalSurface:
+                case IgesEntityType.RightCircularConicalSurface:
+                case IgesEntityType.SphericalSurface:
+                case IgesEntityType.ToroidalSurface:
+                    // These are not strictly planes, but could be handled if needed
+                    return false;
                 default:
                     return false;
             }
         }
 
-        private static (IgesFace? Face, (Vec3 Origin, Vec3 Normal)? Plane) FindProfileFaceAndPlane(IgesManifestSolidBRepObject solid)
+        private static (IgesFace? Face, (Vec3 Origin, Vec3 Normal)? Plane, double? MinSeparation) FindProfileFaceAndPlane(IgesManifestSolidBRepObject solid)
         {
+            string solidName = GetEntityName(solid);
             var planarFaces = new List<(IgesFace face, (Vec3 Origin, Vec3 Normal) plane, double area)>();
-            foreach (var face in GetSolidFaces(solid))
+            var allFaces = GetSolidFaces(solid).ToList();
+            if (solidName == "JASONBOX")
+            {
+                Console.WriteLine($"[JASONBOX] Total faces: {allFaces.Count}");
+            }
+            foreach (var face in allFaces)
             {
                 var surf = GetFaceSurface(face);
                 if (TryGetPlane(surf, out var plane))
@@ -171,26 +191,44 @@ namespace LaserConvert
                     if (outer is null) continue;
                     var area = Math.Abs(ComputeLoopArea2D(plane, outer));
                     planarFaces.Add((face, plane, area));
+                    if (solidName == "JASONBOX")
+                    {
+                        Console.WriteLine($"[JASONBOX] Planar face: Area={area:0.###} Origin=({plane.Origin.X:0.###},{plane.Origin.Y:0.###},{plane.Origin.Z:0.###}) Normal=({plane.Normal.X:0.###},{plane.Normal.Y:0.###},{plane.Normal.Z:0.###})");
+                    }
                 }
             }
+            if (solidName == "JASONBOX")
+            {
+                Console.WriteLine($"[JASONBOX] Planar faces found: {planarFaces.Count}");
+            }
             if (planarFaces.Count < 2)
-                return (null, null);
+                return (null, null, null);
             var byArea = planarFaces.OrderByDescending(p => p.area).ToList();
+            double? minSep = null;
             foreach (var (faceA, planeA, areaA) in byArea)
             {
                 var candidates = byArea.Where(p => p.face != faceA && ArePlanesParallel(planeA, p.plane)).ToList();
                 foreach (var (faceB, planeB, areaB) in candidates)
                 {
                     var sep = PlanePlaneSeparation(planeA, planeB);
+                    if (solidName == "JASONBOX")
+                    {
+                        Console.WriteLine($"[JASONBOX] Face pair: AreaA={areaA:0.###} AreaB={areaB:0.###} Sep={sep:0.###} Parallel={ArePlanesParallel(planeA, planeB)}");
+                    }
+                    if (sep.HasValue)
+                    {
+                        if (!minSep.HasValue || sep.Value < minSep.Value)
+                            minSep = sep.Value;
+                    }
                     if (sep.HasValue && IsApproximately(sep.Value, 3.0, tol: 0.2))
                     {
                         var chosen = areaA >= areaB ? (faceA, planeA) : (faceB, planeB);
-                        return (chosen.Item1, chosen.Item2);
+                        return (chosen.Item1, chosen.Item2, sep.Value);
                     }
                 }
             }
             var top = byArea.FirstOrDefault();
-            return (top.face, top.plane);
+            return (top.face, top.plane, minSep);
         }
 
         private static IEnumerable<IgesFace> GetSolidFaces(IgesManifestSolidBRepObject solid)
