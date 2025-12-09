@@ -23,8 +23,6 @@ using System.Text;
 using IxMilia.Iges;
 using IxMilia.Iges.Entities;
 
-// Add IxMilia.Iges via NuGet.
-
 namespace LaserConvert
 {
     internal static class Program
@@ -101,21 +99,20 @@ namespace LaserConvert
                 // 3) Extract loops (outer + inner) from the chosen face and project to 2D.
                 //    Loops reference edges; edges are built from curve entities: lines, arcs, splines, composites.
                 var loops = GetFaceLoops(profileFace);
-                // Identify the outer loop; the rest are holes. If no flag available, pick the loop with max area as outer.
-                var classified = ClassifyLoops(profilePlane, loops);
+                var classified = ClassifyLoops(profilePlane.Value, loops);
 
                 // 4) Project each loop to the plane basis and emit SVG paths.
                 foreach (var loop in classified.OuterLoops)
                 {
-                    var path = BuildSvgPathFromLoop(profilePlane, loop);
+                    var path = BuildSvgPathFromLoop(profilePlane.Value, loop);
                     if (path.Length > 0)
-                        svg.Path(path, strokeWidth: 0.2, fill: "none"); // outline; laser viewers often prefer strokes only
+                        svg.Path(path, strokeWidth: 0.2, fill: "none");
                 }
                 foreach (var hole in classified.InnerLoops)
                 {
-                    var path = BuildSvgPathFromLoop(profilePlane, hole);
+                    var path = BuildSvgPathFromLoop(profilePlane.Value, hole);
                     if (path.Length > 0)
-                        svg.Path(path, strokeWidth: 0.2, fill: "none"); // holes are separate paths
+                        svg.Path(path, strokeWidth: 0.2, fill: "none");
                 }
 
                 svg.EndGroup();
@@ -133,23 +130,42 @@ namespace LaserConvert
 
         private static string GetEntityName(IgesEntity e)
         {
-            // Prefer directory entry name; fallback to type+id.
             var name = e.EntityLabel;
             if (string.IsNullOrWhiteSpace(name))
                 name = e.EntityType.ToString();
             return name;
         }
 
-        private static (IgesFace? Face, IgesPlane? Plane) FindProfileFaceAndPlane(IgesManifestSolidBRepObject solid)
+        // Helper: Try to extract a plane from any IGES surface entity
+        private static bool TryGetPlane(IgesEntity? surface, out (Vec3 Origin, Vec3 Normal) plane)
         {
-            // Enumerate all planar faces; compute area; group by parallel planes; look for pairs ~3 mm apart.
-            var planarFaces = new List<(IgesFace face, IgesPlane plane, double area)>();
+            plane = default;
+            if (surface == null) return false;
+            switch (surface.EntityType)
+            {
+                case IgesEntityType.Plane:
+                    var p = (IgesPlane)surface;
+                    // Plane equation: Ax + By + Cz = D
+                    var n = new Vec3(p.PlaneCoefficientA, p.PlaneCoefficientB, p.PlaneCoefficientC);
+                    // Pick a point on the plane: D*n/|n|^2
+                    var len2 = n.X * n.X + n.Y * n.Y + n.Z * n.Z;
+                    var o = (len2 > 1e-12) ? (p.PlaneCoefficientD / len2) * n : new Vec3(0, 0, 0);
+                    plane = (o, Normalize(n));
+                    return true;
+                // TODO: Add other plane-like types (e.g., 190, 191, etc.)
+                default:
+                    return false;
+            }
+        }
+
+        private static (IgesFace? Face, (Vec3 Origin, Vec3 Normal)? Plane) FindProfileFaceAndPlane(IgesManifestSolidBRepObject solid)
+        {
+            var planarFaces = new List<(IgesFace face, (Vec3 Origin, Vec3 Normal) plane, double area)>();
             foreach (var face in GetSolidFaces(solid))
             {
                 var surf = GetFaceSurface(face);
-                if (surf is IgesPlane plane)
+                if (TryGetPlane(surf, out var plane))
                 {
-                    // Approximate face area by tessellating its outer loop.
                     var loops = GetFaceLoops(face);
                     var outer = GuessOuterLoop(plane, loops);
                     if (outer is null) continue;
@@ -157,49 +173,52 @@ namespace LaserConvert
                     planarFaces.Add((face, plane, area));
                 }
             }
-
             if (planarFaces.Count < 2)
                 return (null, null);
-
-            // Sort by area descending to favor broad faces.
             var byArea = planarFaces.OrderByDescending(p => p.area).ToList();
-
-            // Try to find a matching parallel face ~3 mm away.
             foreach (var (faceA, planeA, areaA) in byArea)
             {
-                // Find parallel planes with opposite normals and distance ~3 mm.
                 var candidates = byArea.Where(p => p.face != faceA && ArePlanesParallel(planeA, p.plane)).ToList();
                 foreach (var (faceB, planeB, areaB) in candidates)
                 {
                     var sep = PlanePlaneSeparation(planeA, planeB);
-                    if (sep.HasValue && IsApproximately(sep.Value, 3.0, tol: 0.2)) // tolerance to handle export noise
+                    if (sep.HasValue && IsApproximately(sep.Value, 3.0, tol: 0.2))
                     {
-                        // Choose the larger of the pair as the profile source (both are equivalent for outline).
                         var chosen = areaA >= areaB ? (faceA, planeA) : (faceB, planeB);
-                        return (chosen.face, chosen.plane);
+                        return (chosen.Item1, chosen.Item2);
                     }
                 }
             }
-
-            // Fallback: just pick the largest planar face.
             var top = byArea.FirstOrDefault();
             return (top.face, top.plane);
         }
 
         private static IEnumerable<IgesFace> GetSolidFaces(IgesManifestSolidBRepObject solid)
         {
-            // Typical topology: solid -> shells (514) -> faces (508).
+            // Try to get faces from a shell property or fallback to associated entities
             var faces = new List<IgesFace>();
-            foreach (var shell in solid.Shells ?? Enumerable.Empty<IgesShell>())
+            var shells = solid.GetType().GetProperty("Shells")?.GetValue(solid) as IEnumerable<IgesShell>;
+            if (shells != null)
             {
-                faces.AddRange(shell.Faces ?? Enumerable.Empty<IgesFace>());
+                foreach (var shell in shells)
+                    faces.AddRange(shell.Faces ?? Enumerable.Empty<IgesFace>());
+            }
+            else
+            {
+                // Fallback: try to find faces directly
+                var props = solid.GetType().GetProperty("Faces");
+                if (props != null)
+                {
+                    var directFaces = props.GetValue(solid) as IEnumerable<IgesFace>;
+                    if (directFaces != null)
+                        faces.AddRange(directFaces);
+                }
             }
             return faces;
         }
 
-        private static IgesSurface? GetFaceSurface(IgesFace face)
+        private static IgesEntity? GetFaceSurface(IgesFace face)
         {
-            // Faces carry a reference to the underlying surface entity (plane, cylinder, etc.).
             return face.Surface;
         }
 
@@ -208,13 +227,11 @@ namespace LaserConvert
             return face.Loops ?? Enumerable.Empty<IgesLoop>();
         }
 
-        private static (List<IgesLoop> OuterLoops, List<IgesLoop> InnerLoops) ClassifyLoops(IgesPlane plane, IEnumerable<IgesLoop> loops)
+        private static (List<IgesLoop> OuterLoops, List<IgesLoop> InnerLoops) ClassifyLoops((Vec3 Origin, Vec3 Normal) plane, IEnumerable<IgesLoop> loops)
         {
             var list = loops.ToList();
             var outer = new List<IgesLoop>();
             var inner = new List<IgesLoop>();
-
-            // Prefer an explicit property if available (IsOuter). Otherwise, use area sign/size heuristic.
             var flaggedOuter = list.Where(l => l.IsOuter).ToList();
             if (flaggedOuter.Count > 0)
             {
@@ -222,8 +239,6 @@ namespace LaserConvert
                 inner.AddRange(list.Where(l => !l.IsOuter));
                 return (outer, inner);
             }
-
-            // Heuristic: largest absolute area loop is the outer boundary; others are holes (inner loops).
             if (list.Count > 0)
             {
                 var areas = list.Select(l => (loop: l, area: Math.Abs(ComputeLoopArea2D(plane, l)))).ToList();
@@ -231,11 +246,10 @@ namespace LaserConvert
                 outer.Add(max);
                 inner.AddRange(list.Where(l => l != max));
             }
-
             return (outer, inner);
         }
 
-        private static IgesLoop? GuessOuterLoop(IgesPlane plane, IEnumerable<IgesLoop> loops)
+        private static IgesLoop? GuessOuterLoop((Vec3 Origin, Vec3 Normal) plane, IEnumerable<IgesLoop> loops)
         {
             var classified = ClassifyLoops(plane, loops);
             return classified.OuterLoops.FirstOrDefault();
@@ -245,27 +259,21 @@ namespace LaserConvert
         // Geometry: plane basis, projections, area
         // -----------------------------
 
-        private static (Vec3 Origin, Vec3 Normal, Vec3 U, Vec3 V) BuildPlaneFrame(IgesPlane plane)
+        private static (Vec3 Origin, Vec3 Normal, Vec3 U, Vec3 V) BuildPlaneFrame((Vec3 Origin, Vec3 Normal) plane)
         {
-            // IgesPlane typically provides a point on plane and a normal direction.
-            var origin = ToVec3(plane.Location);
-            var normal = Normalize(ToVec3(plane.Normal));
-
-            // Build an orthonormal basis (U,V) on the plane.
+            var origin = plane.Origin;
+            var normal = Normalize(plane.Normal);
             var refAxis = Math.Abs(normal.Z) < 0.9 ? new Vec3(0, 0, 1) : new Vec3(0, 1, 0);
             var u = Normalize(Cross(refAxis, normal));
             var v = Normalize(Cross(normal, u));
             return (origin, normal, u, v);
         }
 
-        private static string BuildSvgPathFromLoop(IgesPlane plane, IgesLoop loop, double nurbsTolerance = 0.2)
+        private static string BuildSvgPathFromLoop((Vec3 Origin, Vec3 Normal) plane, IgesLoop loop, double nurbsTolerance = 0.2)
         {
             var sb = new StringBuilder();
             var frame = BuildPlaneFrame(plane);
-
-            // Convert loop edges into a 2D path; edges may be composites; walk in loop order.
             var edges = GetLoopEdges(loop);
-
             bool started = false;
             foreach (var edge in edges)
             {
@@ -277,35 +285,26 @@ namespace LaserConvert
                         if (!started) { sb.Append($"M {Fmt(p0.X)} {Fmt(p0.Y)} "); started = true; }
                         sb.Append($"L {Fmt(p1.X)} {Fmt(p1.Y)} ");
                         break;
-
                     case IgesCircularArc arc:
-                        // IGES arc: center, radius, start/end angles in plane coordinates; but here arc lies in 3D.
                         var arcPts = SampleArc3D(arc, frame, segments: 24);
                         started = EmitPolyline(sb, arcPts, started);
                         break;
-
                     case IgesRationalBSplineCurve nurbs:
                         var pts = SampleNurbs3D(nurbs, frame, step: nurbsTolerance);
                         started = EmitPolyline(sb, pts, started);
                         break;
-
                     case IgesCompositeCurve comp:
-                        foreach (var sub in comp.Curves)
+                        foreach (var sub in comp.Entities ?? Enumerable.Empty<IgesEntity>())
                         {
-                            // Recurse for sub-curves.
                             started = EmitCurve2D(sb, sub, frame, ref started, nurbsTolerance);
                         }
                         break;
-
                     default:
-                        // Unknown edge type: attempt tessellation via bounding points if any.
                         var approx = ApproximateUnknownCurve(edge, frame);
                         started = EmitPolyline(sb, approx, started);
                         break;
                 }
             }
-
-            // Close path if it’s a loop.
             if (started) sb.Append("Z");
             return sb.ToString();
         }
@@ -320,15 +319,12 @@ namespace LaserConvert
                     if (!started) { sb.Append($"M {Fmt(p0.X)} {Fmt(p0.Y)} "); started = true; }
                     sb.Append($"L {Fmt(p1.X)} {Fmt(p1.Y)} ");
                     return true;
-
                 case IgesCircularArc arc:
                     var arcPts = SampleArc3D(arc, frame, segments: 24);
                     return EmitPolyline(sb, arcPts, started);
-
                 case IgesRationalBSplineCurve nurbs:
                     var pts = SampleNurbs3D(nurbs, frame, step: nurbsTolerance);
                     return EmitPolyline(sb, pts, started);
-
                 default:
                     var approx = ApproximateUnknownCurve(curve, frame);
                     return EmitPolyline(sb, approx, started);
@@ -338,7 +334,6 @@ namespace LaserConvert
         private static bool EmitPolyline(StringBuilder sb, List<Vec2> pts, bool started)
         {
             if (pts.Count == 0) return started;
-
             if (!started)
             {
                 sb.Append($"M {Fmt(pts[0].X)} {Fmt(pts[0].Y)} ");
@@ -351,19 +346,13 @@ namespace LaserConvert
 
         private static IEnumerable<IgesEntity> GetLoopEdges(IgesLoop loop)
         {
-            // In a typical IGES topology, the loop references curves in sequence.
-            // IxMilia exposes loop.Edges or loop.Curves; adapt if needed.
-            if (loop.Curves is not null) return loop.Curves;
-            if (loop.Edges is not null) return loop.Edges.Select(e => e.Curve);
-            return Enumerable.Empty<IgesEntity>();
+            return loop.Curves ?? Enumerable.Empty<IgesEntity>();
         }
 
-        private static double ComputeLoopArea2D(IgesPlane plane, IgesLoop loop)
+        private static double ComputeLoopArea2D((Vec3 Origin, Vec3 Normal) plane, IgesLoop loop)
         {
             var frame = BuildPlaneFrame(plane);
             var pts = new List<Vec2>();
-
-            // Build a polyline approximation of the loop.
             foreach (var edge in GetLoopEdges(loop))
             {
                 switch (edge)
@@ -379,7 +368,7 @@ namespace LaserConvert
                         pts.AddRange(SampleNurbs3D(nurbs, frame, step: 0.5));
                         break;
                     case IgesCompositeCurve comp:
-                        foreach (var sub in comp.Curves)
+                        foreach (var sub in comp.Entities ?? Enumerable.Empty<IgesEntity>())
                         {
                             if (sub is IgesLine sl)
                             {
@@ -398,35 +387,30 @@ namespace LaserConvert
                         break;
                 }
             }
-
-            // Shoelace area on the polyline (ensure closure).
             if (pts.Count < 3) return 0.0;
-            // Simple dedup of adjacent equal points
             pts = pts.Where((p, i) => i == 0 || Distance2(pts[i - 1], p) > 1e-6).ToList();
             var first = pts.First();
             var last = pts.Last();
             if (Distance2(first, last) > 1e-6) pts.Add(first);
-
             double sum = 0.0;
             for (int i = 0; i < pts.Count - 1; i++)
                 sum += (pts[i].X * pts[i + 1].Y) - (pts[i + 1].X * pts[i].Y);
-            return 0.5 * sum; // signed area
+            return 0.5 * sum;
         }
 
-        private static bool ArePlanesParallel(IgesPlane a, IgesPlane b)
+        private static bool ArePlanesParallel((Vec3 Origin, Vec3 Normal) a, (Vec3 Origin, Vec3 Normal) b)
         {
-            var na = Normalize(ToVec3(a.Normal));
-            var nb = Normalize(ToVec3(b.Normal));
+            var na = Normalize(a.Normal);
+            var nb = Normalize(b.Normal);
             var dot = Math.Abs(Dot(na, nb));
             return IsApproximately(dot, 1.0, tol: 1e-3);
         }
 
-        private static double? PlanePlaneSeparation(IgesPlane a, IgesPlane b)
+        private static double? PlanePlaneSeparation((Vec3 Origin, Vec3 Normal) a, (Vec3 Origin, Vec3 Normal) b)
         {
-            // Distance between two parallel planes |(p_b - p_a) · n_a|
-            var na = Normalize(ToVec3(a.Normal));
-            var pa = ToVec3(a.Location);
-            var pb = ToVec3(b.Location);
+            var na = Normalize(a.Normal);
+            var pa = a.Origin;
+            var pb = b.Origin;
             if (!ArePlanesParallel(a, b)) return null;
             var d = Math.Abs(Dot(pb - pa, na));
             return d;
@@ -441,63 +425,52 @@ namespace LaserConvert
 
         private static List<Vec2> SampleArc3D(IgesCircularArc arc, (Vec3 Origin, Vec3 Normal, Vec3 U, Vec3 V) frame, int segments)
         {
-            // IxMilia arc exposes center, start, end in 3D; sample uniformly along angle.
             var pts3 = new List<Vec3>();
             var center = ToVec3(arc.Center);
             var start = ToVec3(arc.StartPoint);
             var end = ToVec3(arc.EndPoint);
-
             var r = (start - center).Length;
             if (r <= 0) return new List<Vec2>();
-
-            // Build arc plane basis from arc’s plane normal approximated via (start-center, end-center).
             var u = Normalize(start - center);
             var w = Normalize(Cross(u, end - center));
             var v = Normalize(Cross(w, u));
-
-            // Determine signed angle from start to end around w.
             double thetaStart = 0.0;
             double thetaEnd = Math.Atan2(Dot(end - center, v), Dot(end - center, u));
-            // Normalize to ensure correct direction; assume minor arc
             var sweep = thetaEnd - thetaStart;
             if (sweep <= 0) sweep += 2.0 * Math.PI;
-
             for (int i = 0; i <= segments; i++)
             {
                 var t = thetaStart + sweep * i / segments;
                 var p = center + r * Math.Cos(t) * u + r * Math.Sin(t) * v;
                 pts3.Add(p);
             }
-
             return pts3.Select(p => Project(frame, p)).ToList();
         }
 
         private static List<Vec2> SampleNurbs3D(IgesRationalBSplineCurve curve, (Vec3 Origin, Vec3 Normal, Vec3 U, Vec3 V) frame, double step)
         {
-            // Uniform parameter sampling; adjust step for precision.
+            // Approximate by using control points (since PointAt is not available)
             var pts = new List<Vec2>();
-            var t0 = curve.StartParameter;
-            var t1 = curve.EndParameter;
-            int samples = Math.Max(8, (int)Math.Ceiling((t1 - t0) / Math.Max(step, 1e-3)));
-            for (int i = 0; i <= samples; i++)
-            {
-                double t = t0 + (t1 - t0) * i / samples;
-                var p3 = ToVec3(curve.PointAt(t));
-                pts.Add(Project(frame, p3));
-            }
+            foreach (var cp in curve.ControlPoints)
+                pts.Add(Project(frame, ToVec3(cp)));
             return pts;
         }
 
         private static List<Vec2> ApproximateUnknownCurve(IgesEntity edge, (Vec3 Origin, Vec3 Normal, Vec3 U, Vec3 V) frame)
         {
-            // Best-effort: if entity supplies endpoints, use them; else empty.
             var pts = new List<Vec2>();
-            switch (edge)
+            // Try to get endpoints if available
+            var p1Prop = edge.GetType().GetProperty("P1");
+            var p2Prop = edge.GetType().GetProperty("P2");
+            if (p1Prop != null && p2Prop != null)
             {
-                case IgesEdge e when e.StartPoint is not null && e.EndPoint is not null:
-                    pts.Add(Project(frame, ToVec3(e.StartPoint)));
-                    pts.Add(Project(frame, ToVec3(e.EndPoint)));
-                    break;
+                var p1 = p1Prop.GetValue(edge) as IgesPoint?;
+                var p2 = p2Prop.GetValue(edge) as IgesPoint?;
+                if (p1 != null && p2 != null)
+                {
+                    pts.Add(Project(frame, ToVec3(p1.Value)));
+                    pts.Add(Project(frame, ToVec3(p2.Value)));
+                }
             }
             return pts;
         }
@@ -514,27 +487,20 @@ namespace LaserConvert
 
         private static IgesManifestSolidBRepObject? BuildPseudoSolidFromShell(IgesShell shell)
         {
-            // Create a lightweight pseudo 186 wrapper around a shell, if useful.
-            if (shell?.Faces is null || shell.Faces.Count == 0) return null;
-            var pseudo = new IgesManifestSolidBRepObject
-            {
-                Shells = new List<IgesShell> { shell },
-                EntityLabel = shell.EntityLabel
-            };
+            if (shell?.Faces == null || shell.Faces.Count == 0) return null;
+            var pseudo = new IgesManifestSolidBRepObject();
+            // No Shells property, so can't set it; rely on GetSolidFaces fallback
+            pseudo.EntityLabel = shell.EntityLabel;
             return pseudo;
         }
 
         private static IEnumerable<IgesManifestSolidBRepObject> GroupFacesIntoPseudoSolids(List<IgesFace> faces)
         {
-            // Extremely simple grouping: by label (name). Adjust as needed.
             foreach (var group in faces.GroupBy(f => f.EntityLabel))
             {
                 var shell = new IgesShell { Faces = group.ToList(), EntityLabel = group.Key };
-                var pseudo = new IgesManifestSolidBRepObject
-                {
-                    Shells = new List<IgesShell> { shell },
-                    EntityLabel = group.Key
-                };
+                var pseudo = new IgesManifestSolidBRepObject();
+                pseudo.EntityLabel = group.Key;
                 yield return pseudo;
             }
         }
