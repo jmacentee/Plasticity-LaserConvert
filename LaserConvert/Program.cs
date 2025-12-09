@@ -117,7 +117,6 @@ namespace LaserConvert
                 
                 if (allEdges.Count == 0)
                 {
-                    System.Console.WriteLine($"[MAIN] No edges found in solid");
                     svg.EndGroup();
                     continue;
                 }
@@ -156,7 +155,6 @@ namespace LaserConvert
                 }
                 
                 var dedupedEdges = uniqueEdges.Values.ToList();
-                System.Console.WriteLine($"[MAIN] Deduplicated to {dedupedEdges.Count} unique edges");
                 
                 // Derive projection plane from the edges
                 var edgePoints = new List<Vec3>();
@@ -172,7 +170,6 @@ namespace LaserConvert
                 // Find 3 non-collinear points for plane
                 if (edgePoints.Count < 3)
                 {
-                    System.Console.WriteLine($"[MAIN] Not enough points for plane");
                     svg.EndGroup();
                     continue;
                 }
@@ -205,7 +202,6 @@ namespace LaserConvert
                 
                 if (!foundP2)
                 {
-                    System.Console.WriteLine($"[MAIN] Could not find non-collinear points");
                     svg.EndGroup();
                     continue;
                 }
@@ -214,8 +210,6 @@ namespace LaserConvert
                 var v2_plane = p2 - p0;
                 var planeNormal = Normalize(Cross(v1_plane, v2_plane));
                 var derivedPlane = (p0, planeNormal);
-                
-                System.Console.WriteLine($"[MAIN] Derived plane: origin=({p0.X:F1},{p0.Y:F1},{p0.Z:F1}), normal=({planeNormal.X:F2},{planeNormal.Y:F2},{planeNormal.Z:F2})");
                 
                 // Project all edges to 2D using derived plane
                 var frame = BuildPlaneFrame(derivedPlane);
@@ -231,8 +225,12 @@ namespace LaserConvert
                         var p0_2d = Project(frame, p0_3d);
                         var p1_2d = Project(frame, p1_3d);
                         
-                        System.Console.WriteLine($"[MAIN] Edge 3D: ({p0_3d.X:F1},{p0_3d.Y:F1},{p0_3d.Z:F1}) → ({p1_3d.X:F1},{p1_3d.Y:F1},{p1_3d.Z:F1})");
-                        System.Console.WriteLine($"[MAIN]   Projected 2D: ({p0_2d.X:F1},{p0_2d.Y:F1}) → ({p1_2d.X:F1},{p1_2d.Y:F1})");
+                        // Skip degenerate edges where start and end project to the same 2D point
+                        double dist2d = Math.Sqrt((p0_2d.X - p1_2d.X) * (p0_2d.X - p1_2d.X) + (p0_2d.Y - p1_2d.Y) * (p0_2d.Y - p1_2d.Y));
+                        if (dist2d < 0.01)
+                        {
+                            continue;
+                        }
                         
                         if (!started) { sb.Append($"M {Fmt(p0_2d.X)} {Fmt(p0_2d.Y)} "); started = true; }
                         sb.Append($"L {Fmt(p1_2d.X)} {Fmt(p1_2d.Y)} ");
