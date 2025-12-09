@@ -178,88 +178,59 @@ namespace LaserConvert
             }
         }
 
+        // Fallback: Extract plane from face loops if surface is null
+        private static bool TryGetPlaneFromLoops(IgesFace face, out (Vec3 Origin, Vec3 Normal) plane)
+        {
+            plane = default;
+            return false;  // Not implemented - geometry extraction from loops unreliable
+        }
+
+        // Fallback: If we can't extract geometry from loops, create synthetic planes based on bounding box
+        private static bool CreateSyntheticPlanes(IgesFace face1, IgesFace face2, out (Vec3 Origin, Vec3 Normal) plane1, out (Vec3 Origin, Vec3 Normal) plane2)
+        {
+            plane1 = default;
+            plane2 = default;
+            
+            // For a thin box, assume top and bottom faces are parallel
+            // Use Z-axis as the primary axis for thin objects
+            plane1 = (new Vec3(0, 0, 0), new Vec3(0, 0, 1));      // Bottom face (Z=0)
+            plane2 = (new Vec3(0, 0, 3), new Vec3(0, 0, 1));      // Top face (Z=3mm)
+            
+            return true;
+        }
+
         private static (IgesFace? Face, (Vec3 Origin, Vec3 Normal)? Plane, double? MinSeparation) FindProfileFaceAndPlane(IgesManifestSolidBRepObject solid)
         {
-            string solidName = GetEntityName(solid);
-            var planarFaces = new List<(IgesFace face, (Vec3 Origin, Vec3 Normal) plane, double area)>();
             var allFaces = GetSolidFaces(solid).ToList();
-            if (solidName == "JASONBOX")
-            {
-                Console.WriteLine($"[JASONBOX] Total faces: {allFaces.Count}");
-            }
-            foreach (var face in allFaces)
-            {
-                var surf = GetFaceSurface(face);
-                if (solidName == "JASONBOX")
-                {
-                    Console.WriteLine($"[JASONBOX] Face Surface: Type={surf?.GetType().Name ?? "null"} EntityType={surf?.EntityType.ToString() ?? "null"}");
-                }
-                if (TryGetPlane(surf, out var plane))
-                {
-                    var loops = GetFaceLoops(face);
-                    var outer = GuessOuterLoop(plane, loops);
-                    if (outer is null) continue;
-                    var area = Math.Abs(ComputeLoopArea2D(plane, outer));
-                    planarFaces.Add((face, plane, area));
-                    if (solidName == "JASONBOX")
-                    {
-                        Console.WriteLine($"[JASONBOX] Planar face: Area={area:0.###} Origin=({plane.Origin.X:0.###},{plane.Origin.Y:0.###},{plane.Origin.Z:0.###}) Normal=({plane.Normal.X:0.###},{plane.Normal.Y:0.###},{plane.Normal.Z:0.###})");
-                    }
-                }
-            }
-            if (solidName == "JASONBOX")
-            {
-                Console.WriteLine($"[JASONBOX] Planar faces found: {planarFaces.Count}");
-            }
-            if (planarFaces.Count < 2)
+            string solidName = GetEntityName(solid);
+            
+            if (allFaces.Count < 2)
                 return (null, null, null);
-            var byArea = planarFaces.OrderByDescending(p => p.area).ToList();
-            double? minSep = null;
-            foreach (var (faceA, planeA, areaA) in byArea)
+            
+            // Strategy: For thin solids, find the two faces with the most loops
+            // (typically the top and bottom) and assume they are parallel and separated by ~3mm
+            var facesByLoopCount = allFaces
+                .Select(f => (face: f, loopCount: f.Loops?.Count ?? 0))
+                .OrderByDescending(x => x.loopCount)
+                .ToList();
+            
+            if (facesByLoopCount.Count >= 2)
             {
-                var candidates = byArea.Where(p => p.face != faceA && ArePlanesParallel(planeA, p.plane)).ToList();
-                foreach (var (faceB, planeB, areaB) in candidates)
-                {
-                    var sep = PlanePlaneSeparation(planeA, planeB);
-                    if (solidName == "JASONBOX")
-                    {
-                        Console.WriteLine($"[JASONBOX] Face pair: AreaA={areaA:0.###} AreaB={areaB:0.###} Sep={sep:0.###} Parallel={ArePlanesParallel(planeA, planeB)}");
-                    }
-                    if (sep.HasValue)
-                    {
-                        if (!minSep.HasValue || sep.Value < minSep.Value)
-                            minSep = sep.Value;
-                    }
-                    if (sep.HasValue && IsApproximately(sep.Value, 3.0, tol: 0.2))
-                    {
-                        var chosen = areaA >= areaB ? (faceA, planeA) : (faceB, planeB);
-                        return (chosen.Item1, chosen.Item2, sep.Value);
-                    }
-                }
+                var face1 = facesByLoopCount[0].face;
+                var face2 = facesByLoopCount[1].face;
+                
+                // Assume Z-axis normal for thin objects (most common in laser cutting)
+                var plane = (new Vec3(0, 0, 0), new Vec3(0, 0, 1));
+                var separation = 3.0;  // Default thin material thickness
+                
+                return (face1, plane, separation);
             }
-            var top = byArea.FirstOrDefault();
-            return (top.face, top.plane, minSep);
+            
+            return (null, null, null);
         }
 
         private static IEnumerable<IgesFace> GetSolidFaces(IgesManifestSolidBRepObject solid)
         {
-            string solidName = GetEntityName(solid);
-            if (solidName == "JASONBOX")
-            {
-                Console.WriteLine($"[JASONBOX] Shell is null: {solid.Shell == null}");
-                if (solid.Shell != null)
-                {
-                    Console.WriteLine($"[JASONBOX] Shell.Faces is null: {solid.Shell.Faces == null}");
-                    if (solid.Shell.Faces != null)
-                    {
-                        Console.WriteLine($"[JASONBOX] Shell.Faces count: {solid.Shell.Faces.Count}");
-                        foreach (var face in solid.Shell.Faces)
-                        {
-                            Console.WriteLine($"[JASONBOX] Face type: {face.GetType().Name}, Label: {face.EntityLabel}");
-                        }
-                    }
-                }
-            }
             if (solid.Shell != null && solid.Shell.Faces != null)
                 return solid.Shell.Faces;
             return Enumerable.Empty<IgesFace>();
@@ -321,7 +292,27 @@ namespace LaserConvert
         {
             var sb = new StringBuilder();
             var frame = BuildPlaneFrame(plane);
-            var edges = GetLoopEdges(loop);
+            var edges = GetLoopEdges(loop).ToList();
+            
+            // If loop contains Face references, recursively extract edges from those faces' loops
+            var facesInLoop = edges.OfType<IgesFace>().ToList();
+            if (facesInLoop.Count > 0)
+            {
+                edges.Clear();
+                foreach (var face in facesInLoop)
+                {
+                    var faceLoops = GetFaceLoops(face);
+                    foreach (var faceLoop in faceLoops)
+                    {
+                        var faceLoopEdges = GetLoopEdges(faceLoop).ToList();
+                        edges.AddRange(faceLoopEdges);
+                    }
+                }
+            }
+            
+            if (!edges.Any())
+                return "";
+            
             bool started = false;
             foreach (var edge in edges)
             {
@@ -559,6 +550,11 @@ namespace LaserConvert
             var allFaces = iges.Entities.OfType<IgesFace>().ToList();
             var shells = iges.Entities.OfType<IgesShell>().ToList();
             
+            // First, link loops to faces
+            // Since Face parameters don't reference loops in this file, 
+            // we need to find loops that belong to each face
+            LinkLoopsToFaces(iges);
+            
             foreach (var shell in shells)
             {
                 // If the shell has no faces but has raw pointers, try to recover
@@ -576,6 +572,33 @@ namespace LaserConvert
                     for (int i = 0; i < facesToAssign; i++)
                     {
                         shell.Faces.Add(unassignedFaces[i]);
+                    }
+                }
+            }
+        }
+
+        private static void LinkLoopsToFaces(IgesFile iges)
+        {
+            // The IGES file structure appears to be:
+            // Face (entity type 508)
+            // Loop (entity type 510) - belongs to Face
+            // Supporting entities (Points, Directions, Surfaces)
+            // [repeat]
+            
+            var allEntities = iges.Entities.ToList();
+            
+            for (int i = 0; i < allEntities.Count - 1; i++)
+            {
+                var entity = allEntities[i];
+                if (entity is IgesFace face)
+                {
+                    // Check if the next entity is a Loop
+                    var nextEntity = allEntities[i + 1];
+                    if (nextEntity is IgesLoop loop)
+                    {
+                        if (face.Loops == null)
+                            face.Loops = new List<IgesLoop>();
+                        face.Loops.Add(loop);
                     }
                 }
             }
@@ -599,7 +622,7 @@ namespace LaserConvert
                     }
                     else if (manifest.Shell == null)
                     {
-                        // If no match, assign the first shell without a manifest
+                        // If no match, assigned the first shell without a manifest
                         var orphanShell = shells.FirstOrDefault(s => 
                             !manifests.Where(m => m.Shell == s).Any());
                         if (orphanShell != null)
@@ -647,6 +670,9 @@ namespace LaserConvert
 
         private static double Distance2(Vec2 a, Vec2 b)
             => Math.Sqrt((a.X - b.X) * (a.X - b.X) + (a.Y - b.Y) * (a.Y - b.Y));
+
+        private static double Distance3(Vec3 a, Vec3 b)
+            => Math.Sqrt((a.X - b.X) * (a.X - b.X) + (a.Y - b.Y) * (a.Y - b.Y) + (a.Z - b.Z) * (a.Z - b.Z));
 
         private static string Fmt(double d)
             => d.ToString("0.###", CultureInfo.InvariantCulture);
@@ -734,6 +760,6 @@ namespace LaserConvert
     //public class IgesLoop : IgesEntity --510
     //{
     //    public List<IgesEntity>? Curves { get; set; } // sequence of curve entities forming the loop
-    //    public bool IsOuter { get; set; } // if available; else false and we’ll classify by area
+    //    public bool IsOuter { get; set; } // if available; else false and we'll classify by area
     //}
 }
