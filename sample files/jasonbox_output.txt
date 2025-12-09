@@ -1,2 +1,1 @@
-[MAIN] Total unique edges after dedup: 2
 Wrote SVG: C:\Users\jdm\OneDrive\Documents\art\glowforge\big box\jasonbox.svg

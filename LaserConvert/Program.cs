@@ -103,61 +103,61 @@ namespace LaserConvert
                 
                 svg.BeginGroup(solidName);
 
-                // Get ALL edges from ALL faces in the solid
+                // Collect ALL edges from ALL faces
                 var allFaces = GetSolidFaces(solid).ToList();
-                var allEdgesMap = new Dictionary<string, IgesEntity>();  // Key: edge geometry, Value: entity
+                var allEdges = new List<IgesEntity>();
                 
                 foreach (var face in allFaces)
                 {
                     if (face is IgesFace igesFace && igesFace.Edges.Count > 0)
                     {
-                        foreach (var edge in igesFace.Edges)
-                        {
-                            // Create unique key based on edge geometry
-                            string key = "";
-                            if (edge is IgesLine line)
-                            {
-                                // Use sorted endpoints as key to catch duplicates
-                                double x1 = line.P1.X, y1 = line.P1.Y, z1 = line.P1.Z;
-                                double x2 = line.P2.X, y2 = line.P2.Y, z2 = line.P2.Z;
-                                
-                                // Sort so same line in reverse order has same key
-                                if (x1 > x2 || (Math.Abs(x1 - x2) < 1e-6 && y1 > y2) || 
-                                    (Math.Abs(x1 - x2) < 1e-6 && Math.Abs(y1 - y2) < 1e-6 && z1 > z2))
-                                {
-                                    key = $"L({x2:F3},{y2:F3},{z2:F3})-({x1:F3},{y1:F3},{z1:F3})";
-                                }
-                                else
-                                {
-                                    key = $"L({x1:F3},{y1:F3},{z1:F3})-({x2:F3},{y2:F3},{z2:F3})";
-                                }
-                                
-                                if (!allEdgesMap.ContainsKey(key))
-                                {
-                                    allEdgesMap[key] = edge;
-                                }
-                            }
-                            else
-                            {
-                                // For other curve types, just add them (no dedup)
-                                allEdgesMap[Guid.NewGuid().ToString()] = edge;
-                            }
-                        }
+                        allEdges.AddRange(igesFace.Edges);
                     }
                 }
                 
-                var allEdges = allEdgesMap.Values.ToList();
-                System.Console.WriteLine($"[MAIN] Total unique edges after dedup: {allEdges.Count}");
-
-                // If we have direct edges, use them; otherwise fall back to loops
-                if (allEdges.Count > 0)
+                // Deduplicate: keep only unique edge geometries
+                var uniqueEdges = new Dictionary<string, IgesEntity>();
+                
+                foreach (var edge in allEdges)
                 {
-                    // Project all edges to 2D
+                    if (edge is IgesLine line)
+                    {
+                        double x1 = line.P1.X, y1 = line.P1.Y, z1 = line.P1.Z;
+                        double x2 = line.P2.X, y2 = line.P2.Y, z2 = line.P2.Z;
+                        
+                        // Normalize so reverse edges have same key
+                        string key;
+                        if (x1 > x2 || (Math.Abs(x1 - x2) < 1e-6 && y1 > y2) || 
+                            (Math.Abs(x1 - x2) < 1e-6 && Math.Abs(y1 - y2) < 1e-6 && z1 > z2))
+                        {
+                            key = $"L({x2:F2},{y2:F2},{z2:F2})-({x1:F2},{y1:F2},{z1:F2})";
+                        }
+                        else
+                        {
+                            key = $"L({x1:F2},{y1:F2},{z1:F2})-({x2:F2},{y2:F2},{z2:F2})";
+                        }
+                        
+                        if (!uniqueEdges.ContainsKey(key))
+                        {
+                            uniqueEdges[key] = edge;
+                        }
+                    }
+                    else
+                    {
+                        uniqueEdges[Guid.NewGuid().ToString()] = edge;
+                    }
+                }
+                
+                var dedupedEdges = uniqueEdges.Values.ToList();
+                
+                // Project edges to 2D and render
+                if (dedupedEdges.Count > 0)
+                {
                     var frame = BuildPlaneFrame(profilePlane.Value);
                     var sb = new StringBuilder();
                     bool started = false;
                     
-                    foreach (var edge in allEdges)
+                    foreach (var edge in dedupedEdges)
                     {
                         switch (edge)
                         {
@@ -182,35 +182,6 @@ namespace LaserConvert
                     {
                         sb.Append("Z");
                         svg.Path(sb.ToString(), strokeWidth: 0.2, fill: "none");
-                    }
-                }
-                else
-                {
-                    // Fallback: use loops
-                    var allLoops = new List<IgesLoop>();
-                    foreach (var face in allFaces)
-                    {
-                        var faceLoops = GetFaceLoops(face);
-                        allLoops.AddRange(faceLoops);
-                    }
-                    
-                    var classified = ClassifyLoops(profilePlane.Value, allLoops);
-
-                    foreach (var loop in classified.OuterLoops)
-                    {
-                        var path = BuildSvgPathFromLoop(profilePlane.Value, loop);
-                        if (path.Length > 0)
-                        {
-                            svg.Path(path, strokeWidth: 0.2, fill: "none");
-                        }
-                    }
-                    foreach (var hole in classified.InnerLoops)
-                    {
-                        var path = BuildSvgPathFromLoop(profilePlane.Value, hole);
-                        if (path.Length > 0)
-                        {
-                            svg.Path(path, strokeWidth: 0.2, fill: "none");
-                        }
                     }
                 }
 
