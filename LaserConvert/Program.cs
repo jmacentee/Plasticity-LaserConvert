@@ -103,61 +103,24 @@ namespace LaserConvert
                 
                 svg.BeginGroup(solidName);
 
-                // Collect ALL edges from ALL faces
-                var allFaces = GetSolidFaces(solid).ToList();
-                var allEdges = new List<IgesEntity>();
+                // Get edges ONLY from the profile face
+                var profileFaceIges = profileFace as IgesFace;
+                var edgesToRender = new List<IgesEntity>();
                 
-                foreach (var face in allFaces)
+                if (profileFaceIges != null && profileFaceIges.Edges.Count > 0)
                 {
-                    if (face is IgesFace igesFace && igesFace.Edges.Count > 0)
-                    {
-                        allEdges.AddRange(igesFace.Edges);
-                    }
+                    System.Console.WriteLine($"[MAIN] Profile face has {profileFaceIges.Edges.Count} edges");
+                    edgesToRender.AddRange(profileFaceIges.Edges);
                 }
-                
-                // Deduplicate: keep only unique edge geometries
-                var uniqueEdges = new Dictionary<string, IgesEntity>();
-                
-                foreach (var edge in allEdges)
-                {
-                    if (edge is IgesLine line)
-                    {
-                        double x1 = line.P1.X, y1 = line.P1.Y, z1 = line.P1.Z;
-                        double x2 = line.P2.X, y2 = line.P2.Y, z2 = line.P2.Z;
-                        
-                        // Normalize so reverse edges have same key
-                        string key;
-                        if (x1 > x2 || (Math.Abs(x1 - x2) < 1e-6 && y1 > y2) || 
-                            (Math.Abs(x1 - x2) < 1e-6 && Math.Abs(y1 - y2) < 1e-6 && z1 > z2))
-                        {
-                            key = $"L({x2:F2},{y2:F2},{z2:F2})-({x1:F2},{y1:F2},{z1:F2})";
-                        }
-                        else
-                        {
-                            key = $"L({x1:F2},{y1:F2},{z1:F2})-({x2:F2},{y2:F2},{z2:F2})";
-                        }
-                        
-                        if (!uniqueEdges.ContainsKey(key))
-                        {
-                            uniqueEdges[key] = edge;
-                        }
-                    }
-                    else
-                    {
-                        uniqueEdges[Guid.NewGuid().ToString()] = edge;
-                    }
-                }
-                
-                var dedupedEdges = uniqueEdges.Values.ToList();
                 
                 // Project edges to 2D and render
-                if (dedupedEdges.Count > 0)
+                if (edgesToRender.Count > 0)
                 {
                     var frame = BuildPlaneFrame(profilePlane.Value);
                     var sb = new StringBuilder();
                     bool started = false;
                     
-                    foreach (var edge in dedupedEdges)
+                    foreach (var edge in edgesToRender)
                     {
                         switch (edge)
                         {
@@ -183,6 +146,10 @@ namespace LaserConvert
                         sb.Append("Z");
                         svg.Path(sb.ToString(), strokeWidth: 0.2, fill: "none");
                     }
+                }
+                else
+                {
+                    System.Console.WriteLine($"[MAIN] Profile face has no edges, fallback to loops");
                 }
 
                 svg.EndGroup();
@@ -266,28 +233,63 @@ namespace LaserConvert
         private static (IgesFace? Face, (Vec3 Origin, Vec3 Normal)? Plane, double? MinSeparation) FindProfileFaceAndPlane(IgesManifestSolidBRepObject solid)
         {
             var allFaces = GetSolidFaces(solid).ToList();
-            string solidName = GetEntityName(solid);
             
             if (allFaces.Count < 2)
                 return (null, null, null);
             
-            // Strategy: For thin solids, find the two faces with the most loops
-            // (typically the top and bottom) and assume they are parallel and separated by ~3mm
-            var facesByLoopCount = allFaces
-                .Select(f => (face: f, loopCount: f.Loops?.Count ?? 0))
-                .OrderByDescending(x => x.loopCount)
-                .ToList();
+            // Strategy: Find two faces that are parallel and ~3mm apart
+            // These are the top/bottom faces; use one as profile
             
-            if (facesByLoopCount.Count >= 2)
+            double bestSeparation = double.MaxValue;
+            IgesFace bestFace1 = null;
+            IgesFace bestFace2 = null;
+            
+            for (int i = 0; i < allFaces.Count; i++)
             {
-                var face1 = facesByLoopCount[0].face;
-                var face2 = facesByLoopCount[1].face;
-                
-                // Assume Z-axis normal for thin objects (most common in laser cutting)
-                var plane = (new Vec3(0, 0, 0), new Vec3(0, 0, 1));
-                var separation = 3.0;  // Default thin material thickness
-                 
-                return (face1, plane, separation);
+                for (int j = i + 1; j < allFaces.Count; j++)
+                {
+                    var face1 = allFaces[i];
+                    var face2 = allFaces[j];
+                    
+                    // Try to extract a plane from each face (from its surface)
+                    if (TryGetPlane(face1.Surface, out var plane1) && TryGetPlane(face2.Surface, out var plane2))
+                    {
+                        // Check if parallel
+                        var n1 = Normalize(plane1.Normal);
+                        var n2 = Normalize(plane2.Normal);
+                        double dot = Math.Abs(Dot(n1, n2));
+                        
+                        if (Math.Abs(dot - 1.0) < 0.01)  // Parallel (within 0.01)
+                        {
+                            // Calculate separation
+                            var v = plane2.Origin - plane1.Origin;
+                            double sep = Math.Abs(Dot(v, n1));
+                            
+                            // Look for ~3mm separation (thin material)
+                            if (sep > 2.5 && sep < 5.0 && sep < bestSeparation)
+                            {
+                                bestSeparation = sep;
+                                bestFace1 = face1 as IgesFace;
+                                bestFace2 = face2 as IgesFace;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            if (bestFace1 != null)
+            {
+                // Use bestFace1's surface plane as the profile
+                if (TryGetPlane(bestFace1.Surface, out var profilePlane))
+                {
+                    return (bestFace1, profilePlane, bestSeparation);
+                }
+            }
+            
+            // Fallback: use first face
+            if (allFaces[0].Surface != null && TryGetPlane(allFaces[0].Surface, out var fallbackPlane))
+            {
+                return (allFaces[0] as IgesFace, fallbackPlane, null);
             }
             
             return (null, null, null);
