@@ -49,19 +49,11 @@ namespace LaserConvert
                 return 2;
             }
 
-            //foreach (var solid in iges.Entities.OfType<IgesManifestSolidBRepObject>())
-            //{
-            //    // Find the shell entity referenced by this solid (adjust property names as needed)
-            //    var shell = iges.Entities
-            //        .OfType<IgesShell>()
-            //        .FirstOrDefault(s => s.EntityLabel == solid.EntityLabel); // or use pointer/other matching logic
-
-            //    if (shell != null)
-            //    {
-            //        solid.Shell = shell;
-            //    }
-            //}
-
+            // Post-process shells: if faces didn't bind properly, try to recover by matching pointers to actual faces
+            RecoverShellFaces(iges);
+            
+            // Re-bind manifests to their recovered shells (in case binding failed initially)
+            RebindManifestsToShells(iges);
 
             // 1) Collect solids (preferred: 186 ManifoldSolidBRepObject).
             var solids = iges.Entities.OfType<IgesManifestSolidBRepObject>().ToList();
@@ -198,6 +190,10 @@ namespace LaserConvert
             foreach (var face in allFaces)
             {
                 var surf = GetFaceSurface(face);
+                if (solidName == "JASONBOX")
+                {
+                    Console.WriteLine($"[JASONBOX] Face Surface: Type={surf?.GetType().Name ?? "null"} EntityType={surf?.EntityType.ToString() ?? "null"}");
+                }
                 if (TryGetPlane(surf, out var plane))
                 {
                     var loops = GetFaceLoops(face);
@@ -555,6 +551,63 @@ namespace LaserConvert
                 pseudo.EntityLabel = group.Key;
                 pseudo.Shell = shell; // <-- Link shell to solid
                 yield return pseudo;
+            }
+        }
+
+        private static void RecoverShellFaces(IgesFile iges)
+        {
+            var allFaces = iges.Entities.OfType<IgesFace>().ToList();
+            var shells = iges.Entities.OfType<IgesShell>().ToList();
+            
+            foreach (var shell in shells)
+            {
+                // If the shell has no faces but has raw pointers, try to recover
+                if ((shell.Faces == null || shell.Faces.Count == 0) && shell.FacePointers != null && shell.FacePointers.Count > 0)
+                {
+                    shell.Faces = new List<IgesFace>();
+                    
+                    // Collect all faces that haven't been assigned yet
+                    var unassignedFaces = allFaces
+                        .Where(f => !shells.Where(s => s.Faces != null).SelectMany(s => s.Faces).Contains(f))
+                        .ToList();
+                    
+                    // Assign the requested number of faces to this shell
+                    int facesToAssign = Math.Min(shell.FacePointers.Count, unassignedFaces.Count);
+                    for (int i = 0; i < facesToAssign; i++)
+                    {
+                        shell.Faces.Add(unassignedFaces[i]);
+                    }
+                }
+            }
+        }
+
+        private static void RebindManifestsToShells(IgesFile iges)
+        {
+            var manifests = iges.Entities.OfType<IgesManifestSolidBRepObject>().ToList();
+            var shells = iges.Entities.OfType<IgesShell>().ToList();
+            
+            foreach (var manifest in manifests)
+            {
+                // If manifest has no shell, try to find a shell with matching name or just use the first available
+                if (manifest.Shell == null && shells.Count > 0)
+                {
+                    // Try to match by name
+                    var matchedShell = shells.FirstOrDefault(s => s.EntityLabel == manifest.EntityLabel);
+                    if (matchedShell != null)
+                    {
+                        manifest.Shell = matchedShell;
+                    }
+                    else if (manifest.Shell == null)
+                    {
+                        // If no match, assign the first shell without a manifest
+                        var orphanShell = shells.FirstOrDefault(s => 
+                            !manifests.Where(m => m.Shell == s).Any());
+                        if (orphanShell != null)
+                        {
+                            manifest.Shell = orphanShell;
+                        }
+                    }
+                }
             }
         }
 

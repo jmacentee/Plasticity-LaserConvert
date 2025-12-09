@@ -5,6 +5,8 @@
     <File Path="sample files/big box v3.svg" />
     <File Path="sample files/big box v3d.svg" />
     <File Path="sample files/big box v3e.svg" />
+    <File Path="sample files/jasonbox only.igs" />
+    <File Path="sample files/jasonbox_output.txt" />
     <File Path="sample files/output.txt" />
   </Folder>
   <Project Path="external/iges/src/IxMilia.Iges/IxMilia.Iges.csproj" />

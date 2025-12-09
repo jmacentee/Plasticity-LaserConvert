@@ -1580,6 +1580,7 @@
 [IGESSHELL] Pointer 67 did not resolve to any entity.
 [IGESSHELL] Label= Bound entity type=null SeqNum=1
 [IGESSHELL] Pointer 1 did not resolve to any entity.
+[IGESMANIFESTSOLID] Pointer 105 did not resolve to any entity.
 [IGESSHELL] Label= Bound entity type=null SeqNum=153
 [IGESSHELL] Pointer 153 did not resolve to any entity.
 [IGESSHELL] Label= Bound entity type=null SeqNum=165
@@ -1588,6 +1589,7 @@
 [IGESSHELL] Pointer 177 did not resolve to any entity.
 [IGESSHELL] Label= Bound entity type=null SeqNum=1
 [IGESSHELL] Pointer 1 did not resolve to any entity.
+[IGESMANIFESTSOLID] Pointer 215 did not resolve to any entity.
 [IGESSHELL] Label= Bound entity type=null SeqNum=263
 [IGESSHELL] Pointer 263 did not resolve to any entity.
 [IGESSHELL] Label= Bound entity type=null SeqNum=1
@@ -1600,6 +1602,7 @@
 [IGESSHELL] Pointer 287 did not resolve to any entity.
 [IGESSHELL] Label= Bound entity type=null SeqNum=1
 [IGESSHELL] Pointer 1 did not resolve to any entity.
+[IGESMANIFESTSOLID] Pointer 325 did not resolve to any entity.
 [IGESSHELL] Label= Bound entity type=null SeqNum=373
 [IGESSHELL] Pointer 373 did not resolve to any entity.
 [IGESSHELL] Label= Bound entity type=null SeqNum=1
@@ -1610,12 +1613,14 @@
 [IGESSHELL] Pointer 397 did not resolve to any entity.
 [IGESSHELL] Label= Bound entity type=null SeqNum=1
 [IGESSHELL] Pointer 1 did not resolve to any entity.
+[IGESMANIFESTSOLID] Pointer 435 did not resolve to any entity.
 [IGESSHELL] Label= Bound entity type=null SeqNum=483
 [IGESSHELL] Pointer 483 did not resolve to any entity.
 [IGESSHELL] Label= Bound entity type=null SeqNum=495
 [IGESSHELL] Pointer 495 did not resolve to any entity.
 [IGESSHELL] Label= Bound entity type=null SeqNum=507
 [IGESSHELL] Pointer 507 did not resolve to any entity.
+[IGESMANIFESTSOLID] Pointer 545 did not resolve to any entity.
 [IGESSHELL] Label= Bound entity type=null SeqNum=589
 [IGESSHELL] Pointer 589 did not resolve to any entity.
 [IGESSHELL] Label= Bound entity type=null SeqNum=1
@@ -1628,6 +1633,7 @@
 [IGESSHELL] Pointer 613 did not resolve to any entity.
 [IGESSHELL] Label= Bound entity type=null SeqNum=1
 [IGESSHELL] Pointer 1 did not resolve to any entity.
+[IGESMANIFESTSOLID] Pointer 651 did not resolve to any entity.
 [IGESSHELL] Label= Bound entity type=null SeqNum=693
 [IGESSHELL] Pointer 693 did not resolve to any entity.
 [IGESSHELL] Label= Bound entity type=null SeqNum=1
@@ -1640,6 +1646,7 @@
 [IGESSHELL] Pointer 717 did not resolve to any entity.
 [IGESSHELL] Label= Bound entity type=null SeqNum=1
 [IGESSHELL] Pointer 1 did not resolve to any entity.
+[IGESMANIFESTSOLID] Pointer 755 did not resolve to any entity.
 [IGESSHELL] Label= Bound entity type=null SeqNum=797
 [IGESSHELL] Pointer 797 did not resolve to any entity.
 [IGESSHELL] Label= Bound entity type=null SeqNum=1
@@ -1652,6 +1659,7 @@
 [IGESSHELL] Pointer 821 did not resolve to any entity.
 [IGESSHELL] Label= Bound entity type=null SeqNum=1
 [IGESSHELL] Pointer 1 did not resolve to any entity.
+[IGESMANIFESTSOLID] Pointer 859 did not resolve to any entity.
 [IGESSHELL] Label= Bound entity type=null SeqNum=901
 [IGESSHELL] Pointer 901 did not resolve to any entity.
 [IGESSHELL] Label= Bound entity type=null SeqNum=1
@@ -1664,6 +1672,7 @@
 [IGESSHELL] Pointer 925 did not resolve to any entity.
 [IGESSHELL] Label= Bound entity type=null SeqNum=1
 [IGESSHELL] Pointer 1 did not resolve to any entity.
+[IGESMANIFESTSOLID] Pointer 963 did not resolve to any entity.
 Skipping solid (no 3 mm face pair found): Extruded
 Skipping solid (no 3 mm face pair found): Extruded
 Skipping solid (no 3 mm face pair found): Extruded
