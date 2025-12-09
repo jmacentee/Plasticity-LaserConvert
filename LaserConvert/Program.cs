@@ -20,10 +20,10 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-
-// Add IxMilia.Iges via NuGet.
 using IxMilia.Iges;
 using IxMilia.Iges.Entities;
+
+// Add IxMilia.Iges via NuGet.
 
 namespace LaserConvert
 {
@@ -140,7 +140,7 @@ namespace LaserConvert
             return name;
         }
 
-        private static (IgesFace? Face, IgesPlane? Plane) FindProfileFaceAndPlane(IgesManifoldSolidBRepObject solid)
+        private static (IgesFace? Face, IgesPlane? Plane) FindProfileFaceAndPlane(IgesManifestSolidBRepObject solid)
         {
             // Enumerate all planar faces; compute area; group by parallel planes; look for pairs ~3 mm apart.
             var planarFaces = new List<(IgesFace face, IgesPlane plane, double area)>();
@@ -186,7 +186,7 @@ namespace LaserConvert
             return (top.face, top.plane);
         }
 
-        private static IEnumerable<IgesFace> GetSolidFaces(IgesManifoldSolidBRepObject solid)
+        private static IEnumerable<IgesFace> GetSolidFaces(IgesManifestSolidBRepObject solid)
         {
             // Typical topology: solid -> shells (514) -> faces (508).
             var faces = new List<IgesFace>();
@@ -512,11 +512,11 @@ namespace LaserConvert
         // Fallback pseudo-solid builders
         // -----------------------------
 
-        private static IgesManifoldSolidBRepObject? BuildPseudoSolidFromShell(IgesShell shell)
+        private static IgesManifestSolidBRepObject? BuildPseudoSolidFromShell(IgesShell shell)
         {
             // Create a lightweight pseudo 186 wrapper around a shell, if useful.
             if (shell?.Faces is null || shell.Faces.Count == 0) return null;
-            var pseudo = new IgesManifoldSolidBRepObject
+            var pseudo = new IgesManifestSolidBRepObject
             {
                 Shells = new List<IgesShell> { shell },
                 EntityLabel = shell.EntityLabel
@@ -524,13 +524,13 @@ namespace LaserConvert
             return pseudo;
         }
 
-        private static IEnumerable<IgesManifoldSolidBRepObject> GroupFacesIntoPseudoSolids(List<IgesFace> faces)
+        private static IEnumerable<IgesManifestSolidBRepObject> GroupFacesIntoPseudoSolids(List<IgesFace> faces)
         {
             // Extremely simple grouping: by label (name). Adjust as needed.
             foreach (var group in faces.GroupBy(f => f.EntityLabel))
             {
                 var shell = new IgesShell { Faces = group.ToList(), EntityLabel = group.Key };
-                var pseudo = new IgesManifoldSolidBRepObject
+                var pseudo = new IgesManifestSolidBRepObject
                 {
                     Shells = new List<IgesShell> { shell },
                     EntityLabel = group.Key
@@ -628,12 +628,12 @@ namespace LaserConvert
         }
     }
 
-    //// -----------------------------
-    //// IxMilia-like topology shims
-    //// (If your exact API differs, adjust names/members below)
-    //// -----------------------------
+    // -----------------------------
+    // IxMilia-like topology shims
+    // (If your exact API differs, adjust names/members below)
+    // -----------------------------
 
-    //// Surfaces
+    // Surfaces
     //public abstract class IgesSurface : IgesEntity { }
     //public class IgesPlane : IgesSurface
     //{
@@ -647,24 +647,19 @@ namespace LaserConvert
     //    public List<IgesEntity> Curves { get; set; } = new();
     //}
 
-    //// Topology
-    //public class IgesManifoldSolidBRepObject : IgesEntity
-    //{
-    //    public List<IgesShell>? Shells { get; set; }
-    //}
-
-    //public class IgesShell : IgesEntity
+    
+    //public class IgesShell : IgesEntity --514
     //{
     //    public List<IgesFace>? Faces { get; set; }
     //}
 
-    //public class IgesFace : IgesEntity
+    //public class IgesFace : IgesEntity --508
     //{
     //    public IgesSurface? Surface { get; set; }
     //    public List<IgesLoop>? Loops { get; set; }
     //}
 
-    //public class IgesLoop : IgesEntity
+    //public class IgesLoop : IgesEntity --510
     //{
     //    public List<IgesEntity>? Curves { get; set; } // sequence of curve entities forming the loop
     //    public bool IsOuter { get; set; } // if available; else false and we’ll classify by area
