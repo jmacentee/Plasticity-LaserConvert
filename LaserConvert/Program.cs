@@ -101,45 +101,116 @@ namespace LaserConvert
                     continue;
                 }
                 
-                System.Console.WriteLine($"[MAIN] Processing solid {solidName} with profile plane");
                 svg.BeginGroup(solidName);
 
-                // Get ALL faces from the solid to find the best projection
+                // Get ALL edges from ALL faces in the solid
                 var allFaces = GetSolidFaces(solid).ToList();
-                System.Console.WriteLine($"[MAIN] Solid has {allFaces.Count} total faces");
+                var allEdgesMap = new Dictionary<string, IgesEntity>();  // Key: edge geometry, Value: entity
                 
-                // Use profileFace as the one to project (it's typically the largest/broadest face)
-                var loops = GetFaceLoops(profileFace);
-                var classified = ClassifyLoops(profilePlane.Value, loops);
-
-                System.Console.WriteLine($"[MAIN] Profile face has {loops.Count()} loops total");
-                System.Console.WriteLine($"[MAIN] Classified: {classified.OuterLoops.Count} outer, {classified.InnerLoops.Count} inner");
-
-                // 4) Project each loop to the plane basis and emit SVG paths.
-                foreach (var loop in classified.OuterLoops)
+                foreach (var face in allFaces)
                 {
-                    var path = BuildSvgPathFromLoop(profilePlane.Value, loop);
-                    if (path.Length > 0)
+                    if (face is IgesFace igesFace && igesFace.Edges.Count > 0)
                     {
-                        System.Console.WriteLine($"[MAIN] Adding outer loop path");
-                        svg.Path(path, strokeWidth: 0.2, fill: "none");
-                    }
-                    else
-                    {
-                        System.Console.WriteLine($"[MAIN] Outer loop produced empty path");
+                        foreach (var edge in igesFace.Edges)
+                        {
+                            // Create unique key based on edge geometry
+                            string key = "";
+                            if (edge is IgesLine line)
+                            {
+                                // Use sorted endpoints as key to catch duplicates
+                                double x1 = line.P1.X, y1 = line.P1.Y, z1 = line.P1.Z;
+                                double x2 = line.P2.X, y2 = line.P2.Y, z2 = line.P2.Z;
+                                
+                                // Sort so same line in reverse order has same key
+                                if (x1 > x2 || (Math.Abs(x1 - x2) < 1e-6 && y1 > y2) || 
+                                    (Math.Abs(x1 - x2) < 1e-6 && Math.Abs(y1 - y2) < 1e-6 && z1 > z2))
+                                {
+                                    key = $"L({x2:F3},{y2:F3},{z2:F3})-({x1:F3},{y1:F3},{z1:F3})";
+                                }
+                                else
+                                {
+                                    key = $"L({x1:F3},{y1:F3},{z1:F3})-({x2:F3},{y2:F3},{z2:F3})";
+                                }
+                                
+                                if (!allEdgesMap.ContainsKey(key))
+                                {
+                                    allEdgesMap[key] = edge;
+                                }
+                            }
+                            else
+                            {
+                                // For other curve types, just add them (no dedup)
+                                allEdgesMap[Guid.NewGuid().ToString()] = edge;
+                            }
+                        }
                     }
                 }
-                foreach (var hole in classified.InnerLoops)
+                
+                var allEdges = allEdgesMap.Values.ToList();
+                System.Console.WriteLine($"[MAIN] Total unique edges after dedup: {allEdges.Count}");
+
+                // If we have direct edges, use them; otherwise fall back to loops
+                if (allEdges.Count > 0)
                 {
-                    var path = BuildSvgPathFromLoop(profilePlane.Value, hole);
-                    if (path.Length > 0)
+                    // Project all edges to 2D
+                    var frame = BuildPlaneFrame(profilePlane.Value);
+                    var sb = new StringBuilder();
+                    bool started = false;
+                    
+                    foreach (var edge in allEdges)
                     {
-                        System.Console.WriteLine($"[MAIN] Adding inner loop path");
-                        svg.Path(path, strokeWidth: 0.2, fill: "none");
+                        switch (edge)
+                        {
+                            case IgesLine line:
+                                var p0 = Project(frame, ToVec3(line.P1));
+                                var p1 = Project(frame, ToVec3(line.P2));
+                                if (!started) { sb.Append($"M {Fmt(p0.X)} {Fmt(p0.Y)} "); started = true; }
+                                sb.Append($"L {Fmt(p1.X)} {Fmt(p1.Y)} ");
+                                break;
+                            case IgesCircularArc arc:
+                                var arcPts = SampleArc3D(arc, frame, segments: 24);
+                                started = EmitPolyline(sb, arcPts, started);
+                                break;
+                            case IgesRationalBSplineCurve nurbs:
+                                var pts = SampleNurbs3D(nurbs, frame, step: 0.2);
+                                started = EmitPolyline(sb, pts, started);
+                                break;
+                        }
                     }
-                    else
+                    
+                    if (started)
                     {
-                        System.Console.WriteLine($"[MAIN] Inner loop produced empty path");
+                        sb.Append("Z");
+                        svg.Path(sb.ToString(), strokeWidth: 0.2, fill: "none");
+                    }
+                }
+                else
+                {
+                    // Fallback: use loops
+                    var allLoops = new List<IgesLoop>();
+                    foreach (var face in allFaces)
+                    {
+                        var faceLoops = GetFaceLoops(face);
+                        allLoops.AddRange(faceLoops);
+                    }
+                    
+                    var classified = ClassifyLoops(profilePlane.Value, allLoops);
+
+                    foreach (var loop in classified.OuterLoops)
+                    {
+                        var path = BuildSvgPathFromLoop(profilePlane.Value, loop);
+                        if (path.Length > 0)
+                        {
+                            svg.Path(path, strokeWidth: 0.2, fill: "none");
+                        }
+                    }
+                    foreach (var hole in classified.InnerLoops)
+                    {
+                        var path = BuildSvgPathFromLoop(profilePlane.Value, hole);
+                        if (path.Length > 0)
+                        {
+                            svg.Path(path, strokeWidth: 0.2, fill: "none");
+                        }
                     }
                 }
 
@@ -244,7 +315,7 @@ namespace LaserConvert
                 // Assume Z-axis normal for thin objects (most common in laser cutting)
                 var plane = (new Vec3(0, 0, 0), new Vec3(0, 0, 1));
                 var separation = 3.0;  // Default thin material thickness
-                
+                 
                 return (face1, plane, separation);
             }
             
@@ -316,13 +387,44 @@ namespace LaserConvert
             var frame = BuildPlaneFrame(plane);
             var edges = GetLoopEdges(loop).ToList();
             
-            System.Console.WriteLine($"[LOOP] Processing loop: {edges.Count} edges");
+            // Deduplicate edges: filter out edges that are identical to previous ones
+            var uniqueEdges = new List<IgesEntity>();
+            foreach (var edge in edges)
+            {
+                bool isDuplicate = false;
+                if (edge is IgesLine line)
+                {
+                    foreach (var prevEdge in uniqueEdges)
+                    {
+                        if (prevEdge is IgesLine prevLine)
+                        {
+                            // Check if same line (both endpoints match)
+                            if (Math.Abs(line.P1.X - prevLine.P1.X) < 1e-6 && 
+                                Math.Abs(line.P1.Y - prevLine.P1.Y) < 1e-6 && 
+                                Math.Abs(line.P1.Z - prevLine.P1.Z) < 1e-6 &&
+                                Math.Abs(line.P2.X - prevLine.P2.X) < 1e-6 && 
+                                Math.Abs(line.P2.Y - prevLine.P2.Y) < 1e-6 && 
+                                Math.Abs(line.P2.Z - prevLine.P2.Z) < 1e-6)
+                            {
+                                isDuplicate = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                
+                if (!isDuplicate)
+                {
+                    uniqueEdges.Add(edge);
+                }
+            }
+            
+            edges = uniqueEdges;
             
             // If loop contains Face references, recursively extract edges from those faces' loops
             var facesInLoop = edges.OfType<IgesFace>().ToList();
             if (facesInLoop.Count > 0)
             {
-                System.Console.WriteLine($"[LOOP] Loop contains {facesInLoop.Count} face references, recursing...");
                 edges.Clear();
                 foreach (var face in facesInLoop)
                 {
@@ -333,20 +435,16 @@ namespace LaserConvert
                         edges.AddRange(faceLoopEdges);
                     }
                 }
-                System.Console.WriteLine($"[LOOP] After recursion: {edges.Count} edges");
             }
             
             if (!edges.Any())
             {
-                System.Console.WriteLine($"[LOOP] No edges found, returning empty path");
                 return "";
             }
             
-            System.Console.WriteLine($"[LOOP] Processing {edges.Count} edges");
             bool started = false;
             foreach (var edge in edges)
             {
-                System.Console.WriteLine($"[LOOP]   Edge type: {edge?.GetType().Name ?? "null"}");
                 switch (edge)
                 {
                     case IgesLine line:
@@ -354,7 +452,6 @@ namespace LaserConvert
                         var p1 = Project(frame, ToVec3(line.P2));
                         if (!started) { sb.Append($"M {Fmt(p0.X)} {Fmt(p0.Y)} "); started = true; }
                         sb.Append($"L {Fmt(p1.X)} {Fmt(p1.Y)} ");
-                        System.Console.WriteLine($"[LOOP]     Line: ({Fmt(p0.X)}, {Fmt(p0.Y)}) -> ({Fmt(p1.X)}, {Fmt(p1.Y)})");
                         break;
                     case IgesCircularArc arc:
                         var arcPts = SampleArc3D(arc, frame, segments: 24);
@@ -371,7 +468,6 @@ namespace LaserConvert
                         }
                         break;
                     default:
-                        System.Console.WriteLine($"[LOOP]     Unknown edge type, skipping");
                         var approx = ApproximateUnknownCurve(edge, frame);
                         started = EmitPolyline(sb, approx, started);
                         break;
@@ -778,7 +874,6 @@ namespace LaserConvert
     //    public List<IgesEntity> Curves { get; set; } = new();
     //}
 
-    
     //public class IgesShell : IgesEntity --514
     //{
     //    public List<IgesFace>? Faces { get; set; }
