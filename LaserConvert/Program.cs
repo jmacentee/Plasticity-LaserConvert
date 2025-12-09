@@ -49,6 +49,20 @@ namespace LaserConvert
                 return 2;
             }
 
+            //foreach (var solid in iges.Entities.OfType<IgesManifestSolidBRepObject>())
+            //{
+            //    // Find the shell entity referenced by this solid (adjust property names as needed)
+            //    var shell = iges.Entities
+            //        .OfType<IgesShell>()
+            //        .FirstOrDefault(s => s.EntityLabel == solid.EntityLabel); // or use pointer/other matching logic
+
+            //    if (shell != null)
+            //    {
+            //        solid.Shell = shell;
+            //    }
+            //}
+
+
             // 1) Collect solids (preferred: 186 ManifoldSolidBRepObject).
             var solids = iges.Entities.OfType<IgesManifestSolidBRepObject>().ToList();
 
@@ -233,26 +247,26 @@ namespace LaserConvert
 
         private static IEnumerable<IgesFace> GetSolidFaces(IgesManifestSolidBRepObject solid)
         {
-            // Try to get faces from a shell property or fallback to associated entities
-            var faces = new List<IgesFace>();
-            var shells = solid.GetType().GetProperty("Shells")?.GetValue(solid) as IEnumerable<IgesShell>;
-            if (shells != null)
+            string solidName = GetEntityName(solid);
+            if (solidName == "JASONBOX")
             {
-                foreach (var shell in shells)
-                    faces.AddRange(shell.Faces ?? Enumerable.Empty<IgesFace>());
-            }
-            else
-            {
-                // Fallback: try to find faces directly
-                var props = solid.GetType().GetProperty("Faces");
-                if (props != null)
+                Console.WriteLine($"[JASONBOX] Shell is null: {solid.Shell == null}");
+                if (solid.Shell != null)
                 {
-                    var directFaces = props.GetValue(solid) as IEnumerable<IgesFace>;
-                    if (directFaces != null)
-                        faces.AddRange(directFaces);
+                    Console.WriteLine($"[JASONBOX] Shell.Faces is null: {solid.Shell.Faces == null}");
+                    if (solid.Shell.Faces != null)
+                    {
+                        Console.WriteLine($"[JASONBOX] Shell.Faces count: {solid.Shell.Faces.Count}");
+                        foreach (var face in solid.Shell.Faces)
+                        {
+                            Console.WriteLine($"[JASONBOX] Face type: {face.GetType().Name}, Label: {face.EntityLabel}");
+                        }
+                    }
                 }
             }
-            return faces;
+            if (solid.Shell != null && solid.Shell.Faces != null)
+                return solid.Shell.Faces;
+            return Enumerable.Empty<IgesFace>();
         }
 
         private static IgesEntity? GetFaceSurface(IgesFace face)
@@ -527,8 +541,8 @@ namespace LaserConvert
         {
             if (shell?.Faces == null || shell.Faces.Count == 0) return null;
             var pseudo = new IgesManifestSolidBRepObject();
-            // No Shells property, so can't set it; rely on GetSolidFaces fallback
             pseudo.EntityLabel = shell.EntityLabel;
+            pseudo.Shell = shell; // <-- This line links the shell to the solid
             return pseudo;
         }
 
@@ -539,6 +553,7 @@ namespace LaserConvert
                 var shell = new IgesShell { Faces = group.ToList(), EntityLabel = group.Key };
                 var pseudo = new IgesManifestSolidBRepObject();
                 pseudo.EntityLabel = group.Key;
+                pseudo.Shell = shell; // <-- Link shell to solid
                 yield return pseudo;
             }
         }
