@@ -103,53 +103,146 @@ namespace LaserConvert
                 
                 svg.BeginGroup(solidName);
 
-                // Get edges ONLY from the profile face
-                var profileFaceIges = profileFace as IgesFace;
-                var edgesToRender = new List<IgesEntity>();
+                // Collect ALL edges from ALL faces in this solid
+                var allFaces = GetSolidFaces(solid).ToList();
+                var allEdges = new List<IgesEntity>();
                 
-                if (profileFaceIges != null && profileFaceIges.Edges.Count > 0)
+                foreach (var face in allFaces)
                 {
-                    System.Console.WriteLine($"[MAIN] Profile face has {profileFaceIges.Edges.Count} edges");
-                    edgesToRender.AddRange(profileFaceIges.Edges);
+                    if (face is IgesFace igesFace && igesFace.Edges.Count > 0)
+                    {
+                        allEdges.AddRange(igesFace.Edges);
+                    }
                 }
                 
-                // Project edges to 2D and render
-                if (edgesToRender.Count > 0)
+                if (allEdges.Count == 0)
                 {
-                    var frame = BuildPlaneFrame(profilePlane.Value);
-                    var sb = new StringBuilder();
-                    bool started = false;
-                    
-                    foreach (var edge in edgesToRender)
+                    System.Console.WriteLine($"[MAIN] No edges found in solid");
+                    svg.EndGroup();
+                    continue;
+                }
+                
+                // Deduplicate edges by geometry
+                var uniqueEdges = new Dictionary<string, IgesEntity>();
+                
+                foreach (var edge in allEdges)
+                {
+                    if (edge is IgesLine line)
                     {
-                        switch (edge)
+                        double x1 = line.P1.X, y1 = line.P1.Y, z1 = line.P1.Z;
+                        double x2 = line.P2.X, y2 = line.P2.Y, z2 = line.P2.Z;
+                        
+                        // Normalize so reverse edges have same key
+                        string key;
+                        if (x1 > x2 || (Math.Abs(x1 - x2) < 1e-6 && y1 > y2) || 
+                            (Math.Abs(x1 - x2) < 1e-6 && Math.Abs(y1 - y2) < 1e-6 && z1 > z2))
                         {
-                            case IgesLine line:
-                                var p0 = Project(frame, ToVec3(line.P1));
-                                var p1 = Project(frame, ToVec3(line.P2));
-                                if (!started) { sb.Append($"M {Fmt(p0.X)} {Fmt(p0.Y)} "); started = true; }
-                                sb.Append($"L {Fmt(p1.X)} {Fmt(p1.Y)} ");
-                                break;
-                            case IgesCircularArc arc:
-                                var arcPts = SampleArc3D(arc, frame, segments: 24);
-                                started = EmitPolyline(sb, arcPts, started);
-                                break;
-                            case IgesRationalBSplineCurve nurbs:
-                                var pts = SampleNurbs3D(nurbs, frame, step: 0.2);
-                                started = EmitPolyline(sb, pts, started);
-                                break;
+                            key = $"L({x2:F1},{y2:F1},{z2:F1})-({x1:F1},{y1:F1},{z1:F1})";
+                        }
+                        else
+                        {
+                            key = $"L({x1:F1},{y1:F1},{z1:F1})-({x2:F1},{y2:F1},{z2:F1})";
+                        }
+                        
+                        if (!uniqueEdges.ContainsKey(key))
+                        {
+                            uniqueEdges[key] = edge;
                         }
                     }
-                    
-                    if (started)
+                    else
                     {
-                        sb.Append("Z");
-                        svg.Path(sb.ToString(), strokeWidth: 0.2, fill: "none");
+                        uniqueEdges[Guid.NewGuid().ToString()] = edge;
                     }
                 }
-                else
+                
+                var dedupedEdges = uniqueEdges.Values.ToList();
+                System.Console.WriteLine($"[MAIN] Deduplicated to {dedupedEdges.Count} unique edges");
+                
+                // Derive projection plane from the edges
+                var edgePoints = new List<Vec3>();
+                foreach (var edge in dedupedEdges)
                 {
-                    System.Console.WriteLine($"[MAIN] Profile face has no edges, fallback to loops");
+                    if (edge is IgesLine line)
+                    {
+                        edgePoints.Add(ToVec3(line.P1));
+                        edgePoints.Add(ToVec3(line.P2));
+                    }
+                }
+                
+                // Find 3 non-collinear points for plane
+                if (edgePoints.Count < 3)
+                {
+                    System.Console.WriteLine($"[MAIN] Not enough points for plane");
+                    svg.EndGroup();
+                    continue;
+                }
+                
+                Vec3 p0 = edgePoints[0];
+                Vec3 p1 = new Vec3(0, 0, 0);
+                Vec3 p2 = new Vec3(0, 0, 0);
+                bool foundP1 = false;
+                bool foundP2 = false;
+                
+                for (int i = 1; i < edgePoints.Count && !foundP2; i++)
+                {
+                    if (!foundP1 && Distance3(edgePoints[i], p0) > 0.1)
+                    {
+                        p1 = edgePoints[i];
+                        foundP1 = true;
+                    }
+                    else if (foundP1)
+                    {
+                        var v1 = p1 - p0;
+                        var v2 = edgePoints[i] - p0;
+                        var cross = Cross(v1, v2);
+                        if (cross.Length > 0.1)
+                        {
+                            p2 = edgePoints[i];
+                            foundP2 = true;
+                        }
+                    }
+                }
+                
+                if (!foundP2)
+                {
+                    System.Console.WriteLine($"[MAIN] Could not find non-collinear points");
+                    svg.EndGroup();
+                    continue;
+                }
+                
+                var v1_plane = p1 - p0;
+                var v2_plane = p2 - p0;
+                var planeNormal = Normalize(Cross(v1_plane, v2_plane));
+                var derivedPlane = (p0, planeNormal);
+                
+                System.Console.WriteLine($"[MAIN] Derived plane: origin=({p0.X:F1},{p0.Y:F1},{p0.Z:F1}), normal=({planeNormal.X:F2},{planeNormal.Y:F2},{planeNormal.Z:F2})");
+                
+                // Project all edges to 2D using derived plane
+                var frame = BuildPlaneFrame(derivedPlane);
+                var sb = new StringBuilder();
+                bool started = false;
+                
+                foreach (var edge in dedupedEdges)
+                {
+                    if (edge is IgesLine line)
+                    {
+                        var p0_3d = ToVec3(line.P1);
+                        var p1_3d = ToVec3(line.P2);
+                        var p0_2d = Project(frame, p0_3d);
+                        var p1_2d = Project(frame, p1_3d);
+                        
+                        System.Console.WriteLine($"[MAIN] Edge 3D: ({p0_3d.X:F1},{p0_3d.Y:F1},{p0_3d.Z:F1}) → ({p1_3d.X:F1},{p1_3d.Y:F1},{p1_3d.Z:F1})");
+                        System.Console.WriteLine($"[MAIN]   Projected 2D: ({p0_2d.X:F1},{p0_2d.Y:F1}) → ({p1_2d.X:F1},{p1_2d.Y:F1})");
+                        
+                        if (!started) { sb.Append($"M {Fmt(p0_2d.X)} {Fmt(p0_2d.Y)} "); started = true; }
+                        sb.Append($"L {Fmt(p1_2d.X)} {Fmt(p1_2d.Y)} ");
+                    }
+                }
+                
+                if (started)
+                {
+                    sb.Append("Z");
+                    svg.Path(sb.ToString(), strokeWidth: 0.2, fill: "none");
                 }
 
                 svg.EndGroup();
@@ -234,65 +327,19 @@ namespace LaserConvert
         {
             var allFaces = GetSolidFaces(solid).ToList();
             
-            if (allFaces.Count < 2)
+            if (allFaces.Count < 1)
                 return (null, null, null);
             
-            // Strategy: Find two faces that are parallel and ~3mm apart
-            // These are the top/bottom faces; use one as profile
+            // Just return the first face - we'll use ALL edges from ALL faces
+            // The profile plane will be derived from those edges
+            var firstFace = allFaces[0] as IgesFace;
+            if (firstFace == null)
+                return (null, null, null);
             
-            double bestSeparation = double.MaxValue;
-            IgesFace bestFace1 = null;
-            IgesFace bestFace2 = null;
-            
-            for (int i = 0; i < allFaces.Count; i++)
-            {
-                for (int j = i + 1; j < allFaces.Count; j++)
-                {
-                    var face1 = allFaces[i];
-                    var face2 = allFaces[j];
-                    
-                    // Try to extract a plane from each face (from its surface)
-                    if (TryGetPlane(face1.Surface, out var plane1) && TryGetPlane(face2.Surface, out var plane2))
-                    {
-                        // Check if parallel
-                        var n1 = Normalize(plane1.Normal);
-                        var n2 = Normalize(plane2.Normal);
-                        double dot = Math.Abs(Dot(n1, n2));
-                        
-                        if (Math.Abs(dot - 1.0) < 0.01)  // Parallel (within 0.01)
-                        {
-                            // Calculate separation
-                            var v = plane2.Origin - plane1.Origin;
-                            double sep = Math.Abs(Dot(v, n1));
-                            
-                            // Look for ~3mm separation (thin material)
-                            if (sep > 2.5 && sep < 5.0 && sep < bestSeparation)
-                            {
-                                bestSeparation = sep;
-                                bestFace1 = face1 as IgesFace;
-                                bestFace2 = face2 as IgesFace;
-                            }
-                        }
-                    }
-                }
-            }
-            
-            if (bestFace1 != null)
-            {
-                // Use bestFace1's surface plane as the profile
-                if (TryGetPlane(bestFace1.Surface, out var profilePlane))
-                {
-                    return (bestFace1, profilePlane, bestSeparation);
-                }
-            }
-            
-            // Fallback: use first face
-            if (allFaces[0].Surface != null && TryGetPlane(allFaces[0].Surface, out var fallbackPlane))
-            {
-                return (allFaces[0] as IgesFace, fallbackPlane, null);
-            }
-            
-            return (null, null, null);
+            // We'll derive the plane from edges later
+            // For now, just return a dummy plane
+            var dummyPlane = (new Vec3(0, 0, 0), new Vec3(0, 0, 1));
+            return (firstFace, dummyPlane, null);
         }
 
         private static IEnumerable<IgesFace> GetSolidFaces(IgesManifestSolidBRepObject solid)
@@ -431,18 +478,8 @@ namespace LaserConvert
                         started = EmitPolyline(sb, arcPts, started);
                         break;
                     case IgesRationalBSplineCurve nurbs:
-                        var pts = SampleNurbs3D(nurbs, frame, step: nurbsTolerance);
+                        var pts = SampleNurbs3D(nurbs, frame, step: 0.2);
                         started = EmitPolyline(sb, pts, started);
-                        break;
-                    case IgesCompositeCurve comp:
-                        foreach (var sub in comp.Entities ?? Enumerable.Empty<IgesEntity>())
-                        {
-                            started = EmitCurve2D(sb, sub, frame, ref started, nurbsTolerance);
-                        }
-                        break;
-                    default:
-                        var approx = ApproximateUnknownCurve(edge, frame);
-                        started = EmitPolyline(sb, approx, started);
                         break;
                 }
             }
