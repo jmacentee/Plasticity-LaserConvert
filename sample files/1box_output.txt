@@ -1,10 +1,9 @@
-[DEBUG] Box1: 6 faces
-[DEBUG]   Face has 0 loops
-[DEBUG]   Face has 0 loops
-[DEBUG]   Face has 0 loops
-[DEBUG]   Face has 0 loops
-[DEBUG]   Face has 0 loops
-[DEBUG]   Face has 0 loops
-No solids with ~3mm thickness found.
-No 186 solids found; attempting face-based fallback.
-Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.svg
+Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.stp
+File loaded. Total items: 152
+[SOLID] No MANIFOLD_SOLID_BREP found. Creating pseudo-solids from 6 faces.
+[SOLID] Created pseudo-solid 'Solid1' with 6 faces
+Found 1 solids
+[TOPO] Processing 6 faces
+[TOPO] Extracted 8 unique vertices
+[FILTER] Solid1: dimensions [155.8, 73.6, 150.0] - FAIL
+No thin solids found.

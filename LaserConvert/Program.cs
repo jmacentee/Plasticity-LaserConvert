@@ -15,7 +15,7 @@ namespace LaserConvert
         {
             if (args.Length < 2)
             {
-                Console.WriteLine("Usage: LaserConvert <input.igs> <output.svg>");
+                Console.WriteLine("Usage: LaserConvert <input.igs|stp> <output.svg>");
                 return 1;
             }
 
@@ -31,7 +31,7 @@ namespace LaserConvert
             if (inputPath.EndsWith(".stp", StringComparison.OrdinalIgnoreCase) ||
                inputPath.EndsWith(".step", StringComparison.OrdinalIgnoreCase))
             {
-                return IgesProcess.Main(inputPath, outputPath);
+                return StepProcess.Main(inputPath, outputPath);
             }
 
             return 0;
