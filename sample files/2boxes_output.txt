@@ -1,7 +1,5 @@
 [DEBUG] Box2: 6 faces
-[DEBUG] Box2: edges [3.0, ..., 170.0] total=13
-[FILTER] Solid 'Box2': Found thin dimension 3.0mm (other edges: 170.0mm)
 [DEBUG] Box1: 6 faces
-[DEBUG] Box1: edges [3.0, ..., 170.0] total=13
-[FILTER] Solid 'Box1': Found thin dimension 3.0mm (other edges: 170.0mm)
+No solids with ~3mm thickness found.
+No 186 solids found; attempting face-based fallback.
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\2boxes.svg

@@ -8,7 +8,7 @@ namespace LaserConvert
 {
     /// <summary>
     /// Helper class for IGES-specific post-processing logic.
-    /// Handles manifest-to-shell binding after IxMilia has loaded all entities.
+    /// Handles manifest-to-shell bindings after IxMilia has loaded all entities.
     /// </summary>
     internal static class IgesHelper
     {
@@ -19,6 +19,12 @@ namespace LaserConvert
         {
             var manifests = iges.Entities.OfType<IgesManifestSolidBRepObject>().ToList();
             var shells = iges.Entities.OfType<IgesShell>().ToList();
+
+            // Resolve shell face pointers using the entity line number map
+            foreach (var shell in shells)
+            {
+                shell.ResolveFacePointers(iges.EntityLineNumberMap);
+            }
 
             // Bind manifests to shells using sequential assignment based on entity load order
             for (int i = 0; i < manifests.Count && i < shells.Count; i++)

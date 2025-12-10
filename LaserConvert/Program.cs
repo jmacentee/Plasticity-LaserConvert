@@ -117,9 +117,15 @@ namespace LaserConvert
 
                 foreach (var face in allFaces)
                 {
-                    if (face is IgesFace igesFace && igesFace.Edges.Count > 0)
+                    if (face is IgesFace igesFace)
                     {
-                        allEdges.AddRange(igesFace.Edges);
+                        // Extract edges from loops (Plasticity exports have edges in loops, not Face.Edges)
+                        var loops = igesFace.Loops ?? new List<IgesLoop>();
+                        foreach (var loop in loops)
+                        {
+                            var curves = loop.Curves ?? new List<IgesEntity>();
+                            allEdges.AddRange(curves);
+                        }
                     }
                 }
 
@@ -287,19 +293,25 @@ namespace LaserConvert
 
             foreach (var face in allFaces)
             {
-                if (face is IgesFace igesFace && igesFace.Edges.Count > 0)
+                if (face is IgesFace igesFace)
                 {
-                    foreach (var edge in igesFace.Edges)
+                    // Extract edges from loops (Plasticity exports have edges in loops, not Face.Edges)
+                    var loops = igesFace.Loops ?? new List<IgesLoop>();
+                    foreach (var loop in loops)
                     {
-                        if (edge is IgesLine line)
+                        var curves = loop.Curves ?? new List<IgesEntity>();
+                        foreach (var curve in curves)
                         {
-                            double len = Math.Sqrt(
-                                (line.P1.X - line.P2.X) * (line.P1.X - line.P2.X) +
-                                (line.P1.Y - line.P2.Y) * (line.P1.Y - line.P2.Y) +
-                                (line.P1.Z - line.P2.Z) * (line.P1.Z - line.P2.Z));
+                            if (curve is IgesLine line)
+                            {
+                                double len = Math.Sqrt(
+                                    (line.P1.X - line.P2.X) * (line.P1.X - line.P2.X) +
+                                    (line.P1.Y - line.P2.Y) * (line.P1.Y - line.P2.Y) +
+                                    (line.P1.Z - line.P2.Z) * (line.P1.Z - line.P2.Z));
 
-                            if (len > 0.1)  // Skip degenerate edges
-                                edgeLengths.Add(len);
+                                if (len > 0.1)  // Skip degenerate edges
+                                    edgeLengths.Add(len);
+                            }
                         }
                     }
                 }
