@@ -1,0 +1,91 @@
+Concatenated results
+ 
+REM File: 1box.svg 
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
+<defs/>
+  <g id="Box1">
+    <path d="M 0 0 L 0 150 L -170 150 L -170 0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+</svg>
+ 
+REM File: 2boxes.svg 
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
+<defs/>
+  <g id="Box2">
+    <path d="M 0 0 L 0 -110.215 L 170 -110.215 L 170 0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g id="Box1">
+    <path d="M 0 0 L 0 150 L -170 150 L -170 0 L -162.889 0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+</svg>
+ 
+REM File: 3boxes.svg 
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
+<defs/>
+  <g id="Box2">
+    <path d="M 0 0 L 0 150 L -170 150 L -170 0 L -77.97 0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+</svg>
+ 
+REM File: 1box_output.txt 
+[POST] Found 6 total faces for 1 shells
+[POST] Shell expects 6 faces
+[POST] Shell assigned 6 faces
+[REBIND] Found 1 manifests and 1 shells
+[REBIND] Shell[0]: 6 faces
+[REBIND] Manifest[0] 'Box1': assigning shell...
+[REBIND]   -> Assigned shell with 6 faces
+[DEBUG] Box1: 6 faces
+[DEBUG] Box1: edges [3.0, ..., 170.0] total=13
+[FILTER] Solid 'Box1': Found thin dimension 3.0mm (other edges: 170.0mm)
+Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.svg
+ 
+REM File: 2boxes_output.txt 
+[POST] Found 12 total faces for 2 shells
+[POST] Shell expects 6 faces
+[POST] Shell assigned 6 faces
+[POST] Shell expects 6 faces
+[POST] Shell assigned 6 faces
+[REBIND] Found 2 manifests and 2 shells
+[REBIND] Shell[0]: 6 faces
+[REBIND] Shell[1]: 6 faces
+[REBIND] Manifest[0] 'Box2': assigning shell...
+[REBIND]   -> Assigned shell with 6 faces
+[REBIND] Manifest[1] 'Box1': assigning shell...
+[REBIND]   -> Assigned shell with 6 faces
+[DEBUG] Box2: 6 faces
+[DEBUG] Box2: edges [3.0, ..., 170.0] total=13
+[FILTER] Solid 'Box2': Found thin dimension 3.0mm (other edges: 170.0mm)
+[DEBUG] Box1: 6 faces
+[DEBUG] Box1: edges [3.0, ..., 170.0] total=13
+[FILTER] Solid 'Box1': Found thin dimension 3.0mm (other edges: 170.0mm)
+Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\2boxes.svg
+ 
+REM File: 3boxes_output.txt 
+[POST] Found 18 total faces for 3 shells
+[POST] Shell expects 6 faces
+[POST] Shell assigned 6 faces
+[POST] Shell expects 6 faces
+[POST] Shell assigned 6 faces
+[POST] Shell expects 6 faces
+[POST] Shell assigned 6 faces
+[REBIND] Found 3 manifests and 3 shells
+[REBIND] Shell[0]: 6 faces
+[REBIND] Shell[1]: 6 faces
+[REBIND] Shell[2]: 6 faces
+[REBIND] Manifest[0] 'Box3': assigning shell...
+[REBIND]   -> Assigned shell with 6 faces
+[REBIND] Manifest[1] 'Box2': assigning shell...
+[REBIND]   -> Assigned shell with 6 faces
+[REBIND] Manifest[2] 'Box1': assigning shell...
+[REBIND]   -> Assigned shell with 6 faces
+[DEBUG] Box3: 6 faces
+[DEBUG] Box3: edges [150.0, ..., 170.0] total=10
+[FILTER] Solid 'Box3': Skipped (min edge 150.0mm is outside 2.5-5mm range)
+[DEBUG] Box2: 6 faces
+[DEBUG] Box2: edges [3.0, ..., 170.0] total=13
+[FILTER] Solid 'Box2': Found thin dimension 3.0mm (other edges: 170.0mm)
+[DEBUG] Box1: 6 faces
+[DEBUG] Box1: edges [170.0, ..., 170.0] total=1
+[FILTER] Solid 'Box1': Skipped (min edge 170.0mm is outside 2.5-5mm range)
+Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxes.svg

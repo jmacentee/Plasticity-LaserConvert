@@ -10,6 +10,7 @@
     <File Path="sample files/3boxes.igs" />
     <File Path="sample files/3boxes.svg" />
     <File Path="sample files/3boxes_output.txt" />
+    <File Path="sample files/all_results.txt" />
     <File Path="sample files/testrun.bat" />
   </Folder>
   <Project Path="external/iges/src/IxMilia.Iges/IxMilia.Iges.csproj" />

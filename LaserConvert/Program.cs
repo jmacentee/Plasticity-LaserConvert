@@ -49,9 +49,8 @@ namespace LaserConvert
                 return 2;
             }
 
-            // Post-process shells: if faces didn't bind properly, try to recover by matching pointers to actual faces
-            // DISABLED: This sequential assignment breaks the mapping!
-            // RecoverShellFaces(iges);
+            // Post-process shells: resolve face pointers now that all entities are loaded
+            PostProcessShellFacePointers(iges);
 
             // Re-bind manifests to their shells using entity pointers
             RebindManifestsToShells(iges);
@@ -318,9 +317,9 @@ namespace LaserConvert
             double maxEdge = edgeLengths[edgeLengths.Count - 1];
 
             bool hasThinDimension = minEdge >= minThickness && minEdge <= maxThickness;
-            
+
             Console.WriteLine($"[DEBUG] {solidName}: edges [{minEdge:F1}, ..., {maxEdge:F1}] total={edgeLengths.Count}");
-            
+
             if (hasThinDimension)
             {
                 Console.WriteLine($"[FILTER] Solid '{solidName}': Found thin dimension {minEdge:F1}mm (other edges: {maxEdge:F1}mm)");
@@ -329,7 +328,7 @@ namespace LaserConvert
             {
                 Console.WriteLine($"[FILTER] Solid '{solidName}': Skipped (min edge {minEdge:F1}mm is outside {minThickness}-{maxThickness}mm range)");
             }
-            
+
             return hasThinDimension;
         }
 
@@ -770,7 +769,7 @@ namespace LaserConvert
             foreach (var shell in shells)
             {
                 Console.WriteLine($"[RECOVER] Processing shell {GetEntityName(shell)}: FacePointers={shell.FacePointers?.Count ?? 0}, Faces={shell.Faces?.Count ?? 0}");
-                
+
                 // If the shell has no faces but has raw pointers, try to recover
                 if ((shell.Faces == null || shell.Faces.Count == 0) && shell.FacePointers != null && shell.FacePointers.Count > 0)
                 {
@@ -820,29 +819,70 @@ namespace LaserConvert
             }
         }
 
+        private static void PostProcessShellFacePointers(IgesFile iges)
+        {
+            // The FacePointers are IGES directory entry numbers (1-based)
+            // but IxMilia only loads recognized entity types.
+            // Strategy: Since we don't have access to directory mapping,
+            // we'll collect all IgesFace entities in load order
+            // and distribute them to shells based on the count each shell expects
+            
+            var shells = iges.Entities.OfType<IgesShell>().ToList();
+            var allFaces = iges.Entities.OfType<IgesFace>().ToList();
+            
+            Console.WriteLine($"[POST] Found {allFaces.Count} total faces for {shells.Count} shells");
+            
+            var usedFaces = new HashSet<IgesFace>();
+            
+            foreach (var shell in shells)
+            {
+                if (shell.FacePointers == null || shell.FacePointers.Count == 0)
+                {
+                    Console.WriteLine($"[POST] Shell has no FacePointers");
+                    continue;
+                }
+                
+                int expectedCount = shell.FacePointers.Count;
+                Console.WriteLine($"[POST] Shell expects {expectedCount} faces");
+                
+                // Collect the next batch of unused faces
+                shell.Faces = allFaces
+                    .Where(f => !usedFaces.Contains(f))
+                    .Take(expectedCount)
+                    .ToList();
+                
+                foreach (var face in shell.Faces)
+                {
+                    usedFaces.Add(face);
+                }
+                
+                Console.WriteLine($"[POST] Shell assigned {shell.Faces.Count} faces");
+            }
+        }
+
         private static void RebindManifestsToShells(IgesFile iges)
         {
             var manifests = iges.Entities.OfType<IgesManifestSolidBRepObject>().ToList();
             var shells = iges.Entities.OfType<IgesShell>().ToList();
 
             Console.WriteLine($"[REBIND] Found {manifests.Count} manifests and {shells.Count} shells");
-            
+
             // Debug: show which shells have faces
             for (int shellIdx = 0; shellIdx < shells.Count; shellIdx++)
             {
                 Console.WriteLine($"[REBIND] Shell[{shellIdx}]: {shells[shellIdx].Faces?.Count ?? 0} faces");
             }
-            
+
             // Match manifests to shells: each manifest gets assigned to a shell with faces
             var usedShells = new HashSet<IgesShell>();
-            
+
             for (int i = 0; i < manifests.Count; i++)
             {
                 var manifest = manifests[i];
                 var manifestName = GetEntityName(manifest);
-                
+
                 Console.WriteLine($"[REBIND] Manifest[{i}] '{manifestName}': assigning shell...");
-                
+
                 // Find a shell that has faces and hasn't been used yet
                 foreach (var shell in shells)
                 {
@@ -866,10 +906,10 @@ namespace LaserConvert
         private static (Vec3 Center, Vec3 Min, Vec3 Max) GetLoopBounds(IgesLoop? loop)
         {
             var points = new List<Vec3>();
-            
-            if (loop?.Curves == null) 
+
+            if (loop?.Curves == null)
                 return (new Vec3(0, 0, 0), new Vec3(0, 0, 0), new Vec3(0, 0, 0));
-            
+
             foreach (var curve in loop.Curves)
             {
                 if (curve is IgesLine line)
@@ -878,21 +918,21 @@ namespace LaserConvert
                     points.Add(ToVec3(line.P2));
                 }
             }
-            
+
             if (points.Count == 0)
                 return (new Vec3(0, 0, 0), new Vec3(0, 0, 0), new Vec3(0, 0, 0));
-            
+
             var minX = points.Min(p => p.X);
             var maxX = points.Max(p => p.X);
             var minY = points.Min(p => p.Y);
             var maxY = points.Max(p => p.Y);
             var minZ = points.Min(p => p.Z);
             var maxZ = points.Max(p => p.Z);
-            
+
             var min = new Vec3(minX, minY, minZ);
             var max = new Vec3(maxX, maxY, maxZ);
             var center = new Vec3((minX + maxX) / 2, (minY + maxY) / 2, (minZ + maxZ) / 2);
-            
+
             return (center, min, max);
         }
 

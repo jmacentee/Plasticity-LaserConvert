@@ -1,3 +1,6 @@
+[POST] Found 6 total faces for 1 shells
+[POST] Shell expects 6 faces
+[POST] Shell assigned 6 faces
 [REBIND] Found 1 manifests and 1 shells
 [REBIND] Shell[0]: 6 faces
 [REBIND] Manifest[0] 'Box1': assigning shell...
