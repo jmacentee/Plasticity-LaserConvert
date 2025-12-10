@@ -1,12 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
-  <g id="Box3">
-    <path d="M 0 0 L 0 167 L -170 0 L -170 0 L -170 167 L 0 0 L -170 167 L 0 0 L 0 167 L -170 110.215 L 0 110.215 L 0 0 L -170 0 L 0 110.215 L -170 110.215 L 0 0 L -161.639 35.293 L -7.111 -35.566 L -7.111 -35.566 L -161.639 35.293 L -8.361 -38.293 L -161.639 35.293 L -7.111 -35.566 L -162.889 32.566 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  <g id="ManifestSolidBRepObject">
   </g>
-  <g id="Box2">
-    <path d="M 0 0 L -170 0 L -0 -0 L -0 -110.215 L -170 -110.215 L 0 0 L -170 -0 L -170 -110.215 L 0 -110.215 L -161.639 -74.922 L -7.111 -145.782 L -7.111 -145.782 L -161.639 -74.922 L -8.361 -148.509 L -161.639 -74.922 L -7.111 -145.782 L -162.889 -77.649 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  <g id="ManifestSolidBRepObject">
   </g>
-  <g id="Box1">
-    <path d="M 0 0 L 170 -0 L 0 -0 L 0 150 L 170 150 L -0 0 L 170 0 L 170 150 L -0 150 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  <g id="ManifestSolidBRepObject">
   </g>
 </svg>

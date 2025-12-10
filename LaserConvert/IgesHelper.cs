@@ -34,9 +34,9 @@ namespace LaserConvert
         }
 
         /// <summary>
-        /// Resolve Face.Loops by matching loop pointers to Loop entities.
-        /// Also resolve Loop.Curves by matching curves by directory proximity.
-        /// This post-processes the deferred bindings that were registered during entity.ReadParameters().
+        /// Resolve Face.Loops by matching stored loop pointers to Loop entities.
+        /// Resolve Loop.Curves by matching stored edge pointers to Curve entities.
+        /// This properly resolves entity pointers that were read from the IGES file.
         /// </summary>
         public static void ResolveFaceLoops(IgesFile iges)
         {
@@ -45,61 +45,54 @@ namespace LaserConvert
             var allCurves = iges.Entities.OfType<IgesEntity>().Where(e => 
                 e is IgesLine || e is IgesCircularArc || e is IgesRationalBSplineCurve || e is IgesCompositeCurve).ToList();
 
-            // Build a reverse map from entity to directory line number
-            var entityToLineNum = new Dictionary<IgesEntity, int>();
-            foreach (var kvp in iges.EntityLineNumberMap)
+            // Build maps from directory line number to entity
+            var lineToEntity = iges.EntityLineNumberMap;
+            var entityToLine = new Dictionary<IgesEntity, int>();
+            foreach (var kvp in lineToEntity)
             {
-                entityToLineNum[kvp.Value] = kvp.Key;
+                entityToLine[kvp.Value] = kvp.Key;
             }
 
-            // Step 1: Match Faces to Loops by directory proximity
+            // Step 1: Resolve Face loop pointers to actual Loop entities
             foreach (var face in allFaces)
             {
                 if (face.Loops == null)
                     face.Loops = new List<IgesLoop>();
 
-                if (entityToLineNum.TryGetValue(face, out int faceLineNum))
+                // Face stores loop pointers - resolve them using the -2 offset (IGES pointer format)
+                foreach (var loopPointer in face._loopPointers ?? new List<int>())
                 {
-                    // Look for loops that come right after this face (within 10 lines)
-                    foreach (var loop in allLoops)
+                    if (loopPointer <= 0)
+                        continue;
+
+                    int directoryLine = loopPointer - 2;
+                    if (lineToEntity.TryGetValue(directoryLine, out var entity) && entity is IgesLoop loop)
                     {
-                        if (entityToLineNum.TryGetValue(loop, out int loopLineNum))
-                        {
-                            if (loopLineNum > faceLineNum && loopLineNum <= faceLineNum + 10)
-                            {
-                                if (!face.Loops.Contains(loop))
-                                    face.Loops.Add(loop);
-                            }
-                        }
+                        if (!face.Loops.Contains(loop))
+                            face.Loops.Add(loop);
                     }
                 }
             }
 
-            // Step 2: Match Loops to Curves by directory proximity
-            // Curves come after loops in the IGES structure
+            // Step 2: Resolve Loop edge pointers to actual Curve entities
             foreach (var loop in allLoops)
             {
                 if (loop.Curves == null)
                     loop.Curves = new List<IgesEntity>();
 
-                if (entityToLineNum.TryGetValue(loop, out int loopLineNum))
+                // Loop stores edge pointers - resolve them using the -2 offset (IGES pointer format)
+                foreach (var edgePointer in loop.EdgePointers)
                 {
-                    // Look for curves that come shortly after this loop
-                    // Expand range significantly since supporting entities can appear between
-                    int searchStart = loopLineNum + 1;
-                    int searchEnd = Math.Min(loopLineNum + 500, iges.EntityLineNumberMap.Keys.Max() + 1);
-                    
-                    foreach (var curve in allCurves)
+                    if (edgePointer <= 0)
+                        continue;
+
+                    int directoryLine = edgePointer - 2;
+                    if (lineToEntity.TryGetValue(directoryLine, out var entity))
                     {
-                        if (entityToLineNum.TryGetValue(curve, out int curveLineNum))
+                        if ((entity is IgesLine || entity is IgesCircularArc || entity is IgesRationalBSplineCurve || entity is IgesCompositeCurve) &&
+                            !loop.Curves.Contains(entity))
                         {
-                            // Curves should come after the loop (or rarely, before if reordered)
-                            if ((curveLineNum > loopLineNum && curveLineNum <= searchEnd) ||
-                                (curveLineNum < loopLineNum && loopLineNum - curveLineNum <= 50))
-                            {
-                                if (!loop.Curves.Contains(curve))
-                                    loop.Curves.Add(curve);
-                            }
+                            loop.Curves.Add(entity);
                         }
                     }
                 }

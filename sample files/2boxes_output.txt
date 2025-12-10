@@ -1,31 +1,17 @@
 [DEBUG] Box2: 6 faces
-[DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 24 curves
-[DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 24 curves
-[DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 19 curves
-[DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 13 curves
-[DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 12 curves
-[DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 12 curves
-[DEBUG] Box2: edges [3.0, ..., 170.0] total=104
-[FILTER] Solid 'Box2': Found thin dimension 3.0mm (other edges: 170.0mm)
+[DEBUG]   Face has 0 loops
+[DEBUG]   Face has 0 loops
+[DEBUG]   Face has 0 loops
+[DEBUG]   Face has 0 loops
+[DEBUG]   Face has 0 loops
+[DEBUG]   Face has 0 loops
 [DEBUG] Box1: 6 faces
-[DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 12 curves
-[DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 12 curves
-[DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 7 curves
-[DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 1 curves
-[DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 0 curves
-[DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 0 curves
-[DEBUG] Box1: edges [3.0, ..., 170.0] total=32
-[FILTER] Solid 'Box1': Found thin dimension 3.0mm (other edges: 170.0mm)
+[DEBUG]   Face has 0 loops
+[DEBUG]   Face has 0 loops
+[DEBUG]   Face has 0 loops
+[DEBUG]   Face has 0 loops
+[DEBUG]   Face has 0 loops
+[DEBUG]   Face has 0 loops
+No solids with ~3mm thickness found.
+No 186 solids found; attempting face-based fallback.
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\2boxes.svg
