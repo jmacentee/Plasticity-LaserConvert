@@ -49,11 +49,8 @@ namespace LaserConvert
                 return 2;
             }
 
-            // Post-process shells: resolve face pointers now that all entities are loaded
-            PostProcessShellFacePointers(iges);
-
-            // Re-bind manifests to their shells using entity pointers
-            RebindManifestsToShells(iges);
+            // Post-process and resolve IGES manifest-to-shell bindings
+            IgesHelper.ResolveManifestShellBindings(iges);
 
             // 1) Collect solids (preferred: 186 ManifoldSolidBRepObject).
             var solids = iges.Entities.OfType<IgesManifestSolidBRepObject>().ToList();
@@ -814,84 +811,6 @@ namespace LaserConvert
                         if (face.Loops == null)
                             face.Loops = new List<IgesLoop>();
                         face.Loops.Add(loop);
-                    }
-                }
-            }
-        }
-
-        private static void PostProcessShellFacePointers(IgesFile iges)
-        {
-            // The FacePointers are IGES directory entry numbers (1-based)
-            // but IxMilia only loads recognized entity types.
-            // Strategy: Since we don't have access to directory mapping,
-            // we'll collect all IgesFace entities in load order
-            // and distribute them to shells based on the count each shell expects
-            
-            var shells = iges.Entities.OfType<IgesShell>().ToList();
-            var allFaces = iges.Entities.OfType<IgesFace>().ToList();
-            
-            Console.WriteLine($"[POST] Found {allFaces.Count} total faces for {shells.Count} shells");
-            
-            var usedFaces = new HashSet<IgesFace>();
-            
-            foreach (var shell in shells)
-            {
-                if (shell.FacePointers == null || shell.FacePointers.Count == 0)
-                {
-                    Console.WriteLine($"[POST] Shell has no FacePointers");
-                    continue;
-                }
-                
-                int expectedCount = shell.FacePointers.Count;
-                Console.WriteLine($"[POST] Shell expects {expectedCount} faces");
-                
-                // Collect the next batch of unused faces
-                shell.Faces = allFaces
-                    .Where(f => !usedFaces.Contains(f))
-                    .Take(expectedCount)
-                    .ToList();
-                
-                foreach (var face in shell.Faces)
-                {
-                    usedFaces.Add(face);
-                }
-                
-                Console.WriteLine($"[POST] Shell assigned {shell.Faces.Count} faces");
-            }
-        }
-
-        private static void RebindManifestsToShells(IgesFile iges)
-        {
-            var manifests = iges.Entities.OfType<IgesManifestSolidBRepObject>().ToList();
-            var shells = iges.Entities.OfType<IgesShell>().ToList();
-
-            Console.WriteLine($"[REBIND] Found {manifests.Count} manifests and {shells.Count} shells");
-
-            // Debug: show which shells have faces
-            for (int shellIdx = 0; shellIdx < shells.Count; shellIdx++)
-            {
-                Console.WriteLine($"[REBIND] Shell[{shellIdx}]: {shells[shellIdx].Faces?.Count ?? 0} faces");
-            }
-
-            // Match manifests to shells: each manifest gets assigned to a shell with faces
-            var usedShells = new HashSet<IgesShell>();
-
-            for (int i = 0; i < manifests.Count; i++)
-            {
-                var manifest = manifests[i];
-                var manifestName = GetEntityName(manifest);
-
-                Console.WriteLine($"[REBIND] Manifest[{i}] '{manifestName}': assigning shell...");
-
-                // Find a shell that has faces and hasn't been used yet
-                foreach (var shell in shells)
-                {
-                    if (!usedShells.Contains(shell) && shell.Faces != null && shell.Faces.Count > 0)
-                    {
-                        manifest.Shell = shell;
-                        usedShells.Add(shell);
-                        Console.WriteLine($"[REBIND]   -> Assigned shell with {shell.Faces.Count} faces");
-                        break;
                     }
                 }
             }

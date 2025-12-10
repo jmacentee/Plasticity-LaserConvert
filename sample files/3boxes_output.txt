@@ -1,20 +1,27 @@
-[POST] Found 18 total faces for 3 shells
-[POST] Shell expects 6 faces
-[POST] Shell assigned 6 faces
-[POST] Shell expects 6 faces
-[POST] Shell assigned 6 faces
-[POST] Shell expects 6 faces
-[POST] Shell assigned 6 faces
-[REBIND] Found 3 manifests and 3 shells
-[REBIND] Shell[0]: 6 faces
-[REBIND] Shell[1]: 6 faces
-[REBIND] Shell[2]: 6 faces
-[REBIND] Manifest[0] 'Box3': assigning shell...
-[REBIND]   -> Assigned shell with 6 faces
-[REBIND] Manifest[1] 'Box2': assigning shell...
-[REBIND]   -> Assigned shell with 6 faces
-[REBIND] Manifest[2] 'Box1': assigning shell...
-[REBIND]   -> Assigned shell with 6 faces
+[IGES] Resolving bindings: 3 manifests, 3 shells, 18 faces
+[IGES] Manifests in load order:
+[IGES]   [0] 'Box3'
+[IGES]   [1] 'Box2'
+[IGES]   [2] 'Box1'
+[IGES] Shells in load order:
+[IGES]   [0] Shell (will have 6 faces)
+[IGES]   [1] Shell (will have 6 faces)
+[IGES]   [2] Shell (will have 6 faces)
+[IGES] Populating 3 shells with 18 total faces
+[IGES]   Shell expects 6 faces, FacePointers: 41, 53, 65, 77, 89, 101
+[IGES]   Shell assigned 6 faces
+[IGES]   Shell expects 6 faces, FacePointers: 145, 157, 169, 181, 193, 205
+[IGES]   Shell assigned 6 faces
+[IGES]   Shell expects 6 faces, FacePointers: 249, 261, 273, 285, 297, 309
+[IGES]   Shell assigned 6 faces
+[IGES] Binding 3 manifests to shells
+[IGES]   Manifest[0] 'Box3' ? Shell[0] (6 faces)
+[IGES]   Manifest[1] 'Box2' ? Shell[1] (6 faces)
+[IGES]   Manifest[2] 'Box1' ? Shell[2] (6 faces)
+[IGES] Final binding state:
+[IGES]   Manifest[0] 'Box3' ? Shell[0] (6 faces)
+[IGES]   Manifest[1] 'Box2' ? Shell[1] (6 faces)
+[IGES]   Manifest[2] 'Box1' ? Shell[2] (6 faces)
 [DEBUG] Box3: 6 faces
 [DEBUG] Box3: edges [150.0, ..., 170.0] total=10
 [FILTER] Solid 'Box3': Skipped (min edge 150.0mm is outside 2.5-5mm range)

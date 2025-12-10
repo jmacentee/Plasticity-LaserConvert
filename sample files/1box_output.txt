@@ -1,10 +1,15 @@
-[POST] Found 6 total faces for 1 shells
-[POST] Shell expects 6 faces
-[POST] Shell assigned 6 faces
-[REBIND] Found 1 manifests and 1 shells
-[REBIND] Shell[0]: 6 faces
-[REBIND] Manifest[0] 'Box1': assigning shell...
-[REBIND]   -> Assigned shell with 6 faces
+[IGES] Resolving bindings: 1 manifests, 1 shells, 6 faces
+[IGES] Manifests in load order:
+[IGES]   [0] 'Box1'
+[IGES] Shells in load order:
+[IGES]   [0] Shell (will have 6 faces)
+[IGES] Populating 1 shells with 6 total faces
+[IGES]   Shell expects 6 faces, FacePointers: 39, 51, 63, 75, 87, 99
+[IGES]   Shell assigned 6 faces
+[IGES] Binding 1 manifests to shells
+[IGES]   Manifest[0] 'Box1' ? Shell[0] (6 faces)
+[IGES] Final binding state:
+[IGES]   Manifest[0] 'Box1' ? Shell[0] (6 faces)
 [DEBUG] Box1: 6 faces
 [DEBUG] Box1: edges [3.0, ..., 170.0] total=13
 [FILTER] Solid 'Box1': Found thin dimension 3.0mm (other edges: 170.0mm)
