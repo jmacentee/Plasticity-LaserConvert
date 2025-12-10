@@ -51,12 +51,23 @@ namespace LaserConvert
 
             // Post-process shells: if faces didn't bind properly, try to recover by matching pointers to actual faces
             RecoverShellFaces(iges);
-            
+
             // Re-bind manifests to their recovered shells (in case binding failed initially)
             RebindManifestsToShells(iges);
 
             // 1) Collect solids (preferred: 186 ManifoldSolidBRepObject).
             var solids = iges.Entities.OfType<IgesManifestSolidBRepObject>().ToList();
+
+            // Filter solids: keep only those with at least one thin dimension (~3mm)
+            const double minThickness = 2.5;
+            const double maxThickness = 5.0;
+
+            solids = solids.Where(solid => HasThinDimension(solid, minThickness, maxThickness)).ToList();
+
+            if (solids.Count == 0)
+            {
+                Console.WriteLine("No solids with ~3mm thickness found.");
+            }
 
             // Fallback: some Plasticity exports may use shells/faces without a root 186.
             if (solids.Count == 0)
@@ -100,13 +111,13 @@ namespace LaserConvert
                     Console.WriteLine($"Skipping solid (no 3 mm face pair found): {solidName}{sepMsg}");
                     continue;
                 }
-                
+
                 svg.BeginGroup(solidName);
 
                 // Collect ALL edges from ALL faces in this solid
                 var allFaces = GetSolidFaces(solid).ToList();
                 var allEdges = new List<IgesEntity>();
-                
+
                 foreach (var face in allFaces)
                 {
                     if (face is IgesFace igesFace && igesFace.Edges.Count > 0)
@@ -114,26 +125,26 @@ namespace LaserConvert
                         allEdges.AddRange(igesFace.Edges);
                     }
                 }
-                
+
                 if (allEdges.Count == 0)
                 {
                     svg.EndGroup();
                     continue;
                 }
-                
+
                 // Deduplicate edges by geometry
                 var uniqueEdges = new Dictionary<string, IgesEntity>();
-                
+
                 foreach (var edge in allEdges)
                 {
                     if (edge is IgesLine line)
                     {
                         double x1 = line.P1.X, y1 = line.P1.Y, z1 = line.P1.Z;
                         double x2 = line.P2.X, y2 = line.P2.Y, z2 = line.P2.Z;
-                        
+
                         // Normalize so reverse edges have same key
                         string key;
-                        if (x1 > x2 || (Math.Abs(x1 - x2) < 1e-6 && y1 > y2) || 
+                        if (x1 > x2 || (Math.Abs(x1 - x2) < 1e-6 && y1 > y2) ||
                             (Math.Abs(x1 - x2) < 1e-6 && Math.Abs(y1 - y2) < 1e-6 && z1 > z2))
                         {
                             key = $"L({x2:F1},{y2:F1},{z2:F1})-({x1:F1},{y1:F1},{z1:F1})";
@@ -142,7 +153,7 @@ namespace LaserConvert
                         {
                             key = $"L({x1:F1},{y1:F1},{z1:F1})-({x2:F1},{y2:F1},{z2:F1})";
                         }
-                        
+
                         if (!uniqueEdges.ContainsKey(key))
                         {
                             uniqueEdges[key] = edge;
@@ -153,9 +164,9 @@ namespace LaserConvert
                         uniqueEdges[Guid.NewGuid().ToString()] = edge;
                     }
                 }
-                
+
                 var dedupedEdges = uniqueEdges.Values.ToList();
-                
+
                 // Derive projection plane from the edges
                 var edgePoints = new List<Vec3>();
                 foreach (var edge in dedupedEdges)
@@ -166,20 +177,20 @@ namespace LaserConvert
                         edgePoints.Add(ToVec3(line.P2));
                     }
                 }
-                
+
                 // Find 3 non-collinear points for plane
                 if (edgePoints.Count < 3)
                 {
                     svg.EndGroup();
                     continue;
                 }
-                
+
                 Vec3 p0 = edgePoints[0];
                 Vec3 p1 = new Vec3(0, 0, 0);
                 Vec3 p2 = new Vec3(0, 0, 0);
                 bool foundP1 = false;
                 bool foundP2 = false;
-                
+
                 for (int i = 1; i < edgePoints.Count && !foundP2; i++)
                 {
                     if (!foundP1 && Distance3(edgePoints[i], p0) > 0.1)
@@ -199,23 +210,23 @@ namespace LaserConvert
                         }
                     }
                 }
-                
+
                 if (!foundP2)
                 {
                     svg.EndGroup();
                     continue;
                 }
-                
+
                 var v1_plane = p1 - p0;
                 var v2_plane = p2 - p0;
                 var planeNormal = Normalize(Cross(v1_plane, v2_plane));
                 var derivedPlane = (p0, planeNormal);
-                
+
                 // Project all edges to 2D using derived plane
                 var frame = BuildPlaneFrame(derivedPlane);
                 var sb = new StringBuilder();
                 bool started = false;
-                
+
                 foreach (var edge in dedupedEdges)
                 {
                     if (edge is IgesLine line)
@@ -224,19 +235,19 @@ namespace LaserConvert
                         var p1_3d = ToVec3(line.P2);
                         var p0_2d = Project(frame, p0_3d);
                         var p1_2d = Project(frame, p1_3d);
-                        
+
                         // Skip degenerate edges where start and end project to the same 2D point
                         double dist2d = Math.Sqrt((p0_2d.X - p1_2d.X) * (p0_2d.X - p1_2d.X) + (p0_2d.Y - p1_2d.Y) * (p0_2d.Y - p1_2d.Y));
                         if (dist2d < 0.01)
                         {
                             continue;
                         }
-                        
+
                         if (!started) { sb.Append($"M {Fmt(p0_2d.X)} {Fmt(p0_2d.Y)} "); started = true; }
                         sb.Append($"L {Fmt(p1_2d.X)} {Fmt(p1_2d.Y)} ");
                     }
                 }
-                
+
                 if (started)
                 {
                     sb.Append("Z");
@@ -262,6 +273,47 @@ namespace LaserConvert
             if (string.IsNullOrWhiteSpace(name))
                 name = e.EntityType.ToString();
             return name;
+        }
+
+        // Helper: Check if a solid has one dimension in the "thin" range (for laser cutting)
+        private static bool HasThinDimension(IgesManifestSolidBRepObject solid, double minThickness, double maxThickness)
+        {
+            var allFaces = GetSolidFaces(solid).ToList();
+
+            if (allFaces.Count < 2)
+                return false;
+
+            // Collect all edge lengths from all faces
+            var edgeLengths = new List<double>();
+
+            foreach (var face in allFaces)
+            {
+                if (face is IgesFace igesFace && igesFace.Edges.Count > 0)
+                {
+                    foreach (var edge in igesFace.Edges)
+                    {
+                        if (edge is IgesLine line)
+                        {
+                            double len = Math.Sqrt(
+                                (line.P1.X - line.P2.X) * (line.P1.X - line.P2.X) +
+                                (line.P1.Y - line.P2.Y) * (line.P1.Y - line.P2.Y) +
+                                (line.P1.Z - line.P2.Z) * (line.P1.Z - line.P2.Z));
+
+                            if (len > 0.1)  // Skip degenerate edges
+                                edgeLengths.Add(len);
+                        }
+                    }
+                }
+            }
+
+            if (edgeLengths.Count == 0)
+                return false;
+
+            // Check if the smallest edge length is in the thin range
+            edgeLengths.Sort();
+            double minEdge = edgeLengths[0];
+
+            return minEdge >= minThickness && minEdge <= maxThickness;
         }
 
         // Helper: Try to extract a plane from any IGES surface entity
@@ -312,28 +364,28 @@ namespace LaserConvert
         {
             plane1 = default;
             plane2 = default;
-            
+
             // For a thin box, assume top and bottom faces are parallel
             // Use Z-axis as the primary axis for thin objects
             plane1 = (new Vec3(0, 0, 0), new Vec3(0, 0, 1));      // Bottom face (Z=0)
             plane2 = (new Vec3(0, 0, 3), new Vec3(0, 0, 1));      // Top face (Z=3mm)
-            
+
             return true;
         }
 
         private static (IgesFace? Face, (Vec3 Origin, Vec3 Normal)? Plane, double? MinSeparation) FindProfileFaceAndPlane(IgesManifestSolidBRepObject solid)
         {
             var allFaces = GetSolidFaces(solid).ToList();
-            
+
             if (allFaces.Count < 1)
                 return (null, null, null);
-            
+
             // Just return the first face - we'll use ALL edges from ALL faces
             // The profile plane will be derived from those edges
             var firstFace = allFaces[0] as IgesFace;
             if (firstFace == null)
                 return (null, null, null);
-            
+
             // We'll derive the plane from edges later
             // For now, just return a dummy plane
             var dummyPlane = (new Vec3(0, 0, 0), new Vec3(0, 0, 1));
@@ -404,7 +456,7 @@ namespace LaserConvert
             var sb = new StringBuilder();
             var frame = BuildPlaneFrame(plane);
             var edges = GetLoopEdges(loop).ToList();
-            
+
             // Deduplicate edges: filter out edges that are identical to previous ones
             var uniqueEdges = new List<IgesEntity>();
             foreach (var edge in edges)
@@ -417,11 +469,11 @@ namespace LaserConvert
                         if (prevEdge is IgesLine prevLine)
                         {
                             // Check if same line (both endpoints match)
-                            if (Math.Abs(line.P1.X - prevLine.P1.X) < 1e-6 && 
-                                Math.Abs(line.P1.Y - prevLine.P1.Y) < 1e-6 && 
+                            if (Math.Abs(line.P1.X - prevLine.P1.X) < 1e-6 &&
+                                Math.Abs(line.P1.Y - prevLine.P1.Y) < 1e-6 &&
                                 Math.Abs(line.P1.Z - prevLine.P1.Z) < 1e-6 &&
-                                Math.Abs(line.P2.X - prevLine.P2.X) < 1e-6 && 
-                                Math.Abs(line.P2.Y - prevLine.P2.Y) < 1e-6 && 
+                                Math.Abs(line.P2.X - prevLine.P2.X) < 1e-6 &&
+                                Math.Abs(line.P2.Y - prevLine.P2.Y) < 1e-6 &&
                                 Math.Abs(line.P2.Z - prevLine.P2.Z) < 1e-6)
                             {
                                 isDuplicate = true;
@@ -430,15 +482,15 @@ namespace LaserConvert
                         }
                     }
                 }
-                
+
                 if (!isDuplicate)
                 {
                     uniqueEdges.Add(edge);
                 }
             }
-            
+
             edges = uniqueEdges;
-            
+
             // If loop contains Face references, recursively extract edges from those faces' loops
             var facesInLoop = edges.OfType<IgesFace>().ToList();
             if (facesInLoop.Count > 0)
@@ -454,12 +506,12 @@ namespace LaserConvert
                     }
                 }
             }
-            
+
             if (!edges.Any())
             {
                 return "";
             }
-            
+
             bool started = false;
             foreach (var edge in edges)
             {
@@ -686,24 +738,24 @@ namespace LaserConvert
         {
             var allFaces = iges.Entities.OfType<IgesFace>().ToList();
             var shells = iges.Entities.OfType<IgesShell>().ToList();
-            
+
             // First, link loops to faces
             // Since Face parameters don't reference loops in this file, 
             // we need to find loops that belong to each face
             LinkLoopsToFaces(iges);
-            
+
             foreach (var shell in shells)
             {
                 // If the shell has no faces but has raw pointers, try to recover
                 if ((shell.Faces == null || shell.Faces.Count == 0) && shell.FacePointers != null && shell.FacePointers.Count > 0)
                 {
                     shell.Faces = new List<IgesFace>();
-                    
+
                     // Collect all faces that haven't been assigned yet
                     var unassignedFaces = allFaces
                         .Where(f => !shells.Where(s => s.Faces != null).SelectMany(s => s.Faces).Contains(f))
                         .ToList();
-                    
+
                     // Assign the requested number of faces to this shell
                     int facesToAssign = Math.Min(shell.FacePointers.Count, unassignedFaces.Count);
                     for (int i = 0; i < facesToAssign; i++)
@@ -721,9 +773,9 @@ namespace LaserConvert
             // Loop (entity type 510) - belongs to Face
             // Supporting entities (Points, Directions, Surfaces)
             // [repeat]
-            
+
             var allEntities = iges.Entities.ToList();
-            
+
             for (int i = 0; i < allEntities.Count - 1; i++)
             {
                 var entity = allEntities[i];
@@ -745,28 +797,14 @@ namespace LaserConvert
         {
             var manifests = iges.Entities.OfType<IgesManifestSolidBRepObject>().ToList();
             var shells = iges.Entities.OfType<IgesShell>().ToList();
-            
-            foreach (var manifest in manifests)
+
+            // Match manifests to shells by position/order
+            // Each manifest gets the shell at the same index
+            for (int i = 0; i < manifests.Count && i < shells.Count; i++)
             {
-                // If manifest has no shell, try to find a shell with matching name or just use the first available
-                if (manifest.Shell == null && shells.Count > 0)
+                if (manifests[i].Shell == null)
                 {
-                    // Try to match by name
-                    var matchedShell = shells.FirstOrDefault(s => s.EntityLabel == manifest.EntityLabel);
-                    if (matchedShell != null)
-                    {
-                        manifest.Shell = matchedShell;
-                    }
-                    else if (manifest.Shell == null)
-                    {
-                        // If no match, assigned the first shell without a manifest
-                        var orphanShell = shells.FirstOrDefault(s => 
-                            !manifests.Where(m => m.Shell == s).Any());
-                        if (orphanShell != null)
-                        {
-                            manifest.Shell = orphanShell;
-                        }
-                    }
+                    manifests[i].Shell = shells[i];
                 }
             }
         }
@@ -862,6 +900,7 @@ namespace LaserConvert
             }
         }
     }
+}
 
     // -----------------------------
     // IxMilia-like topology shims
@@ -898,4 +937,3 @@ namespace LaserConvert
     //    public List<IgesEntity>? Curves { get; set; // sequence of curve entities forming the loop
     //    public bool IsOuter { get; set; // if available; else false and we'll classify by area
     //}
-}
