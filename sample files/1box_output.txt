@@ -1,4 +1,16 @@
 [DEBUG] Box1: 6 faces
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
 No solids with ~3mm thickness found.
 No 186 solids found; attempting face-based fallback.
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.svg

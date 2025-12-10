@@ -10,40 +10,113 @@ REM File: 1box.svg
 REM File: 2boxes.svg 
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
-  <g id="ManifestSolidBRepObject">
-  </g>
-  <g id="ManifestSolidBRepObject">
+  <g id="Box2">
+    <path d="M 0 0 L 170 -0 L 0 -0 L 0 150 L 170 150 L -0 0 L 170 0 L 170 150 L -0 150 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
 REM File: 3boxes.svg 
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
-  <g id="ManifestSolidBRepObject">
+  <g id="Box3">
+    <path d="M 0 0 L -170 0 L -0 -0 L -0 -110.215 L -170 -110.215 L 0 0 L -170 -0 L -170 -110.215 L 0 -110.215 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
-  <g id="ManifestSolidBRepObject">
-  </g>
-  <g id="ManifestSolidBRepObject">
+  <g id="Box2">
+    <path d="M 0 0 L 170 -0 L 0 -0 L 0 150 L 170 150 L -0 0 L 170 0 L 170 150 L -0 150 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
 REM File: 1box_output.txt 
 [DEBUG] Box1: 6 faces
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
 No solids with ~3mm thickness found.
 No 186 solids found; attempting face-based fallback.
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.svg
  
 REM File: 2boxes_output.txt 
 [DEBUG] Box2: 6 faces
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 4 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 10 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 12 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 12 curves
+[DEBUG] Box2: edges [3.0, ..., 170.0] total=38
+[FILTER] Solid 'Box2': Found thin dimension 3.0mm (other edges: 170.0mm)
 [DEBUG] Box1: 6 faces
-No solids with ~3mm thickness found.
-No 186 solids found; attempting face-based fallback.
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\2boxes.svg
  
 REM File: 3boxes_output.txt 
 [DEBUG] Box3: 6 faces
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 4 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 10 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 12 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 12 curves
+[DEBUG] Box3: edges [3.0, ..., 170.0] total=38
+[FILTER] Solid 'Box3': Found thin dimension 3.0mm (other edges: 170.0mm)
 [DEBUG] Box2: 6 faces
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 4 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 10 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 12 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 12 curves
+[DEBUG] Box2: edges [3.0, ..., 170.0] total=38
+[FILTER] Solid 'Box2': Found thin dimension 3.0mm (other edges: 170.0mm)
 [DEBUG] Box1: 6 faces
-No solids with ~3mm thickness found.
-No 186 solids found; attempting face-based fallback.
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 0 curves
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxes.svg

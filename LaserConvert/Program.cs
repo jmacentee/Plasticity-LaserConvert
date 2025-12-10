@@ -51,6 +51,9 @@ namespace LaserConvert
 
             // Post-process and resolve IGES manifest-to-shell bindings
             IgesHelper.ResolveManifestShellBindings(iges);
+            
+            // Post-process: Ensure all Face.Loops are populated from deferred binding
+            IgesHelper.ResolveFaceLoops(iges);
 
             // 1) Collect solids (preferred: 186 ManifoldSolidBRepObject).
             var solids = iges.Entities.OfType<IgesManifestSolidBRepObject>().ToList();
@@ -297,9 +300,11 @@ namespace LaserConvert
                 {
                     // Extract edges from loops (Plasticity exports have edges in loops, not Face.Edges)
                     var loops = igesFace.Loops ?? new List<IgesLoop>();
+                    Console.WriteLine($"[DEBUG]   Face has {loops.Count} loops");
                     foreach (var loop in loops)
                     {
                         var curves = loop.Curves ?? new List<IgesEntity>();
+                        Console.WriteLine($"[DEBUG]     Loop has {curves.Count} curves");
                         foreach (var curve in curves)
                         {
                             if (curve is IgesLine line)
