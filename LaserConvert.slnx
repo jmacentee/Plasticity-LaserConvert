@@ -1,14 +1,16 @@
 <Solution>
   <Folder Name="/Solution Items/">
     <File Path="README.md" />
-    <File Path="sample files/3 big boxs.igs" />
-    <File Path="sample files/big box v3.igs" />
-    <File Path="sample files/big box v3.svg" />
-    <File Path="sample files/big box v3d.svg" />
-    <File Path="sample files/big box v3e.svg" />
-    <File Path="sample files/jasonbox only.igs" />
-    <File Path="sample files/jasonbox_output.txt" />
-    <File Path="sample files/output.txt" />
+    <File Path="sample files/1box.igs" />
+    <File Path="sample files/1box.svg" />
+    <File Path="sample files/1box_output.txt" />
+    <File Path="sample files/2boxes.igs" />
+    <File Path="sample files/2boxes.svg" />
+    <File Path="sample files/2boxes_output.txt" />
+    <File Path="sample files/3boxes.igs" />
+    <File Path="sample files/3boxes.svg" />
+    <File Path="sample files/3boxes_output.txt" />
+    <File Path="sample files/testrun.bat" />
   </Folder>
   <Project Path="external/iges/src/IxMilia.Iges/IxMilia.Iges.csproj" />
   <Project Path="LaserConvert/LaserConvert.csproj" />

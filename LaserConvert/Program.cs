@@ -50,7 +50,8 @@ namespace LaserConvert
             }
 
             // Post-process shells: if faces didn't bind properly, try to recover by matching pointers to actual faces
-            RecoverShellFaces(iges);
+            // DISABLED: This sequential assignment breaks the mapping!
+            // RecoverShellFaces(iges);
 
             // Re-bind manifests to their shells using entity pointers
             RebindManifestsToShells(iges);
@@ -826,34 +827,31 @@ namespace LaserConvert
 
             Console.WriteLine($"[REBIND] Found {manifests.Count} manifests and {shells.Count} shells");
             
-            // Strategy: Match manifests to shells by checking which shell has faces
-            // For each manifest, find the shell that contains the faces referenced in its structure
+            // Debug: show which shells have faces
+            for (int shellIdx = 0; shellIdx < shells.Count; shellIdx++)
+            {
+                Console.WriteLine($"[REBIND] Shell[{shellIdx}]: {shells[shellIdx].Faces?.Count ?? 0} faces");
+            }
+            
+            // Match manifests to shells: each manifest gets assigned to a shell with faces
+            var usedShells = new HashSet<IgesShell>();
             
             for (int i = 0; i < manifests.Count; i++)
             {
                 var manifest = manifests[i];
                 var manifestName = GetEntityName(manifest);
                 
-                Console.WriteLine($"[REBIND] Manifest[{i}] '{manifestName}': Shell={manifest.Shell}, Faces={manifest.Shell?.Faces?.Count ?? 0}");
+                Console.WriteLine($"[REBIND] Manifest[{i}] '{manifestName}': assigning shell...");
                 
-                // If shell has no faces, try to find a shell that does have faces
-                if (manifest.Shell == null || manifest.Shell.Faces == null || manifest.Shell.Faces.Count == 0)
+                // Find a shell that has faces and hasn't been used yet
+                foreach (var shell in shells)
                 {
-                    // Find a shell with faces that hasn't been assigned yet
-                    foreach (var shell in shells)
+                    if (!usedShells.Contains(shell) && shell.Faces != null && shell.Faces.Count > 0)
                     {
-                        if (shell.Faces != null && shell.Faces.Count > 0)
-                        {
-                            // Check if this shell is already assigned to another manifest
-                            bool alreadyAssigned = manifests.Take(i).Any(m => m.Shell == shell);
-                            
-                            if (!alreadyAssigned)
-                            {
-                                manifest.Shell = shell;
-                                Console.WriteLine($"[REBIND]   -> Assigned shell with {shell.Faces.Count} faces");
-                                break;
-                            }
-                        }
+                        manifest.Shell = shell;
+                        usedShells.Add(shell);
+                        Console.WriteLine($"[REBIND]   -> Assigned shell with {shell.Faces.Count} faces");
+                        break;
                     }
                 }
             }

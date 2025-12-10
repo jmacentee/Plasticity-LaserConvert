@@ -1,0 +1,11 @@
+[REBIND] Found 2 manifests and 2 shells
+[REBIND] Shell[0]: 6 faces
+[REBIND] Shell[1]: 0 faces
+[REBIND] Manifest[0] 'Box2': assigning shell...
+[REBIND]   -> Assigned shell with 6 faces
+[REBIND] Manifest[1] 'Box1': assigning shell...
+[DEBUG] Box2: 6 faces
+[DEBUG] Box2: edges [3.0, ..., 170.0] total=13
+[FILTER] Solid 'Box2': Found thin dimension 3.0mm (other edges: 170.0mm)
+[DEBUG] Box1: 0 faces
+Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\2boxes.svg

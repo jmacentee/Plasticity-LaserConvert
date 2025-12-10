@@ -1,6 +1,0 @@
-[DEBUG] JASONBOX: 0 faces
-[DEBUG] Box.001: 0 faces
-[DEBUG] FlatBox: 0 faces
-No solids with ~3mm thickness found.
-No 186 solids found; attempting face-based fallback.
-Wrote SVG: C:\Users\jdm\OneDrive\Documents\art\glowforge\big box\3 big boxs.svg

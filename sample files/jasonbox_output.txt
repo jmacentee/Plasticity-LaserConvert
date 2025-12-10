@@ -1,2 +1,0 @@
-[MAIN] Deduplicated to 4 unique edges
-Wrote SVG: C:\Users\jdm\OneDrive\Documents\art\glowforge\big box\jasonbox.svg

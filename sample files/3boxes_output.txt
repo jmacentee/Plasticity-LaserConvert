@@ -1,0 +1,13 @@
+[REBIND] Found 3 manifests and 3 shells
+[REBIND] Shell[0]: 0 faces
+[REBIND] Shell[1]: 0 faces
+[REBIND] Shell[2]: 0 faces
+[REBIND] Manifest[0] 'Box3': assigning shell...
+[REBIND] Manifest[1] 'Box2': assigning shell...
+[REBIND] Manifest[2] 'Box1': assigning shell...
+[DEBUG] Box3: 0 faces
+[DEBUG] Box2: 0 faces
+[DEBUG] Box1: 0 faces
+No solids with ~3mm thickness found.
+No 186 solids found; attempting face-based fallback.
+Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxes.svg

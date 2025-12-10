@@ -1,0 +1,5 @@
+"C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.igs" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box_output.txt"
+
+"C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\2boxes.igs" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\2boxes.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\2boxes_output.txt"
+
+"C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxes.igs" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxes.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxes_output.txt"
