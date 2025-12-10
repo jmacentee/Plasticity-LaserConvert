@@ -1,3 +1,6 @@
 [submodule "external/iges"]
 	path = external/iges
 	url = https://github.com/jmacentee/iges.git
+[submodule "external/step"]
+	path = external/step
+	url = https://github.com/jmacentee/step.git
