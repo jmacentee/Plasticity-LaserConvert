@@ -15,7 +15,7 @@ REM File: 2boxes.svg
     <path d="M 0 0 L 0 -110.215 L 170 -110.215 L 170 0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box1">
-    <path d="M 0 0 L 0 150 L -170 150 L -170 0 L -162.889 0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0 0 L 0 150 L -170 150 L -170 0 L -8.361 3 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -23,47 +23,170 @@ REM File: 3boxes.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="Box2">
-    <path d="M 0 0 L 0 150 L -170 150 L -170 0 L -77.97 0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0 0 L 0 150 L -170 150 L -170 0 L -8.361 0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
 REM File: 1box_output.txt 
-[IGES] Resolving bindings: 1 manifests, 1 shells, 6 faces
-[IGES] Manifests in load order:
-[IGES]   [0] 'Box1'
-[IGES] Shells in load order:
-[IGES]   [0] Shell (will have 6 faces)
-[IGES] Populating 1 shells with 6 total faces
-[IGES]   Shell expects 6 faces, FacePointers: 39, 51, 63, 75, 87, 99
-[IGES]   Shell assigned 6 faces
+[SHELL] ReadParameters called with 15 parameters
+[SHELL]   param[0] = 6
+[SHELL]   param[1] = 39
+[SHELL]   param[2] = 1
+[SHELL]   param[3] = 51
+[SHELL]   param[4] = 1
+[SHELL]   param[5] = 63
+[SHELL]   param[6] = 1
+[SHELL]   param[7] = 75
+[SHELL]   param[8] = 1
+[SHELL]   param[9] = 87
+[SHELL] Face count: 6
+[SHELL] Face 0: pointer=39, orientation=1
+[SHELL] Face 1: pointer=51, orientation=1
+[SHELL] Face 2: pointer=63, orientation=1
+[SHELL] Face 3: pointer=75, orientation=1
+[SHELL] Face 4: pointer=87, orientation=1
+[SHELL] Face 5: pointer=99, orientation=1
+[IGES] Resolving bindings: 1 manifests, 1 shells
+[IGES] Built entity map with 51 directory entries
+[IGES] Directory entry indices range: 1-51
+[IGES] Entity type distribution:
+[IGES]   Direction: 12
+[IGES]   Face: 6
+[IGES]   Group: 1
+[IGES]   Line: 12
+[IGES]   Loop: 6
+[IGES]   ManifestSolidBRepObject: 1
+[IGES]   PlaneSurface: 6
+[IGES]   Point: 6
+[IGES]   Shell: 1
+[IGES] All Face entities:
+[IGES]   DirectoryIndex 18 ? Pointer 19
+[IGES]   DirectoryIndex 24 ? Pointer 25
+[IGES]   DirectoryIndex 30 ? Pointer 31
+[IGES]   DirectoryIndex 36 ? Pointer 37
+[IGES]   DirectoryIndex 42 ? Pointer 43
+[IGES]   DirectoryIndex 48 ? Pointer 49
+[IGES] Shell has 6 face pointers: 39, 51, 63, 75, 87, 99
+[IGES]   Pointer 39 ? DirectoryIndex 18 ? Face found
+[IGES]   Pointer 51 ? DirectoryIndex 24 ? Face found
+[IGES]   Pointer 63 ? DirectoryIndex 30 ? Face found
+[IGES]   Pointer 75 ? DirectoryIndex 36 ? Face found
+[IGES]   Pointer 87 ? DirectoryIndex 42 ? Face found
+[IGES]   Pointer 99 ? DirectoryIndex 48 ? Face found
+[IGES] Shell resolved to 6 faces
 [IGES] Binding 1 manifests to shells
 [IGES]   Manifest[0] 'Box1' ? Shell[0] (6 faces)
-[IGES] Final binding state:
-[IGES]   Manifest[0] 'Box1' ? Shell[0] (6 faces)
+[IGES]     Shell has 6 faces with edges:
+[IGES]       Face: 4 edges
+[IGES]       Face: 1 edges
+[IGES]       Face: 1 edges
+[IGES]       Face: 2 edges
+[IGES]       Face: 4 edges
+[IGES]       Face: 1 edges
+[IGES]     Total edges in shell: 13
 [DEBUG] Box1: 6 faces
 [DEBUG] Box1: edges [3.0, ..., 170.0] total=13
 [FILTER] Solid 'Box1': Found thin dimension 3.0mm (other edges: 170.0mm)
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.svg
  
 REM File: 2boxes_output.txt 
-[IGES] Resolving bindings: 2 manifests, 2 shells, 12 faces
-[IGES] Manifests in load order:
-[IGES]   [0] 'Box2'
-[IGES]   [1] 'Box1'
-[IGES] Shells in load order:
-[IGES]   [0] Shell (will have 6 faces)
-[IGES]   [1] Shell (will have 6 faces)
-[IGES] Populating 2 shells with 12 total faces
-[IGES]   Shell expects 6 faces, FacePointers: 39, 51, 63, 75, 87, 99
-[IGES]   Shell assigned 6 faces
-[IGES]   Shell expects 6 faces, FacePointers: 143, 155, 167, 179, 191, 203
-[IGES]   Shell assigned 6 faces
+[SHELL] ReadParameters called with 15 parameters
+[SHELL]   param[0] = 6
+[SHELL]   param[1] = 39
+[SHELL]   param[2] = 1
+[SHELL]   param[3] = 51
+[SHELL]   param[4] = 1
+[SHELL]   param[5] = 63
+[SHELL]   param[6] = 1
+[SHELL]   param[7] = 75
+[SHELL]   param[8] = 1
+[SHELL]   param[9] = 87
+[SHELL] Face count: 6
+[SHELL] Face 0: pointer=39, orientation=1
+[SHELL] Face 1: pointer=51, orientation=1
+[SHELL] Face 2: pointer=63, orientation=1
+[SHELL] Face 3: pointer=75, orientation=1
+[SHELL] Face 4: pointer=87, orientation=1
+[SHELL] Face 5: pointer=99, orientation=1
+[SHELL] ReadParameters called with 15 parameters
+[SHELL]   param[0] = 6
+[SHELL]   param[1] = 143
+[SHELL]   param[2] = 1
+[SHELL]   param[3] = 155
+[SHELL]   param[4] = 1
+[SHELL]   param[5] = 167
+[SHELL]   param[6] = 1
+[SHELL]   param[7] = 179
+[SHELL]   param[8] = 1
+[SHELL]   param[9] = 191
+[SHELL] Face count: 6
+[SHELL] Face 0: pointer=143, orientation=1
+[SHELL] Face 1: pointer=155, orientation=1
+[SHELL] Face 2: pointer=167, orientation=1
+[SHELL] Face 3: pointer=179, orientation=1
+[SHELL] Face 4: pointer=191, orientation=1
+[SHELL] Face 5: pointer=203, orientation=1
+[IGES] Resolving bindings: 2 manifests, 2 shells
+[IGES] Built entity map with 102 directory entries
+[IGES] Directory entry indices range: 1-103
+[IGES] Entity type distribution:
+[IGES]   Direction: 24
+[IGES]   Face: 12
+[IGES]   Group: 2
+[IGES]   Line: 24
+[IGES]   Loop: 12
+[IGES]   ManifestSolidBRepObject: 2
+[IGES]   PlaneSurface: 12
+[IGES]   Point: 12
+[IGES]   Shell: 2
+[IGES] All Face entities:
+[IGES]   DirectoryIndex 18 ? Pointer 19
+[IGES]   DirectoryIndex 24 ? Pointer 25
+[IGES]   DirectoryIndex 30 ? Pointer 31
+[IGES]   DirectoryIndex 36 ? Pointer 37
+[IGES]   DirectoryIndex 42 ? Pointer 43
+[IGES]   DirectoryIndex 48 ? Pointer 49
+[IGES]   DirectoryIndex 70 ? Pointer 71
+[IGES]   DirectoryIndex 76 ? Pointer 77
+[IGES]   DirectoryIndex 82 ? Pointer 83
+[IGES]   DirectoryIndex 88 ? Pointer 89
+[IGES]   DirectoryIndex 94 ? Pointer 95
+[IGES]   DirectoryIndex 100 ? Pointer 101
+[IGES] Shell has 6 face pointers: 39, 51, 63, 75, 87, 99
+[IGES]   Pointer 39 ? DirectoryIndex 18 ? Face found
+[IGES]   Pointer 51 ? DirectoryIndex 24 ? Face found
+[IGES]   Pointer 63 ? DirectoryIndex 30 ? Face found
+[IGES]   Pointer 75 ? DirectoryIndex 36 ? Face found
+[IGES]   Pointer 87 ? DirectoryIndex 42 ? Face found
+[IGES]   Pointer 99 ? DirectoryIndex 48 ? Face found
+[IGES] Shell resolved to 6 faces
+[IGES] Shell has 6 face pointers: 143, 155, 167, 179, 191, 203
+[IGES]   Pointer 143 ? DirectoryIndex 70 ? Face found
+[IGES]   Pointer 155 ? DirectoryIndex 76 ? Face found
+[IGES]   Pointer 167 ? DirectoryIndex 82 ? Face found
+[IGES]   Pointer 179 ? DirectoryIndex 88 ? Face found
+[IGES]   Pointer 191 ? DirectoryIndex 94 ? Face found
+[IGES]   Pointer 203 ? DirectoryIndex 100 ? Face found
+[IGES] Shell resolved to 6 faces
 [IGES] Binding 2 manifests to shells
 [IGES]   Manifest[0] 'Box2' ? Shell[0] (6 faces)
+[IGES]     Shell has 6 faces with edges:
+[IGES]       Face: 4 edges
+[IGES]       Face: 1 edges
+[IGES]       Face: 1 edges
+[IGES]       Face: 2 edges
+[IGES]       Face: 4 edges
+[IGES]       Face: 1 edges
+[IGES]     Total edges in shell: 13
 [IGES]   Manifest[1] 'Box1' ? Shell[1] (6 faces)
-[IGES] Final binding state:
-[IGES]   Manifest[0] 'Box2' ? Shell[0] (6 faces)
-[IGES]   Manifest[1] 'Box1' ? Shell[1] (6 faces)
+[IGES]     Shell has 6 faces with edges:
+[IGES]       Face: 4 edges
+[IGES]       Face: 1 edges
+[IGES]       Face: 1 edges
+[IGES]       Face: 2 edges
+[IGES]       Face: 4 edges
+[IGES]       Face: 1 edges
+[IGES]     Total edges in shell: 13
 [DEBUG] Box2: 6 faces
 [DEBUG] Box2: edges [3.0, ..., 170.0] total=13
 [FILTER] Solid 'Box2': Found thin dimension 3.0mm (other edges: 170.0mm)
@@ -73,30 +196,145 @@ REM File: 2boxes_output.txt
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\2boxes.svg
  
 REM File: 3boxes_output.txt 
-[IGES] Resolving bindings: 3 manifests, 3 shells, 18 faces
-[IGES] Manifests in load order:
-[IGES]   [0] 'Box3'
-[IGES]   [1] 'Box2'
-[IGES]   [2] 'Box1'
-[IGES] Shells in load order:
-[IGES]   [0] Shell (will have 6 faces)
-[IGES]   [1] Shell (will have 6 faces)
-[IGES]   [2] Shell (will have 6 faces)
-[IGES] Populating 3 shells with 18 total faces
-[IGES]   Shell expects 6 faces, FacePointers: 41, 53, 65, 77, 89, 101
-[IGES]   Shell assigned 6 faces
-[IGES]   Shell expects 6 faces, FacePointers: 145, 157, 169, 181, 193, 205
-[IGES]   Shell assigned 6 faces
-[IGES]   Shell expects 6 faces, FacePointers: 249, 261, 273, 285, 297, 309
-[IGES]   Shell assigned 6 faces
+[SHELL] ReadParameters called with 15 parameters
+[SHELL]   param[0] = 6
+[SHELL]   param[1] = 41
+[SHELL]   param[2] = 1
+[SHELL]   param[3] = 53
+[SHELL]   param[4] = 1
+[SHELL]   param[5] = 65
+[SHELL]   param[6] = 1
+[SHELL]   param[7] = 77
+[SHELL]   param[8] = 1
+[SHELL]   param[9] = 89
+[SHELL] Face count: 6
+[SHELL] Face 0: pointer=41, orientation=1
+[SHELL] Face 1: pointer=53, orientation=1
+[SHELL] Face 2: pointer=65, orientation=1
+[SHELL] Face 3: pointer=77, orientation=1
+[SHELL] Face 4: pointer=89, orientation=1
+[SHELL] Face 5: pointer=101, orientation=0
+[SHELL] ReadParameters called with 15 parameters
+[SHELL]   param[0] = 6
+[SHELL]   param[1] = 145
+[SHELL]   param[2] = 1
+[SHELL]   param[3] = 157
+[SHELL]   param[4] = 1
+[SHELL]   param[5] = 169
+[SHELL]   param[6] = 1
+[SHELL]   param[7] = 181
+[SHELL]   param[8] = 1
+[SHELL]   param[9] = 193
+[SHELL] Face count: 6
+[SHELL] Face 0: pointer=145, orientation=1
+[SHELL] Face 1: pointer=157, orientation=1
+[SHELL] Face 2: pointer=169, orientation=1
+[SHELL] Face 3: pointer=181, orientation=1
+[SHELL] Face 4: pointer=193, orientation=1
+[SHELL] Face 5: pointer=205, orientation=1
+[SHELL] ReadParameters called with 15 parameters
+[SHELL]   param[0] = 6
+[SHELL]   param[1] = 249
+[SHELL]   param[2] = 1
+[SHELL]   param[3] = 261
+[SHELL]   param[4] = 1
+[SHELL]   param[5] = 273
+[SHELL]   param[6] = 1
+[SHELL]   param[7] = 285
+[SHELL]   param[8] = 1
+[SHELL]   param[9] = 297
+[SHELL] Face count: 6
+[SHELL] Face 0: pointer=249, orientation=1
+[SHELL] Face 1: pointer=261, orientation=1
+[SHELL] Face 2: pointer=273, orientation=1
+[SHELL] Face 3: pointer=285, orientation=1
+[SHELL] Face 4: pointer=297, orientation=1
+[SHELL] Face 5: pointer=309, orientation=1
+[IGES] Resolving bindings: 3 manifests, 3 shells
+[IGES] Built entity map with 154 directory entries
+[IGES] Directory entry indices range: 0-156
+[IGES] Entity type distribution:
+[IGES]   ColorDefinition: 1
+[IGES]   Direction: 36
+[IGES]   Face: 18
+[IGES]   Group: 3
+[IGES]   Line: 36
+[IGES]   Loop: 18
+[IGES]   ManifestSolidBRepObject: 3
+[IGES]   PlaneSurface: 18
+[IGES]   Point: 18
+[IGES]   Shell: 3
+[IGES] All Face entities:
+[IGES]   DirectoryIndex 19 ? Pointer 20
+[IGES]   DirectoryIndex 25 ? Pointer 26
+[IGES]   DirectoryIndex 31 ? Pointer 32
+[IGES]   DirectoryIndex 37 ? Pointer 38
+[IGES]   DirectoryIndex 43 ? Pointer 44
+[IGES]   DirectoryIndex 49 ? Pointer 50
+[IGES]   DirectoryIndex 71 ? Pointer 72
+[IGES]   DirectoryIndex 77 ? Pointer 78
+[IGES]   DirectoryIndex 83 ? Pointer 84
+[IGES]   DirectoryIndex 89 ? Pointer 90
+[IGES]   DirectoryIndex 95 ? Pointer 96
+[IGES]   DirectoryIndex 101 ? Pointer 102
+[IGES]   DirectoryIndex 123 ? Pointer 124
+[IGES]   DirectoryIndex 129 ? Pointer 130
+[IGES]   DirectoryIndex 135 ? Pointer 136
+[IGES]   DirectoryIndex 141 ? Pointer 142
+[IGES]   DirectoryIndex 147 ? Pointer 148
+[IGES]   DirectoryIndex 153 ? Pointer 154
+[IGES] Shell has 6 face pointers: 41, 53, 65, 77, 89, 101
+[IGES]   Pointer 41 ? DirectoryIndex 19 ? Face found
+[IGES]   Pointer 53 ? DirectoryIndex 25 ? Face found
+[IGES]   Pointer 65 ? DirectoryIndex 31 ? Face found
+[IGES]   Pointer 77 ? DirectoryIndex 37 ? Face found
+[IGES]   Pointer 89 ? DirectoryIndex 43 ? Face found
+[IGES]   Pointer 101 ? DirectoryIndex 49 ? Face found
+[IGES] Shell resolved to 6 faces
+[IGES] Shell has 6 face pointers: 145, 157, 169, 181, 193, 205
+[IGES]   Pointer 145 ? DirectoryIndex 71 ? Face found
+[IGES]   Pointer 157 ? DirectoryIndex 77 ? Face found
+[IGES]   Pointer 169 ? DirectoryIndex 83 ? Face found
+[IGES]   Pointer 181 ? DirectoryIndex 89 ? Face found
+[IGES]   Pointer 193 ? DirectoryIndex 95 ? Face found
+[IGES]   Pointer 205 ? DirectoryIndex 101 ? Face found
+[IGES] Shell resolved to 6 faces
+[IGES] Shell has 6 face pointers: 249, 261, 273, 285, 297, 309
+[IGES]   Pointer 249 ? DirectoryIndex 123 ? Face found
+[IGES]   Pointer 261 ? DirectoryIndex 129 ? Face found
+[IGES]   Pointer 273 ? DirectoryIndex 135 ? Face found
+[IGES]   Pointer 285 ? DirectoryIndex 141 ? Face found
+[IGES]   Pointer 297 ? DirectoryIndex 147 ? Face found
+[IGES]   Pointer 309 ? DirectoryIndex 153 ? Face found
+[IGES] Shell resolved to 6 faces
 [IGES] Binding 3 manifests to shells
 [IGES]   Manifest[0] 'Box3' ? Shell[0] (6 faces)
+[IGES]     Shell has 6 faces with edges:
+[IGES]       Face: 3 edges
+[IGES]       Face: 1 edges
+[IGES]       Face: 3 edges
+[IGES]       Face: 1 edges
+[IGES]       Face: 1 edges
+[IGES]       Face: 1 edges
+[IGES]     Total edges in shell: 10
 [IGES]   Manifest[1] 'Box2' ? Shell[1] (6 faces)
+[IGES]     Shell has 6 faces with edges:
+[IGES]       Face: 4 edges
+[IGES]       Face: 1 edges
+[IGES]       Face: 1 edges
+[IGES]       Face: 2 edges
+[IGES]       Face: 4 edges
+[IGES]       Face: 1 edges
+[IGES]     Total edges in shell: 13
 [IGES]   Manifest[2] 'Box1' ? Shell[2] (6 faces)
-[IGES] Final binding state:
-[IGES]   Manifest[0] 'Box3' ? Shell[0] (6 faces)
-[IGES]   Manifest[1] 'Box2' ? Shell[1] (6 faces)
-[IGES]   Manifest[2] 'Box1' ? Shell[2] (6 faces)
+[IGES]     Shell has 6 faces with edges:
+[IGES]       Face: 0 edges
+[IGES]       Face: 0 edges
+[IGES]       Face: 0 edges
+[IGES]       Face: 1 edges
+[IGES]       Face: 0 edges
+[IGES]       Face: 0 edges
+[IGES]     Total edges in shell: 1
 [DEBUG] Box3: 6 faces
 [DEBUG] Box3: edges [150.0, ..., 170.0] total=10
 [FILTER] Solid 'Box3': Skipped (min edge 150.0mm is outside 2.5-5mm range)

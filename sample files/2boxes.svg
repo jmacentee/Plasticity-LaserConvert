@@ -4,6 +4,6 @@
     <path d="M 0 0 L 0 -110.215 L 170 -110.215 L 170 0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box1">
-    <path d="M 0 0 L 0 150 L -170 150 L -170 0 L -162.889 0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0 0 L 0 150 L -170 150 L -170 0 L -8.361 3 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>

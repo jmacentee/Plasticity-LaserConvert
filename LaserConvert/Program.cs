@@ -753,22 +753,16 @@ namespace LaserConvert
             var shells = iges.Entities.OfType<IgesShell>().ToList();
 
             Console.WriteLine($"[RECOVER] Total faces: {allFaces.Count}");
-            foreach (var face in allFaces)
-            {
-                Console.WriteLine($"[RECOVER]   Face: {GetEntityName(face)}");
-            }
 
-            // First, link loops to faces
-            // Since Face parameters don't reference loops in this file, 
-            // we need to find loops that belong to each face
+            // Link loops to faces
             LinkLoopsToFaces(iges);
 
             foreach (var shell in shells)
             {
-                Console.WriteLine($"[RECOVER] Processing shell {GetEntityName(shell)}: FacePointers={shell.FacePointers?.Count ?? 0}, Faces={shell.Faces?.Count ?? 0}");
+                Console.WriteLine($"[RECOVER] Processing shell");
 
-                // If the shell has no faces but has raw pointers, try to recover
-                if ((shell.Faces == null || shell.Faces.Count == 0) && shell.FacePointers != null && shell.FacePointers.Count > 0)
+                // If the shell has no faces, try to assign from unassigned faces
+                if ((shell.Faces == null || shell.Faces.Count == 0))
                 {
                     shell.Faces = new List<IgesFace>();
 
@@ -777,14 +771,9 @@ namespace LaserConvert
                         .Where(f => !shells.Where(s => s.Faces != null).SelectMany(s => s.Faces).Contains(f))
                         .ToList();
 
-                    // Assign the requested number of faces to this shell
-                    int facesToAssign = Math.Min(shell.FacePointers.Count, unassignedFaces.Count);
-                    Console.WriteLine($"[RECOVER]   Assigning {facesToAssign} faces from {unassignedFaces.Count} unassigned");
-                    for (int i = 0; i < facesToAssign; i++)
-                    {
-                        shell.Faces.Add(unassignedFaces[i]);
-                        Console.WriteLine($"[RECOVER]     -> {GetEntityName(unassignedFaces[i])}");
-                    }
+                    // Assign all unassigned faces to this shell
+                    shell.Faces.AddRange(unassignedFaces);
+                    Console.WriteLine($"[RECOVER] Assigned {shell.Faces.Count} faces");
                 }
             }
         }
