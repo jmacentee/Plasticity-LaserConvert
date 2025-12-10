@@ -52,7 +52,7 @@ namespace LaserConvert
             // Post-process shells: if faces didn't bind properly, try to recover by matching pointers to actual faces
             RecoverShellFaces(iges);
 
-            // Re-bind manifests to their recovered shells (in case binding failed initially)
+            // Re-bind manifests to their shells using entity pointers
             RebindManifestsToShells(iges);
 
             // 1) Collect solids (preferred: 186 ManifoldSolidBRepObject).
@@ -279,6 +279,8 @@ namespace LaserConvert
         private static bool HasThinDimension(IgesManifestSolidBRepObject solid, double minThickness, double maxThickness)
         {
             var allFaces = GetSolidFaces(solid).ToList();
+            string solidName = GetEntityName(solid);
+            Console.WriteLine($"[DEBUG] {solidName}: {allFaces.Count} faces");
 
             if (allFaces.Count < 2)
                 return false;
@@ -312,8 +314,22 @@ namespace LaserConvert
             // Check if the smallest edge length is in the thin range
             edgeLengths.Sort();
             double minEdge = edgeLengths[0];
+            double maxEdge = edgeLengths[edgeLengths.Count - 1];
 
-            return minEdge >= minThickness && minEdge <= maxThickness;
+            bool hasThinDimension = minEdge >= minThickness && minEdge <= maxThickness;
+            
+            Console.WriteLine($"[DEBUG] {solidName}: edges [{minEdge:F1}, ..., {maxEdge:F1}] total={edgeLengths.Count}");
+            
+            if (hasThinDimension)
+            {
+                Console.WriteLine($"[FILTER] Solid '{solidName}': Found thin dimension {minEdge:F1}mm (other edges: {maxEdge:F1}mm)");
+            }
+            else
+            {
+                Console.WriteLine($"[FILTER] Solid '{solidName}': Skipped (min edge {minEdge:F1}mm is outside {minThickness}-{maxThickness}mm range)");
+            }
+            
+            return hasThinDimension;
         }
 
         // Helper: Try to extract a plane from any IGES surface entity
@@ -739,6 +755,12 @@ namespace LaserConvert
             var allFaces = iges.Entities.OfType<IgesFace>().ToList();
             var shells = iges.Entities.OfType<IgesShell>().ToList();
 
+            Console.WriteLine($"[RECOVER] Total faces: {allFaces.Count}");
+            foreach (var face in allFaces)
+            {
+                Console.WriteLine($"[RECOVER]   Face: {GetEntityName(face)}");
+            }
+
             // First, link loops to faces
             // Since Face parameters don't reference loops in this file, 
             // we need to find loops that belong to each face
@@ -746,6 +768,8 @@ namespace LaserConvert
 
             foreach (var shell in shells)
             {
+                Console.WriteLine($"[RECOVER] Processing shell {GetEntityName(shell)}: FacePointers={shell.FacePointers?.Count ?? 0}, Faces={shell.Faces?.Count ?? 0}");
+                
                 // If the shell has no faces but has raw pointers, try to recover
                 if ((shell.Faces == null || shell.Faces.Count == 0) && shell.FacePointers != null && shell.FacePointers.Count > 0)
                 {
@@ -758,9 +782,11 @@ namespace LaserConvert
 
                     // Assign the requested number of faces to this shell
                     int facesToAssign = Math.Min(shell.FacePointers.Count, unassignedFaces.Count);
+                    Console.WriteLine($"[RECOVER]   Assigning {facesToAssign} faces from {unassignedFaces.Count} unassigned");
                     for (int i = 0; i < facesToAssign; i++)
                     {
                         shell.Faces.Add(unassignedFaces[i]);
+                        Console.WriteLine($"[RECOVER]     -> {GetEntityName(unassignedFaces[i])}");
                     }
                 }
             }
@@ -798,15 +824,78 @@ namespace LaserConvert
             var manifests = iges.Entities.OfType<IgesManifestSolidBRepObject>().ToList();
             var shells = iges.Entities.OfType<IgesShell>().ToList();
 
-            // Match manifests to shells by position/order
-            // Each manifest gets the shell at the same index
-            for (int i = 0; i < manifests.Count && i < shells.Count; i++)
+            Console.WriteLine($"[REBIND] Found {manifests.Count} manifests and {shells.Count} shells");
+            
+            // Strategy: Match manifests to shells by checking which shell has faces
+            // For each manifest, find the shell that contains the faces referenced in its structure
+            
+            for (int i = 0; i < manifests.Count; i++)
             {
-                if (manifests[i].Shell == null)
+                var manifest = manifests[i];
+                var manifestName = GetEntityName(manifest);
+                
+                Console.WriteLine($"[REBIND] Manifest[{i}] '{manifestName}': Shell={manifest.Shell}, Faces={manifest.Shell?.Faces?.Count ?? 0}");
+                
+                // If shell has no faces, try to find a shell that does have faces
+                if (manifest.Shell == null || manifest.Shell.Faces == null || manifest.Shell.Faces.Count == 0)
                 {
-                    manifests[i].Shell = shells[i];
+                    // Find a shell with faces that hasn't been assigned yet
+                    foreach (var shell in shells)
+                    {
+                        if (shell.Faces != null && shell.Faces.Count > 0)
+                        {
+                            // Check if this shell is already assigned to another manifest
+                            bool alreadyAssigned = manifests.Take(i).Any(m => m.Shell == shell);
+                            
+                            if (!alreadyAssigned)
+                            {
+                                manifest.Shell = shell;
+                                Console.WriteLine($"[REBIND]   -> Assigned shell with {shell.Faces.Count} faces");
+                                break;
+                            }
+                        }
+                    }
                 }
             }
+        }
+
+        private static (Vec3 Center, Vec3 Min, Vec3 Max) GetFaceBounds(IgesFace face)
+        {
+            var bounds = GetLoopBounds(face.Loops?.FirstOrDefault());
+            return bounds;
+        }
+
+        private static (Vec3 Center, Vec3 Min, Vec3 Max) GetLoopBounds(IgesLoop? loop)
+        {
+            var points = new List<Vec3>();
+            
+            if (loop?.Curves == null) 
+                return (new Vec3(0, 0, 0), new Vec3(0, 0, 0), new Vec3(0, 0, 0));
+            
+            foreach (var curve in loop.Curves)
+            {
+                if (curve is IgesLine line)
+                {
+                    points.Add(ToVec3(line.P1));
+                    points.Add(ToVec3(line.P2));
+                }
+            }
+            
+            if (points.Count == 0)
+                return (new Vec3(0, 0, 0), new Vec3(0, 0, 0), new Vec3(0, 0, 0));
+            
+            var minX = points.Min(p => p.X);
+            var maxX = points.Max(p => p.X);
+            var minY = points.Min(p => p.Y);
+            var maxY = points.Max(p => p.Y);
+            var minZ = points.Min(p => p.Z);
+            var maxZ = points.Max(p => p.Z);
+            
+            var min = new Vec3(minX, minY, minZ);
+            var max = new Vec3(maxX, maxY, maxZ);
+            var center = new Vec3((minX + maxX) / 2, (minY + maxY) / 2, (minZ + maxZ) / 2);
+            
+            return (center, min, max);
         }
 
         // -----------------------------
@@ -854,10 +943,7 @@ namespace LaserConvert
 
         private static Vec3 ToVec3(IgesPoint p) => new Vec3(p.X, p.Y, p.Z);
 
-        // -----------------------------
         // SVG builder (mm units)
-        // -----------------------------
-
         private sealed class SvgBuilder
         {
             private readonly StringBuilder _sb = new StringBuilder();
@@ -901,39 +987,3 @@ namespace LaserConvert
         }
     }
 }
-
-    // -----------------------------
-    // IxMilia-like topology shims
-    // (If your exact API differs, adjust names/members below)
-    // -----------------------------
-
-    // Surfaces
-    //public abstract class IgesSurface : IgesEntity { }
-    //public class IgesPlane : IgesSurface
-    //{
-    //    public IgesPoint Location { get; set; } = new IgesPoint(0, 0, 0);
-    //    public IgesVector Normal { get; set; } = new IgesVector(0, 0, 1);
-    //}
-
-    //// Curves
-    //public class IgesCompositeCurve : IgesEntity
-    //{
-    //    public List<IgesEntity> Curves { get; set; } = new();
-    //}
-
-    //public class IgesShell : IgesEntity --514
-    //{
-    //    public List<IgesFace>? Faces { get; set; }
-    //}
-
-    //public class IgesFace : IgesEntity --508
-    //{
-    //    public IgesSurface? Surface { get; set; }
-    //    public List<IgesLoop>? Loops { get; set; }
-    //}
-
-    //public class IgesLoop : IgesEntity --510
-    //{
-    //    public List<IgesEntity>? Curves { get; set; // sequence of curve entities forming the loop
-    //    public bool IsOuter { get; set; // if available; else false and we'll classify by area
-    //}

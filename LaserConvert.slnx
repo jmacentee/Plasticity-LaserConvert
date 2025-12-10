@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/Solution Items/">
     <File Path="README.md" />
+    <File Path="sample files/3 big boxs.igs" />
     <File Path="sample files/big box v3.igs" />
     <File Path="sample files/big box v3.svg" />
     <File Path="sample files/big box v3d.svg" />
