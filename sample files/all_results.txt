@@ -3,7 +3,8 @@ Concatenated results
 REM File: 1box.svg 
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
-  <g id="ManifestSolidBRepObject">
+  <g id="Box1">
+    <path d="M 0 0 L 170 -0 L 0 -0 L 0 150 L 170 150 L -0 0 L 170 0 L 170 150 L -0 150 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -11,6 +12,9 @@ REM File: 2boxes.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="Box2">
+    <path d="M 0 0 L -170 0 L -0 -0 L -0 -110.215 L -170 -110.215 L 0 0 L -170 -0 L -170 -110.215 L 0 -110.215 L -161.639 -74.922 L -7.111 -145.782 L -7.111 -145.782 L -161.639 -74.922 L -8.361 -148.509 L -161.639 -74.922 L -7.111 -145.782 L -162.889 -77.649 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g id="Box1">
     <path d="M 0 0 L 170 -0 L 0 -0 L 0 150 L 170 150 L -0 0 L 170 0 L 170 150 L -0 150 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
@@ -19,9 +23,12 @@ REM File: 3boxes.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="Box3">
-    <path d="M 0 0 L -170 0 L -0 -0 L -0 -110.215 L -170 -110.215 L 0 0 L -170 -0 L -170 -110.215 L 0 -110.215 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0 0 L 0 167 L -170 0 L -170 0 L -170 167 L 0 0 L -170 167 L 0 0 L 0 167 L -170 110.215 L 0 110.215 L 0 0 L -170 0 L 0 110.215 L -170 110.215 L 0 0 L -161.639 35.293 L -7.111 -35.566 L -7.111 -35.566 L -161.639 35.293 L -8.361 -38.293 L -161.639 35.293 L -7.111 -35.566 L -162.889 32.566 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box2">
+    <path d="M 0 0 L -170 0 L -0 -0 L -0 -110.215 L -170 -110.215 L 0 0 L -170 -0 L -170 -110.215 L 0 -110.215 L -161.639 -74.922 L -7.111 -145.782 L -7.111 -145.782 L -161.639 -74.922 L -8.361 -148.509 L -161.639 -74.922 L -7.111 -145.782 L -162.889 -77.649 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g id="Box1">
     <path d="M 0 0 L 170 -0 L 0 -0 L 0 150 L 170 150 L -0 0 L 170 0 L 170 150 L -0 150 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
@@ -29,94 +36,98 @@ REM File: 3boxes.svg
 REM File: 1box_output.txt 
 [DEBUG] Box1: 6 faces
 [DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 0 curves
+[DEBUG]     Loop has 12 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 12 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 7 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 1 curves
 [DEBUG]   Face has 1 loops
 [DEBUG]     Loop has 0 curves
 [DEBUG]   Face has 1 loops
 [DEBUG]     Loop has 0 curves
-[DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 0 curves
-[DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 0 curves
-[DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 0 curves
-No solids with ~3mm thickness found.
-No 186 solids found; attempting face-based fallback.
+[DEBUG] Box1: edges [3.0, ..., 170.0] total=32
+[FILTER] Solid 'Box1': Found thin dimension 3.0mm (other edges: 170.0mm)
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.svg
  
 REM File: 2boxes_output.txt 
 [DEBUG] Box2: 6 faces
 [DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 0 curves
+[DEBUG]     Loop has 24 curves
 [DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 0 curves
+[DEBUG]     Loop has 24 curves
 [DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 4 curves
+[DEBUG]     Loop has 19 curves
 [DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 10 curves
-[DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 12 curves
+[DEBUG]     Loop has 13 curves
 [DEBUG]   Face has 1 loops
 [DEBUG]     Loop has 12 curves
-[DEBUG] Box2: edges [3.0, ..., 170.0] total=38
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 12 curves
+[DEBUG] Box2: edges [3.0, ..., 170.0] total=104
 [FILTER] Solid 'Box2': Found thin dimension 3.0mm (other edges: 170.0mm)
 [DEBUG] Box1: 6 faces
 [DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 0 curves
+[DEBUG]     Loop has 12 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 12 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 7 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 1 curves
 [DEBUG]   Face has 1 loops
 [DEBUG]     Loop has 0 curves
 [DEBUG]   Face has 1 loops
 [DEBUG]     Loop has 0 curves
-[DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 0 curves
-[DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 0 curves
-[DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 0 curves
+[DEBUG] Box1: edges [3.0, ..., 170.0] total=32
+[FILTER] Solid 'Box1': Found thin dimension 3.0mm (other edges: 170.0mm)
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\2boxes.svg
  
 REM File: 3boxes_output.txt 
 [DEBUG] Box3: 6 faces
 [DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 0 curves
+[DEBUG]     Loop has 36 curves
 [DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 0 curves
+[DEBUG]     Loop has 36 curves
 [DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 4 curves
+[DEBUG]     Loop has 31 curves
 [DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 10 curves
+[DEBUG]     Loop has 25 curves
 [DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 12 curves
+[DEBUG]     Loop has 24 curves
 [DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 12 curves
-[DEBUG] Box3: edges [3.0, ..., 170.0] total=38
+[DEBUG]     Loop has 24 curves
+[DEBUG] Box3: edges [3.0, ..., 170.0] total=176
 [FILTER] Solid 'Box3': Found thin dimension 3.0mm (other edges: 170.0mm)
 [DEBUG] Box2: 6 faces
 [DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 0 curves
+[DEBUG]     Loop has 24 curves
 [DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 0 curves
+[DEBUG]     Loop has 24 curves
 [DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 4 curves
+[DEBUG]     Loop has 19 curves
 [DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 10 curves
-[DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 12 curves
+[DEBUG]     Loop has 13 curves
 [DEBUG]   Face has 1 loops
 [DEBUG]     Loop has 12 curves
-[DEBUG] Box2: edges [3.0, ..., 170.0] total=38
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 12 curves
+[DEBUG] Box2: edges [3.0, ..., 170.0] total=104
 [FILTER] Solid 'Box2': Found thin dimension 3.0mm (other edges: 170.0mm)
 [DEBUG] Box1: 6 faces
 [DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 0 curves
+[DEBUG]     Loop has 12 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 12 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 7 curves
+[DEBUG]   Face has 1 loops
+[DEBUG]     Loop has 1 curves
 [DEBUG]   Face has 1 loops
 [DEBUG]     Loop has 0 curves
 [DEBUG]   Face has 1 loops
 [DEBUG]     Loop has 0 curves
-[DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 0 curves
-[DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 0 curves
-[DEBUG]   Face has 1 loops
-[DEBUG]     Loop has 0 curves
+[DEBUG] Box1: edges [3.0, ..., 170.0] total=32
+[FILTER] Solid 'Box1': Found thin dimension 3.0mm (other edges: 170.0mm)
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxes.svg

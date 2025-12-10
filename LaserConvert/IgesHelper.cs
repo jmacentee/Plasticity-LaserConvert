@@ -35,7 +35,7 @@ namespace LaserConvert
 
         /// <summary>
         /// Resolve Face.Loops by matching loop pointers to Loop entities.
-        /// Also resolve Loop.Curves by matching curve pointers to Curve entities.
+        /// Also resolve Loop.Curves by matching curves by directory proximity.
         /// This post-processes the deferred bindings that were registered during entity.ReadParameters().
         /// </summary>
         public static void ResolveFaceLoops(IgesFile iges)
@@ -52,7 +52,7 @@ namespace LaserConvert
                 entityToLineNum[kvp.Value] = kvp.Key;
             }
 
-            // Step 1: Match Faces to Loops
+            // Step 1: Match Faces to Loops by directory proximity
             foreach (var face in allFaces)
             {
                 if (face.Loops == null)
@@ -60,25 +60,23 @@ namespace LaserConvert
 
                 if (entityToLineNum.TryGetValue(face, out int faceLineNum))
                 {
-                    // Look for loops that come right after this face
+                    // Look for loops that come right after this face (within 10 lines)
                     foreach (var loop in allLoops)
                     {
                         if (entityToLineNum.TryGetValue(loop, out int loopLineNum))
                         {
-                            // Loops typically follow faces - check if this loop is close to the face
                             if (loopLineNum > faceLineNum && loopLineNum <= faceLineNum + 10)
                             {
                                 if (!face.Loops.Contains(loop))
-                                {
                                     face.Loops.Add(loop);
-                                }
                             }
                         }
                     }
                 }
             }
 
-            // Step 2: Resolve Loop curves using directory proximity
+            // Step 2: Match Loops to Curves by directory proximity
+            // Curves come after loops in the IGES structure
             foreach (var loop in allLoops)
             {
                 if (loop.Curves == null)
@@ -87,17 +85,20 @@ namespace LaserConvert
                 if (entityToLineNum.TryGetValue(loop, out int loopLineNum))
                 {
                     // Look for curves that come shortly after this loop
+                    // Expand range significantly since supporting entities can appear between
+                    int searchStart = loopLineNum + 1;
+                    int searchEnd = Math.Min(loopLineNum + 500, iges.EntityLineNumberMap.Keys.Max() + 1);
+                    
                     foreach (var curve in allCurves)
                     {
                         if (entityToLineNum.TryGetValue(curve, out int curveLineNum))
                         {
-                            // Curves typically follow loops in IGES structure
-                            if (curveLineNum > loopLineNum && curveLineNum <= loopLineNum + 50)
+                            // Curves should come after the loop (or rarely, before if reordered)
+                            if ((curveLineNum > loopLineNum && curveLineNum <= searchEnd) ||
+                                (curveLineNum < loopLineNum && loopLineNum - curveLineNum <= 50))
                             {
                                 if (!loop.Curves.Contains(curve))
-                                {
                                     loop.Curves.Add(curve);
-                                }
                             }
                         }
                     }
