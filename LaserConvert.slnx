@@ -11,8 +11,10 @@
     <File Path="sample files/3boxes.svg" />
     <File Path="sample files/3boxes_output.txt" />
     <File Path="sample files/all_results.txt" />
-    <File Path="sample files/testrun.bat" />
+    <File Path="sample files/testrun_igs.bat" />
+    <File Path="sample files/testrun_stp.bat" />
   </Folder>
   <Project Path="external/iges/src/IxMilia.Iges/IxMilia.Iges.csproj" />
+  <Project Path="external/step/src/IxMilia.Step/IxMilia.Step.csproj" />
   <Project Path="LaserConvert/LaserConvert.csproj" />
 </Solution>
