@@ -4,7 +4,7 @@ REM File: 1box.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="Box1">
-    <path d="M 0 0 L 150 0 L 150 170 L 0 170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 227,112 L 99,112 L 99,225 L 99,0 L 127,0 L 127,112 L 227,112 L 0,112 L 127,112 L 127,0 L 127,225 L 99,225 L 99,112 L 0,112 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -12,10 +12,10 @@ REM File: 2boxes.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="Box2">
-    <path d="M 0 0 L 110 0 L 110 170 L 0 170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 203,92 L 60,92 L 60,185 L 60,0 L 143,0 L 143,92 L 203,92 L 0,92 L 143,92 L 143,0 L 143,185 L 60,185 L 60,92 L 0,92 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box1">
-    <path d="M 0 0 L 150 0 L 150 170 L 0 170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 227,112 L 99,112 L 99,225 L 99,0 L 127,0 L 127,112 L 227,112 L 0,112 L 127,112 L 127,0 L 127,225 L 99,225 L 99,112 L 0,112 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -23,10 +23,10 @@ REM File: 3boxes.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="Box2">
-    <path d="M 0 0 L 110 0 L 110 170 L 0 170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 203,92 L 60,92 L 60,185 L 60,0 L 143,0 L 143,92 L 203,92 L 0,92 L 143,92 L 143,0 L 143,185 L 60,185 L 60,92 L 0,92 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box1">
-    <path d="M 0 0 L 150 0 L 150 170 L 0 170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 227,112 L 99,112 L 99,225 L 99,0 L 127,0 L 127,112 L 227,112 L 0,112 L 127,112 L 127,0 L 127,225 L 99,225 L 99,112 L 0,112 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -34,13 +34,13 @@ REM File: 3boxesB.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="Box2">
-    <path d="M 0 0 L 110 0 L 110 170 L 0 170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 203,92 L 60,92 L 60,185 L 60,0 L 143,0 L 143,92 L 203,92 L 0,92 L 143,92 L 143,0 L 143,185 L 60,185 L 60,92 L 0,92 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box4">
-    <path d="M 0 0 L 67 0 L 67 75 L 0 75 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 101,50 L 45,50 L 45,100 L 45,0 L 56,0 L 56,50 L 101,50 L 0,50 L 56,50 L 56,0 L 56,100 L 45,100 L 45,50 L 0,50 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box1">
-    <path d="M 0 0 L 150 0 L 150 170 L 0 170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 227,112 L 99,112 L 99,225 L 99,0 L 127,0 L 127,112 L 227,112 L 0,112 L 127,112 L 127,0 L 127,225 L 99,225 L 99,112 L 0,112 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -48,16 +48,16 @@ REM File: 4boxes.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="Box1">
-    <path d="M 0 0 L 150 0 L 150 170 L 0 170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 227,112 L 99,112 L 99,225 L 99,0 L 127,0 L 127,112 L 227,112 L 0,112 L 127,112 L 127,0 L 127,225 L 99,225 L 99,112 L 0,112 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box2">
-    <path d="M 0 0 L 110 0 L 110 170 L 0 170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 203,92 L 60,92 L 60,185 L 60,0 L 143,0 L 143,92 L 203,92 L 0,92 L 143,92 L 143,0 L 143,185 L 60,185 L 60,92 L 0,92 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box4">
-    <path d="M 0 0 L 67 0 L 67 75 L 0 75 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 101,50 L 45,50 L 45,100 L 45,0 L 56,0 L 56,50 L 101,50 L 0,50 L 56,50 L 56,0 L 56,100 L 45,100 L 45,50 L 0,50 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box5">
-    <path d="M 0 0 L 44 0 L 44 58 L 0 58 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 73,35 L 27,35 L 27,70 L 27,0 L 46,0 L 46,35 L 73,35 L 0,35 L 46,35 L 46,0 L 46,70 L 27,70 L 27,35 L 0,35 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -65,8 +65,8 @@ REM File: CBox.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="CBox">
-    <path d="M 0,0 L 0,0 L 10,0 L 10,0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 0,0 L 0,0 L 50,0 L 50,0 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 10,0 L 0,0 L 0,2 L 12,2 L 12,10 L 12,0 L 10,0 L 10,12 L 2,12 L 12,12 L 12,10 L 0,10 L 0,2 L 0,12 L 2,12 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M -33,-25 L 6,-25 L 6,-35 L 6,23 L -21,23 L -21,-25 L -33,-25 L 18,-25 L 18,13 L -21,13 L -21,23 L -21,-35 L 6,-35 L 6,13 L 18,13 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -74,8 +74,8 @@ REM File: CBoxR.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="CBoxR">
-    <path d="M 10,0 L 10,0 L 0,0 L 0,0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 0,0 L 0,0 L 50,0 L 50,0 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 10,0 L 0,0 L 0,2 L 12,2 L 12,10 L 12,0 L 10,0 L 10,12 L 2,12 L 12,12 L 12,10 L 0,10 L 0,2 L 0,12 L 2,12 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M -33,-25 L 6,-25 L 6,-35 L 6,23 L -21,23 L -21,-25 L -33,-25 L 18,-25 L 18,13 L -21,13 L -21,23 L -21,-35 L 6,-35 L 6,13 L 18,13 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -83,7 +83,7 @@ REM File: KBox.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="KBox">
-    <path d="M 170,0 L 0,0 L 170,0 L 116,0 L 116,0 L 82,0 L 82,0 L 48,0 L 48,0 L 14,0 L 14,0 L 0,0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 220,94 L 220,226 L 113,226 L 113,0 L 103,0 L 220,0 L 220,94 L 69,94 L 69,42 L 69,0 L 103,0 L 103,45 L 73,45 L 69,45 L 69,42 L 69,71 L 52,71 L 52,45 L 73,45 L 73,74 L 56,74 L 52,74 L 52,71 L 52,101 L 34,101 L 34,74 L 56,74 L 56,101 L 34,101 L 27,101 L 27,95 L 27,121 L 5,121 L 5,95 L 27,95 L 27,124 L 9,124 L 5,124 L 5,121 L 5,136 L 0,136 L 0,124 L 9,124 L 113,124 L 113,226 L 0,226 L 0,136 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -135,7 +135,7 @@ REM File: KCBox.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="KCBox">
-    <path d="M 0 0 L 3 0 L 3 6 L 0 6 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 3,1 L 0,1 L 0,2 L 0,1 L 0,2 L 3,2 L 3,0 L 0,0 L 0,1 L 3,1 L 3,0 L 3,1 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -209,8 +209,6 @@ Found 1 solids
 [TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
 [SVG] Box1: Z range [74.4, 77.4], top=4 verts, bottom=4 verts
 [SVG] Box1: Found 4 vertices on top face
-[SVG] Box1: Normalized top face bounds: 150 x 170
-[SVG] Box1: Outer bounds X:[-150.0,0.0] Y:[-119.8,50.2]
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.svg
  
 REM File: 2boxes_output.txt 
@@ -240,14 +238,10 @@ Found 2 solids
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
 [SVG] Box2: Z range [-3.0, 0.0], top=4 verts, bottom=4 verts
 [SVG] Box2: Found 4 vertices on top face
-[SVG] Box2: Normalized top face bounds: 110 x 170
-[SVG] Box2: Outer bounds X:[-82.0,28.2] Y:[-85.0,85.0]
 [TRANSFORM] Thin dimension: -77.9,-117.6,0.0 -> -76.6,-120.3,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
 [SVG] Box1: Z range [74.4, 77.4], top=4 verts, bottom=4 verts
 [SVG] Box1: Found 4 vertices on top face
-[SVG] Box1: Normalized top face bounds: 150 x 170
-[SVG] Box1: Outer bounds X:[-150.0,0.0] Y:[-119.8,50.2]
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\2boxes.svg
  
 REM File: 3boxesB_output.txt 
@@ -285,20 +279,14 @@ Found 3 solids
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
 [SVG] Box2: Z range [-3.0, 0.0], top=4 verts, bottom=4 verts
 [SVG] Box2: Found 4 vertices on top face
-[SVG] Box2: Normalized top face bounds: 110 x 170
-[SVG] Box2: Outer bounds X:[-82.0,28.2] Y:[-85.0,85.0]
 [TRANSFORM] Thin dimension: -13.2,-14.5,51.8 -> -14.5,-14.5,49.1 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
 [SVG] Box4: Z range [-41.0, -38.0], top=4 verts, bottom=4 verts
 [SVG] Box4: Found 4 vertices on top face
-[SVG] Box4: Normalized top face bounds: 67 x 75
-[SVG] Box4: Outer bounds X:[-82.0,-14.5] Y:[-109.1,-34.3]
 [TRANSFORM] Thin dimension: -77.9,-117.6,0.0 -> -76.6,-120.3,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
 [SVG] Box1: Z range [74.4, 77.4], top=4 verts, bottom=4 verts
 [SVG] Box1: Found 4 vertices on top face
-[SVG] Box1: Normalized top face bounds: 150 x 170
-[SVG] Box1: Outer bounds X:[-150.0,0.0] Y:[-119.8,50.2]
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxesB.svg
  
 REM File: 3boxes_output.txt 
@@ -334,14 +322,10 @@ Found 3 solids
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
 [SVG] Box2: Z range [-3.0, 0.0], top=4 verts, bottom=4 verts
 [SVG] Box2: Found 4 vertices on top face
-[SVG] Box2: Normalized top face bounds: 110 x 170
-[SVG] Box2: Outer bounds X:[-82.0,28.2] Y:[-85.0,85.0]
 [TRANSFORM] Thin dimension: -77.9,-117.6,0.0 -> -76.6,-120.3,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
 [SVG] Box1: Z range [74.4, 77.4], top=4 verts, bottom=4 verts
 [SVG] Box1: Found 4 vertices on top face
-[SVG] Box1: Normalized top face bounds: 150 x 170
-[SVG] Box1: Outer bounds X:[-150.0,0.0] Y:[-119.8,50.2]
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxes.svg
  
 REM File: 4boxes_output.txt 
@@ -390,26 +374,18 @@ Found 4 solids
 [TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
 [SVG] Box1: Z range [74.4, 77.4], top=4 verts, bottom=4 verts
 [SVG] Box1: Found 4 vertices on top face
-[SVG] Box1: Normalized top face bounds: 150 x 170
-[SVG] Box1: Outer bounds X:[-150.0,0.0] Y:[-119.8,50.2]
 [TRANSFORM] Thin dimension: -85.0,28.2,3.0 -> -85.0,28.2,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
 [SVG] Box2: Z range [-3.0, 0.0], top=4 verts, bottom=4 verts
 [SVG] Box2: Found 4 vertices on top face
-[SVG] Box2: Normalized top face bounds: 110 x 170
-[SVG] Box2: Outer bounds X:[-82.0,28.2] Y:[-85.0,85.0]
 [TRANSFORM] Thin dimension: -13.2,-14.5,51.8 -> -14.5,-14.5,49.1 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
 [SVG] Box4: Z range [-41.0, -38.0], top=4 verts, bottom=4 verts
 [SVG] Box4: Found 4 vertices on top face
-[SVG] Box4: Normalized top face bounds: 67 x 75
-[SVG] Box4: Outer bounds X:[-82.0,-14.5] Y:[-109.1,-34.3]
 [TRANSFORM] Thin dimension: -28.7,25.5,87.4 -> -30.0,23.0,86.4 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=53.9ø
 [SVG] Box5: Z range [-36.4, -33.4], top=4 verts, bottom=4 verts
 [SVG] Box5: Found 4 vertices on top face
-[SVG] Box5: Normalized top face bounds: 44 x 58
-[SVG] Box5: Outer bounds X:[28.7,73.2] Y:[49.3,106.9]
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\4boxes.svg
  
 REM File: CBoxR_output.txt 
@@ -428,10 +404,6 @@ Found 1 solids
 [TRANSFORM] Normalizing edge to X-axis: angle=-54.3ø
 [SVG] CBoxR: Z range [-72.9, -69.9], top=2 verts, bottom=8 verts
 [SVG] CBoxR: Found 8 vertices on top face
-[TRANSFORM] Thin dimension: 10.3,-7.5,82.0 -> 20.0,-8.8,79.8 (10.0mm)
-[TRANSFORM] Normalizing edge to X-axis: angle=-65.2ø
-[TRANSFORM] Thin dimension: 45.3,-7.8,76.7 -> 6.6,-2.7,85.8 (40.0mm)
-[TRANSFORM] Normalizing edge to X-axis: angle=50.2ø
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBoxR.svg
  
 REM File: CBox_output.txt 
@@ -450,10 +422,6 @@ Found 1 solids
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
 [SVG] CBox: Z range [-3.0, 0.0], top=8 verts, bottom=8 verts
 [SVG] CBox: Found 8 vertices on top face
-[TRANSFORM] Thin dimension: 5.0,-15.0,3.0 -> 15.0,-15.0,3.0 (10.0mm)
-[TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
-[TRANSFORM] Thin dimension: 40.0,-50.0,3.0 -> 0.0,-50.0,3.0 (40.0mm)
-[TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBox.svg
  
 REM File: CBox_test.txt 
@@ -564,8 +532,6 @@ Found 1 solids
 [TRANSFORM] Normalizing edge to X-axis: angle=24.6ø
 [SVG] KBox: Z range [19.7, 22.7], top=12 verts, bottom=12 verts
 [SVG] KBox: Found 12 vertices on top face
-[TRANSFORM] Thin dimension: -29.4,-35.1,150.0 -> -29.4,-35.1,145.0 (5.0mm)
-[TRANSFORM] Normalizing edge to X-axis: angle=-24.6ø
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox.svg
  
 REM File: KCBox_output.txt 
@@ -584,8 +550,6 @@ Found 1 solids
 [TRANSFORM] Normalizing edge to X-axis: angle=56.2ø
 [SVG] KCBox: Z range [-35.9, 22.1], top=4 verts, bottom=4 verts
 [SVG] KCBox: Found 4 vertices on top face
-[SVG] KCBox: Normalized top face bounds: 3 x 6
-[SVG] KCBox: Outer bounds X:[-19.3,-16.3] Y:[-23.8,-18.0]
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.svg
  
 REM File: output.txt 

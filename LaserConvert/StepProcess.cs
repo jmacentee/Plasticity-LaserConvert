@@ -85,30 +85,99 @@ namespace LaserConvert
                         mainFace = faces[face2Idx];
                     }
 
-                    bool complex = topFaceVerts.Count > 8 || (mainFace?.Bounds?.Count ?? 0) > 1;
-                    if (complex && mainFace != null)
+                    bool complex = topFaceVerts.Count > 8 || (mainFace?.Bounds?.Count ?? 0) > 0;
+                    if (mainFace != null && complex)
                     {
-                        // Use STEP bounds: first is outer, rest are holes
-                        var (outer3D, holeLoops3D) = StepTopologyResolver.ExtractFaceWithHoles(mainFace, stepFile);
-                        if (outer3D.Count >= 4)
-                        {
-                            // Rotate outer/holes with same transform and render ordered edges
-                            var outerRotNorm = GeometryTransform.RotateAndNormalize(outer3D);
-                            var outerPath = BuildAxisAlignedPathFromOrderedLoop(outerRotNorm);
-                            if (!string.IsNullOrEmpty(outerPath))
-                            {
-                                svg.Path(outerPath, strokeWidth: 0.2, fill: "none", stroke: "#000");
-                            }
+                        // Build projection frame from all vertices of the main face
+                        var mainFaceAllVerts = StepTopologyResolver.ExtractVerticesFromFace(mainFace, stepFile);
+                        var frame = BuildProjectionFrame(mainFaceAllVerts);
 
-                            foreach (var hole3D in holeLoops3D)
+                        // Helper: project a bound to ordered 2D points
+                        List<(double X, double Y)> ProjectBoundPoints(StepFaceBound b)
+                        {
+                            var edgeLoop = GetEdgeLoopFromBound(b);
+                            var pts2D = new List<(double, double)>();
+                            if (edgeLoop?.EdgeList == null) return pts2D;
+                            foreach (var orientedEdge in edgeLoop.EdgeList)
                             {
-                                if (hole3D.Count < 3) continue;
-                                var holeRotNorm = GeometryTransform.RotateAndNormalize(hole3D);
-                                var holePath = BuildAxisAlignedPathFromOrderedLoop(holeRotNorm);
-                                if (!string.IsNullOrEmpty(holePath))
+                                var edgeCurve = orientedEdge?.EdgeElement;
+                                if (edgeCurve == null) continue;
+                                StepVertexPoint startVertex = null, endVertex = null;
+                                foreach (var prop in edgeCurve.GetType().GetProperties())
                                 {
-                                    svg.Path(holePath, strokeWidth: 0.2, fill: "none", stroke: "#FF0000");
+                                    if (prop.Name.Contains("EdgeStart") || prop.Name.Contains("Start"))
+                                        startVertex = prop.GetValue(edgeCurve) as StepVertexPoint;
+                                    if (prop.Name.Contains("EdgeEnd") || prop.Name.Contains("End"))
+                                        endVertex = prop.GetValue(edgeCurve) as StepVertexPoint;
                                 }
+                                if (startVertex?.Location != null)
+                                {
+                                    var s3 = new Vec3(startVertex.Location.X, startVertex.Location.Y, startVertex.Location.Z);
+                                    var s2 = Project(frame, s3);
+                                    pts2D.Add((s2.X, s2.Y));
+                                }
+                                if (endVertex?.Location != null)
+                                {
+                                    var e3 = new Vec3(endVertex.Location.X, endVertex.Location.Y, endVertex.Location.Z);
+                                    var e2 = Project(frame, e3);
+                                    pts2D.Add((e2.X, e2.Y));
+                                }
+                            }
+                            return pts2D;
+                        }
+
+                        // Project outer and holes
+                        var outerPts = ProjectBoundPoints(mainFace.Bounds[0]);
+                        if (outerPts.Count >= 4)
+                        {
+                            // Normalize: translate so min x/y becomes 0,0; round to whole mm
+                            var minOX = outerPts.Min(p => p.X);
+                            var minOY = outerPts.Min(p => p.Y);
+                            var normOuter = outerPts.Select(p => ((long)Math.Round(p.X - minOX), (long)Math.Round(p.Y - minOY))).ToList();
+                            // Build path following point order; snap near-axis segments
+                            string BuildPath(List<(long X, long Y)> pts)
+                            {
+                                var sbp = new StringBuilder();
+                                if (pts.Count == 0) return string.Empty;
+                                sbp.Append($"M {pts[0].X},{pts[0].Y}");
+                                for (int i = 1; i < pts.Count; i++)
+                                {
+                                    var a = pts[i - 1];
+                                    var b = pts[i];
+                                    if (a.X == b.X || a.Y == b.Y)
+                                    {
+                                        sbp.Append($" L {b.X},{b.Y}");
+                                    }
+                                    else
+                                    {
+                                        var dx = Math.Abs(b.X - a.X);
+                                        var dy = Math.Abs(b.Y - a.Y);
+                                        if (dx >= dy)
+                                        {
+                                            sbp.Append($" L {b.X},{a.Y}");
+                                            sbp.Append($" L {b.X},{b.Y}");
+                                        }
+                                        else
+                                        {
+                                            sbp.Append($" L {a.X},{b.Y}");
+                                            sbp.Append($" L {b.X},{b.Y}");
+                                        }
+                                    }
+                                }
+                                sbp.Append(" Z");
+                                return sbp.ToString();
+                            }
+                            var outerPath = BuildPath(normOuter);
+                            svg.Path(outerPath, strokeWidth: 0.2, fill: "none", stroke: "#000");
+
+                            // Holes: subsequent bounds
+                            for (int bi = 1; bi < mainFace.Bounds.Count; bi++)
+                            {
+                                var holePts = ProjectBoundPoints(mainFace.Bounds[bi]);
+                                if (holePts.Count < 3) continue;
+                                var normHole = holePts.Select(p => ((long)Math.Round(p.X - minOX), (long)Math.Round(p.Y - minOY))).ToList();
+                                var holePath = BuildPath(normHole);
+                                svg.Path(holePath, strokeWidth: 0.2, fill: "none", stroke: "#FF0000");
                             }
 
                             svg.EndGroup();
@@ -275,6 +344,71 @@ namespace LaserConvert
             }
             sb.Append(" Z");
             return sb.ToString();
+        }
+
+        private struct Vec2
+        {
+            public readonly double X, Y;
+            public Vec2(double x, double y) { X = x; Y = y; }
+        }
+
+        private struct Vec3
+        {
+            public readonly double X, Y, Z;
+            public Vec3(double x, double y, double z) { X = x; Y = y; Z = z; }
+            public double Length => Math.Sqrt(X * X + Y * Y + Z * Z);
+            public static Vec3 operator +(Vec3 a, Vec3 b) => new Vec3(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
+            public static Vec3 operator -(Vec3 a, Vec3 b) => new Vec3(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
+            public static Vec3 operator *(double s, Vec3 a) => new Vec3(s * a.X, s * a.Y, s * a.Z);
+        }
+
+        private static double Dot(Vec3 a, Vec3 b) => a.X * b.X + a.Y * b.Y + a.Z * b.Z;
+        private static Vec3 Cross(Vec3 a, Vec3 b) => new Vec3(
+            a.Y * b.Z - a.Z * b.Y,
+            a.Z * b.X - a.X * b.Z,
+            a.X * b.Y - a.Y * b.X
+        );
+        private static Vec3 Normalize(Vec3 v)
+        {
+            var len = v.Length;
+            return len > 1e-12 ? (1.0 / len) * v : v;
+        }
+
+        private static (Vec3 Origin, Vec3 Normal, Vec3 U, Vec3 V) BuildProjectionFrame(List<(double X, double Y, double Z)> vertices)
+        {
+            if (vertices.Count < 3)
+                return (new Vec3(0, 0, 0), new Vec3(0, 0, 1), new Vec3(1, 0, 0), new Vec3(0, 1, 0));
+            var origin = new Vec3(vertices.Average(v => v.X), vertices.Average(v => v.Y), vertices.Average(v => v.Z));
+            var v0 = new Vec3(vertices[0].X, vertices[0].Y, vertices[0].Z) - origin;
+            var v1 = new Vec3(0, 0, 0);
+            for (int i = 1; i < vertices.Count; i++)
+            {
+                v1 = new Vec3(vertices[i].X, vertices[i].Y, vertices[i].Z) - origin;
+                if (Math.Sqrt(v1.X * v1.X + v1.Y * v1.Y + v1.Z * v1.Z) > 0.01) break;
+            }
+            var normal = Normalize(Cross(v0, v1));
+            var u = Normalize(v0);
+            var vvec = Normalize(Cross(normal, u));
+            return (origin, normal, u, vvec);
+        }
+
+        private static Vec2 Project((Vec3 Origin, Vec3 Normal, Vec3 U, Vec3 V) frame, Vec3 point)
+        {
+            var rel = point - frame.Origin;
+            return new Vec2(Dot(rel, frame.U), Dot(rel, frame.V));
+        }
+
+        private static StepEdgeLoop GetEdgeLoopFromBound(StepFaceBound bound)
+        {
+            var props = bound.GetType().GetProperties();
+            foreach (var prop in props)
+            {
+                if (prop.PropertyType == typeof(StepEdgeLoop) || prop.PropertyType.Name.Contains("Loop"))
+                {
+                    return prop.GetValue(bound) as StepEdgeLoop;
+                }
+            }
+            return null;
         }
     }
 }

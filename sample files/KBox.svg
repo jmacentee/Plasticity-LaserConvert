@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="KBox">
-    <path d="M 170,0 L 0,0 L 170,0 L 116,0 L 116,0 L 82,0 L 82,0 L 48,0 L 48,0 L 14,0 L 14,0 L 0,0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 220,94 L 220,226 L 113,226 L 113,0 L 103,0 L 220,0 L 220,94 L 69,94 L 69,42 L 69,0 L 103,0 L 103,45 L 73,45 L 69,45 L 69,42 L 69,71 L 52,71 L 52,45 L 73,45 L 73,74 L 56,74 L 52,74 L 52,71 L 52,101 L 34,101 L 34,74 L 56,74 L 56,101 L 34,101 L 27,101 L 27,95 L 27,121 L 5,121 L 5,95 L 27,95 L 27,124 L 9,124 L 5,124 L 5,121 L 5,136 L 0,136 L 0,124 L 9,124 L 113,124 L 113,226 L 0,226 L 0,136 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>

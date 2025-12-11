@@ -13,6 +13,4 @@ Found 1 solids
 [TRANSFORM] Normalizing edge to X-axis: angle=56.2ø
 [SVG] KCBox: Z range [-35.9, 22.1], top=4 verts, bottom=4 verts
 [SVG] KCBox: Found 4 vertices on top face
-[SVG] KCBox: Normalized top face bounds: 3 x 6
-[SVG] KCBox: Outer bounds X:[-19.3,-16.3] Y:[-23.8,-18.0]
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.svg
