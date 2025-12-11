@@ -13,7 +13,8 @@ Found 1 solids
 [TRANSFORM] Normalizing edge to X-axis: angle=-54.3ø
 [SVG] CBoxR: Z range [-72.9, -69.9], top=2 verts, bottom=8 verts
 [SVG] CBoxR: Found 8 vertices on top face
-[SVG] CBoxR: Normalized top face bounds: 50 x 40
-[SVG] CBoxR: Outer bounds X:[-6.1,43.9] Y:[-12.7,27.3]
-[SVG] Main face Z level: 73.26
+[TRANSFORM] Thin dimension: 10.3,-7.5,82.0 -> 20.0,-8.8,79.8 (10.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=-65.2ø
+[TRANSFORM] Thin dimension: 45.3,-7.8,76.7 -> 6.6,-2.7,85.8 (40.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=50.2ø
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBoxR.svg

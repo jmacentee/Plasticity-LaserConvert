@@ -14,12 +14,8 @@ Found 1 solids
 [FILTER] KBox: dimensions [3.0, 150.0, 155.8] - PASS
 [TRANSFORM] Thin dimension: -29.4,-35.1,150.0 -> -28.2,-37.9,150.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=24.6ø
-[SVG] KBox: Complex shape with 24 vertices
-[SVG]   After rotation - X:[-94.7,75.3] Y:[-0.0,150.0] Z:[19.7,22.7]
-[SVG] KBox: Found 24 vertices on top face
-[SVG] KBox: Dimensions - X:170.0 Y:150.0 Z:3.0
-[SVG] KBox: Rendering complex boundary with 24 vertices
-[SVG] KBox: Outer verts: 14, Inner verts: 10, Avg dist: 68.1
-[SVG] KBox: Found 1 hole cluster(s)
-[SVG] KBox: Hole #1 too close to edges (0.0), skipping
+[SVG] KBox: Z range [19.7, 22.7], top=12 verts, bottom=12 verts
+[SVG] KBox: Found 12 vertices on top face
+[TRANSFORM] Thin dimension: -29.4,-35.1,150.0 -> -29.4,-35.1,145.0 (5.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=-24.6ø
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox.svg

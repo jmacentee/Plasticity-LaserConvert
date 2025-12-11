@@ -28,7 +28,7 @@ REM This file contains both the previous Box1 and a second box named Box2 which 
 REM This file contains the previous two boxes as well as a third box named Box3 which is 167x170x150mm which should be filtered out as too large. The output should be identical to the previous test.
 "C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxes.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxes.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxes_output.txt"
 
-REM This file contains the previous Box1 and Box2 as well as a third box named Box4 which is 67.488x74.819x3mm. The output should be the same as 2boxes.svg with the addition of Box4 which is 64x74mm.
+REM This file contains the previous Box1 and Box2 as well as a third box named Box4 which is 67.488x74.819x3mm. The output should be the same as 2boxes.svg with the addition of Box4 which is 67x75mm.
 "C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxesB.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxesB.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxesB_output.txt"
 
 REM This file contains the previous Box1 and Box2 and Box4 fourth box named Box5 which is 44.445x57.582x3mm. The output should be the same as 3boxesB.svg with the addition of Box5 which is 44x58mm.
