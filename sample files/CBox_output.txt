@@ -1,0 +1,15 @@
+Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBox.stp
+File loaded. Total items: 290
+Found 1 solids
+[TOPO] Processing 10 faces
+[TOPO] Found pair of faces with separation: 3.0mm
+[TOPO] Extracted 16 unique vertices
+[TOPO] Vertex ranges: X[0.0,40.0] Y[-50.0,0.0] Z[0.0,3.0]
+[TOPO] Computed dimensions: 40.0 x 50.0 x 3.0
+[TOPO] Thin dimension detected from face separation: 3.0mm
+[TOPO] Adjusted dimensions: 3.0 x 40.0 x 50.0
+[FILTER] CBox: dimensions [3.0, 40.0, 50.0] - PASS
+[TRANSFORM] Thin dimension: 5.0,-15.0,3.0 -> 5.0,-15.0,0.0 (3.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
+[SVG] CBox: Normalized top face bounds: 50 x 40
+Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBox.svg

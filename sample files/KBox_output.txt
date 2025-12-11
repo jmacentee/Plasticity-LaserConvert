@@ -1,0 +1,18 @@
+Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox.stp
+File loaded. Total items: 418
+Found 1 solids
+[TOPO] Processing 14 faces
+[TOPO] Found pair of faces with separation: 3.0mm
+[TOPO] Extracted 24 unique vertices
+[TOPO] Vertex ranges: X[-77.9,77.9] Y[-60.1,13.5] Z[0.0,150.0]
+[TOPO] Computed dimensions: 155.8 x 73.6 x 150.0
+[TOPO] WARNING: Small face separation (3.0mm) but large Z dimension (150.0mm) - faces may not be parallel!
+[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.
+[TOPO] Recomputed with all faces: 155.8 x 73.6 x 150.0
+[TOPO] Thin dimension detected from face separation: 3.0mm
+[TOPO] Adjusted dimensions: 3.0 x 150.0 x 155.8
+[FILTER] KBox: dimensions [3.0, 150.0, 155.8] - PASS
+[TRANSFORM] Thin dimension: -29.4,-35.1,150.0 -> -28.2,-37.9,150.0 (3.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=24.6ø
+[SVG] KBox: Normalized top face bounds: 170 x 150
+Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox.svg
