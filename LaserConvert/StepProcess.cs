@@ -155,8 +155,8 @@ namespace LaserConvert
                                 {
                                     Console.WriteLine($"[SVG] {name}: Rendering complex boundary with {projectedVerts.Count} vertices");
                                     svg.Path(boundaryPath, strokeWidth: 0.2, fill: "none", stroke: "#000");
-                                    // For complex shapes, still try to detect interior holes using the projected vertices
-                                    DetectAndRenderCutouts(svg, faces, vertices, projectedVerts, stepFile, double.NaN, double.NaN);
+                                    // For complex shapes, try to detect interior holes (not edge-based cutouts)
+                                    DetectAndRenderInteriorHolesOnly(svg, projectedVerts, name);
                                     svg.EndGroup();
                                     continue;
                                 }
@@ -720,6 +720,96 @@ namespace LaserConvert
             sb.Append(" Z");
             
             return sb.ToString();
+        }
+        
+        /// <summary>
+        /// Detect and render potential interior holes (not cutouts on the edge) for complex shapes.
+        /// This attempts to find clusters of vertices that form rectangular holes inside the shape.
+        /// </summary>
+        private static void DetectAndRenderInteriorHolesOnly(SvgBuilder svg, List<GeometryTransform.Vec3> projectedVerts, string name)
+        {
+            if (projectedVerts.Count < 12)
+            {
+                Console.WriteLine($"[SVG] {name}: Insufficient vertices for hole detection ({projectedVerts.Count} < 12)");
+                return;
+            }
+            
+            // Find bounding box of all vertices
+            var minX = projectedVerts.Min(v => v.X);
+            var maxX = projectedVerts.Max(v => v.X);
+            var minY = projectedVerts.Min(v => v.Y);
+            var maxY = projectedVerts.Max(v => v.Y);
+            
+            var width = maxX - minX;
+            var height = maxY - minY;
+            var minDim = Math.Min(width, height);
+            
+            // Centroid of all vertices
+            var centroidX = projectedVerts.Average(v => v.X);
+            var centroidY = projectedVerts.Average(v => v.Y);
+            
+            // Find vertices by distance from centroid
+            var distFromCenter = projectedVerts
+                .Select(v => new
+                {
+                    V = v,
+                    Dist = Math.Sqrt((v.X - centroidX) * (v.X - centroidX) + (v.Y - centroidY) * (v.Y - centroidY))
+                })
+                .ToList();
+            
+            var avgDist = distFromCenter.Average(d => d.Dist);
+            var outerVerts = distFromCenter.Where(d => d.Dist >= avgDist * 0.75).Select(d => d.V).ToList();
+            var innerVerts = distFromCenter.Where(d => d.Dist < avgDist * 0.75).Select(d => d.V).ToList();
+            
+            Console.WriteLine($"[SVG] {name}: Outer verts: {outerVerts.Count}, Inner verts: {innerVerts.Count}, Avg dist: {avgDist:F1}");
+            
+            if (innerVerts.Count < 4)
+            {
+                Console.WriteLine($"[SVG] {name}: Insufficient inner vertices for holes");
+                return;
+            }
+            
+            // For interior holes, check if the inner cluster is WELL SEPARATED from edges
+            var innerMinX = innerVerts.Min(v => v.X);
+            var innerMaxX = innerVerts.Max(v => v.X);
+            var innerMinY = innerVerts.Min(v => v.Y);
+            var innerMaxY = innerVerts.Max(v => v.Y);
+            
+            // Distance from inner cluster to each edge
+            var distToLeftEdge = innerMinX - minX;
+            var distToRightEdge = maxX - innerMaxX;
+            var distToTopEdge = maxY - innerMaxY;
+            var distToBottomEdge = innerMinY - minY;
+            
+            var minDistToEdge = Math.Min(Math.Min(distToLeftEdge, distToRightEdge), 
+                                         Math.Min(distToTopEdge, distToBottomEdge));
+            
+            Console.WriteLine($"[SVG] {name}: Min distance to edge: {minDistToEdge:F1}mm, Min dimension: {minDim:F1}mm");
+            
+            // Only treat as a hole if it's well-separated from the edges
+            // If the hole is very close to an edge, it's probably part of an edge cutout (like a tab)
+            if (minDistToEdge < minDim * 0.10)  // Less than 10% of the smallest dimension away from edge
+            {
+                Console.WriteLine($"[SVG] {name}: Inner cluster is too close to edges ({minDistToEdge:F1} < {minDim * 0.10:F1}), likely edge-based cutouts not holes");
+                return;
+            }
+            
+            // This is a true interior hole - render it in RED
+            var holeW = (long)Math.Round(innerMaxX - innerMinX);
+            var holeH = (long)Math.Round(innerMaxY - innerMinY);
+            
+            if (holeW > 2 && holeH > 2)
+            {
+                var outerMinXc = outerVerts.Min(v => v.X);
+                var outerMinYc = outerVerts.Min(v => v.Y);
+                
+                var holeX = (long)Math.Round(innerMinX - outerMinXc);
+                var holeY = (long)Math.Round(innerMinY - outerMinYc);
+                
+                var pathData = $"M {holeX} {holeY} L {holeX + holeW} {holeY} L {holeX + holeW} {holeY + holeH} L {holeX} {holeY + holeH} Z";
+                svg.Path(pathData, strokeWidth: 0.2, fill: "none", stroke: "#FF0000");
+                Console.WriteLine($"[SVG] {name}: Rendered RED interior hole: {holeW} x {holeH} at ({holeX}, {holeY})");
+            }
         }
     }
 }
