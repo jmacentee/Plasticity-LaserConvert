@@ -131,7 +131,7 @@ REM File: KBox.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="KBox">
-    <path d="M 170,0 L 0,0 L 170,0 L 116,0 L 116,0 L 82,0 L 82,0 L 48,0 L 48,0 L 14,0 L 14,0 L 0,0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 0,150 L 54,150 L 54,145 L 88,145 L 88,140 L 122,140 L 122,150 L 156,150 L 156,145 L 170,145 L 170,0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -502,22 +502,19 @@ Found 1 solids
 [TRANSFORM] Normalizing edge to X-axis: angle=24.6ø
 [SVG] KBox: Z range [19.7, 22.7], top=12 verts, bottom=12 verts
 [SVG] KBox: Found 12 vertices on top face
-[SVG] KBox: Extracted 12 vertices from complex face (expected at least 12)
-[TRANSFORM] Thin dimension: -29.4,-35.1,150.0 -> -29.4,-35.1,145.0 (5.0mm)
-[TRANSFORM] Normalizing edge to X-axis: angle=-24.6ø
-[SVG] KBox: 12 vertices in perimeter order:
-[SVG]   [0] (170,0) -> (0,0) [OK]
-[SVG]   [1] (0,0) -> (170,0) [OK]
-[SVG]   [2] (170,0) -> (116,0) [OK]
-[SVG]   [3] (116,0) -> (116,0) [OK]
-[SVG]   [4] (116,0) -> (82,0) [OK]
-[SVG]   [5] (82,0) -> (82,0) [OK]
-[SVG]   [6] (82,0) -> (48,0) [OK]
-[SVG]   [7] (48,0) -> (48,0) [OK]
-[SVG]   [8] (48,0) -> (14,0) [OK]
-[SVG]   [9] (14,0) -> (14,0) [OK]
-[SVG]   [10] (14,0) -> (0,0) [OK]
-[SVG]   [11] (0,0) -> (170,0) [OK]
+[SVG] KBox: Reordered 12 vertices:
+[SVG]   [0] (0,0) -> (0,150) [OK]
+[SVG]   [1] (0,150) -> (54,150) [OK]
+[SVG]   [2] (54,150) -> (54,145) [OK]
+[SVG]   [3] (54,145) -> (88,145) [OK]
+[SVG]   [4] (88,145) -> (88,140) [OK]
+[SVG]   [5] (88,140) -> (122,140) [OK]
+[SVG]   [6] (122,140) -> (122,150) [OK]
+[SVG]   [7] (122,150) -> (156,150) [OK]
+[SVG]   [8] (156,150) -> (156,145) [OK]
+[SVG]   [9] (156,145) -> (170,145) [OK]
+[SVG]   [10] (170,145) -> (170,0) [OK]
+[SVG]   [11] (170,0) -> (0,0) [OK]
 [SVG] KBox: Rendering complex boundary with 12 vertices (no hole detection for complex shapes)
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox.svg
  
