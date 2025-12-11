@@ -56,6 +56,7 @@ REM This file is the same as CBox.stp but repositioned rotated in 3d space.  The
 
 REM This file contains a solid which is rotated in 3d space, has cutouts and tabs along the outer edge, and has two holes cut into it.
 REM The approximate correct output for this file can be found in KCBox_corrected.svg.  This KCBox_corrected.svg sample file may have rounding errors which do not need to be duplicated exactly.
+REM the overall width is 40mm.  the overall height is 58mm including the tab at the bottom and the tall tab at the top.  the left side is only 50mm without those tabs.  the top hole is 10x10 and is 5mm from the top and left sides (not counting the tabs).
 "C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox_output.txt"
 
 
