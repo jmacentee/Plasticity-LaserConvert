@@ -158,7 +158,8 @@ namespace LaserConvert
         }
 
         /// <summary>
-        /// Project rotated face vertices to 2D SVG path by sorting them in order.
+        /// Project rotated face vertices to 2D SVG path by sorting them in order and normalizing to axis-aligned.
+        /// Translates so minimum point is at (0,0) and rounds coordinates.
         /// </summary>
         private static string ProjectRotatedFaceToSvg(List<GeometryTransform.Vec3> faceVertices)
         {
@@ -173,19 +174,36 @@ namespace LaserConvert
                 .OrderBy(v => Math.Atan2(v.Y - centroidY, v.X - centroidX))
                 .ToList();
             
+            // Find bounding box
+            var minX = sortedVerts.Min(v => v.X);
+            var maxX = sortedVerts.Max(v => v.X);
+            var minY = sortedVerts.Min(v => v.Y);
+            var maxY = sortedVerts.Max(v => v.Y);
+            
+            // Normalize: translate so min is at (0, 0)
+            var normalizedVerts = sortedVerts
+                .Select(v => new GeometryTransform.Vec3(
+                    Math.Round(v.X - minX),
+                    Math.Round(v.Y - minY),
+                    v.Z
+                ))
+                .ToList();
+            
+            Console.WriteLine($"[SVG] Normalized dimensions: {Math.Round(maxX - minX)} x {Math.Round(maxY - minY)}");
+            
             var sb = new StringBuilder();
             bool first = true;
             
-            foreach (var vert in sortedVerts)
+            foreach (var vert in normalizedVerts)
             {
                 if (first)
                 {
-                    sb.Append($"M {Fmt(vert.X)} {Fmt(vert.Y)} ");
+                    sb.Append($"M {(long)vert.X} {(long)vert.Y} ");
                     first = false;
                 }
                 else
                 {
-                    sb.Append($"L {Fmt(vert.X)} {Fmt(vert.Y)} ");
+                    sb.Append($"L {(long)vert.X} {(long)vert.Y} ");
                 }
             }
             
