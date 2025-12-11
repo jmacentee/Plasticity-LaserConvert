@@ -57,8 +57,52 @@ namespace LaserConvert
                 {
                     svg.BeginGroup(name);
 
-                    // Rotate vertices to align thin dimension with Z and normalize one edge to X
-                    var (normalizedVertices, rotMatrix1, rotMatrix2) = GeometryTransform.RotateAndNormalizeWithMatrices(vertices);
+                    // Compute rotation from thin face pair (guaranteed to align with thin dimension)
+                    // For complex shapes, the FindThinDimension algorithm on all vertices may find spurious pairs
+                    double[,] rotMatrix1 = null;
+                    double[,] rotMatrix2 = null;
+                    List<GeometryTransform.Vec3> normalizedVertices = null;
+                    
+                    if (faces.Count > 20 && face1Idx >= 0 && face1Idx < faces.Count && face2Idx >= 0 && face2Idx < faces.Count)
+                    {
+                        // For complex shapes: get rotation from the identified thin faces only
+                        var thinFaceVerts = new List<(double X, double Y, double Z)>();
+                        thinFaceVerts.AddRange(StepTopologyResolver.ExtractVerticesFromFace(faces[face1Idx], stepFile));
+                        thinFaceVerts.AddRange(StepTopologyResolver.ExtractVerticesFromFace(faces[face2Idx], stepFile));
+                        if (thinFaceVerts.Count > 0)
+                        {
+                            // Compute rotation matrices from thin faces
+                            var (_, m1, m2) = GeometryTransform.RotateAndNormalizeWithMatrices(thinFaceVerts);
+                            rotMatrix1 = m1;
+                            rotMatrix2 = m2;
+                            Console.WriteLine($"[SVG] {name}: Computing rotation from {thinFaceVerts.Count} vertices in thin faces");
+                        }
+                    }
+                    
+                    // If we didn't get rotation matrices, compute them from all vertices
+                    if (rotMatrix1 == null || rotMatrix2 == null)
+                    {
+                        var (_, m1, m2) = GeometryTransform.RotateAndNormalizeWithMatrices(vertices);
+                        rotMatrix1 = m1;
+                        rotMatrix2 = m2;
+                    }
+                    
+                    // Now apply these rotation matrices to ALL vertices
+                    normalizedVertices = vertices
+                        .Select(v => {
+                            var vec = new GeometryTransform.Vec3(v.X, v.Y, v.Z);
+                            var rot1 = ApplyMatrix(vec, rotMatrix1);
+                            // For complex shapes, skip the edge-alignment normalization (rotMatrix2)
+                            // since the thin-face vertex set may not have enough top vertices for good alignment
+                            if (faces.Count > 20)
+                            {
+                                return rot1;
+                            }
+                            var rot2 = ApplyMatrix(rot1, rotMatrix2);
+                            return rot2;
+                        })
+                        .ToList();
+
                     if (normalizedVertices.Count < 4)
                     {
                         svg.EndGroup();
@@ -67,12 +111,21 @@ namespace LaserConvert
 
                     var maxZ = normalizedVertices.Max(v => v.Z);
                     var minZ = normalizedVertices.Min(v => v.Z);
-                    var topPlaneVerts = normalizedVertices.Where(v => Math.Abs(v.Z - maxZ) < 1.0).ToList();
-                    var bottomPlaneVerts = normalizedVertices.Where(v => Math.Abs(v.Z - minZ) < 1.0).ToList();
-                    var topFaceVerts = (topPlaneVerts.Count >= bottomPlaneVerts.Count) ? topPlaneVerts : bottomPlaneVerts;
-
-                    Console.WriteLine($"[SVG] {name}: Z range [{minZ:F1}, {maxZ:F1}], top={topPlaneVerts.Count} verts, bottom={bottomPlaneVerts.Count} verts");
-                    Console.WriteLine($"[SVG] {name}: Found {topFaceVerts.Count} vertices on top face");
+                    var zRange = maxZ - minZ;
+                    
+                    // For complex shapes, we need to use ALL vertices since they represent
+                    // the full geometry. If Z discrimination doesn't work well (too few vertices),
+                    // use all normalized vertices as the projection source.
+                    var topFaceVerts = normalizedVertices;
+                    
+                    Console.WriteLine($"[SVG] {name}: Z range [{minZ:F1}, {maxZ:F1}] (range={zRange:F1}), using all {topFaceVerts.Count} vertices for projection");
+                    
+                    // Debug: Print X and Y ranges too
+                    var projMinX = topFaceVerts.Min(v => v.X);
+                    var projMaxX = topFaceVerts.Max(v => v.X);
+                    var projMinY = topFaceVerts.Min(v => v.Y);
+                    var projMaxY = topFaceVerts.Max(v => v.Y);
+                    Console.WriteLine($"[SVG] {name}: After rotation - X:[{projMinX:F1},{projMaxX:F1}] Y:[{projMinY:F1},{projMaxY:F1}]");
 
                     // If we have a usable thin face index, prefer using its bounds for outline/holes
                     StepAdvancedFace mainFace = null;

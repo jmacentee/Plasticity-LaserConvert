@@ -11,8 +11,8 @@ Found 1 solids
 [FILTER] CBoxR: dimensions [7.6, 46.2, 50.1] - PASS
 [TRANSFORM] Thin dimension: 17.7,-17.0,74.6 -> 17.3,-15.3,72.1 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=-54.3ø
-[SVG] CBoxR: Z range [-72.9, -69.9], top=2 verts, bottom=8 verts
-[SVG] CBoxR: Found 8 vertices on top face
+[SVG] CBoxR: Z range [-72.9, -69.9] (range=3.0), using all 10 vertices for projection
+[SVG] CBoxR: After rotation - X:[-6.1,43.9] Y:[-12.7,27.3]
 [SVG] CBoxR: mainFace has 2 bounds
 [SVG] CBoxR: Normalized top face bounds: 50 x 40
 [SVG] CBoxR: Outer bounds X:[-6.1,43.9] Y:[-12.7,27.3]
