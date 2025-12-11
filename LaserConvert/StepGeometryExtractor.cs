@@ -192,12 +192,15 @@ namespace LaserConvert
             
             if (isComplexShape)
             {
-                Console.WriteLine($"[TOPO] Complex shape detected ({faces.Count} faces), using ALL vertices from all faces");
+                Console.WriteLine($"[TOPO] Complex shape detected ({faces.Count} faces), using outer loop vertices from ALL faces");
+                // Extract outer loop vertices from all faces - these will be filtered by top face in StepProcess
                 foreach (var (face, faceVerts) in faceData)
                 {
-                    // For complex shapes, include ALL vertices (both outer and inner loops)
-                    // The rotation will handle putting them all in the right place
-                    allVertices.AddRange(faceVerts);
+                    var outerVerts = ExtractOuterLoopVerticesFromFace(face, stepFile);
+                    if (outerVerts.Count > 0)
+                    {
+                        allVertices.AddRange(outerVerts);
+                    }
                 }
             }
             else

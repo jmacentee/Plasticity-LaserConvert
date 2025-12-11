@@ -182,28 +182,15 @@ namespace LaserConvert
                         }
                     }
 
-                    // For complex shapes with multiple faces, build the actual perimeter path
+                    // For complex shapes with multiple faces, use the actual top face only
                     if (faces.Count > 20 && topFaceVerts.Count > 8)
                     {
-                        // Try to build orthogonal loop from all projected vertices
-                        var minXv = topFaceVerts.Min(v => v.X);
-                        var minYv = topFaceVerts.Min(v => v.Y);
-                        var pts2d = topFaceVerts
-                            .Select(v => ((long)Math.Round(v.X - minXv), (long)Math.Round(v.Y - minYv)))
-                            .Distinct()
-                            .ToList();
-                        
-                        if (pts2d.Count > 4)
-                        {
-                            Console.WriteLine($"[SVG] {name}: Building orthogonal perimeter from {pts2d.Count} distinct 2D points");
-                            var complexPath = BuildOrthogonalLoop2D(pts2d);
-                            svg.Path(complexPath, strokeWidth: 0.2, fill: "none", stroke: "#000");
-                            svg.EndGroup();
-                            continue;
-                        }
+                        // Don't try to trace complex perimeters - just use bounding box
+                        // The orthogonal loop builder is unreliable with mixed interior/boundary vertices
+                        Console.WriteLine($"[SVG] {name}: Complex shape - using bounding box instead of perimeter tracing");
                     }
 
-                    // Standard rectangular outline for simple cases
+                    // Standard rectangular outline
                     var minX = topFaceVerts.Min(v => v.X);
                     var maxX = topFaceVerts.Max(v => v.X);
                     var minY = topFaceVerts.Min(v => v.Y);
