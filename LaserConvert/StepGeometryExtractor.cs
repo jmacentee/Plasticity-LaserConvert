@@ -192,10 +192,15 @@ namespace LaserConvert
             
             if (isComplexShape)
             {
-                Console.WriteLine($"[TOPO] Complex shape detected ({faces.Count} faces), using all vertices");
+                Console.WriteLine($"[TOPO] Complex shape detected ({faces.Count} faces), using outer loop vertices only");
                 foreach (var (face, faceVerts) in faceData)
                 {
-                    allVertices.AddRange(faceVerts);
+                    // For complex shapes, use ONLY outer loop vertices
+                    var outerVerts = ExtractOuterLoopVerticesFromFace(face, stepFile);
+                    if (outerVerts.Count > 0)
+                    {
+                        allVertices.AddRange(outerVerts);
+                    }
                 }
             }
             else
@@ -204,17 +209,23 @@ namespace LaserConvert
                 {
                     Console.WriteLine($"[TOPO] Found pair of faces with separation: {minSeparation:F1}mm");
                     
-                    // For dimensions: use vertices from the two closest faces
-                    allVertices.AddRange(faceData[face1Idx].vertices);
-                    allVertices.AddRange(faceData[face2Idx].vertices);
+                    // For dimensions: use vertices from the two closest faces (outer loops only)
+                    var outerVerts1 = ExtractOuterLoopVerticesFromFace(faceData[face1Idx].face, stepFile);
+                    var outerVerts2 = ExtractOuterLoopVerticesFromFace(faceData[face2Idx].face, stepFile);
+                    allVertices.AddRange(outerVerts1);
+                    allVertices.AddRange(outerVerts2);
                 }
                 else
                 {
-                    // Fallback: use all vertices
-                    Console.WriteLine($"[TOPO] No close face pair found, using all vertices");
-                    foreach (var (face, faceVerts) in faceData)
+                    // Fallback: use outer loop vertices only
+                    Console.WriteLine($"[TOPO] No close face pair found, using outer loop vertices from all faces");
+                    foreach (var face in faces)
                     {
-                        allVertices.AddRange(faceVerts);
+                        var outerVerts = ExtractOuterLoopVerticesFromFace(face, stepFile);
+                        if (outerVerts.Count > 0)
+                        {
+                            allVertices.AddRange(outerVerts);
+                        }
                     }
                 }
             }
@@ -292,7 +303,7 @@ namespace LaserConvert
                 }
             }
             
-            // CRITICAL FIX: If we found a face pair with separation in reasonable range (2.5-8.0mm),
+            // CRITICAL FIX: If we found a face pair with separation in reasonable range (2.5-10.0mm),
             // consider that as the detected thin dimension regardless of vertex bounding box
             // This handles rotated geometry where the thin faces aren't axis-aligned
             if (minSeparation >= 2.0 && minSeparation <= 10.0)  // Increased to 10mm for rotated geometry tolerance
@@ -494,6 +505,62 @@ namespace LaserConvert
                     processedPoints.Add(key);
                 }
             }
+        }
+
+        /// <summary>
+        /// Extract vertices from a single face's OUTER LOOP ONLY.
+        /// This is the correct way to handle B-rep solids with holes:
+        /// the first bound is the outer loop, subsequent bounds are inner loops (holes).
+        /// </summary>
+        public static List<(double X, double Y, double Z)> ExtractOuterLoopVerticesFromFace(
+            StepAdvancedFace face,
+            StepFile stepFile)
+        {
+            var vertices = new List<(double, double, double)>();
+            
+            if (face?.Bounds == null || face.Bounds.Count == 0)
+                return vertices;
+            
+            // Only extract from the FIRST bound - the outer loop
+            // Subsequent bounds are inner loops (holes) and should not be used for boundary tracing
+            var outerBound = face.Bounds[0];
+            var processedPoints = new HashSet<string>();
+            
+            ExtractVerticesFromFaceBound(outerBound, stepFile, vertices, processedPoints);
+            return vertices;
+        }
+        
+        /// <summary>
+        /// Extract vertices from all bounds of a face (outer + inner loops).
+        /// This includes holes. Used when we want to detect holes separately.
+        /// </summary>
+        public static (List<(double X, double Y, double Z)> OuterVertices, List<List<(double X, double Y, double Z)>> HoleVertices) ExtractFaceWithHoles(
+            StepAdvancedFace face,
+            StepFile stepFile)
+        {
+            var outerVerts = new List<(double, double, double)>();
+            var holeVerts = new List<List<(double, double, double)>>();
+            
+            if (face?.Bounds == null || face.Bounds.Count == 0)
+                return (outerVerts, holeVerts);
+            
+            // Extract outer loop (first bound)
+            var outerBound = face.Bounds[0];
+            var processedPoints = new HashSet<string>();
+            ExtractVerticesFromFaceBound(outerBound, stepFile, outerVerts, processedPoints);
+            
+            // Extract inner loops (subsequent bounds) 
+            for (int i = 1; i < face.Bounds.Count; i++)
+            {
+                var innerBound = face.Bounds[i];
+                var innerVerts = new List<(double, double, double)>();
+                var innerProcessed = new HashSet<string>();
+                ExtractVerticesFromFaceBound(innerBound, stepFile, innerVerts, innerProcessed);
+                if (innerVerts.Count > 0)
+                    holeVerts.Add(innerVerts);
+            }
+            
+            return (outerVerts, holeVerts);
         }
     }
 }
