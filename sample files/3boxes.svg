@@ -1,6 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="Box2">
-    <path d="M -85 28.215 L -85 -82 L 85 28.215 L 85 -82 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 101.312 -0 L -41.317 92.504 L 101.312 -0 L 41.361 -92.436 L -101.268 0.068 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g id="Box1">
+    <path d="M -77.889 -120.293 L 77.889 -120.293 L 77.889 -46.707 L -77.889 -46.707 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>

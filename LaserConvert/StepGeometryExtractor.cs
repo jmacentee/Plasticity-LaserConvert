@@ -18,8 +18,6 @@ namespace LaserConvert
         {
             var solids = new List<(string, List<StepAdvancedFace>)>();
             
-            Console.WriteLine($"[SOLID] Searching {stepFile.Items.Count} items for MANIFOLD_SOLID_BREP...");
-            
             // First, try to find actual MANIFOLD_SOLID_BREP entities
             var allItems = stepFile.Items.ToList();
             var foundManifoldSolids = false;
@@ -27,12 +25,9 @@ namespace LaserConvert
             foreach (var item in allItems)
             {
                 var typeName = item.GetType().Name;
-                Console.WriteLine($"[SOLID] Checking type: {typeName}");
                 
-                // Look for any type that contains "ManifoldSolid" or "Brep"
-                if (typeName.IndexOf("ManifoldSolid", StringComparison.OrdinalIgnoreCase) >= 0 ||
-                    (typeName.IndexOf("Solid", StringComparison.OrdinalIgnoreCase) >= 0 && 
-                     typeName.IndexOf("Brep", StringComparison.OrdinalIgnoreCase) >= 0))
+                // Look for ManifoldSolidBrep type
+                if (typeName.Equals("StepManifoldSolidBrep", StringComparison.OrdinalIgnoreCase))
                 {
                     var name = !string.IsNullOrWhiteSpace(item.Name) ? item.Name : $"Solid_{solids.Count}";
                     
@@ -42,7 +37,6 @@ namespace LaserConvert
                     if (faces.Count > 0)
                     {
                         solids.Add((name, faces));
-                        Console.WriteLine($"[SOLID] ? Found {typeName} '{name}' with {faces.Count} faces");
                         foundManifoldSolids = true;
                     }
                 }
@@ -51,7 +45,6 @@ namespace LaserConvert
             // If we found MANIFOLD_SOLID_BREP entities, use them
             if (foundManifoldSolids)
             {
-                Console.WriteLine($"[SOLID] Found {solids.Count} explicit MANIFOLD_SOLID_BREP entities");
                 return solids;
             }
             
@@ -73,7 +66,6 @@ namespace LaserConvert
                     var solidName = $"Solid{i + 1}";
                     
                     solids.Add((solidName, solidFaces));
-                    Console.WriteLine($"[SOLID] Created pseudo-solid '{solidName}' with {solidFaces.Count} faces");
                 }
             }
             
@@ -118,75 +110,256 @@ namespace LaserConvert
         }
 
         /// <summary>
-        /// Extract vertices from a list of faces, finding the outline of the thin solid.
-        /// For a thin box, find the pair of parallel faces separated by ~3mm and use their outline.
+        /// Extract vertices from a list of faces for dimension calculation.
+        /// Also returns information about the thin face pair for SVG projection and adjusted dimensions.
         /// </summary>
-        public static List<(double X, double Y, double Z)> ExtractVerticesFromFaces(
+        public static (List<(double X, double Y, double Z)> DimensionVertices, int ThinFace1Idx, int ThinFace2Idx, double DimX, double DimY, double DimZ) ExtractVerticesAndFaceIndices(
             List<StepAdvancedFace> faces,
             StepFile stepFile)
         {
-            var vertices = new List<(double, double, double)>();
+            var allVertices = new List<(double, double, double)>();
             
             Console.WriteLine($"[TOPO] Processing {faces.Count} faces");
             
-            // For each face, extract its vertices and compute its bounding box
-            var faceData = new List<(StepAdvancedFace face, List<(double X, double Y, double Z)> vertices, double minZ, double maxZ)>();
+            // For each face, extract its vertices
+            var faceData = new List<(StepAdvancedFace face, List<(double X, double Y, double Z)> vertices)>();
             
             foreach (var face in faces)
             {
                 var faceVertices = ExtractVerticesFromFace(face, stepFile);
                 if (faceVertices.Count > 0)
                 {
-                    var minZ = faceVertices.Min(v => v.Item3);
-                    var maxZ = faceVertices.Max(v => v.Item3);
-                    faceData.Add((face, faceVertices, minZ, maxZ));
+                    faceData.Add((face, faceVertices));
                 }
             }
             
-            // Find faces with minimal Z extent (planar faces perpendicular to Z axis)
-            var planarFaces = faceData.Where(f => Math.Abs(f.maxZ - f.minZ) < 0.1).ToList();
+            // Find the PAIR of faces with the smallest centroid-to-centroid distance
+            // BUT: ensure the separation direction aligns with one of the dimension axes
+            double minSeparation = double.MaxValue;
+            int face1Idx = -1, face2Idx = -1;
             
-            if (planarFaces.Count >= 2)
+            // Strategy: Find ALL face pairs, then pick the one that:
+            // 1. Has separation close to a reasonable "thin" dimension (2.5-5mm range)
+            // 2. Is well-aligned along one axis
+            // If that fails, pick the closest pair overall
+            
+            var candidates = new List<(int i, int j, double sep, double alignment)>();
+            
+            for (int i = 0; i < faceData.Count; i++)
             {
-                // Sort by Z coordinate
-                planarFaces = planarFaces.OrderBy(f => f.minZ).ToList();
-                
-                // The thickness is the difference between the two planar faces
-                var thickness = planarFaces[1].minZ - planarFaces[0].minZ;
-                Console.WriteLine($"[TOPO] Found pair of parallel faces with Z separation: {thickness:F1}mm");
-                
-                // For dimensions: use all vertices from both parallel faces
-                // This gives us the correct X, Y dimensions and the thickness in Z
-                vertices.AddRange(planarFaces[0].vertices);
-                vertices.AddRange(planarFaces[1].vertices);
-            }
-            else if (planarFaces.Count == 1)
-            {
-                // Only one planar face found, but we need to include all vertices for dimension calculation
-                Console.WriteLine($"[TOPO] Found only one planar face, using all face vertices for dimensions");
-                foreach (var (face, faceVerts, _, _) in faceData)
+                for (int j = i + 1; j < faceData.Count; j++)
                 {
-                    vertices.AddRange(faceVerts);
+                    var fi = faceData[i].vertices;
+                    var fj = faceData[j].vertices;
+                    
+                    var (sep, dx, dy, dz) = ComputeFacePairSeparationWithDirection(fi, fj);
+                    var maxComponent = Math.Max(Math.Max(Math.Abs(dx), Math.Abs(dy)), Math.Abs(dz));
+                    var alignment = maxComponent / (sep + 1e-6);
+                    
+                    candidates.Add((i, j, sep, alignment));
                 }
+            }
+            
+            // Prefer pairs with "thin" separation (2.5-5.0mm) and good alignment
+            var thinCandidates = candidates.Where(c => c.sep >= 2.5 && c.sep <= 5.0 && c.alignment > 0.9).ToList();
+            
+            if (thinCandidates.Count > 0)
+            {
+                // Pick the best aligned thin pair
+                var best = thinCandidates.OrderByDescending(c => c.alignment).First();
+                minSeparation = best.sep;
+                face1Idx = best.i;
+                face2Idx = best.j;
+            }
+            else if (candidates.Count > 0)
+            {
+                // Fallback: pick the closest well-aligned pair
+                var alignedCandidates = candidates.Where(c => c.alignment > 0.85).OrderBy(c => c.sep).ToList();
+                if (alignedCandidates.Count > 0)
+                {
+                    var best = alignedCandidates.First();
+                    minSeparation = best.sep;
+                    face1Idx = best.i;
+                    face2Idx = best.j;
+                }
+            }
+            
+            if (face1Idx >= 0 && face2Idx >= 0 && minSeparation < 200.0)
+            {
+                Console.WriteLine($"[TOPO] Found pair of faces with separation: {minSeparation:F1}mm");
+                
+                // For dimensions: use vertices from the two closest faces
+                allVertices.AddRange(faceData[face1Idx].vertices);
+                allVertices.AddRange(faceData[face2Idx].vertices);
+                
+                // Track the face pair separation as a detected thin dimension
+                var storedMinSeparation = minSeparation;
             }
             else
             {
-                // No clear planar faces, use all vertices
-                Console.WriteLine($"[TOPO] No clear parallel faces found, using all vertices");
-                foreach (var (face, faceVerts, _, _) in faceData)
+                // Fallback: use all vertices
+                Console.WriteLine($"[TOPO] No close face pair found, using all vertices");
+                foreach (var (face, faceVerts) in faceData)
                 {
-                    vertices.AddRange(faceVerts);
+                    allVertices.AddRange(faceVerts);
                 }
             }
             
-            // Deduplicate
-            var uniqueVertices = vertices
-                .GroupBy(v => (Math.Round(v.Item1, 3), Math.Round(v.Item2, 3), Math.Round(v.Item3, 3)))
+            // Deduplicate - keep vertices from both faces
+            var uniqueVertices = allVertices
+                .GroupBy(v => (Math.Round(v.Item1, 2), Math.Round(v.Item2, 2), Math.Round(v.Item3, 2)))
                 .Select(g => g.First())
                 .ToList();
             
             Console.WriteLine($"[TOPO] Extracted {uniqueVertices.Count} unique vertices");
-            return uniqueVertices;
+            
+            // Debug: print vertex ranges for dimension calculation
+            var minX = 0.0;
+            var maxX = 0.0;
+            var minY = 0.0;
+            var maxY = 0.0;
+            var minZ = 0.0;
+            var maxZ = 0.0;
+            var dimX = 0.0;
+            var dimY = 0.0;
+            var dimZ = 0.0;
+            
+            if (uniqueVertices.Count > 0)
+            {
+                minX = uniqueVertices.Min(v => v.Item1);
+                maxX = uniqueVertices.Max(v => v.Item1);
+                minY = uniqueVertices.Min(v => v.Item2);
+                maxY = uniqueVertices.Max(v => v.Item2);
+                minZ = uniqueVertices.Min(v => v.Item3);
+                maxZ = uniqueVertices.Max(v => v.Item3);
+                dimX = maxX - minX;
+                dimY = maxY - minY;
+                dimZ = maxZ - minZ;
+                Console.WriteLine($"[TOPO] Vertex ranges: X[{minX:F1},{maxX:F1}] Y[{minY:F1},{maxY:F1}] Z[{minZ:F1},{maxZ:F1}]");
+                Console.WriteLine($"[TOPO] Computed dimensions: {dimX:F1} x {dimY:F1} x {dimZ:F1}");
+            }
+            
+            // Sanity check: if we found a small separation but computed a large Z dimension,
+            // the faces might not be what we think they are
+            if (minSeparation < 10.0 && dimZ > 50.0)
+            {
+                Console.WriteLine($"[TOPO] WARNING: Small face separation ({minSeparation:F1}mm) but large Z dimension ({dimZ:F1}mm) - faces may not be parallel!");
+                Console.WriteLine($"[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.");
+                
+                // Fallback: re-compute dimensions using ALL faces
+                allVertices.Clear();
+                foreach (var (face, faceVerts) in faceData)
+                {
+                    allVertices.AddRange(faceVerts);
+                }
+                
+                uniqueVertices = allVertices
+                    .GroupBy(v => (Math.Round(v.Item1, 2), Math.Round(v.Item2, 2), Math.Round(v.Item3, 2)))
+                    .Select(g => g.First())
+                    .ToList();
+                
+                // Reset face indices since we're now using all vertices
+                face1Idx = -1;
+                face2Idx = -1;
+                
+                // Recompute dimensions
+                if (uniqueVertices.Count > 0)
+                {
+                    minX = uniqueVertices.Min(v => v.Item1);
+                    maxX = uniqueVertices.Max(v => v.Item1);
+                    minY = uniqueVertices.Min(v => v.Item2);
+                    maxY = uniqueVertices.Max(v => v.Item2);
+                    minZ = uniqueVertices.Min(v => v.Item3);
+                    maxZ = uniqueVertices.Max(v => v.Item3);
+                    dimX = maxX - minX;
+                    dimY = maxY - minY;
+                    dimZ = maxZ - minZ;
+                    Console.WriteLine($"[TOPO] Recomputed with all faces: {dimX:F1} x {dimY:F1} x {dimZ:F1}");
+                }
+            }
+            
+            // CRITICAL FIX: If we found a small face pair separation in the thin range (2.5-5mm),
+            // consider the thin dimension detected, even if vertex bounding box doesn't show it correctly.
+            // Store the face separation as the detected thin thickness.
+            if (minSeparation >= 2.5 && minSeparation <= 5.0)
+            {
+                // Replace the smallest dimension with the detected separation
+                var dims = new[] { dimX, dimY, dimZ }.OrderBy(d => d).ToArray();
+                dims[0] = minSeparation;
+                dimX = dims[0];
+                dimY = dims[1];
+                dimZ = dims[2];
+                Console.WriteLine($"[TOPO] Thin dimension detected from face separation: {minSeparation:F1}mm");
+                Console.WriteLine($"[TOPO] Adjusted dimensions: {dimX:F1} x {dimY:F1} x {dimZ:F1}");
+            }
+            
+            return (uniqueVertices, face1Idx, face2Idx, dimX, dimY, dimZ);
+        }
+
+        /// <summary>
+        /// Extract vertices from a list of faces (legacy interface for dimension calculation).
+        /// </summary>
+        public static List<(double X, double Y, double Z)> ExtractVerticesFromFaces(
+            List<StepAdvancedFace> faces,
+            StepFile stepFile)
+        {
+            var (vertices, _, _, _, _, _) = ExtractVerticesAndFaceIndices(faces, stepFile);
+            return vertices;
+        }
+
+        /// <summary>
+        /// Compute the distance between two sets of vertices and return the separation vector.
+        /// </summary>
+        private static double ComputeFacePairSeparation(
+            List<(double X, double Y, double Z)> face1,
+            List<(double X, double Y, double Z)> face2)
+        {
+            if (face1.Count == 0 || face2.Count == 0)
+                return double.MaxValue;
+            
+            // Compute centroid of each face
+            var c1x = face1.Average(v => v.X);
+            var c1y = face1.Average(v => v.Y);
+            var c1z = face1.Average(v => v.Z);
+            
+            var c2x = face2.Average(v => v.X);
+            var c2y = face2.Average(v => v.Y);
+            var c2z = face2.Average(v => v.Z);
+            
+            // Distance between centroids
+            var dx = c2x - c1x;
+            var dy = c2y - c1y;
+            var dz = c2z - c1z;
+            
+            return Math.Sqrt(dx * dx + dy * dy + dz * dz);
+        }
+
+        /// <summary>
+        /// Compute the distance between two sets of vertices and return the separation vector.
+        /// </summary>
+        private static (double Distance, double DX, double DY, double DZ) ComputeFacePairSeparationWithDirection(
+            List<(double X, double Y, double Z)> face1,
+            List<(double X, double Y, double Z)> face2)
+        {
+            if (face1.Count == 0 || face2.Count == 0)
+                return (double.MaxValue, 0, 0, 0);
+            
+            // Compute centroid of each face
+            var c1x = face1.Average(v => v.X);
+            var c1y = face1.Average(v => v.Y);
+            var c1z = face1.Average(v => v.Z);
+            
+            var c2x = face2.Average(v => v.X);
+            var c2y = face2.Average(v => v.Y);
+            var c2z = face2.Average(v => v.Z);
+            
+            // Vector from face1 centroid to face2 centroid
+            var dx = c2x - c1x;
+            var dy = c2y - c1y;
+            var dz = c2z - c1z;
+            
+            var dist = Math.Sqrt(dx * dx + dy * dy + dz * dz);
+            return (dist, dx, dy, dz);
         }
 
         private static void ExtractVerticesFromFace(

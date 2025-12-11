@@ -1,6 +1,8 @@
 REM all 3 STP files have been validated as correct with the geometry described below. never assume there is a problem in an STP file and that is why test is failing.
 REM when successful, the groups in the SVG files will have the ids Box1 (in all cases) and Box2 (in the 2nd and 3rd case)
 REM the box ordering in the SVG file is not important
+REM the solids are allowed to be placed and rotated anywhere in 3d space in the step file.  Our job is to find the faces which are perpendicular to the 3mm wide face and then make a 2d projection of that face into the svg file.  the outer edge of the solids may not be regular and there may be cutouts in the solids which should be included in the svg output as indepdent paths.  only the current test cases are regular boxes with no cutouts.
+
 
 REM This file contains a single object named Box1 which is 170x150x3mm and should result in a single square in the SVG of 170x150mm.
 "C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box_output.txt"
