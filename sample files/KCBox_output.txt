@@ -16,5 +16,10 @@ Found 1 solids
 [SVG] CKBox: Found 84 vertices on top face
 [SVG] CKBox: Dimensions - X:3.0 Y:40.0 Z:58.0
 [SVG] CKBox: Rendering in Y-Z plane (Z becomes X for output)
-[SVG] CKBox: Rendering complex boundary with 84 vertices (no hole detection for complex shapes)
+[SVG] CKBox: Rendering complex boundary with 84 vertices
+[SVG] Total vertices: 84, Top plane vertices: 42
+[SVG] Outer verts: 34, Inner verts: 8, Avg dist from center: 22.8
+[SVG] Outer X range: [-35.9, 22.1], Y range: [-52.3, -12.3]
+[SVG] Inner X range: [-18.9, 11.1], Y range: [-50.3, -15.3]
+[SVG] Rendered RED hole: 30 x 35 at (17, 2)
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.svg

@@ -2,5 +2,6 @@
 <defs/>
   <g id="KBox">
     <path d="M 0,0 L 0,150 L 54,150 L 54,145 L 88,145 L 88,140 L 122,140 L 122,150 L 156,150 L 156,145 L 170,145 L 170,0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 53 140 L 121 140 L 121 150 L 53 150 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>

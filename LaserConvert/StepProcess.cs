@@ -153,9 +153,10 @@ namespace LaserConvert
                                 var boundaryPath = ExtractBoundaryPath(projectedVerts, name);
                                 if (!string.IsNullOrEmpty(boundaryPath))
                                 {
-                                    Console.WriteLine($"[SVG] {name}: Rendering complex boundary with {projectedVerts.Count} vertices (no hole detection for complex shapes)");
+                                    Console.WriteLine($"[SVG] {name}: Rendering complex boundary with {projectedVerts.Count} vertices");
                                     svg.Path(boundaryPath, strokeWidth: 0.2, fill: "none", stroke: "#000");
-                                    // Do NOT call DetectAndRenderCutouts for complex paths - they represent edge-based cutouts
+                                    // For complex shapes, still try to detect interior holes using the projected vertices
+                                    DetectAndRenderCutouts(svg, faces, vertices, projectedVerts, stepFile, double.NaN, double.NaN);
                                     svg.EndGroup();
                                     continue;
                                 }
@@ -556,15 +557,6 @@ namespace LaserConvert
             
             Console.WriteLine($"[SVG] Total vertices: {normalizedVertices.Count}, Top plane vertices: {topVerts.Count}");
             
-            // Only detect holes if we have an explicit outer boundary (passed in)
-            // This means we're dealing with a simple rectangular shape with potential interior holes
-            // NOT with edge-based cutouts like KBox
-            if (double.IsNaN(outerMinX) || double.IsNaN(outerMinY))
-            {
-                Console.WriteLine($"[SVG] No explicit outer bounds, skipping hole detection (likely edge-based cutouts)");
-                return;
-            }
-            
             if (topVerts.Count < 8)
             {
                 Console.WriteLine($"[SVG] Insufficient top vertices ({topVerts.Count} < 8), no cutouts detected");
@@ -588,8 +580,15 @@ namespace LaserConvert
             var innerVerts = distFromCenter.Where(d => d.Dist < avgDist * 0.8).Select(d => d.V).ToList();
             
             Console.WriteLine($"[SVG] Outer verts: {outerVerts.Count}, Inner verts: {innerVerts.Count}, Avg dist from center: {avgDist:F1}");
-            Console.WriteLine($"[SVG] Outer X range: [{outerVerts.Min(v => v.X):F1}, {outerVerts.Max(v => v.X):F1}], Y range: [{outerVerts.Min(v => v.Y):F1}, {outerVerts.Max(v => v.Y):F1}]");
-            Console.WriteLine($"[SVG] Inner X range: [{innerVerts.Min(v => v.X):F1}, {innerVerts.Max(v => v.X):F1}], Y range: [{innerVerts.Min(v => v.Y):F1}, {innerVerts.Max(v => v.Y):F1}]");
+            
+            if (outerVerts.Count > 0)
+            {
+                Console.WriteLine($"[SVG] Outer X range: [{outerVerts.Min(v => v.X):F1}, {outerVerts.Max(v => v.X):F1}], Y range: [{outerVerts.Min(v => v.Y):F1}, {outerVerts.Max(v => v.Y):F1}]");
+            }
+            if (innerVerts.Count > 0)
+            {
+                Console.WriteLine($"[SVG] Inner X range: [{innerVerts.Min(v => v.X):F1}, {innerVerts.Max(v => v.X):F1}], Y range: [{innerVerts.Min(v => v.Y):F1}, {innerVerts.Max(v => v.Y):F1}]");
+            }
             
             // If we have potential hole vertices, render them as RED
             if (innerVerts.Count >= 4)
@@ -599,28 +598,46 @@ namespace LaserConvert
                 var holeMinY = innerVerts.Min(v => v.Y);
                 var holeMaxY = innerVerts.Max(v => v.Y);
                 
-                // Normalize hole coords relative to outer boundary origin
-                var holeX = (long)Math.Round(holeMinX - outerMinX);
-                var holeY = (long)Math.Round(holeMinY - outerMinY);
                 var holeW = (long)Math.Round(holeMaxX - holeMinX);
                 var holeH = (long)Math.Round(holeMaxY - holeMinY);
                 
-                // Check if this looks like a rectangular hole (roughly equal sides)
+                // Check if this looks like a rectangular hole (minimum size)
                 if (holeW > 2 && holeH > 2)  // Minimum hole size
                 {
-                    // For holes, the position might be flipped depending on rotation direction
-                    // Adjust so the hole appears in the correct position
-                    var actualHoleX = holeX;
-                    var outerWidth = (long)Math.Round(outerVerts.Max(v => v.X) - outerMinX);
-                    if (holeX > outerWidth / 2)
-                    {
-                        // Hole is on the right side, flip it to the left
-                        actualHoleX = outerWidth - holeX - holeW;
-                    }
+                    long holeX, holeY;
                     
-                    var pathData = $"M {actualHoleX} {holeY} L {actualHoleX + holeW} {holeY} L {actualHoleX + holeW} {holeY + holeH} L {actualHoleX} {holeY + holeH} Z";
-                    svg.Path(pathData, strokeWidth: 0.2, fill: "none", stroke: "#FF0000");
-                    Console.WriteLine($"[SVG] Rendered RED hole: {holeW} x {holeH} at ({actualHoleX}, {holeY})");
+                    if (!double.IsNaN(outerMinX) && !double.IsNaN(outerMinY))
+                    {
+                        // We have explicit outer bounds - normalize relative to them
+                        holeX = (long)Math.Round(holeMinX - outerMinX);
+                        holeY = (long)Math.Round(holeMinY - outerMinY);
+                        
+                        // For holes, the position might be flipped depending on rotation direction
+                        var actualHoleX = holeX;
+                        var outerWidth = (long)Math.Round(outerVerts.Max(v => v.X) - outerMinX);
+                        if (holeX > outerWidth / 2)
+                        {
+                            // Hole is on the right side, flip it to the left
+                            actualHoleX = outerWidth - holeX - holeW;
+                        }
+                        
+                        var pathData = $"M {actualHoleX} {holeY} L {actualHoleX + holeW} {holeY} L {actualHoleX + holeW} {holeY + holeH} L {actualHoleX} {holeY + holeH} Z";
+                        svg.Path(pathData, strokeWidth: 0.2, fill: "none", stroke: "#FF0000");
+                        Console.WriteLine($"[SVG] Rendered RED hole: {holeW} x {holeH} at ({actualHoleX}, {holeY})");
+                    }
+                    else if (outerVerts.Count > 0)
+                    {
+                        // No explicit outer bounds - use outer verts bounds for normalization
+                        var outerMinXc = outerVerts.Min(v => v.X);
+                        var outerMinYc = outerVerts.Min(v => v.Y);
+                        
+                        holeX = (long)Math.Round(holeMinX - outerMinXc);
+                        holeY = (long)Math.Round(holeMinY - outerMinYc);
+                        
+                        var pathData = $"M {holeX} {holeY} L {holeX + holeW} {holeY} L {holeX + holeW} {holeY + holeH} L {holeX} {holeY + holeH} Z";
+                        svg.Path(pathData, strokeWidth: 0.2, fill: "none", stroke: "#FF0000");
+                        Console.WriteLine($"[SVG] Rendered RED hole: {holeW} x {holeH} at ({holeX}, {holeY})");
+                    }
                 }
             }
         }
