@@ -97,7 +97,30 @@ namespace LaserConvert
                         {
                             var maxZnf = normalizedVertices.Max(v => v.Z);
                             var topVertsNf = normalizedVertices.Where(v => Math.Abs(v.Z - maxZnf) < 1.0).ToList();
-                            if (topVertsNf.Count >= 4)
+                            if (topVertsNf.Count >= 6)
+                            {
+                                // Complex top face (tabs/steps): build from top vertices
+                                var minXn = topVertsNf.Min(v => v.X);
+                                var minYn = topVertsNf.Min(v => v.Y);
+                                var pts = topVertsNf
+                                    .Select(v => ((long)Math.Round(v.X - minXn), (long)Math.Round(v.Y - minYn)))
+                                    .ToList();
+
+                                // Remove consecutive duplicates
+                                var dedup = new List<(long X,long Y)>();
+                                foreach (var p in pts)
+                                {
+                                    if (dedup.Count == 0 || dedup.Last().X != p.Item1 || dedup.Last().Y != p.Item2)
+                                        dedup.Add((p.Item1,p.Item2));
+                                }
+
+                                // Build orthogonal perimeter from sides
+                                string path = BuildOrthogonalLoop2D(dedup);
+                                svg.Path(path, strokeWidth: 0.2, fill: "none", stroke: "#000");
+                                svg.EndGroup();
+                                continue;
+                            }
+                            else if (topVertsNf.Count >= 4)
                             {
                                 var minXn = topVertsNf.Min(v => v.X);
                                 var maxXn = topVertsNf.Max(v => v.X);
@@ -105,13 +128,7 @@ namespace LaserConvert
                                 var maxYn = topVertsNf.Max(v => v.Y);
                                 var w = (long)Math.Round(maxXn - minXn);
                                 var h = (long)Math.Round(maxYn - minYn);
-                                if (w < h)
-                                {
-                                    // Prefer longer side along X-axis
-                                    var tmp = w;
-                                    w = h;
-                                    h = tmp;
-                                }
+                                if (w < h) { var tmp = w; w = h; h = tmp; }
                                 var rectPath = $"M 0 0 L {w} 0 L {w} {h} L 0 {h} Z";
                                 svg.Path(rectPath, strokeWidth: 0.2, fill: "none", stroke: "#000");
                                 svg.EndGroup();
@@ -157,13 +174,15 @@ namespace LaserConvert
                         var outerPts = ProjectBoundPoints(mainFace.Bounds[0]);
                         if (outerPts.Count >= 4)
                         {
-                            // Normalize: translate so min x/y becomes 0,0; round to whole mm
                             var minOX = outerPts.Min(p => p.X);
                             var minOY = outerPts.Min(p => p.Y);
                             var normOuter = outerPts.Select(p => ((long)Math.Round(p.X - minOX), (long)Math.Round(p.Y - minOY))).ToList();
 
-                            // If single bound and rectangle, render clean bbox path
-                            if (mainFace.Bounds.Count == 1)
+                            // Determine uniqueness
+                            var uniqueCorners = new HashSet<(long, long)>(normOuter);
+
+                            // Rectangle shortcut only if exactly 4 corners
+                            if (mainFace.Bounds.Count == 1 && uniqueCorners.Count == 4)
                             {
                                 var xs = normOuter.Select(p => p.Item1).ToList();
                                 var ys = normOuter.Select(p => p.Item2).ToList();
@@ -171,17 +190,19 @@ namespace LaserConvert
                                 var maxXr = xs.Max();
                                 var minYr = ys.Min();
                                 var maxYr = ys.Max();
-                                var uniqueCorners = new HashSet<(long, long)>(normOuter);
-                                if (uniqueCorners.Count == 4 && minXr == 0 && minYr == 0)
+                                var w = maxXr - minXr;
+                                var h = maxYr - minYr;
+                                if (w < h)
                                 {
-                                    var rectPath = $"M 0 0 L {maxXr} 0 L {maxXr} {maxYr} L 0 {maxYr} Z";
-                                    svg.Path(rectPath, strokeWidth: 0.2, fill: "none", stroke: "#000");
-                                    svg.EndGroup();
-                                    continue;
+                                    var tmp = w; w = h; h = tmp;
                                 }
+                                var rectPath = $"M 0 0 L {w} 0 L {w} {h} L 0 {h} Z";
+                                svg.Path(rectPath, strokeWidth: 0.2, fill: "none", stroke: "#000");
+                                svg.EndGroup();
+                                continue;
                             }
 
-                            // Build path following point order; snap near-axis segments
+                            // Build path following point order with axis snapping
                             string BuildPath(List<(long X, long Y)> pts)
                             {
                                 var sbp = new StringBuilder();
@@ -214,16 +235,49 @@ namespace LaserConvert
                                 sbp.Append(" Z");
                                 return sbp.ToString();
                             }
-                            var outerPath = BuildPath(normOuter);
+
+                            string BuildOrthogonalLoop(List<(long X, long Y)> pts)
+                            {
+                                var xs = pts.Select(p => p.X).ToList();
+                                var ys = pts.Select(p => p.Y).ToList();
+                                long minX = xs.Min();
+                                long maxX = xs.Max();
+                                long minY = ys.Min();
+                                long maxY = ys.Max();
+                                int tol = 1;
+                                var bottom = pts.Where(p => Math.Abs(p.Y - minY) <= tol).OrderBy(p => p.X).ToList();
+                                var right = pts.Where(p => Math.Abs(p.X - maxX) <= tol).OrderBy(p => p.Y).ToList();
+                                var top = pts.Where(p => Math.Abs(p.Y - maxY) <= tol).OrderByDescending(p => p.X).ToList();
+                                var left = pts.Where(p => Math.Abs(p.X - minX) <= tol).OrderByDescending(p => p.Y).ToList();
+                                var walk = new List<(long X, long Y)>();
+                                void AppendUnique(IEnumerable<(long X,long Y)> seq)
+                                {
+                                    foreach (var p in seq)
+                                    {
+                                        if (walk.Count == 0 || walk.Last().X != p.X || walk.Last().Y != p.Y)
+                                            walk.Add(p);
+                                    }
+                                }
+                                AppendUnique(bottom);
+                                AppendUnique(right);
+                                AppendUnique(top);
+                                AppendUnique(left);
+                                if (walk.Count > 0 && (walk.First().X != walk.Last().X || walk.First().Y != walk.Last().Y))
+                                    walk.Add(walk.First());
+                                return BuildPath(walk);
+                            }
+
+                            var outerPath = (uniqueCorners.Count > 4) ? BuildOrthogonalLoop2D(normOuter) : BuildPath2D(normOuter);
+
                             svg.Path(outerPath, strokeWidth: 0.2, fill: "none", stroke: "#000");
 
-                            // Holes: subsequent bounds
+                            // Holes
                             for (int bi = 1; bi < mainFace.Bounds.Count; bi++)
                             {
                                 var holePts = ProjectBoundPoints(mainFace.Bounds[bi]);
                                 if (holePts.Count < 3) continue;
                                 var normHole = holePts.Select(p => ((long)Math.Round(p.X - minOX), (long)Math.Round(p.Y - minOY))).ToList();
-                                var holePath = BuildPath(normHole);
+                                var holePath = BuildPath2D(normHole);
                                 svg.Path(holePath, strokeWidth: 0.2, fill: "none", stroke: "#FF0000");
                             }
 
@@ -456,6 +510,71 @@ namespace LaserConvert
                 }
             }
             return null;
+        }
+
+        private static string BuildPath2D(List<(long X, long Y)> pts)
+        {
+            var sbp = new StringBuilder();
+            if (pts == null || pts.Count == 0) return string.Empty;
+            sbp.Append($"M {pts[0].X},{pts[0].Y}");
+            for (int i = 1; i < pts.Count; i++)
+            {
+                var a = pts[i - 1];
+                var b = pts[i];
+                if (a.X == b.X || a.Y == b.Y)
+                {
+                    sbp.Append($" L {b.X},{b.Y}");
+                }
+                else
+                {
+                    var dx = Math.Abs(b.X - a.X);
+                    var dy = Math.Abs(b.Y - a.Y);
+                    if (dx >= dy)
+                    {
+                        sbp.Append($" L {b.X},{a.Y}");
+                        sbp.Append($" L {b.X},{b.Y}");
+                    }
+                    else
+                    {
+                        sbp.Append($" L {a.X},{b.Y}");
+                        sbp.Append($" L {b.X},{b.Y}");
+                    }
+                }
+            }
+            sbp.Append(" Z");
+            return sbp.ToString();
+        }
+
+        private static string BuildOrthogonalLoop2D(List<(long X, long Y)> pts)
+        {
+            if (pts == null || pts.Count == 0) return string.Empty;
+            var xs = pts.Select(p => p.X).ToList();
+            var ys = pts.Select(p => p.Y).ToList();
+            long minX = xs.Min();
+            long maxX = xs.Max();
+            long minY = ys.Min();
+            long maxY = ys.Max();
+            int tol = 1;
+            var bottom = pts.Where(p => Math.Abs(p.Y - minY) <= tol).OrderBy(p => p.X).ToList();
+            var right = pts.Where(p => Math.Abs(p.X - maxX) <= tol).OrderBy(p => p.Y).ToList();
+            var top = pts.Where(p => Math.Abs(p.Y - maxY) <= tol).OrderByDescending(p => p.X).ToList();
+            var left = pts.Where(p => Math.Abs(p.X - minX) <= tol).OrderByDescending(p => p.Y).ToList();
+            var walk = new List<(long X, long Y)>();
+            void AppendUnique(IEnumerable<(long X,long Y)> seq)
+            {
+                foreach (var p in seq)
+                {
+                    if (walk.Count == 0 || walk.Last().X != p.X || walk.Last().Y != p.Y)
+                        walk.Add(p);
+                }
+            }
+            AppendUnique(bottom);
+            AppendUnique(right);
+            AppendUnique(top);
+            AppendUnique(left);
+            if (walk.Count > 0 && (walk.First().X != walk.Last().X || walk.First().Y != walk.Last().Y))
+                walk.Add(walk.First());
+            return BuildPath2D(walk);
         }
     }
 }
