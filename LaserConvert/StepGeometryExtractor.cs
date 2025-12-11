@@ -527,6 +527,7 @@ namespace LaserConvert
         /// <summary>
         /// Extract vertices from all bounds of a face (outer + inner loops).
         /// This includes holes. Used when we want to detect holes separately.
+        /// Handles STEP files that may have bounds in any order (not always outer first).
         /// </summary>
         public static (List<(double X, double Y, double Z)> OuterVertices, List<List<(double X, double Y, double Z)>> HoleVertices) ExtractFaceWithHoles(
             StepAdvancedFace face,
@@ -538,22 +539,51 @@ namespace LaserConvert
             if (face?.Bounds == null || face.Bounds.Count == 0)
                 return (outerVerts, holeVerts);
             
-            // Extract outer loop (first bound)
-            var outerBound = face.Bounds[0];
-            var processedPoints = new HashSet<string>();
-            ExtractVerticesFromFaceBound(outerBound, stepFile, outerVerts, processedPoints);
+            Console.WriteLine($"[EXTRACT] ExtractFaceWithHoles: face has {face.Bounds.Count} bounds");
             
-            // Extract inner loops (subsequent bounds) 
-            for (int i = 1; i < face.Bounds.Count; i++)
+            // Extract all loops first
+            var allLoops = new List<(int Index, List<(double, double, double)> Vertices, double BoundingBoxArea)>();
+            
+            for (int i = 0; i < face.Bounds.Count; i++)
             {
-                var innerBound = face.Bounds[i];
-                var innerVerts = new List<(double, double, double)>();
-                var innerProcessed = new HashSet<string>();
-                ExtractVerticesFromFaceBound(innerBound, stepFile, innerVerts, innerProcessed);
-                if (innerVerts.Count > 0)
-                    holeVerts.Add(innerVerts);
+                var bound = face.Bounds[i];
+                var verts = new List<(double, double, double)>();
+                var processedPoints = new HashSet<string>();
+                ExtractVerticesFromFaceBound(bound, stepFile, verts, processedPoints);
+                
+                // Calculate bounding box area
+                if (verts.Count > 0)
+                {
+                    var minX = verts.Min(v => v.Item1);
+                    var maxX = verts.Max(v => v.Item1);
+                    var minY = verts.Min(v => v.Item2);
+                    var maxY = verts.Max(v => v.Item2);
+                    var width = maxX - minX;
+                    var height = maxY - minY;
+                    var area = width * height;
+                    
+                    Console.WriteLine($"[EXTRACT] Bound {i} has {verts.Count} vertices, bbox {width:F1}x{height:F1} (area={area:F1}): {string.Join(", ", verts.Take(4).Select(v => $"({v.Item1:F1},{v.Item2:F1},{v.Item3:F1})"))}...");
+                    
+                    allLoops.Add((i, verts, area));
+                }
             }
             
+            // The OUTER loop should have the LARGEST bounding box area
+            if (allLoops.Count > 0)
+            {
+                allLoops = allLoops.OrderByDescending(l => l.BoundingBoxArea).ToList();
+                
+                outerVerts = allLoops[0].Vertices;
+                Console.WriteLine($"[EXTRACT] Identified bound {allLoops[0].Index} as outer loop (largest area={allLoops[0].BoundingBoxArea:F1})");
+                
+                for (int i = 1; i < allLoops.Count; i++)
+                {
+                    holeVerts.Add(allLoops[i].Vertices);
+                    Console.WriteLine($"[EXTRACT] Identified bound {allLoops[i].Index} as hole loop {i} (area={allLoops[i].BoundingBoxArea:F1})");
+                }
+            }
+            
+            Console.WriteLine($"[EXTRACT] Returning {outerVerts.Count} outer verts and {holeVerts.Count} hole loops");
             return (outerVerts, holeVerts);
         }
 

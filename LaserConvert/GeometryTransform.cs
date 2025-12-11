@@ -184,9 +184,10 @@ namespace LaserConvert
         /// Apply TWO rotations:
         /// 1. Align thin dimension with Z axis
         /// 2. Align one edge of the top face with X axis (normalize to axis-aligned)
-        /// Returns the doubly-rotated vertices ready for 2D SVG projection.
+        /// Returns the doubly-rotated vertices ready for 2D SVG projection and the rotation matrices.
         /// </summary>
-        public static List<Vec3> RotateAndNormalize(List<(double X, double Y, double Z)> vertices)
+        public static (List<Vec3> NormalizedVertices, double[,] RotationMatrix1, double[,] RotationMatrix2) RotateAndNormalizeWithMatrices(
+            List<(double X, double Y, double Z)> vertices)
         {
             // Step 1: Rotate to align thin dimension with Z
             var (rotatedVertices, rotMatrix1) = RotateToAlignThinDimension(vertices);
@@ -198,49 +199,80 @@ namespace LaserConvert
                 .OrderBy(v => v.X).ThenBy(v => v.Y)
                 .ToList();
             
-            if (topFaceVerts.Count < 2)
+            double[,] rotMatrix2 = new[,]
             {
-                return rotatedVertices;  // Can't normalize, return as-is
-            }
-            
-            // Get the first edge of the top face
-            var v0 = topFaceVerts[0];
-            var v1 = topFaceVerts[1];
-            
-            // Vector along this edge
-            var edgeVec = new Vec3(v1.X - v0.X, v1.Y - v0.Y, 0);  // Keep Z=0 (already on top face)
-            
-            if (edgeVec.Length < 0.01)
-            {
-                return rotatedVertices;  // Degenerate edge
-            }
-            
-            // Normalize edge vector
-            edgeVec = edgeVec.Normalize();
-            
-            // We want to rotate this edge to align with X axis (1, 0, 0)
-            // This is a rotation in the XY plane only
-            var angle = Math.Atan2(edgeVec.Y, edgeVec.X);
-            
-            // Create rotation matrix for Z-axis rotation (rotation around Z by -angle)
-            var cos = Math.Cos(-angle);
-            var sin = Math.Sin(-angle);
-            
-            var rotMatrix2 = new[,]
-            {
-                { cos,  -sin,  0 },
-                { sin,   cos,  0 },
-                { 0,     0,    1 }
+                { 1.0, 0.0, 0.0 },
+                { 0.0, 1.0, 0.0 },
+                { 0.0, 0.0, 1.0 }
             };
             
-            Console.WriteLine($"[TRANSFORM] Normalizing edge to X-axis: angle={angle * 180 / Math.PI:F1}°");
+            if (topFaceVerts.Count >= 2)
+            {
+                // Get the first edge of the top face
+                var v0 = topFaceVerts[0];
+                var v1 = topFaceVerts[1];
+                
+                // Vector along this edge
+                var edgeVec = new Vec3(v1.X - v0.X, v1.Y - v0.Y, 0);  // Keep Z=0 (already on top face)
+                
+                if (edgeVec.Length >= 0.01)
+                {
+                    // Normalize edge vector
+                    edgeVec = edgeVec.Normalize();
+                    
+                    // We want to rotate this edge to align with X axis (1, 0, 0)
+                    // This is a rotation in the XY plane only
+                    var angle = Math.Atan2(edgeVec.Y, edgeVec.X);
+                    
+                    // Create rotation matrix for Z-axis rotation (rotation around Z by -angle)
+                    var cos = Math.Cos(-angle);
+                    var sin = Math.Sin(-angle);
+                    
+                    rotMatrix2 = new[,]
+                    {
+                        { cos,  -sin,  0 },
+                        { sin,   cos,  0 },
+                        { 0,     0,    1 }
+                    };
+                    
+                    Console.WriteLine($"[TRANSFORM] Normalizing edge to X-axis: angle={angle * 180 / Math.PI:F1}°");
+                }
+            }
             
             // Apply second rotation to all rotated vertices
             var normalizedVertices = rotatedVertices
                 .Select(v => RotatePoint(v, rotMatrix2))
                 .ToList();
             
-            return normalizedVertices;
+            return (normalizedVertices, rotMatrix1, rotMatrix2);
+        }
+        
+        /// <summary>
+        /// Legacy method: Apply both rotations and return only the normalized vertices.
+        /// </summary>
+        public static List<Vec3> RotateAndNormalize(List<(double X, double Y, double Z)> vertices)
+        {
+            var (normalized, _, _) = RotateAndNormalizeWithMatrices(vertices);
+            return normalized;
+        }
+        
+        /// <summary>
+        /// Apply a saved pair of rotation matrices to vertices.
+        /// This is used to transform holes using the same transformation as the main outline.
+        /// </summary>
+        public static List<Vec3> ApplyRotationMatrices(List<(double X, double Y, double Z)> vertices, double[,] rotMatrix1, double[,] rotMatrix2)
+        {
+            // Apply first rotation
+            var rotated = vertices
+                .Select(v => RotatePoint(new Vec3(v.X, v.Y, v.Z), rotMatrix1))
+                .ToList();
+            
+            // Apply second rotation
+            var normalized = rotated
+                .Select(v => RotatePoint(v, rotMatrix2))
+                .ToList();
+            
+            return normalized;
         }
     }
 }

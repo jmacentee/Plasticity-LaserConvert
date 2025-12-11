@@ -58,7 +58,7 @@ namespace LaserConvert
                     svg.BeginGroup(name);
 
                     // Rotate vertices to align thin dimension with Z and normalize one edge to X
-                    var normalizedVertices = GeometryTransform.RotateAndNormalize(vertices);
+                    var (normalizedVertices, rotMatrix1, rotMatrix2) = GeometryTransform.RotateAndNormalizeWithMatrices(vertices);
                     if (normalizedVertices.Count < 4)
                     {
                         svg.EndGroup();
@@ -84,9 +84,15 @@ namespace LaserConvert
                     {
                         mainFace = faces[face2Idx];
                     }
+                    
+                    // Debug: log mainFace details
+                    if (mainFace != null)
+                    {
+                        Console.WriteLine($"[SVG] {name}: mainFace has {mainFace.Bounds?.Count ?? 0} bounds");
+                    }
 
-                    bool complex = topFaceVerts.Count > 8 || (mainFace?.Bounds?.Count ?? 0) > 0;
-                    if (mainFace != null && complex)
+                    bool complex = topFaceVerts.Count > 8;
+                    if (mainFace != null && complex && (mainFace.Bounds?.Count ?? 0) <= 1)
                     {
                         // Build projection frame from all vertices of the main face
                         var mainFaceAllVerts = StepTopologyResolver.ExtractVerticesFromFace(mainFace, stepFile);
@@ -120,173 +126,10 @@ namespace LaserConvert
                                 svg.EndGroup();
                                 continue;
                             }
-                            else if (topVertsNf.Count >= 4)
-                            {
-                                var minXn = topVertsNf.Min(v => v.X);
-                                var maxXn = topVertsNf.Max(v => v.X);
-                                var minYn = topVertsNf.Min(v => v.Y);
-                                var maxYn = topVertsNf.Max(v => v.Y);
-                                var w = (long)Math.Round(maxXn - minXn);
-                                var h = (long)Math.Round(maxYn - minYn);
-                                if (w < h) { var tmp = w; w = h; h = tmp; }
-                                var rectPath = $"M 0 0 L {w} 0 L {w} {h} L 0 {h} Z";
-                                svg.Path(rectPath, strokeWidth: 0.2, fill: "none", stroke: "#000");
-                                svg.EndGroup();
-                                continue;
-                            }
-                        }
-                        
-                        // Helper: project a bound to ordered 2D points
-                        List<(double X, double Y)> ProjectBoundPoints(StepFaceBound b)
-                        {
-                            var edgeLoop = GetEdgeLoopFromBound(b);
-                            var pts2D = new List<(double, double)>();
-                            if (edgeLoop?.EdgeList == null) return pts2D;
-                            foreach (var orientedEdge in edgeLoop.EdgeList)
-                            {
-                                var edgeCurve = orientedEdge?.EdgeElement;
-                                if (edgeCurve == null) continue;
-                                StepVertexPoint startVertex = null, endVertex = null;
-                                foreach (var prop in edgeCurve.GetType().GetProperties())
-                                {
-                                    if (prop.Name.Contains("EdgeStart") || prop.Name.Contains("Start"))
-                                        startVertex = prop.GetValue(edgeCurve) as StepVertexPoint;
-                                    if (prop.Name.Contains("EdgeEnd") || prop.Name.Contains("End"))
-                                        endVertex = prop.GetValue(edgeCurve) as StepVertexPoint;
-                                }
-                                if (startVertex?.Location != null)
-                                {
-                                    var s3 = new Vec3(startVertex.Location.X, startVertex.Location.Y, startVertex.Location.Z);
-                                    var s2 = Project(frame, s3);
-                                    pts2D.Add((s2.X, s2.Y));
-                                }
-                                if (endVertex?.Location != null)
-                                {
-                                    var e3 = new Vec3(endVertex.Location.X, endVertex.Location.Y, endVertex.Location.Z);
-                                    var e2 = Project(frame, e3);
-                                    pts2D.Add((e2.X, e2.Y));
-                                }
-                            }
-                            return pts2D;
-                        }
-                        
-                        // Project outer and holes
-                        var outerPts = ProjectBoundPoints(mainFace.Bounds[0]);
-                        if (outerPts.Count >= 4)
-                        {
-                            var minOX = outerPts.Min(p => p.X);
-                            var minOY = outerPts.Min(p => p.Y);
-                            var normOuter = outerPts.Select(p => ((long)Math.Round(p.X - minOX), (long)Math.Round(p.Y - minOY))).ToList();
-
-                            // Determine uniqueness
-                            var uniqueCorners = new HashSet<(long, long)>(normOuter);
-
-                            // Rectangle shortcut only if exactly 4 corners
-                            if (mainFace.Bounds.Count == 1 && uniqueCorners.Count == 4)
-                            {
-                                var xs = normOuter.Select(p => p.Item1).ToList();
-                                var ys = normOuter.Select(p => p.Item2).ToList();
-                                var minXr = xs.Min();
-                                var maxXr = xs.Max();
-                                var minYr = ys.Min();
-                                var maxYr = ys.Max();
-                                var w = maxXr - minXr;
-                                var h = maxYr - minYr;
-                                if (w < h)
-                                {
-                                    var tmp = w; w = h; h = tmp;
-                                }
-                                var rectPath = $"M 0 0 L {w} 0 L {w} {h} L 0 {h} Z";
-                                svg.Path(rectPath, strokeWidth: 0.2, fill: "none", stroke: "#000");
-                                svg.EndGroup();
-                                continue;
-                            }
-
-                            // Build path following point order with axis snapping
-                            string BuildPath(List<(long X, long Y)> pts)
-                            {
-                                var sbp = new StringBuilder();
-                                if (pts.Count == 0) return string.Empty;
-                                sbp.Append($"M {pts[0].X},{pts[0].Y}");
-                                for (int i = 1; i < pts.Count; i++)
-                                {
-                                    var a = pts[i - 1];
-                                    var b = pts[i];
-                                    if (a.X == b.X || a.Y == b.Y)
-                                    {
-                                        sbp.Append($" L {b.X},{b.Y}");
-                                    }
-                                    else
-                                    {
-                                        var dx = Math.Abs(b.X - a.X);
-                                        var dy = Math.Abs(b.Y - a.Y);
-                                        if (dx >= dy)
-                                        {
-                                            sbp.Append($" L {b.X},{a.Y}");
-                                            sbp.Append($" L {b.X},{b.Y}");
-                                        }
-                                        else
-                                        {
-                                            sbp.Append($" L {a.X},{b.Y}");
-                                            sbp.Append($" L {b.X},{b.Y}");
-                                        }
-                                    }
-                                }
-                                sbp.Append(" Z");
-                                return sbp.ToString();
-                            }
-
-                            string BuildOrthogonalLoop(List<(long X, long Y)> pts)
-                            {
-                                var xs = pts.Select(p => p.X).ToList();
-                                var ys = pts.Select(p => p.Y).ToList();
-                                long minX = xs.Min();
-                                long maxX = xs.Max();
-                                long minY = ys.Min();
-                                long maxY = ys.Max();
-                                int tol = 1;
-                                var bottom = pts.Where(p => Math.Abs(p.Y - minY) <= tol).OrderBy(p => p.X).ToList();
-                                var right = pts.Where(p => Math.Abs(p.X - maxX) <= tol).OrderBy(p => p.Y).ToList();
-                                var top = pts.Where(p => Math.Abs(p.Y - maxY) <= tol).OrderByDescending(p => p.X).ToList();
-                                var left = pts.Where(p => Math.Abs(p.X - minX) <= tol).OrderByDescending(p => p.Y).ToList();
-                                var walk = new List<(long X, long Y)>();
-                                void AppendUnique(IEnumerable<(long X,long Y)> seq)
-                                {
-                                    foreach (var p in seq)
-                                    {
-                                        if (walk.Count == 0 || walk.Last().X != p.X || walk.Last().Y != p.Y)
-                                            walk.Add(p);
-                                    }
-                                }
-                                AppendUnique(bottom);
-                                AppendUnique(right);
-                                AppendUnique(top);
-                                AppendUnique(left);
-                                if (walk.Count > 0 && (walk.First().X != walk.Last().X || walk.First().Y != walk.Last().Y))
-                                    walk.Add(walk.First());
-                                return BuildPath(walk);
-                            }
-
-                            var outerPath = (uniqueCorners.Count > 4) ? BuildOrthogonalLoop2D(normOuter) : BuildPath2D(normOuter);
-
-                            svg.Path(outerPath, strokeWidth: 0.2, fill: "none", stroke: "#000");
-
-                            // Holes
-                            for (int bi = 1; bi < mainFace.Bounds.Count; bi++)
-                            {
-                                var holePts = ProjectBoundPoints(mainFace.Bounds[bi]);
-                                if (holePts.Count < 3) continue;
-                                var normHole = holePts.Select(p => ((long)Math.Round(p.X - minOX), (long)Math.Round(p.Y - minOY))).ToList();
-                                var holePath = BuildPath2D(normHole);
-                                svg.Path(holePath, strokeWidth: 0.2, fill: "none", stroke: "#FF0000");
-                            }
-
-                            svg.EndGroup();
-                            continue;
                         }
                     }
 
-                    // Fallback: rectangular bounds for simple faces
+                    // Standard path: use normalized top face vertices for outline
                     var minX = topFaceVerts.Min(v => v.X);
                     var maxX = topFaceVerts.Max(v => v.X);
                     var minY = topFaceVerts.Min(v => v.Y);
@@ -300,26 +143,62 @@ namespace LaserConvert
                     var pathData = $"M 0 0 L {rectWidth} 0 L {rectWidth} {rectHeight} L 0 {rectHeight} Z";
                     svg.Path(pathData, strokeWidth: 0.2, fill: "none", stroke: "#000");
 
-                    // Render holes using face bounds of the selected main face
-                    if (mainFace != null)
+                    // Render holes: Extract hole bounds from FACE BOUNDS STRUCTURE, then find matching normalized vertices
+                    if (mainFace != null && (mainFace.Bounds?.Count ?? 0) > 1)
                     {
-                        var (_, holeLoops) = StepTopologyResolver.ExtractFaceWithHoles(mainFace, stepFile);
-                        foreach (var hole3D in holeLoops)
+                        Console.WriteLine($"[SVG] {name}: Face has {mainFace.Bounds.Count} bounds (1 outer + {mainFace.Bounds.Count - 1} holes)");
+                        
+                        // Extract hole vertices from face bounds (in original 3D space)
+                        var (_, holeLoopsOriginal) = StepTopologyResolver.ExtractFaceWithHoles(mainFace, stepFile);
+                        
+                        foreach (var holeVertices3D in holeLoopsOriginal)
                         {
-                            var holeRotNorm = GeometryTransform.RotateAndNormalize(hole3D);
-                            if (holeRotNorm.Count < 3) continue;
-                            var hx = holeRotNorm.Min(v => v.X);
-                            var hx2 = holeRotNorm.Max(v => v.X);
-                            var hy = holeRotNorm.Min(v => v.Y);
-                            var hy2 = holeRotNorm.Max(v => v.Y);
+                            Console.WriteLine($"[SVG] {name}: Processing hole with {holeVertices3D.Count} vertices in 3D");
+                            
+                            // Find which of our normalized vertices correspond to this hole
+                            // by matching coordinates (with rounding tolerance)
+                            var holeNormalizedVerts = new List<GeometryTransform.Vec3>();
+                            foreach (var hole3Dvert in holeVertices3D)
+                            {
+                                // Find the matching normalized vertex
+                                var key3D = (Math.Round(hole3Dvert.X, 1), Math.Round(hole3Dvert.Y, 1), Math.Round(hole3Dvert.Z, 1));
+                                var matchingNormVert = normalizedVertices.FirstOrDefault(v => 
+                                    (Math.Round(v.X, 1), Math.Round(v.Y, 1), Math.Round(v.Z, 1)) == key3D ||
+                                    // Also check original vertices transformed (for rotated coordinates)
+                                    IsCloseToOriginal(v, hole3Dvert, rotMatrix1, rotMatrix2));
+                                
+                                if (!matchingNormVert.Equals(default(GeometryTransform.Vec3)))
+                                {
+                                    holeNormalizedVerts.Add(matchingNormVert);
+                                }
+                            }
+                            
+                            if (holeNormalizedVerts.Count < 3)
+                            {
+                                Console.WriteLine($"[SVG] {name}: Hole skipped (only {holeNormalizedVerts.Count} vertices matched)");
+                                continue;
+                            }
+                            
+                            var hx = holeNormalizedVerts.Min(v => v.X);
+                            var hx2 = holeNormalizedVerts.Max(v => v.X);
+                            var hy = holeNormalizedVerts.Min(v => v.Y);
+                            var hy2 = holeNormalizedVerts.Max(v => v.Y);
                             var holeX = (long)Math.Round(hx - minX);
                             var holeY = (long)Math.Round(hy - minY);
                             var holeW = (long)Math.Round(hx2 - hx);
                             var holeH = (long)Math.Round(hy2 - hy);
+                            
+                            Console.WriteLine($"[SVG] {name}: Hole 3D bounds: X:[{hx:F1},{hx2:F1}] Y:[{hy:F1},{hy2:F1}], normalized: ({holeX},{holeY}) {holeW}x{holeH}");
+                            
                             if (holeW > 1 && holeH > 1)
                             {
                                 var holePath = $"M {holeX} {holeY} L {holeX + holeW} {holeY} L {holeX + holeW} {holeY + holeH} L {holeX} {holeY + holeH} Z";
                                 svg.Path(holePath, strokeWidth: 0.2, fill: "none", stroke: "#FF0000");
+                                Console.WriteLine($"[SVG] {name}: Added hole path");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"[SVG] {name}: Hole too small ({holeW}x{holeH})");
                             }
                         }
                     }
@@ -575,6 +454,29 @@ namespace LaserConvert
             if (walk.Count > 0 && (walk.First().X != walk.Last().X || walk.First().Y != walk.Last().Y))
                 walk.Add(walk.First());
             return BuildPath2D(walk);
+        }
+
+        private static bool IsCloseToOriginal(GeometryTransform.Vec3 normVert, (double X, double Y, double Z) orig3D, 
+            double[,] rotMatrix1, double[,] rotMatrix2)
+        {
+            // Apply rotations to the original 3D vertex
+            var orig = new GeometryTransform.Vec3(orig3D.X, orig3D.Y, orig3D.Z);
+            var rot1 = ApplyMatrix(orig, rotMatrix1);
+            var rot2 = ApplyMatrix(rot1, rotMatrix2);
+            
+            // Check if close (within rounding tolerance)
+            return Math.Abs(normVert.X - rot2.X) < 0.5 &&
+                   Math.Abs(normVert.Y - rot2.Y) < 0.5 &&
+                   Math.Abs(normVert.Z - rot2.Z) < 0.5;
+        }
+        
+        private static GeometryTransform.Vec3 ApplyMatrix(GeometryTransform.Vec3 v, double[,] matrix)
+        {
+            return new GeometryTransform.Vec3(
+                matrix[0, 0] * v.X + matrix[0, 1] * v.Y + matrix[0, 2] * v.Z,
+                matrix[1, 0] * v.X + matrix[1, 1] * v.Y + matrix[1, 2] * v.Z,
+                matrix[2, 0] * v.X + matrix[2, 1] * v.Y + matrix[2, 2] * v.Z
+            );
         }
     }
 }
