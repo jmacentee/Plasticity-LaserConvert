@@ -99,10 +99,9 @@ namespace LaserConvert
                                 var boundaryPath = ExtractBoundaryPath(topFaceVerts, name);
                                 if (!string.IsNullOrEmpty(boundaryPath))
                                 {
-                                    Console.WriteLine($"[SVG] {name}: Rendering complex boundary with {topFaceVerts.Count} vertices");
+                                    Console.WriteLine($"[SVG] {name}: Rendering complex boundary with {topFaceVerts.Count} vertices (no hole detection for complex shapes)");
                                     svg.Path(boundaryPath, strokeWidth: 0.2, fill: "none", stroke: "#000");
-                                    // Don't pass outer bounds for complex paths - they're edge-based cutouts, not interior holes
-                                    DetectAndRenderCutouts(svg, faces, vertices, normalizedVertices, stepFile);
+                                    // Do NOT call DetectAndRenderCutouts for complex paths - they represent edge-based cutouts
                                     svg.EndGroup();
                                     continue;
                                 }
@@ -129,7 +128,7 @@ namespace LaserConvert
                         }
                         else
                         {
-                            Console.WriteLine($"[SVG] {name}: Insufficient vertices for output ({topFaceVerts.Count} < 4)");
+                            Console.WriteLine($"{name}: Insufficient vertices for output ({topFaceVerts.Count} < 4)");
                         }
                     }
                     
@@ -584,34 +583,31 @@ namespace LaserConvert
         
         /// <summary>
         /// Extract the actual boundary path from vertices.
-        /// For rectilinear shapes, normalize coordinates starting at (0,0) and trace the outline.
+        /// Sorts vertices by polar angle to create a non-self-intersecting polygon.
         /// </summary>
         private static string ExtractBoundaryPath(List<GeometryTransform.Vec3> vertices, string name)
         {
             if (vertices.Count < 4)
                 return null;
             
-            // Round all vertices to integers with standard rounding (.5 rounds to nearest even)
+            // Round all vertices to integers
             var roundedVerts = vertices
-                .Select(v => ((long)Math.Round(v.X), 
-                              (long)Math.Round(v.Y)))
+                .Select(v => ((long)Math.Round(v.X), (long)Math.Round(v.Y)))
                 .Distinct()
                 .ToList();
+            
+            if (roundedVerts.Count < 4)
+                return null;
             
             // Normalize to start at (0, 0)
             var minX = roundedVerts.Min(v => v.Item1);
             var minY = roundedVerts.Min(v => v.Item2);
-            var maxX = roundedVerts.Max(v => v.Item1);
-            var maxY = roundedVerts.Max(v => v.Item2);
             
             var normalizedVerts = roundedVerts
                 .Select(v => (v.Item1 - minX, v.Item2 - minY))
-                .Distinct()
                 .ToList();
             
-            Console.WriteLine($"[SVG] {name}: {normalizedVerts.Count} vertices");
-            
-            // For rectilinear outline, use polar angle sort from centroid
+            // Sort by polar angle from centroid to create a CCW polygon
             var centroidX = normalizedVerts.Average(v => (double)v.Item1);
             var centroidY = normalizedVerts.Average(v => (double)v.Item2);
             
@@ -619,22 +615,18 @@ namespace LaserConvert
                 .OrderBy(v => Math.Atan2(v.Item2 - centroidY, v.Item1 - centroidX))
                 .ToList();
             
-            // Build SVG path using absolute coordinates
+            // Build SVG path
             var sb = new StringBuilder();
             sb.Append($"M {sorted[0].Item1},{sorted[0].Item2}");
             
             for (int i = 1; i < sorted.Count; i++)
             {
-                var curr = sorted[i];
-                sb.Append($" L {curr.Item1},{curr.Item2}");
+                sb.Append($" L {sorted[i].Item1},{sorted[i].Item2}");
             }
             
             sb.Append(" Z");
             
-            var pathData = sb.ToString();
-            Console.WriteLine($"[SVG] {name}: Path: {pathData}");
-            
-            return pathData;
+            return sb.ToString();
         }
     }
 }

@@ -36,6 +36,9 @@ REM one 5mm cutout is on the edge and is 14.656 wide
 REM the other two cutouts are both 34mm wide.
 REM since these cutouts are on the outside edge of the face, they should not be red.  The black outline of the face is more complex than a rectangle.
 REM the correct svg path for KBox is d="m 0,0 h 170 v 145 h -15 v 5 H 121 V 140 H 87 v 5 H 53 v 5 H 0 Z"
+REM this path should have no diagonal lines.
+REM it is not necessary to copy the format of the correct path with "h" and "v".  Only to have the same points in the same order.
+REM there may be some slight rounding errors in the correct path. it is acceptable if our output is the same within +/- 1 unit.
 "C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox_output.txt"
 
 REM This file contains a single solid named CBox. The Overall dimension is 40x50x3mm. It should be represented in the SVG as a single black square 40x50mm.

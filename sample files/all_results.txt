@@ -446,9 +446,5 @@ Found 1 solids
 [TRANSFORM] Normalizing edge to X-axis: angle=24.6ø
 [SVG] KBox: Z range [19.7, 22.7], top=12 verts, bottom=12 verts
 [SVG] KBox: Found 12 vertices on top face
-[SVG] KBox: 12 vertices
-[SVG] KBox: Path: M 0,0 L 170,0 L 170,145 L 156,145 L 156,150 L 122,140 L 122,150 L 88,145 L 88,140 L 54,150 L 54,145 L 0,150 Z
-[SVG] KBox: Rendering complex boundary with 12 vertices
-[SVG] Total vertices: 24, Top plane vertices: 12
-[SVG] No explicit outer bounds, skipping hole detection (likely edge-based cutouts)
+[SVG] KBox: Rendering complex boundary with 12 vertices (no hole detection for complex shapes)
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox.svg
