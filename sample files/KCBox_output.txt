@@ -18,6 +18,7 @@ Found 1 solids
 [SVG] CKBox: Rendering in Y-Z plane (Z becomes X for output)
 [SVG] CKBox: Rendering complex boundary with 84 vertices
 [SVG] CKBox: Outer verts: 72, Inner verts: 12, Avg dist: 22.8
-[SVG] CKBox: Min distance to edge: 5.0mm, Min dimension: 40.0mm
-[SVG] CKBox: Rendered RED interior hole: 30 x 25 at (17, 10)
+[SVG] CKBox: Found 2 hole cluster(s)
+[SVG] CKBox: Rendered RED hole #1: 10 x 5 at (17, 10)
+[SVG] CKBox: Rendered RED hole #2: 10 x 10 at (37, 25)
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.svg

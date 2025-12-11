@@ -20,6 +20,6 @@ Found 1 solids
 [SVG] KBox: Dimensions - X:170.0 Y:150.0 Z:3.0
 [SVG] KBox: Rendering complex boundary with 24 vertices
 [SVG] KBox: Outer verts: 14, Inner verts: 10, Avg dist: 68.1
-[SVG] KBox: Min distance to edge: 0.0mm, Min dimension: 150.0mm
-[SVG] KBox: Inner cluster is too close to edges (0.0 < 15.0), likely edge-based cutouts not holes
+[SVG] KBox: Found 1 hole cluster(s)
+[SVG] KBox: Hole #1 too close to edges (0.0), skipping
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox.svg

@@ -759,47 +759,114 @@ namespace LaserConvert
                 return;
             }
             
-            // For complex shapes, just render all inner vertices as a single bounding box hole
-            // (This is a simplification; the actual holes may be more complex)
-            var holeMinX = innerVerts.Min(v => v.X);
-            var holeMaxX = innerVerts.Max(v => v.X);
-            var holeMinY = innerVerts.Min(v => v.Y);
-            var holeMaxY = innerVerts.Max(v => v.Y);
+            // Cluster inner vertices into separate holes using agglomerative clustering
+            var holeClusters = ClusterInnerVertices(innerVerts, minDim * 0.25);  // Increased from 0.10
             
-            // Distance from hole to each edge
-            var distToLeftEdge = holeMinX - minX;
-            var distToRightEdge = maxX - holeMaxX;
-            var distToTopEdge = maxY - holeMaxY;
-            var distToBottomEdge = holeMinY - minY;
-            
-            var minDistToEdge = Math.Min(Math.Min(distToLeftEdge, distToRightEdge), 
-                                         Math.Min(distToTopEdge, distToBottomEdge));
-            
-            Console.WriteLine($"[SVG] {name}: Min distance to edge: {minDistToEdge:F1}mm, Min dimension: {minDim:F1}mm");
-            
-            // Only treat as a hole if it's well-separated from the edges
-            if (minDistToEdge < minDim * 0.10)  // Less than 10% away from edge
+            if (holeClusters.Count == 0)
             {
-                Console.WriteLine($"[SVG] {name}: Inner cluster is too close to edges ({minDistToEdge:F1} < {minDim * 0.10:F1}), likely edge-based cutouts not holes");
+                Console.WriteLine($"[SVG] {name}: No hole clusters found");
                 return;
             }
             
-            // This is a true interior hole - render it in RED
-            var holeW = (long)Math.Round(holeMaxX - holeMinX);
-            var holeH = (long)Math.Round(holeMaxY - holeMinY);
+            Console.WriteLine($"[SVG] {name}: Found {holeClusters.Count} hole cluster(s)");
             
-            if (holeW > 2 && holeH > 2)
+            var outerMinXc = outerVerts.Min(v => v.X);
+            var outerMinYc = outerVerts.Min(v => v.Y);
+            
+            int holeIndex = 0;
+            foreach (var holeVerts in holeClusters)
             {
-                var outerMinXc = outerVerts.Min(v => v.X);
-                var outerMinYc = outerVerts.Min(v => v.Y);
+                holeIndex++;
+                var holeMinX = holeVerts.Min(v => v.X);
+                var holeMaxX = holeVerts.Max(v => v.X);
+                var holeMinY = holeVerts.Min(v => v.Y);
+                var holeMaxY = holeVerts.Max(v => v.Y);
                 
-                var holeX = (long)Math.Round(holeMinX - outerMinXc);
-                var holeY = (long)Math.Round(holeMinY - outerMinYc);
+                // Distance from hole to each edge
+                var distToLeftEdge = holeMinX - minX;
+                var distToRightEdge = maxX - holeMaxX;
+                var distToTopEdge = maxY - holeMaxY;
+                var distToBottomEdge = holeMinY - minY;
                 
-                var pathData = $"M {holeX} {holeY} L {holeX + holeW} {holeY} L {holeX + holeW} {holeY + holeH} L {holeX} {holeY + holeH} Z";
-                svg.Path(pathData, strokeWidth: 0.2, fill: "none", stroke: "#FF0000");
-                Console.WriteLine($"[SVG] {name}: Rendered RED interior hole: {holeW} x {holeH} at ({holeX}, {holeY})");
+                var minDistToEdge = Math.Min(Math.Min(distToLeftEdge, distToRightEdge), 
+                                             Math.Min(distToTopEdge, distToBottomEdge));
+                
+                // Only treat as a hole if it's well-separated from the edges
+                if (minDistToEdge < minDim * 0.10)  // Less than 10% away from edge
+                {
+                    Console.WriteLine($"[SVG] {name}: Hole #{holeIndex} too close to edges ({minDistToEdge:F1}), skipping");
+                    continue;
+                }
+                
+                var holeW = (long)Math.Round(holeMaxX - holeMinX);
+                var holeH = (long)Math.Round(holeMaxY - holeMinY);
+                
+                if (holeW > 2 && holeH > 2)
+                {
+                    var holeX = (long)Math.Round(holeMinX - outerMinXc);
+                    var holeY = (long)Math.Round(holeMinY - outerMinYc);
+                    
+                    var pathData = $"M {holeX} {holeY} L {holeX + holeW} {holeY} L {holeX + holeW} {holeY + holeH} L {holeX} {holeY + holeH} Z";
+                    svg.Path(pathData, strokeWidth: 0.2, fill: "none", stroke: "#FF0000");
+                    Console.WriteLine($"[SVG] {name}: Rendered RED hole #{holeIndex}: {holeW} x {holeH} at ({holeX}, {holeY})");
+                }
             }
+        }
+        
+        /// <summary>
+        /// Cluster vertices spatially using a simple agglomerative approach.
+        /// Finds groups of vertices that are close together.
+        /// </summary>
+        private static List<List<GeometryTransform.Vec3>> ClusterInnerVertices(List<GeometryTransform.Vec3> innerVerts, double clusterDistance)
+        {
+            if (innerVerts.Count < 4)
+                return new List<List<GeometryTransform.Vec3>>();
+            
+            var clusters = new List<List<GeometryTransform.Vec3>>();
+            var visited = new HashSet<int>();
+            
+            // Start clustering from each unvisited vertex
+            for (int i = 0; i < innerVerts.Count; i++)
+            {
+                if (visited.Contains(i))
+                    continue;
+                
+                // Start a new cluster
+                var cluster = new List<GeometryTransform.Vec3> { innerVerts[i] };
+                visited.Add(i);
+                
+                // Grow the cluster by adding nearby vertices
+                bool expanded = true;
+                while (expanded)
+                {
+                    expanded = false;
+                    for (int j = 0; j < innerVerts.Count; j++)
+                    {
+                        if (visited.Contains(j))
+                            continue;
+                        
+                        // Check if this vertex is close to ANY vertex in the cluster
+                        var closestDistInCluster = cluster.Min(cv => 
+                            Math.Sqrt((innerVerts[j].X - cv.X) * (innerVerts[j].X - cv.X) + 
+                                     (innerVerts[j].Y - cv.Y) * (innerVerts[j].Y - cv.Y)));
+                        
+                        if (closestDistInCluster <= clusterDistance)
+                        {
+                            cluster.Add(innerVerts[j]);
+                            visited.Add(j);
+                            expanded = true;
+                        }
+                    }
+                }
+                
+                // Only keep clusters with minimum size
+                if (cluster.Count >= 3)
+                {
+                    clusters.Add(cluster);
+                }
+            }
+            
+            return clusters;
         }
     }
 }
