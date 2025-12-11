@@ -83,9 +83,52 @@ REM File: KBox.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="KBox">
-    <path d="M 0 0 L 170 0 L 170 145 L 155 145 L 155 150 L 121 140 L 121 150 L 87 145 L 87 140 L 53 150 L 53 145 L 0 150 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 53 140 L 121 140 L 121 150 L 53 150 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 170,0 L 170,145 L 156,145 L 156,150 L 122,140 L 122,150 L 88,145 L 88,140 L 54,150 L 54,145 L 0,150 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
+</svg>
+ 
+REM File: KBox_corrected.svg 
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   width="1000"
+   height="1000"
+   viewBox="0 0 1000 1000"
+   id="svg2"
+   sodipodi:docname="KBox_corrected.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview2"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="4.756"
+     inkscape:cx="116.58957"
+     inkscape:cy="90.306981"
+     inkscape:window-width="2560"
+     inkscape:window-height="1369"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2" />
+  <defs
+     id="defs1" />
+  <path
+     d="m 0,0 h 170 v 145 h -15 v 5 H 121 V 140 H 87 v 5 H 53 v 5 H 0 Z"
+     stroke="#000000"
+     stroke-width="0.2"
+     fill="none"
+     vector-effect="non-scaling-stroke"
+     id="path1"
+     sodipodi:nodetypes="ccccccccccccc" />
 </svg>
  
 REM File: 1box_output.txt 
@@ -403,11 +446,9 @@ Found 1 solids
 [TRANSFORM] Normalizing edge to X-axis: angle=24.6ø
 [SVG] KBox: Z range [19.7, 22.7], top=12 verts, bottom=12 verts
 [SVG] KBox: Found 12 vertices on top face
-[SVG] KBox: Complex path (170 x 150): M 0 0 L 170 0 L 170 145 L 155 145 L 155 150 L 121 140 L 121 150 L 87 145 L 87 140 L 53 150 L 53 145 L 0 150 Z
+[SVG] KBox: 12 vertices
+[SVG] KBox: Path: M 0,0 L 170,0 L 170,145 L 156,145 L 156,150 L 122,140 L 122,150 L 88,145 L 88,140 L 54,150 L 54,145 L 0,150 Z
 [SVG] KBox: Rendering complex boundary with 12 vertices
 [SVG] Total vertices: 24, Top plane vertices: 12
-[SVG] Outer verts: 6, Inner verts: 6, Avg dist from center: 68.1
-[SVG] Outer X range: [-94.7, 75.3], Y range: [-0.0, 150.0]
-[SVG] Inner X range: [-41.4, 26.6], Y range: [140.0, 150.0]
-[SVG] Rendered RED hole: 68 x 10 at (53, 140)
+[SVG] No explicit outer bounds, skipping hole detection (likely edge-based cutouts)
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox.svg
