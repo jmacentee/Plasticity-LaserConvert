@@ -75,18 +75,37 @@ namespace LaserConvert
                         var minZ = normalizedVertices.Min(v => v.Z);
                         var zRange = Math.Abs(maxZ - minZ);
                         
-                        // The thin face should be at either maxZ or minZ depending on rotation direction
-                        // Use the plane that has more vertices (the actual face, not a single point)
-                        var topCandidates = normalizedVertices
-                            .Where(v => Math.Abs(v.Z - maxZ) < 1.5)
-                            .ToList();
-                        var bottomCandidates = normalizedVertices
-                            .Where(v => Math.Abs(v.Z - minZ) < 1.5)
-                            .ToList();
+                        // For complex shapes with many vertices, use all of them (they should all be on the thin face)
+                        // For simple shapes, filter to just the top face
+                        List<GeometryTransform.Vec3> topFaceVerts;
                         
-                        var topFaceVerts = (topCandidates.Count >= bottomCandidates.Count) ? topCandidates : bottomCandidates;
-                        
-                        Console.WriteLine($"[SVG] {name}: Z range [{minZ:F1}, {maxZ:F1}], top={topCandidates.Count} verts, bottom={bottomCandidates.Count} verts");
+                        if (normalizedVertices.Count > 20)
+                        {
+                            // Complex shape - use all vertices
+                            topFaceVerts = normalizedVertices;
+                            var minXc = topFaceVerts.Min(v => v.X);
+                            var maxXc = topFaceVerts.Max(v => v.X);
+                            var minYc = topFaceVerts.Min(v => v.Y);
+                            var maxYc = topFaceVerts.Max(v => v.Y);
+                            var minZc = topFaceVerts.Min(v => v.Z);
+                            var maxZc = topFaceVerts.Max(v => v.Z);
+                            Console.WriteLine($"[SVG] {name}: Complex shape with {normalizedVertices.Count} vertices");
+                            Console.WriteLine($"[SVG]   After rotation - X:[{minXc:F1},{maxXc:F1}] Y:[{minYc:F1},{maxYc:F1}] Z:[{minZc:F1},{maxZc:F1}]");
+                        }
+                        else
+                        {
+                            // Simple shape - filter to top plane
+                            var topCandidates = normalizedVertices
+                                .Where(v => Math.Abs(v.Z - maxZ) < 1.5)
+                                .ToList();
+                            var bottomCandidates = normalizedVertices
+                                .Where(v => Math.Abs(v.Z - minZ) < 1.5)
+                                .ToList();
+                            
+                            topFaceVerts = (topCandidates.Count >= bottomCandidates.Count) ? topCandidates : bottomCandidates;
+                            
+                            Console.WriteLine($"[SVG] {name}: Z range [{minZ:F1}, {maxZ:F1}], top={topCandidates.Count} verts, bottom={bottomCandidates.Count} verts");
+                        }
                         
                         if (topFaceVerts.Count >= 4)
                         {
@@ -96,12 +115,45 @@ namespace LaserConvert
                             // extract the actual boundary path
                             if (topFaceVerts.Count > 8)
                             {
-                                // For complex shapes, use the original vertices that maintain perimeter order
-                                // Filter to only top-face vertices and apply rotations
-                                var boundaryPath = ExtractBoundaryPath(topFaceVerts, name);
+                                // For complex shapes, render using the two largest dimensions
+                                // This handles cases where the shape ends up in different planes after rotation
+                                var minXt = topFaceVerts.Min(v => v.X);
+                                var maxXt = topFaceVerts.Max(v => v.X);
+                                var minYt = topFaceVerts.Min(v => v.Y);
+                                var maxYt = topFaceVerts.Max(v => v.Y);
+                                var minZt = topFaceVerts.Min(v => v.Z);
+                                var maxZt = topFaceVerts.Max(v => v.Z);
+                                
+                                var dX = maxXt - minXt;
+                                var dY = maxYt - minYt;
+                                var dZ = maxZt - minZt;
+                                
+                                Console.WriteLine($"[SVG] {name}: Dimensions - X:{dX:F1} Y:{dY:F1} Z:{dZ:F1}");
+                                
+                                // If the shape isn't primarily in X-Y plane, use Y-Z or X-Z instead
+                                // by projecting to the plane with the two largest extents
+                                List<GeometryTransform.Vec3> projectedVerts = topFaceVerts;
+                                if (dZ > dX && dZ > dY)
+                                {
+                                    // Use Y-Z plane, swap Z→X for rendering
+                                    projectedVerts = topFaceVerts
+                                        .Select(v => new GeometryTransform.Vec3(v.Z, v.Y, v.X))
+                                        .ToList();
+                                    Console.WriteLine($"[SVG] {name}: Rendering in Y-Z plane (Z becomes X for output)");
+                                }
+                                else if (dZ > dX)
+                                {
+                                    // Use X-Z plane, swap Z→Y for rendering
+                                    projectedVerts = topFaceVerts
+                                        .Select(v => new GeometryTransform.Vec3(v.X, v.Z, v.Y))
+                                        .ToList();
+                                    Console.WriteLine($"[SVG] {name}: Rendering in X-Z plane (Z becomes Y for output)");
+                                }
+                                
+                                var boundaryPath = ExtractBoundaryPath(projectedVerts, name);
                                 if (!string.IsNullOrEmpty(boundaryPath))
                                 {
-                                    Console.WriteLine($"[SVG] {name}: Rendering complex boundary with {topFaceVerts.Count} vertices (no hole detection for complex shapes)");
+                                    Console.WriteLine($"[SVG] {name}: Rendering complex boundary with {projectedVerts.Count} vertices (no hole detection for complex shapes)");
                                     svg.Path(boundaryPath, strokeWidth: 0.2, fill: "none", stroke: "#000");
                                     // Do NOT call DetectAndRenderCutouts for complex paths - they represent edge-based cutouts
                                     svg.EndGroup();

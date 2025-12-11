@@ -133,10 +133,12 @@ namespace LaserConvert
                 }
             }
             
-            // Find the PAIR of faces with the smallest centroid-to-centroid distance
-            // BUT: ensure the separation direction aligns with one of the dimension axes
+            // Initialize tracking variables for thin face pair
             double minSeparation = double.MaxValue;
             int face1Idx = -1, face2Idx = -1;
+            
+            // Find the PAIR of faces with the smallest centroid-to-centroid distance
+            // BUT: ensure the separation direction aligns with one of the dimension axes
             
             // Strategy: Find ALL face pairs, then pick the one that:
             // 1. Has separation close to a reasonable "thin" dimension (2.5-5mm range)
@@ -184,24 +186,36 @@ namespace LaserConvert
                 }
             }
             
-            if (face1Idx >= 0 && face2Idx >= 0 && minSeparation < 200.0)
+            // For complex shapes with many faces (>20), use all vertices
+            // This ensures we get the full geometry including tabs and holes
+            bool isComplexShape = faces.Count > 20;
+            
+            if (isComplexShape)
             {
-                Console.WriteLine($"[TOPO] Found pair of faces with separation: {minSeparation:F1}mm");
-                
-                // For dimensions: use vertices from the two closest faces
-                allVertices.AddRange(faceData[face1Idx].vertices);
-                allVertices.AddRange(faceData[face2Idx].vertices);
-                
-                // Track the face pair separation as a detected thin dimension
-                var storedMinSeparation = minSeparation;
-            }
-            else
-            {
-                // Fallback: use all vertices
-                Console.WriteLine($"[TOPO] No close face pair found, using all vertices");
+                Console.WriteLine($"[TOPO] Complex shape detected ({faces.Count} faces), using all vertices");
                 foreach (var (face, faceVerts) in faceData)
                 {
                     allVertices.AddRange(faceVerts);
+                }
+            }
+            else
+            {
+                if (face1Idx >= 0 && face2Idx >= 0 && minSeparation < 200.0)
+                {
+                    Console.WriteLine($"[TOPO] Found pair of faces with separation: {minSeparation:F1}mm");
+                    
+                    // For dimensions: use vertices from the two closest faces
+                    allVertices.AddRange(faceData[face1Idx].vertices);
+                    allVertices.AddRange(faceData[face2Idx].vertices);
+                }
+                else
+                {
+                    // Fallback: use all vertices
+                    Console.WriteLine($"[TOPO] No close face pair found, using all vertices");
+                    foreach (var (face, faceVerts) in faceData)
+                    {
+                        allVertices.AddRange(faceVerts);
+                    }
                 }
             }
             

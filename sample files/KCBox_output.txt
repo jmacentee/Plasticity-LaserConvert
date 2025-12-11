@@ -2,19 +2,19 @@ Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample file
 File loaded. Total items: 1414
 Found 1 solids
 [TOPO] Processing 44 faces
-[TOPO] Found pair of faces with separation: 2.9mm
-[TOPO] Extracted 6 unique vertices
-[TOPO] Vertex ranges: X[28.4,34.8] Y[-6.3,-3.3] Z[29.7,34.3]
-[TOPO] Computed dimensions: 6.5 x 3.0 x 4.5
+[TOPO] Complex shape detected (44 faces), using all vertices
+[TOPO] Extracted 84 unique vertices
+[TOPO] Vertex ranges: X[-5.8,44.6] Y[-55.1,8.6] Z[5.4,36.9]
+[TOPO] Computed dimensions: 50.4 x 63.7 x 31.5
 [TOPO] Thin dimension detected from face separation: 2.9mm
-[TOPO] Adjusted dimensions: 2.9 x 4.5 x 6.5
-[FILTER] CKBox: dimensions [2.9, 4.5, 6.5] - PASS
+[TOPO] Adjusted dimensions: 2.9 x 50.4 x 63.7
+[FILTER] CKBox: dimensions [2.9, 50.4, 63.7] - PASS
 [TRANSFORM] Thin dimension: 33.4,-6.3,33.9 -> 33.7,-5.4,34.3 (1.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=56.2ø
-[SVG] CKBox: Z range [16.1, 17.1], top=6 verts, bottom=6 verts
-[SVG] CKBox: Found 6 vertices on top face
-[SVG] CKBox: Normalized top face bounds: 3 x 6
-[SVG] CKBox: Outer bounds X:[-19.3,-16.3] Y:[-40.9,-35.2]
-[SVG] Total vertices: 6, Top plane vertices: 4
-[SVG] Insufficient top vertices (4 < 8), no cutouts detected
+[SVG] CKBox: Complex shape with 84 vertices
+[SVG]   After rotation - X:[-19.3,-16.3] Y:[-52.3,-12.3] Z:[-35.9,22.1]
+[SVG] CKBox: Found 84 vertices on top face
+[SVG] CKBox: Dimensions - X:3.0 Y:40.0 Z:58.0
+[SVG] CKBox: Rendering in Y-Z plane (Z becomes X for output)
+[SVG] CKBox: Rendering complex boundary with 84 vertices (no hole detection for complex shapes)
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.svg
