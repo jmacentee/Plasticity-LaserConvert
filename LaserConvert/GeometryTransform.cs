@@ -179,5 +179,68 @@ namespace LaserConvert
             
             return faceVerts;
         }
+
+        /// <summary>
+        /// Apply TWO rotations:
+        /// 1. Align thin dimension with Z axis
+        /// 2. Align one edge of the top face with X axis (normalize to axis-aligned)
+        /// Returns the doubly-rotated vertices ready for 2D SVG projection.
+        /// </summary>
+        public static List<Vec3> RotateAndNormalize(List<(double X, double Y, double Z)> vertices)
+        {
+            // Step 1: Rotate to align thin dimension with Z
+            var (rotatedVertices, rotMatrix1) = RotateToAlignThinDimension(vertices);
+            
+            // Step 2: Find the top face and align one edge with X axis
+            var maxZ = rotatedVertices.Max(v => v.Z);
+            var topFaceVerts = rotatedVertices
+                .Where(v => Math.Abs(v.Z - maxZ) < 1.0)
+                .OrderBy(v => v.X).ThenBy(v => v.Y)
+                .ToList();
+            
+            if (topFaceVerts.Count < 2)
+            {
+                return rotatedVertices;  // Can't normalize, return as-is
+            }
+            
+            // Get the first edge of the top face
+            var v0 = topFaceVerts[0];
+            var v1 = topFaceVerts[1];
+            
+            // Vector along this edge
+            var edgeVec = new Vec3(v1.X - v0.X, v1.Y - v0.Y, 0);  // Keep Z=0 (already on top face)
+            
+            if (edgeVec.Length < 0.01)
+            {
+                return rotatedVertices;  // Degenerate edge
+            }
+            
+            // Normalize edge vector
+            edgeVec = edgeVec.Normalize();
+            
+            // We want to rotate this edge to align with X axis (1, 0, 0)
+            // This is a rotation in the XY plane only
+            var angle = Math.Atan2(edgeVec.Y, edgeVec.X);
+            
+            // Create rotation matrix for Z-axis rotation (rotation around Z by -angle)
+            var cos = Math.Cos(-angle);
+            var sin = Math.Sin(-angle);
+            
+            var rotMatrix2 = new[,]
+            {
+                { cos,  -sin,  0 },
+                { sin,   cos,  0 },
+                { 0,     0,    1 }
+            };
+            
+            Console.WriteLine($"[TRANSFORM] Normalizing edge to X-axis: angle={angle * 180 / Math.PI:F1}°");
+            
+            // Apply second rotation to all rotated vertices
+            var normalizedVertices = rotatedVertices
+                .Select(v => RotatePoint(v, rotMatrix2))
+                .ToList();
+            
+            return normalizedVertices;
+        }
     }
 }

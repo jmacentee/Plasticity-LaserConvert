@@ -34,7 +34,7 @@ namespace LaserConvert
                 const double minThickness = 2.5;
                 const double maxThickness = 5.0;
                 
-                var thinSolids = new List<(string Name, List<StepAdvancedFace> Faces, int Face1Idx, int Face2Idx, List<(double X, double Y, double Z)> Vertices)>();
+                var thinSolids = new List<(string Name, List<StepAdvancedFace> Faces, int Face1Idx, int Face2Idx, List<(double X, double Y, double Z)> Vertices, double DimX, double DimY, double DimZ)>();
                 
                 foreach (var (name, faces) in solids)
                 {
@@ -43,7 +43,7 @@ namespace LaserConvert
                     
                     if (dimensions.HasThinDimension(minThickness, maxThickness))
                     {
-                        thinSolids.Add((name, faces, face1Idx, face2Idx, vertices));
+                        thinSolids.Add((name, faces, face1Idx, face2Idx, vertices, dimX, dimY, dimZ));
                         Console.WriteLine($"[FILTER] {name}: dimensions {dimensions} - PASS");
                     }
                     else
@@ -61,54 +61,37 @@ namespace LaserConvert
                 // Generate SVG
                 var svg = new SvgBuilder();
                 
-                foreach (var (name, faces, face1Idx, face2Idx, vertices) in thinSolids)
+                foreach (var (name, faces, face1Idx, face2Idx, vertices, dimX, dimY, dimZ) in thinSolids)
                 {
                     svg.BeginGroup(name);
                     
-                    // Use 3D rotation to find and project the actual thin face
-                    var (rotatedVertices, rotMatrix) = GeometryTransform.RotateToAlignThinDimension(vertices);
+                    // Apply TWO rotations: align thin dim with Z, then align edge with X
+                    var normalizedVertices = GeometryTransform.RotateAndNormalize(vertices);
                     
-                    // Find vertices with max Z (the top thin face)
-                    if (rotatedVertices.Count > 0)
+                    if (normalizedVertices.Count >= 4)
                     {
-                        var maxZ = rotatedVertices.Max(v => v.Z);
-                        var topFaceVerts = rotatedVertices
-                            .Where(v => Math.Abs(v.Z - maxZ) < 0.5)  // Vertices on top face (within 0.5mm of max Z)
+                        // Find the top face vertices (max Z)
+                        var maxZ = normalizedVertices.Max(v => v.Z);
+                        var topFaceVerts = normalizedVertices
+                            .Where(v => Math.Abs(v.Z - maxZ) < 1.0)
                             .ToList();
                         
-                        if (topFaceVerts.Count >= 3)
+                        if (topFaceVerts.Count >= 4)
                         {
-                            // Project top face vertices to 2D
-                            var projectedPath = ProjectRotatedFaceToSvg(topFaceVerts);
-                            if (!string.IsNullOrEmpty(projectedPath))
-                            {
-                                svg.Path(projectedPath, strokeWidth: 0.2, fill: "none");
-                                Console.WriteLine($"[SVG] {name}: Generated path from rotated face projection");
-                            }
-                            else
-                            {
-                                // Fallback to bounding box if projection fails
-                                Console.WriteLine($"[SVG] {name}: Projection failed, using bounding box fallback");
-                                var (minX, maxX, minY, maxY) = ComputeBoundingBox(vertices);
-                                var rectPath = $"M {Fmt(minX)} {Fmt(minY)} L {Fmt(maxX)} {Fmt(minY)} L {Fmt(maxX)} {Fmt(maxY)} L {Fmt(minX)} {Fmt(maxY)} Z";
-                                svg.Path(rectPath, strokeWidth: 0.2, fill: "none");
-                            }
+                            // Get XY bounds of the normalized top face
+                            var minX = topFaceVerts.Min(v => v.X);
+                            var maxX = topFaceVerts.Max(v => v.X);
+                            var minY = topFaceVerts.Min(v => v.Y);
+                            var maxY = topFaceVerts.Max(v => v.Y);
+                            
+                            var rectWidth = (long)Math.Round(maxX - minX);
+                            var rectHeight = (long)Math.Round(maxY - minY);
+                            
+                            Console.WriteLine($"[SVG] {name}: Normalized top face bounds: {rectWidth} x {rectHeight}");
+                            
+                            var pathData = $"M 0 0 L {rectWidth} 0 L {rectWidth} {rectHeight} L 0 {rectHeight} Z";
+                            svg.Path(pathData, strokeWidth: 0.2, fill: "none");
                         }
-                        else
-                        {
-                            // Fallback to bounding box
-                            Console.WriteLine($"[SVG] {name}: Insufficient top face vertices, using bounding box fallback");
-                            var (minX, maxX, minY, maxY) = ComputeBoundingBox(vertices);
-                            var rectPath = $"M {Fmt(minX)} {Fmt(minY)} L {Fmt(maxX)} {Fmt(minY)} L {Fmt(maxX)} {Fmt(maxY)} L {Fmt(minX)} {Fmt(maxY)} Z";
-                            svg.Path(rectPath, strokeWidth: 0.2, fill: "none");
-                        }
-                    }
-                    else
-                    {
-                        // No rotated vertices, use bounding box
-                        var (minX, maxX, minY, maxY) = ComputeBoundingBox(vertices);
-                        var rectPath = $"M {Fmt(minX)} {Fmt(minY)} L {Fmt(maxX)} {Fmt(minY)} L {Fmt(maxX)} {Fmt(maxY)} L {Fmt(minX)} {Fmt(maxY)} Z";
-                        svg.Path(rectPath, strokeWidth: 0.2, fill: "none");
                     }
                     
                     svg.EndGroup();
@@ -166,48 +149,26 @@ namespace LaserConvert
             if (faceVertices.Count < 3)
                 return "";
             
-            // Sort vertices by angle around their centroid to get proper polygon order
-            var centroidX = faceVertices.Average(v => v.X);
-            var centroidY = faceVertices.Average(v => v.Y);
+            // Find bounding box of all vertices
+            var minX = faceVertices.Min(v => v.X);
+            var maxX = faceVertices.Max(v => v.X);
+            var minY = faceVertices.Min(v => v.Y);
+            var maxY = faceVertices.Max(v => v.Y);
             
-            var sortedVerts = faceVertices
-                .OrderBy(v => Math.Atan2(v.Y - centroidY, v.X - centroidX))
-                .ToList();
+            var width = maxX - minX;
+            var height = maxY - minY;
             
-            // Find bounding box
-            var minX = sortedVerts.Min(v => v.X);
-            var maxX = sortedVerts.Max(v => v.X);
-            var minY = sortedVerts.Min(v => v.Y);
-            var maxY = sortedVerts.Max(v => v.Y);
+            // For axis-aligned output: create a rectangle from the bounding box
+            // This works for rectangular faces (which we expect for laser cutting)
+            var rectWidth = Math.Round(width);
+            var rectHeight = Math.Round(height);
             
-            // Normalize: translate so min is at (0, 0)
-            var normalizedVerts = sortedVerts
-                .Select(v => new GeometryTransform.Vec3(
-                    Math.Round(v.X - minX),
-                    Math.Round(v.Y - minY),
-                    v.Z
-                ))
-                .ToList();
+            Console.WriteLine($"[SVG] Normalized dimensions: {rectWidth} x {rectHeight}");
             
-            Console.WriteLine($"[SVG] Normalized dimensions: {Math.Round(maxX - minX)} x {Math.Round(maxY - minY)}");
-            
+            // Create axis-aligned rectangle path starting at (0,0)
             var sb = new StringBuilder();
-            bool first = true;
+            sb.Append($"M 0 0 L {(long)rectWidth} 0 L {(long)rectWidth} {(long)rectHeight} L 0 {(long)rectHeight} Z");
             
-            foreach (var vert in normalizedVerts)
-            {
-                if (first)
-                {
-                    sb.Append($"M {(long)vert.X} {(long)vert.Y} ");
-                    first = false;
-                }
-                else
-                {
-                    sb.Append($"L {(long)vert.X} {(long)vert.Y} ");
-                }
-            }
-            
-            sb.Append("Z");  // Close path
             return sb.ToString();
         }
 

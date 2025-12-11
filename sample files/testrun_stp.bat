@@ -3,9 +3,17 @@ REM when successful, the groups in the SVG files will have the ids Box1 (in all 
 REM the box ordering in the SVG file is not important
 REM the solids are allowed to be placed and rotated anywhere in 3d space in the step file.  Our job is to find the faces which are perpendicular to the 3mm wide face and then make a 2d projection of that face into the svg file.  the outer edge of the solids may not be regular and there may be cutouts in the solids which should be included in the svg output as indepdent paths.  only the current test cases are regular boxes with no cutouts.
 
+REM 1.	discover the shortest line segment between to verticies on different faces
+REM 2.	discover the 3d rotation of the solid based on the angle between those two vertex
+REM 3.	apply a transform to the entire 3d solid to rotate it in memory so that the short segment is now along the z axis
+REM 4.	pick the topmost face along the z axis
+REM 5.  apply a transform to the entire 3d solid to rotate it so that 1 edge is aligned with the x axis
+REM 6.	use the newly rotated x/y vertexes of that topmost face as the coordinates of the path in the svg file.
+
 REM Normalize the projection so the rectangles appear axis-aligned in the SVG.  
 REM start each object at 0,0 in the svg so we can read easily it's width and height in the SVG.  
 REM round the coordinate output in the SGV to the nearest whole number.
+
 
 
 REM This file contains a single object named Box1 which is 170x150x3mm and should result in a single square in the SVG of 170x150mm.

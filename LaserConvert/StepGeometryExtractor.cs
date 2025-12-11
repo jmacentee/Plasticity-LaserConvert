@@ -258,9 +258,9 @@ namespace LaserConvert
                     .Select(g => g.First())
                     .ToList();
                 
-                // Reset face indices since we're now using all vertices
-                face1Idx = -1;
-                face2Idx = -1;
+                // DON'T reset face indices - keep them for SVG projection!
+                // face1Idx = -1;
+                // face2Idx = -1;
                 
                 // Recompute dimensions
                 if (uniqueVertices.Count > 0)
@@ -305,6 +305,24 @@ namespace LaserConvert
         {
             var (vertices, _, _, _, _, _) = ExtractVerticesAndFaceIndices(faces, stepFile);
             return vertices;
+        }
+
+        /// <summary>
+        /// Get the adjusted dimensions for a solid (returns the three dimensions with thin dimension adjusted).
+        /// </summary>
+        public static (double DimX, double DimY, double DimZ) GetAdjustedDimensions(
+            List<(double X, double Y, double Z)> vertices)
+        {
+            // Re-compute using the same logic as ExtractVerticesAndFaceIndices
+            // This is a simplified version that just returns dimensions without full face analysis
+            var minX = vertices.Min(v => v.X);
+            var maxX = vertices.Max(v => v.X);
+            var minY = vertices.Min(v => v.Y);
+            var maxY = vertices.Max(v => v.Y);
+            var minZ = vertices.Min(v => v.Z);
+            var maxZ = vertices.Max(v => v.Z);
+            
+            return (maxX - minX, maxY - minY, maxZ - minZ);
         }
 
         /// <summary>
@@ -377,7 +395,10 @@ namespace LaserConvert
             }
         }
 
-        private static List<(double X, double Y, double Z)> ExtractVerticesFromFace(
+        /// <summary>
+        /// Extract vertices from a face (public method for external use).
+        /// </summary>
+        public static List<(double X, double Y, double Z)> ExtractVerticesFromFace(
             StepAdvancedFace face,
             StepFile stepFile)
         {
