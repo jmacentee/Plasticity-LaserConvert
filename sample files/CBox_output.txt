@@ -15,7 +15,5 @@ Found 1 solids
 [SVG] CBox: Found 8 vertices on top face
 [SVG] CBox: Normalized top face bounds: 50 x 40
 [SVG] CBox: Outer bounds X:[-50.0,0.0] Y:[-0.0,40.0]
-[HOLE DEBUG] Total vertices: 16, Top face verts: 8
-[HOLE DEBUG] Top face set size: 8
-[HOLE DEBUG] Found 0 hole vertices
+[SVG] Main face Z level: 3.00
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBox.svg

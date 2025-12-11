@@ -556,5 +556,18 @@ namespace LaserConvert
             
             return (outerVerts, holeVerts);
         }
+
+        /// <summary>
+        /// Extract vertices specifically from a single face bound (for extracting inner loops).
+        /// </summary>
+        public static List<(double X, double Y, double Z)> ExtractVerticesFromBound(
+            StepFaceBound bound,
+            StepFile stepFile)
+        {
+            var vertices = new List<(double, double, double)>();
+            var processedPoints = new HashSet<string>();
+            ExtractVerticesFromFaceBound(bound, stepFile, vertices, processedPoints);
+            return vertices;
+        }
     }
 }

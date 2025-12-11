@@ -211,9 +211,13 @@ Found 1 solids
 [SVG] Box1: Found 4 vertices on top face
 [SVG] Box1: Normalized top face bounds: 150 x 170
 [SVG] Box1: Outer bounds X:[-150.0,0.0] Y:[-119.8,50.2]
-[HOLE DEBUG] Total vertices: 8, Top face verts: 4
-[HOLE DEBUG] Top face set size: 4
-[HOLE DEBUG] Found 0 hole vertices
+[SVG] Main face Z level: 75.00
+[SVG] Face 2 has 4 verts at Z=75.00 - checking...
+[TRANSFORM] Thin dimension: 77.9,-49.4,0.0 -> 76.6,-46.7,0.0 (3.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
+[SVG] Face 5 has 4 verts at Z=75.00 - checking...
+[TRANSFORM] Thin dimension: -76.6,-120.3,0.0 -> -77.9,-117.6,0.0 (3.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.svg
  
 REM File: 2boxes_output.txt 
@@ -245,18 +249,20 @@ Found 2 solids
 [SVG] Box2: Found 4 vertices on top face
 [SVG] Box2: Normalized top face bounds: 110 x 170
 [SVG] Box2: Outer bounds X:[-82.0,28.2] Y:[-85.0,85.0]
-[HOLE DEBUG] Total vertices: 8, Top face verts: 4
-[HOLE DEBUG] Top face set size: 4
-[HOLE DEBUG] Found 0 hole vertices
+[SVG] Main face Z level: 3.00
 [TRANSFORM] Thin dimension: -77.9,-117.6,0.0 -> -76.6,-120.3,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
 [SVG] Box1: Z range [74.4, 77.4], top=4 verts, bottom=4 verts
 [SVG] Box1: Found 4 vertices on top face
 [SVG] Box1: Normalized top face bounds: 150 x 170
 [SVG] Box1: Outer bounds X:[-150.0,0.0] Y:[-119.8,50.2]
-[HOLE DEBUG] Total vertices: 8, Top face verts: 4
-[HOLE DEBUG] Top face set size: 4
-[HOLE DEBUG] Found 0 hole vertices
+[SVG] Main face Z level: 75.00
+[SVG] Face 2 has 4 verts at Z=75.00 - checking...
+[TRANSFORM] Thin dimension: 77.9,-49.4,0.0 -> 76.6,-46.7,0.0 (3.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
+[SVG] Face 5 has 4 verts at Z=75.00 - checking...
+[TRANSFORM] Thin dimension: -76.6,-120.3,0.0 -> -77.9,-117.6,0.0 (3.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\2boxes.svg
  
 REM File: 3boxesB_output.txt 
@@ -296,27 +302,27 @@ Found 3 solids
 [SVG] Box2: Found 4 vertices on top face
 [SVG] Box2: Normalized top face bounds: 110 x 170
 [SVG] Box2: Outer bounds X:[-82.0,28.2] Y:[-85.0,85.0]
-[HOLE DEBUG] Total vertices: 8, Top face verts: 4
-[HOLE DEBUG] Top face set size: 4
-[HOLE DEBUG] Found 0 hole vertices
+[SVG] Main face Z level: 3.00
 [TRANSFORM] Thin dimension: -13.2,-14.5,51.8 -> -14.5,-14.5,49.1 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
 [SVG] Box4: Z range [-41.0, -38.0], top=4 verts, bottom=4 verts
 [SVG] Box4: Found 4 vertices on top face
 [SVG] Box4: Normalized top face bounds: 67 x 75
 [SVG] Box4: Outer bounds X:[-82.0,-14.5] Y:[-109.1,-34.3]
-[HOLE DEBUG] Total vertices: 8, Top face verts: 4
-[HOLE DEBUG] Top face set size: 4
-[HOLE DEBUG] Found 0 hole vertices
+[SVG] Main face Z level: 67.97
 [TRANSFORM] Thin dimension: -77.9,-117.6,0.0 -> -76.6,-120.3,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
 [SVG] Box1: Z range [74.4, 77.4], top=4 verts, bottom=4 verts
 [SVG] Box1: Found 4 vertices on top face
 [SVG] Box1: Normalized top face bounds: 150 x 170
 [SVG] Box1: Outer bounds X:[-150.0,0.0] Y:[-119.8,50.2]
-[HOLE DEBUG] Total vertices: 8, Top face verts: 4
-[HOLE DEBUG] Top face set size: 4
-[HOLE DEBUG] Found 0 hole vertices
+[SVG] Main face Z level: 75.00
+[SVG] Face 2 has 4 verts at Z=75.00 - checking...
+[TRANSFORM] Thin dimension: 77.9,-49.4,0.0 -> 76.6,-46.7,0.0 (3.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
+[SVG] Face 5 has 4 verts at Z=75.00 - checking...
+[TRANSFORM] Thin dimension: -76.6,-120.3,0.0 -> -77.9,-117.6,0.0 (3.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxesB.svg
  
 REM File: 3boxes_output.txt 
@@ -354,18 +360,20 @@ Found 3 solids
 [SVG] Box2: Found 4 vertices on top face
 [SVG] Box2: Normalized top face bounds: 110 x 170
 [SVG] Box2: Outer bounds X:[-82.0,28.2] Y:[-85.0,85.0]
-[HOLE DEBUG] Total vertices: 8, Top face verts: 4
-[HOLE DEBUG] Top face set size: 4
-[HOLE DEBUG] Found 0 hole vertices
+[SVG] Main face Z level: 3.00
 [TRANSFORM] Thin dimension: -77.9,-117.6,0.0 -> -76.6,-120.3,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
 [SVG] Box1: Z range [74.4, 77.4], top=4 verts, bottom=4 verts
 [SVG] Box1: Found 4 vertices on top face
 [SVG] Box1: Normalized top face bounds: 150 x 170
 [SVG] Box1: Outer bounds X:[-150.0,0.0] Y:[-119.8,50.2]
-[HOLE DEBUG] Total vertices: 8, Top face verts: 4
-[HOLE DEBUG] Top face set size: 4
-[HOLE DEBUG] Found 0 hole vertices
+[SVG] Main face Z level: 75.00
+[SVG] Face 2 has 4 verts at Z=75.00 - checking...
+[TRANSFORM] Thin dimension: 77.9,-49.4,0.0 -> 76.6,-46.7,0.0 (3.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
+[SVG] Face 5 has 4 verts at Z=75.00 - checking...
+[TRANSFORM] Thin dimension: -76.6,-120.3,0.0 -> -77.9,-117.6,0.0 (3.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxes.svg
  
 REM File: 4boxes_output.txt 
@@ -416,36 +424,34 @@ Found 4 solids
 [SVG] Box1: Found 4 vertices on top face
 [SVG] Box1: Normalized top face bounds: 150 x 170
 [SVG] Box1: Outer bounds X:[-150.0,0.0] Y:[-119.8,50.2]
-[HOLE DEBUG] Total vertices: 8, Top face verts: 4
-[HOLE DEBUG] Top face set size: 4
-[HOLE DEBUG] Found 0 hole vertices
+[SVG] Main face Z level: 75.00
+[SVG] Face 2 has 4 verts at Z=75.00 - checking...
+[TRANSFORM] Thin dimension: 77.9,-49.4,0.0 -> 76.6,-46.7,0.0 (3.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
+[SVG] Face 5 has 4 verts at Z=75.00 - checking...
+[TRANSFORM] Thin dimension: -76.6,-120.3,0.0 -> -77.9,-117.6,0.0 (3.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
 [TRANSFORM] Thin dimension: -85.0,28.2,3.0 -> -85.0,28.2,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
 [SVG] Box2: Z range [-3.0, 0.0], top=4 verts, bottom=4 verts
 [SVG] Box2: Found 4 vertices on top face
 [SVG] Box2: Normalized top face bounds: 110 x 170
 [SVG] Box2: Outer bounds X:[-82.0,28.2] Y:[-85.0,85.0]
-[HOLE DEBUG] Total vertices: 8, Top face verts: 4
-[HOLE DEBUG] Top face set size: 4
-[HOLE DEBUG] Found 0 hole vertices
+[SVG] Main face Z level: 3.00
 [TRANSFORM] Thin dimension: -13.2,-14.5,51.8 -> -14.5,-14.5,49.1 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
 [SVG] Box4: Z range [-41.0, -38.0], top=4 verts, bottom=4 verts
 [SVG] Box4: Found 4 vertices on top face
 [SVG] Box4: Normalized top face bounds: 67 x 75
 [SVG] Box4: Outer bounds X:[-82.0,-14.5] Y:[-109.1,-34.3]
-[HOLE DEBUG] Total vertices: 8, Top face verts: 4
-[HOLE DEBUG] Top face set size: 4
-[HOLE DEBUG] Found 0 hole vertices
+[SVG] Main face Z level: 67.97
 [TRANSFORM] Thin dimension: -28.7,25.5,87.4 -> -30.0,23.0,86.4 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=53.9ø
 [SVG] Box5: Z range [-36.4, -33.4], top=4 verts, bottom=4 verts
 [SVG] Box5: Found 4 vertices on top face
 [SVG] Box5: Normalized top face bounds: 44 x 58
 [SVG] Box5: Outer bounds X:[28.7,73.2] Y:[49.3,106.9]
-[HOLE DEBUG] Total vertices: 8, Top face verts: 4
-[HOLE DEBUG] Top face set size: 4
-[HOLE DEBUG] Found 0 hole vertices
+[SVG] Main face Z level: 70.81
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\4boxes.svg
  
 REM File: CBoxR_output.txt 
@@ -466,9 +472,7 @@ Found 1 solids
 [SVG] CBoxR: Found 8 vertices on top face
 [SVG] CBoxR: Normalized top face bounds: 50 x 40
 [SVG] CBoxR: Outer bounds X:[-6.1,43.9] Y:[-12.7,27.3]
-[HOLE DEBUG] Total vertices: 10, Top face verts: 8
-[HOLE DEBUG] Top face set size: 8
-[HOLE DEBUG] Found 0 hole vertices
+[SVG] Main face Z level: 73.26
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBoxR.svg
  
 REM File: CBox_output.txt 
@@ -489,9 +493,7 @@ Found 1 solids
 [SVG] CBox: Found 8 vertices on top face
 [SVG] CBox: Normalized top face bounds: 50 x 40
 [SVG] CBox: Outer bounds X:[-50.0,0.0] Y:[-0.0,40.0]
-[HOLE DEBUG] Total vertices: 16, Top face verts: 8
-[HOLE DEBUG] Top face set size: 8
-[HOLE DEBUG] Found 0 hole vertices
+[SVG] Main face Z level: 3.00
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBox.svg
  
 REM File: CBox_test.txt 
@@ -899,3 +901,4 @@ C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files>REM This file con
 C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files>REM The approximate correct output for this file can be found in KCBox_corrected.svg.  This KCBox_corrected.svg sample file may have rounding errors which do not need to be duplicated exactly. 
 
 C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files>"C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.svg"  1>"C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox_output.txt" 
+Done. Results written to C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\all_results.txt
