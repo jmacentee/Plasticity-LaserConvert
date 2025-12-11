@@ -161,20 +161,20 @@ namespace LaserConvert
             }
             
             // Prefer pairs with "thin" separation (2.5-5.0mm) and good alignment
-            var thinCandidates = candidates.Where(c => c.sep >= 2.5 && c.sep <= 5.0 && c.alignment > 0.9).ToList();
+            var thinCandidates = candidates.Where(c => c.sep >= 2.0 && c.sep <= 8.0 && c.alignment > 0.85).OrderBy(c => c.sep).ToList();
             
             if (thinCandidates.Count > 0)
             {
-                // Pick the best aligned thin pair
-                var best = thinCandidates.OrderByDescending(c => c.alignment).First();
+                // Pick the CLOSEST well-aligned pair (most likely to be the thin face)
+                var best = thinCandidates.First();
                 minSeparation = best.sep;
                 face1Idx = best.i;
                 face2Idx = best.j;
             }
             else if (candidates.Count > 0)
             {
-                // Fallback: pick the closest well-aligned pair
-                var alignedCandidates = candidates.Where(c => c.alignment > 0.85).OrderBy(c => c.sep).ToList();
+                // Fallback: pick the closest pair with good alignment
+                var alignedCandidates = candidates.Where(c => c.alignment > 0.80).OrderBy(c => c.sep).ToList();
                 if (alignedCandidates.Count > 0)
                 {
                     var best = alignedCandidates.First();
@@ -278,14 +278,15 @@ namespace LaserConvert
                 }
             }
             
-            // CRITICAL FIX: If we found a small face pair separation in the thin range (2.5-5mm),
-            // consider the thin dimension detected, even if vertex bounding box doesn't show it correctly.
-            // Store the face separation as the detected thin thickness.
-            if (minSeparation >= 2.5 && minSeparation <= 5.0)
+            // CRITICAL FIX: If we found a face pair with separation in reasonable range (2.5-8.0mm),
+            // consider that as the detected thin dimension regardless of vertex bounding box
+            // This handles rotated geometry where the thin faces aren't axis-aligned
+            if (minSeparation >= 2.0 && minSeparation <= 10.0)  // Increased to 10mm for rotated geometry tolerance
             {
-                // Replace the smallest dimension with the detected separation
-                var dims = new[] { dimX, dimY, dimZ }.OrderBy(d => d).ToArray();
-                dims[0] = minSeparation;
+                // The detected separation IS the thin dimension
+                // Replace the smallest bounding dimension with it
+                var dims = new[] { dimX, dimY, dimZ }.OrderBy(d => d).ToList();
+                dims[0] = minSeparation;  // The thin dimension
                 dimX = dims[0];
                 dimY = dims[1];
                 dimZ = dims[2];

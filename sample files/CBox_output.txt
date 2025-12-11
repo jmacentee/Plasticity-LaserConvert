@@ -12,4 +12,5 @@ Found 1 solids
 [TRANSFORM] Thin dimension: 5.0,-15.0,3.0 -> 5.0,-15.0,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
 [SVG] CBox: Normalized top face bounds: 50 x 40
+[SVG] Cutout detection not yet implemented
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBox.svg

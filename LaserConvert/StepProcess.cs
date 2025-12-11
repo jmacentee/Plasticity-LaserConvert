@@ -32,7 +32,7 @@ namespace LaserConvert
                 
                 // Filter by thickness
                 const double minThickness = 2.5;
-                const double maxThickness = 5.0;
+                const double maxThickness = 10.0;  // Increased tolerance for rotated geometry
                 
                 var thinSolids = new List<(string Name, List<StepAdvancedFace> Faces, int Face1Idx, int Face2Idx, List<(double X, double Y, double Z)> Vertices, double DimX, double DimY, double DimZ)>();
                 
@@ -78,7 +78,7 @@ namespace LaserConvert
                         
                         if (topFaceVerts.Count >= 4)
                         {
-                            // Get XY bounds of the normalized top face
+                            // Get XY bounds of the normalized top face (outer boundary)
                             var minX = topFaceVerts.Min(v => v.X);
                             var maxX = topFaceVerts.Max(v => v.X);
                             var minY = topFaceVerts.Min(v => v.Y);
@@ -89,8 +89,13 @@ namespace LaserConvert
                             
                             Console.WriteLine($"[SVG] {name}: Normalized top face bounds: {rectWidth} x {rectHeight}");
                             
+                            // Outer boundary in BLACK
                             var pathData = $"M 0 0 L {rectWidth} 0 L {rectWidth} {rectHeight} L 0 {rectHeight} Z";
-                            svg.Path(pathData, strokeWidth: 0.2, fill: "none");
+                            svg.Path(pathData, strokeWidth: 0.2, fill: "none", stroke: "#000");
+                            
+                            // TODO: Detect and render cutouts/holes as separate RED paths
+                            // For now, we'll add a placeholder for cutout detection
+                            DetectAndRenderCutouts(svg, faces, vertices, normalizedVertices);
                         }
                     }
                     
@@ -430,9 +435,9 @@ namespace LaserConvert
                 _sb.AppendLine("  </g>");
             }
 
-            public void Path(string d, double strokeWidth, string fill)
+            public void Path(string d, double strokeWidth, string fill, string stroke = "#000")
             {
-                _sb.AppendLine($"    <path d=\"{d}\" stroke=\"#000\" stroke-width=\"{Fmt(strokeWidth)}\" fill=\"{fill}\" vector-effect=\"non-scaling-stroke\"/>");
+                _sb.AppendLine($"    <path d=\"{d}\" stroke=\"{stroke}\" stroke-width=\"{Fmt(strokeWidth)}\" fill=\"{fill}\" vector-effect=\"non-scaling-stroke\"/>");
             }
 
             public string Build()
@@ -447,6 +452,18 @@ namespace LaserConvert
                 var ok = new string(s.Where(ch => char.IsLetterOrDigit(ch) || ch == '_' || ch == '-').ToArray());
                 return string.IsNullOrEmpty(ok) ? "object" : ok;
             }
+        }
+
+        private static void DetectAndRenderCutouts(SvgBuilder svg, List<StepAdvancedFace> faces, List<(double X, double Y, double Z)> allVertices, List<GeometryTransform.Vec3> normalizedVertices)
+        {
+            // TODO: Implement cutout detection
+            // - Identify faces that represent cutouts (not the main boundary)
+            // - Extract their edge loops
+            // - Project them to 2D
+            // - Render as RED paths
+            
+            // For now: placeholder
+            Console.WriteLine("[SVG] Cutout detection not yet implemented");
         }
     }
 }

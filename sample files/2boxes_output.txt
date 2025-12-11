@@ -23,7 +23,9 @@ Found 2 solids
 [TRANSFORM] Thin dimension: -85.0,28.2,3.0 -> -85.0,28.2,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
 [SVG] Box2: Normalized top face bounds: 110 x 170
+[SVG] Cutout detection not yet implemented
 [TRANSFORM] Thin dimension: -77.9,-117.6,0.0 -> -76.6,-120.3,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
 [SVG] Box1: Normalized top face bounds: 150 x 170
+[SVG] Cutout detection not yet implemented
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\2boxes.svg
