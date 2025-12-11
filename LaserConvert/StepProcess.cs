@@ -65,20 +65,39 @@ namespace LaserConvert
                 {
                     svg.BeginGroup(name);
                     
-                    // Use the thin face (either face1 or face2, prefer face1) for SVG projection
-                    int thinFaceIdx = (face1Idx >= 0) ? face1Idx : face2Idx;
-                    if (thinFaceIdx >= 0 && thinFaceIdx < faces.Count)
+                    // Use 3D rotation to find and project the actual thin face
+                    var (rotatedVertices, rotMatrix) = GeometryTransform.RotateToAlignThinDimension(vertices);
+                    
+                    // Find vertices with max Z (the top thin face)
+                    if (rotatedVertices.Count > 0)
                     {
-                        var thinFace = faces[thinFaceIdx];
-                        var pathData = ProjectFaceToSvg(thinFace, vertices, stepFile);
-                        if (!string.IsNullOrEmpty(pathData))
+                        var maxZ = rotatedVertices.Max(v => v.Z);
+                        var topFaceVerts = rotatedVertices
+                            .Where(v => Math.Abs(v.Z - maxZ) < 0.5)  // Vertices on top face (within 0.5mm of max Z)
+                            .ToList();
+                        
+                        if (topFaceVerts.Count >= 3)
                         {
-                            svg.Path(pathData, strokeWidth: 0.2, fill: "none");
+                            // Project top face vertices to 2D
+                            var projectedPath = ProjectRotatedFaceToSvg(topFaceVerts);
+                            if (!string.IsNullOrEmpty(projectedPath))
+                            {
+                                svg.Path(projectedPath, strokeWidth: 0.2, fill: "none");
+                                Console.WriteLine($"[SVG] {name}: Generated path from rotated face projection");
+                            }
+                            else
+                            {
+                                // Fallback to bounding box if projection fails
+                                Console.WriteLine($"[SVG] {name}: Projection failed, using bounding box fallback");
+                                var (minX, maxX, minY, maxY) = ComputeBoundingBox(vertices);
+                                var rectPath = $"M {Fmt(minX)} {Fmt(minY)} L {Fmt(maxX)} {Fmt(minY)} L {Fmt(maxX)} {Fmt(maxY)} L {Fmt(minX)} {Fmt(maxY)} Z";
+                                svg.Path(rectPath, strokeWidth: 0.2, fill: "none");
+                            }
                         }
                         else
                         {
-                            // Fallback: draw a rectangle from the bounding box
-                            Console.WriteLine($"[SVG] No path generated for {name}, using bounding box fallback");
+                            // Fallback to bounding box
+                            Console.WriteLine($"[SVG] {name}: Insufficient top face vertices, using bounding box fallback");
                             var (minX, maxX, minY, maxY) = ComputeBoundingBox(vertices);
                             var rectPath = $"M {Fmt(minX)} {Fmt(minY)} L {Fmt(maxX)} {Fmt(minY)} L {Fmt(maxX)} {Fmt(maxY)} L {Fmt(minX)} {Fmt(maxY)} Z";
                             svg.Path(rectPath, strokeWidth: 0.2, fill: "none");
@@ -86,7 +105,7 @@ namespace LaserConvert
                     }
                     else
                     {
-                        // No face indices, use bounding box fallback
+                        // No rotated vertices, use bounding box
                         var (minX, maxX, minY, maxY) = ComputeBoundingBox(vertices);
                         var rectPath = $"M {Fmt(minX)} {Fmt(minY)} L {Fmt(maxX)} {Fmt(minY)} L {Fmt(maxX)} {Fmt(maxY)} L {Fmt(minX)} {Fmt(maxY)} Z";
                         svg.Path(rectPath, strokeWidth: 0.2, fill: "none");
@@ -136,6 +155,42 @@ namespace LaserConvert
             var maxY = vertices.Max(v => v.Y);
             
             return (minX, maxX, minY, maxY);
+        }
+
+        /// <summary>
+        /// Project rotated face vertices to 2D SVG path by sorting them in order.
+        /// </summary>
+        private static string ProjectRotatedFaceToSvg(List<GeometryTransform.Vec3> faceVertices)
+        {
+            if (faceVertices.Count < 3)
+                return "";
+            
+            // Sort vertices by angle around their centroid to get proper polygon order
+            var centroidX = faceVertices.Average(v => v.X);
+            var centroidY = faceVertices.Average(v => v.Y);
+            
+            var sortedVerts = faceVertices
+                .OrderBy(v => Math.Atan2(v.Y - centroidY, v.X - centroidX))
+                .ToList();
+            
+            var sb = new StringBuilder();
+            bool first = true;
+            
+            foreach (var vert in sortedVerts)
+            {
+                if (first)
+                {
+                    sb.Append($"M {Fmt(vert.X)} {Fmt(vert.Y)} ");
+                    first = false;
+                }
+                else
+                {
+                    sb.Append($"L {Fmt(vert.X)} {Fmt(vert.Y)} ");
+                }
+            }
+            
+            sb.Append("Z");  // Close path
+            return sb.ToString();
         }
 
         /// <summary>

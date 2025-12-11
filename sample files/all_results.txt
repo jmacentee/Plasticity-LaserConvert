@@ -4,7 +4,7 @@ REM File: 1box.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="Box1">
-    <path d="M -77.889 -120.293 L 77.889 -120.293 L 77.889 -46.707 L -77.889 -46.707 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M -108.901 -49.937 L 45.627 20.923 L -16.896 157.271 L -171.424 86.411 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -12,10 +12,10 @@ REM File: 2boxes.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="Box2">
-    <path d="M 101.312 -0 L -41.317 92.504 L 101.312 -0 L 41.361 -92.436 L -101.268 0.068 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M -85 -82 L 85 -82 L 85 28.215 L -85 28.215 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box1">
-    <path d="M -77.889 -120.293 L 77.889 -120.293 L 77.889 -46.707 L -77.889 -46.707 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M -108.901 -49.937 L 45.627 20.923 L -16.896 157.271 L -171.424 86.411 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -23,10 +23,10 @@ REM File: 3boxes.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="Box2">
-    <path d="M 101.312 -0 L -41.317 92.504 L 101.312 -0 L 41.361 -92.436 L -101.268 0.068 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M -85 -82 L 85 -82 L 85 28.215 L -85 28.215 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box1">
-    <path d="M -77.889 -120.293 L 77.889 -120.293 L 77.889 -46.707 L -77.889 -46.707 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M -108.901 -49.937 L 45.627 20.923 L -16.896 157.271 L -171.424 86.411 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -45,6 +45,8 @@ Found 1 solids
 [TOPO] Thin dimension detected from face separation: 3.0mm
 [TOPO] Adjusted dimensions: 3.0 x 150.0 x 155.8
 [FILTER] Box1: dimensions [3.0, 150.0, 155.8] - PASS
+[TRANSFORM] Thin dimension: -77.9,-117.6,0.0 -> -76.6,-120.3,0.0 (3.0mm)
+[SVG] Box1: Generated path from rotated face projection
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.svg
  
 REM File: 2boxes_output.txt 
@@ -70,6 +72,10 @@ Found 2 solids
 [TOPO] Thin dimension detected from face separation: 3.0mm
 [TOPO] Adjusted dimensions: 3.0 x 150.0 x 155.8
 [FILTER] Box1: dimensions [3.0, 150.0, 155.8] - PASS
+[TRANSFORM] Thin dimension: -85.0,28.2,3.0 -> -85.0,28.2,0.0 (3.0mm)
+[SVG] Box2: Generated path from rotated face projection
+[TRANSFORM] Thin dimension: -77.9,-117.6,0.0 -> -76.6,-120.3,0.0 (3.0mm)
+[SVG] Box1: Generated path from rotated face projection
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\2boxes.svg
  
 REM File: 3boxes_output.txt 
@@ -101,4 +107,8 @@ Found 3 solids
 [TOPO] Vertex ranges: X[-85.0,85.0] Y[-82.0,85.0] Z[0.0,150.0]
 [TOPO] Computed dimensions: 170.0 x 167.0 x 150.0
 [FILTER] Box3: dimensions [170.0, 167.0, 150.0] - FAIL
+[TRANSFORM] Thin dimension: -85.0,28.2,3.0 -> -85.0,28.2,0.0 (3.0mm)
+[SVG] Box2: Generated path from rotated face projection
+[TRANSFORM] Thin dimension: -77.9,-117.6,0.0 -> -76.6,-120.3,0.0 (3.0mm)
+[SVG] Box1: Generated path from rotated face projection
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxes.svg

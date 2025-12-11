@@ -20,4 +20,8 @@ Found 2 solids
 [TOPO] Thin dimension detected from face separation: 3.0mm
 [TOPO] Adjusted dimensions: 3.0 x 150.0 x 155.8
 [FILTER] Box1: dimensions [3.0, 150.0, 155.8] - PASS
+[TRANSFORM] Thin dimension: -85.0,28.2,3.0 -> -85.0,28.2,0.0 (3.0mm)
+[SVG] Box2: Generated path from rotated face projection
+[TRANSFORM] Thin dimension: -77.9,-117.6,0.0 -> -76.6,-120.3,0.0 (3.0mm)
+[SVG] Box1: Generated path from rotated face projection
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\2boxes.svg
