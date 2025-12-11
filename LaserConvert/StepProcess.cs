@@ -93,17 +93,35 @@ namespace LaserConvert
                             Console.WriteLine($"[SVG] {name}: Found {topFaceVerts.Count} vertices on top face");
                             
                             // If we have more than 8 vertices (indicating complex shape with edge cutouts),
-                            // extract the actual boundary path
+                            // extract the actual boundary path using the face that has the complex geometry
                             if (topFaceVerts.Count > 8)
                             {
-                                var boundaryPath = ExtractBoundaryPath(topFaceVerts, name);
-                                if (!string.IsNullOrEmpty(boundaryPath))
+                                // Find the face with the most vertices - this should be the complex top face
+                                var faceWithMostVerts = faces
+                                    .Select(f => (Face: f, VertCount: StepTopologyResolver.ExtractVerticesFromFace(f, stepFile).Count))
+                                    .OrderByDescending(x => x.VertCount)
+                                    .First();
+                                
+                                if (faceWithMostVerts.VertCount >= topFaceVerts.Count)
                                 {
-                                    Console.WriteLine($"[SVG] {name}: Rendering complex boundary with {topFaceVerts.Count} vertices (no hole detection for complex shapes)");
-                                    svg.Path(boundaryPath, strokeWidth: 0.2, fill: "none", stroke: "#000");
-                                    // Do NOT call DetectAndRenderCutouts for complex paths - they represent edge-based cutouts
-                                    svg.EndGroup();
-                                    continue;
+                                    // Extract vertices from this face in their original perimeter order
+                                    var faceVertices = StepTopologyResolver.ExtractVerticesFromFace(faceWithMostVerts.Face, stepFile);
+                                    
+                                    Console.WriteLine($"[SVG] {name}: Extracted {faceVertices.Count} vertices from complex face (expected at least {topFaceVerts.Count})");
+                                    
+                                    // Apply the SAME rotation pipeline as the full vertex list
+                                    var faceNormalized = GeometryTransform.RotateAndNormalize(faceVertices);
+                                    
+                                    // These vertices should now be in perimeter order and properly rotated
+                                    var boundaryPath = ExtractBoundaryPath(faceNormalized, name);
+                                    if (!string.IsNullOrEmpty(boundaryPath))
+                                    {
+                                        Console.WriteLine($"[SVG] {name}: Rendering complex boundary with {faceNormalized.Count} vertices (no hole detection for complex shapes)");
+                                        svg.Path(boundaryPath, strokeWidth: 0.2, fill: "none", stroke: "#000");
+                                        // Do NOT call DetectAndRenderCutouts for complex paths - they represent edge-based cutouts
+                                        svg.EndGroup();
+                                        continue;
+                                    }
                                 }
                             }
                             
@@ -583,18 +601,20 @@ namespace LaserConvert
         
         /// <summary>
         /// Extract the actual boundary path from vertices.
-        /// Sorts vertices by polar angle to create a non-self-intersecting polygon.
+        /// For complex shapes, build edges from the vertex pairs and trace the perimeter.
         /// </summary>
         private static string ExtractBoundaryPath(List<GeometryTransform.Vec3> vertices, string name)
         {
             if (vertices.Count < 4)
                 return null;
             
-            // Round all vertices to integers
-            var roundedVerts = vertices
-                .Select(v => ((long)Math.Round(v.X), (long)Math.Round(v.Y)))
-                .Distinct()
-                .ToList();
+            // The vertices are already in the correct perimeter order from the STEP file
+            // Round them but DON'T use Distinct() as it can collapse vertices with same rounded coordinates
+            var roundedVerts = new List<(long, long)>();
+            for (int i = 0; i < vertices.Count; i++)
+            {
+                roundedVerts.Add(((long)Math.Round(vertices[i].X), (long)Math.Round(vertices[i].Y)));
+            }
             
             if (roundedVerts.Count < 4)
                 return null;
@@ -607,21 +627,25 @@ namespace LaserConvert
                 .Select(v => (v.Item1 - minX, v.Item2 - minY))
                 .ToList();
             
-            // Sort by polar angle from centroid to create a CCW polygon
-            var centroidX = normalizedVerts.Average(v => (double)v.Item1);
-            var centroidY = normalizedVerts.Average(v => (double)v.Item2);
-            
-            var sorted = normalizedVerts
-                .OrderBy(v => Math.Atan2(v.Item2 - centroidY, v.Item1 - centroidX))
-                .ToList();
-            
-            // Build SVG path
-            var sb = new StringBuilder();
-            sb.Append($"M {sorted[0].Item1},{sorted[0].Item2}");
-            
-            for (int i = 1; i < sorted.Count; i++)
+            Console.WriteLine($"[SVG] {name}: {normalizedVerts.Count} vertices in perimeter order:");
+            for (int i = 0; i < normalizedVerts.Count; i++)
             {
-                sb.Append($" L {sorted[i].Item1},{sorted[i].Item2}");
+                var curr = normalizedVerts[i];
+                var next = normalizedVerts[(i + 1) % normalizedVerts.Count];
+                var dx = next.Item1 - curr.Item1;
+                var dy = next.Item2 - curr.Item2;
+                var isAxisAligned = (dx == 0 || dy == 0);
+                var alignment = isAxisAligned ? "OK" : "DIAG";
+                Console.WriteLine($"[SVG]   [{i}] ({curr.Item1},{curr.Item2}) -> ({next.Item1},{next.Item2}) [{alignment}]");
+            }
+            
+            // Build SVG path using the vertices in their input order
+            var sb = new StringBuilder();
+            sb.Append($"M {normalizedVerts[0].Item1},{normalizedVerts[0].Item2}");
+            
+            for (int i = 1; i < normalizedVerts.Count; i++)
+            {
+                sb.Append($" L {normalizedVerts[i].Item1},{normalizedVerts[i].Item2}");
             }
             
             sb.Append(" Z");

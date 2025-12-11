@@ -1,0 +1,20 @@
+Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.stp
+File loaded. Total items: 1414
+Found 1 solids
+[TOPO] Processing 44 faces
+[TOPO] Found pair of faces with separation: 2.9mm
+[TOPO] Extracted 6 unique vertices
+[TOPO] Vertex ranges: X[28.4,34.8] Y[-6.3,-3.3] Z[29.7,34.3]
+[TOPO] Computed dimensions: 6.5 x 3.0 x 4.5
+[TOPO] Thin dimension detected from face separation: 2.9mm
+[TOPO] Adjusted dimensions: 2.9 x 4.5 x 6.5
+[FILTER] CKBox: dimensions [2.9, 4.5, 6.5] - PASS
+[TRANSFORM] Thin dimension: 33.4,-6.3,33.9 -> 33.7,-5.4,34.3 (1.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=56.2ø
+[SVG] CKBox: Z range [16.1, 17.1], top=6 verts, bottom=6 verts
+[SVG] CKBox: Found 6 vertices on top face
+[SVG] CKBox: Normalized top face bounds: 3 x 6
+[SVG] CKBox: Outer bounds X:[-19.3,-16.3] Y:[-40.9,-35.2]
+[SVG] Total vertices: 6, Top plane vertices: 4
+[SVG] Insufficient top vertices (4 < 8), no cutouts detected
+Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.svg

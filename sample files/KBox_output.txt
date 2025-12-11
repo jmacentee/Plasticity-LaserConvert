@@ -16,5 +16,21 @@ Found 1 solids
 [TRANSFORM] Normalizing edge to X-axis: angle=24.6ø
 [SVG] KBox: Z range [19.7, 22.7], top=12 verts, bottom=12 verts
 [SVG] KBox: Found 12 vertices on top face
+[SVG] KBox: Extracted 12 vertices from complex face (expected at least 12)
+[TRANSFORM] Thin dimension: -29.4,-35.1,150.0 -> -29.4,-35.1,145.0 (5.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=-24.6ø
+[SVG] KBox: 12 vertices in perimeter order:
+[SVG]   [0] (170,0) -> (0,0) [OK]
+[SVG]   [1] (0,0) -> (170,0) [OK]
+[SVG]   [2] (170,0) -> (116,0) [OK]
+[SVG]   [3] (116,0) -> (116,0) [OK]
+[SVG]   [4] (116,0) -> (82,0) [OK]
+[SVG]   [5] (82,0) -> (82,0) [OK]
+[SVG]   [6] (82,0) -> (48,0) [OK]
+[SVG]   [7] (48,0) -> (48,0) [OK]
+[SVG]   [8] (48,0) -> (14,0) [OK]
+[SVG]   [9] (14,0) -> (14,0) [OK]
+[SVG]   [10] (14,0) -> (0,0) [OK]
+[SVG]   [11] (0,0) -> (170,0) [OK]
 [SVG] KBox: Rendering complex boundary with 12 vertices (no hole detection for complex shapes)
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox.svg
