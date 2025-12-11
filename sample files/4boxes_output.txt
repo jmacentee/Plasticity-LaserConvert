@@ -45,30 +45,34 @@ Found 4 solids
 [SVG] Box1: Found 4 vertices on top face
 [SVG] Box1: Normalized top face bounds: 150 x 170
 [SVG] Box1: Outer bounds X:[-150.0,0.0] Y:[-119.8,50.2]
-[SVG] Total vertices: 8, Top plane vertices: 4
-[SVG] Insufficient top vertices (4 < 8), no cutouts detected
+[HOLE DEBUG] Total vertices: 8, Top face verts: 4
+[HOLE DEBUG] Top face set size: 4
+[HOLE DEBUG] Found 0 hole vertices
 [TRANSFORM] Thin dimension: -85.0,28.2,3.0 -> -85.0,28.2,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
 [SVG] Box2: Z range [-3.0, 0.0], top=4 verts, bottom=4 verts
 [SVG] Box2: Found 4 vertices on top face
 [SVG] Box2: Normalized top face bounds: 110 x 170
 [SVG] Box2: Outer bounds X:[-82.0,28.2] Y:[-85.0,85.0]
-[SVG] Total vertices: 8, Top plane vertices: 4
-[SVG] Insufficient top vertices (4 < 8), no cutouts detected
+[HOLE DEBUG] Total vertices: 8, Top face verts: 4
+[HOLE DEBUG] Top face set size: 4
+[HOLE DEBUG] Found 0 hole vertices
 [TRANSFORM] Thin dimension: -13.2,-14.5,51.8 -> -14.5,-14.5,49.1 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
 [SVG] Box4: Z range [-41.0, -38.0], top=4 verts, bottom=4 verts
 [SVG] Box4: Found 4 vertices on top face
 [SVG] Box4: Normalized top face bounds: 67 x 75
 [SVG] Box4: Outer bounds X:[-82.0,-14.5] Y:[-109.1,-34.3]
-[SVG] Total vertices: 8, Top plane vertices: 4
-[SVG] Insufficient top vertices (4 < 8), no cutouts detected
+[HOLE DEBUG] Total vertices: 8, Top face verts: 4
+[HOLE DEBUG] Top face set size: 4
+[HOLE DEBUG] Found 0 hole vertices
 [TRANSFORM] Thin dimension: -28.7,25.5,87.4 -> -30.0,23.0,86.4 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=53.9ø
 [SVG] Box5: Z range [-36.4, -33.4], top=4 verts, bottom=4 verts
 [SVG] Box5: Found 4 vertices on top face
 [SVG] Box5: Normalized top face bounds: 44 x 58
 [SVG] Box5: Outer bounds X:[28.7,73.2] Y:[49.3,106.9]
-[SVG] Total vertices: 8, Top plane vertices: 4
-[SVG] Insufficient top vertices (4 < 8), no cutouts detected
+[HOLE DEBUG] Total vertices: 8, Top face verts: 4
+[HOLE DEBUG] Top face set size: 4
+[HOLE DEBUG] Found 0 hole vertices
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\4boxes.svg

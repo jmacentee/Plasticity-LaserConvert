@@ -3,18 +3,19 @@ File loaded. Total items: 290
 Found 1 solids
 [TOPO] Processing 10 faces
 [TOPO] Found pair of faces with separation: 3.0mm
-[TOPO] Extracted 8 unique vertices
-[TOPO] Vertex ranges: X[5.0,15.0] Y[-15.0,-5.0] Z[0.0,3.0]
-[TOPO] Computed dimensions: 10.0 x 10.0 x 3.0
+[TOPO] Extracted 16 unique vertices
+[TOPO] Vertex ranges: X[0.0,40.0] Y[-50.0,0.0] Z[0.0,3.0]
+[TOPO] Computed dimensions: 40.0 x 50.0 x 3.0
 [TOPO] Thin dimension detected from face separation: 3.0mm
-[TOPO] Adjusted dimensions: 3.0 x 10.0 x 10.0
-[FILTER] CBox: dimensions [3.0, 10.0, 10.0] - PASS
+[TOPO] Adjusted dimensions: 3.0 x 40.0 x 50.0
+[FILTER] CBox: dimensions [3.0, 40.0, 50.0] - PASS
 [TRANSFORM] Thin dimension: 5.0,-15.0,3.0 -> 5.0,-15.0,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
-[SVG] CBox: Z range [-3.0, 0.0], top=4 verts, bottom=4 verts
-[SVG] CBox: Found 4 vertices on top face
-[SVG] CBox: Normalized top face bounds: 10 x 10
-[SVG] CBox: Outer bounds X:[-15.0,-5.0] Y:[5.0,15.0]
-[SVG] Total vertices: 8, Top plane vertices: 4
-[SVG] Insufficient top vertices (4 < 8), no cutouts detected
+[SVG] CBox: Z range [-3.0, 0.0], top=8 verts, bottom=8 verts
+[SVG] CBox: Found 8 vertices on top face
+[SVG] CBox: Normalized top face bounds: 50 x 40
+[SVG] CBox: Outer bounds X:[-50.0,0.0] Y:[-0.0,40.0]
+[HOLE DEBUG] Total vertices: 16, Top face verts: 8
+[HOLE DEBUG] Top face set size: 8
+[HOLE DEBUG] Found 0 hole vertices
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBox.svg

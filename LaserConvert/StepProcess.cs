@@ -178,8 +178,9 @@ namespace LaserConvert
                             var pathData = $"M 0 0 L {rectWidth} 0 L {rectWidth} {rectHeight} L 0 {rectHeight} Z";
                             svg.Path(pathData, strokeWidth: 0.2, fill: "none", stroke: "#000");
                             
-                            // Pass the outer bounds to cutout detection so it can normalize hole coords
-                            DetectAndRenderCutouts(svg, faces, vertices, normalizedVertices, stepFile, minX, minY);
+                            // For simple shapes, look for holes by examining all normalized vertices
+                            // Hole vertices will form a separate rectangular cluster inside the bounds
+                            DetectAndRenderHolesFromVertices(svg, normalizedVertices, topFaceVerts, minX, minY, rectWidth, rectHeight);
                         }
                         else
                         {
@@ -542,7 +543,7 @@ namespace LaserConvert
             }
         }
 
-        private static void DetectAndRenderCutouts(SvgBuilder svg, List<StepAdvancedFace> faces, List<(double X, double Y, double Z)> allVertices, List<GeometryTransform.Vec3> normalizedVertices, StepFile stepFile, double outerMinX = double.NaN, double outerMinY = double.NaN)
+        private static void DetectAndRenderCutouts(SvgBuilder svg, List<StepAdvancedFace> faces, List<GeometryTransform.Vec3> normalizedVertices, StepFile stepFile, double outerMinX = double.NaN, double outerMinY = double.NaN)
         {
             // Find all vertices at the top/bottom Z plane
             var maxZ = normalizedVertices.Max(v => v.Z);
@@ -867,6 +868,144 @@ namespace LaserConvert
             }
             
             return clusters;
+        }
+
+        /// <summary>
+        /// For simple shapes, detect holes by looking at all faces and finding interior ones.
+        /// A hole face will have 4 vertices that form a rectangle inside the main boundary.
+        /// </summary>
+        private static void DetectAndRenderHolesFromSeparateFaces(
+            SvgBuilder svg,
+            List<StepAdvancedFace> faces,
+            double outerMinX, double outerMinY,
+            long outerWidth, long outerHeight,
+            StepFile stepFile)
+        {
+            // Skip if we don't have multiple faces
+            if (faces.Count < 2)
+                return;
+            
+            // For simple shapes, look for faces that are much smaller than the main body
+            // These are likely hole faces
+            foreach (var face in faces)
+            {
+                var faceVerts = StepTopologyResolver.ExtractVerticesFromFace(face, stepFile);
+                
+                if (faceVerts.Count < 4 || faceVerts.Count > 8)
+                    continue;  // Holes typically have 4-8 vertices (rectangular)
+                
+                // Rotate this face using the same transformation
+                var rotatedFaceVerts = GeometryTransform.RotateAndNormalize(faceVerts);
+                
+                if (rotatedFaceVerts.Count < 4)
+                    continue;
+                
+                // Compute bounds of this face in XY
+                var faceMinX = rotatedFaceVerts.Min(v => v.X);
+                var faceMaxX = rotatedFaceVerts.Max(v => v.X);
+                var faceMinY = rotatedFaceVerts.Min(v => v.Y);
+                var faceMaxY = rotatedFaceVerts.Max(v => v.Y);
+                var faceWidth = faceMaxX - faceMinX;
+                var faceHeight = faceMaxY - faceMinY;
+                
+                // Skip if face is not significantly smaller than outer bounds  
+                if (faceWidth >= outerWidth * 0.9 || faceHeight >= outerHeight * 0.9)
+                    continue;  // This is probably the main body, not a hole
+                
+                // Skip very small faces
+                if (faceWidth < 1 || faceHeight < 1)
+                    continue;
+                
+                // Check if this face is inside the outer bounds
+                bool isInside = (faceMinX >= outerMinX && faceMaxX <= outerMinX + outerWidth &&
+                                faceMinY >= outerMinY && faceMaxY <= outerMinY + outerHeight);
+                
+                if (isInside)
+                {
+                    // This looks like a hole!
+                    var holeX = (long)Math.Round(faceMinX - outerMinX);
+                    var holeY = (long)Math.Round(faceMinY - outerMinY);
+                    var holeW = (long)Math.Round(faceWidth);
+                    var holeH = (long)Math.Round(faceHeight);
+                    
+                    if (holeW > 2 && holeH > 2)  // Minimum hole size
+                    {
+                        var pathData = $"M {holeX} {holeY} L {holeX + holeW} {holeY} L {holeX + holeW} {holeY + holeH} L {holeX} {holeY + holeH} Z";
+                        svg.Path(pathData, strokeWidth: 0.2, fill: "none", stroke: "#FF0000");
+                        Console.WriteLine($"[SVG] Rendered RED hole: {holeW} x {holeH} at ({holeX}, {holeY})");
+                    }
+                }
+            }
+        }
+        
+        /// <summary>
+        /// For simple shapes, detect holes by examining all normalized vertices.
+        /// Hole vertices are those that are NOT part of the top face boundary but are inside its bounds.
+        /// </summary>
+        private static void DetectAndRenderHolesFromVertices(
+            SvgBuilder svg,
+            List<GeometryTransform.Vec3> allNormalizedVertices,
+            List<GeometryTransform.Vec3> topFaceVertices,
+            double outerMinX, double outerMinY,
+            long outerWidth, long outerHeight)
+        {
+            Console.WriteLine($"[HOLE DEBUG] Total vertices: {allNormalizedVertices.Count}, Top face verts: {topFaceVertices.Count}");
+            
+            // Find vertices that are NOT in the top face (these are hole vertices)
+            var topFaceSet = new HashSet<(double, double)>();
+            foreach (var v in topFaceVertices)
+            {
+                topFaceSet.Add((Math.Round(v.X, 1), Math.Round(v.Y, 1)));
+            }
+            
+            Console.WriteLine($"[HOLE DEBUG] Top face set size: {topFaceSet.Count}");
+            
+            var holeVertices = new List<GeometryTransform.Vec3>();
+            foreach (var v in allNormalizedVertices)
+            {
+                if (!topFaceSet.Contains((Math.Round(v.X, 1), Math.Round(v.Y, 1))))
+                {
+                    // This vertex is not part of the main boundary
+                    // Check if it's inside the bounds
+                    if (v.X >= outerMinX && v.X <= outerMinX + outerWidth &&
+                        v.Y >= outerMinY && v.Y <= outerMinY + outerHeight)
+                    {
+                        holeVertices.Add(v);
+                    }
+                }
+            }
+            
+            Console.WriteLine($"[HOLE DEBUG] Found {holeVertices.Count} hole vertices");
+            
+            if (holeVertices.Count < 4)
+            {
+                return;  // Not enough vertices for a hole
+            }
+            
+            // Compute bounding box of hole vertices
+            var holeMinX = holeVertices.Min(v => v.X);
+            var holeMaxX = holeVertices.Max(v => v.X);
+            var holeMinY = holeVertices.Min(v => v.Y);
+            var holeMaxY = holeVertices.Max(v => v.Y);
+            
+            var holeW = (long)Math.Round(holeMaxX - holeMinX);
+            var holeH = (long)Math.Round(holeMaxY - holeMinY);
+            
+            Console.WriteLine($"[HOLE DEBUG] Hole bounds: {holeW} x {holeH}");
+            
+            if (holeW > 2 && holeH > 2)  // Minimum hole size
+            {
+                var holeX = (long)Math.Round(holeMinX - outerMinX);
+                var holeY = (long)Math.Round(holeMinY - outerMinY);
+                
+                var pathData = $"M {holeX} {holeY} L {holeX + holeW} {holeY} L {holeX + holeW} {holeY + holeH} L {holeX} {holeY + holeH} Z";
+                svg.Path(pathData, strokeWidth: 0.2, fill: "none", stroke: "#FF0000");
+                Console.WriteLine($"[SVG] Rendered RED hole: {holeW} x {holeH} at ({holeX}, {holeY})");
+            }
+            else
+            {
+                Console.WriteLine($"[HOLE DEBUG] Hole too small: {holeW} x {holeH}");
+            }
         }
     }
 }

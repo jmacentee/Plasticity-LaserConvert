@@ -195,7 +195,7 @@ namespace LaserConvert
                 Console.WriteLine($"[TOPO] Complex shape detected ({faces.Count} faces), using outer loop vertices only");
                 foreach (var (face, faceVerts) in faceData)
                 {
-                    // For complex shapes, use ONLY outer loop vertices
+                    // For complex shapes, use ONLY outer loop vertices to avoid mixing hole vertices
                     var outerVerts = ExtractOuterLoopVerticesFromFace(face, stepFile);
                     if (outerVerts.Count > 0)
                     {
@@ -209,23 +209,17 @@ namespace LaserConvert
                 {
                     Console.WriteLine($"[TOPO] Found pair of faces with separation: {minSeparation:F1}mm");
                     
-                    // For dimensions: use vertices from the two closest faces (outer loops only)
-                    var outerVerts1 = ExtractOuterLoopVerticesFromFace(faceData[face1Idx].face, stepFile);
-                    var outerVerts2 = ExtractOuterLoopVerticesFromFace(faceData[face2Idx].face, stepFile);
-                    allVertices.AddRange(outerVerts1);
-                    allVertices.AddRange(outerVerts2);
+                    // For simple shapes, use ALL vertices from the two closest faces (includes holes)
+                    allVertices.AddRange(faceData[face1Idx].vertices);
+                    allVertices.AddRange(faceData[face2Idx].vertices);
                 }
                 else
                 {
-                    // Fallback: use outer loop vertices only
-                    Console.WriteLine($"[TOPO] No close face pair found, using outer loop vertices from all faces");
-                    foreach (var face in faces)
+                    // Fallback: use all vertices
+                    Console.WriteLine($"[TOPO] No close face pair found, using all vertices");
+                    foreach (var (face, faceVerts) in faceData)
                     {
-                        var outerVerts = ExtractOuterLoopVerticesFromFace(face, stepFile);
-                        if (outerVerts.Count > 0)
-                        {
-                            allVertices.AddRange(outerVerts);
-                        }
+                        allVertices.AddRange(faceVerts);
                     }
                 }
             }
