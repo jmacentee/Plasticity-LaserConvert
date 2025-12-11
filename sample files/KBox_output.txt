@@ -14,6 +14,13 @@ Found 1 solids
 [FILTER] KBox: dimensions [3.0, 150.0, 155.8] - PASS
 [TRANSFORM] Thin dimension: -29.4,-35.1,150.0 -> -28.2,-37.9,150.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=24.6ø
-[SVG] KBox: Normalized top face bounds: 170 x 150
-[SVG] Cutout detection not yet implemented
+[SVG] KBox: Z range [19.7, 22.7], top=12 verts, bottom=12 verts
+[SVG] KBox: Found 12 vertices on top face
+[SVG] KBox: Complex path (170 x 150): M 0 0 L 170 0 L 170 145 L 155 145 L 155 150 L 121 140 L 121 150 L 87 145 L 87 140 L 53 150 L 53 145 L 0 150 Z
+[SVG] KBox: Rendering complex boundary with 12 vertices
+[SVG] Total vertices: 24, Top plane vertices: 12
+[SVG] Outer verts: 6, Inner verts: 6, Avg dist from center: 68.1
+[SVG] Outer X range: [-94.7, 75.3], Y range: [-0.0, 150.0]
+[SVG] Inner X range: [-41.4, 26.6], Y range: [140.0, 150.0]
+[SVG] Rendered RED hole: 68 x 10 at (53, 140)
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox.svg

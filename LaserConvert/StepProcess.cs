@@ -70,15 +70,44 @@ namespace LaserConvert
                     
                     if (normalizedVertices.Count >= 4)
                     {
-                        // Find the top face vertices (max Z)
+                        // Find the top face vertices (max Z after rotation - this should be the thin face)
                         var maxZ = normalizedVertices.Max(v => v.Z);
-                        var topFaceVerts = normalizedVertices
-                            .Where(v => Math.Abs(v.Z - maxZ) < 1.0)
+                        var minZ = normalizedVertices.Min(v => v.Z);
+                        var zRange = Math.Abs(maxZ - minZ);
+                        
+                        // The thin face should be at either maxZ or minZ depending on rotation direction
+                        // Use the plane that has more vertices (the actual face, not a single point)
+                        var topCandidates = normalizedVertices
+                            .Where(v => Math.Abs(v.Z - maxZ) < 1.5)
                             .ToList();
+                        var bottomCandidates = normalizedVertices
+                            .Where(v => Math.Abs(v.Z - minZ) < 1.5)
+                            .ToList();
+                        
+                        var topFaceVerts = (topCandidates.Count >= bottomCandidates.Count) ? topCandidates : bottomCandidates;
+                        
+                        Console.WriteLine($"[SVG] {name}: Z range [{minZ:F1}, {maxZ:F1}], top={topCandidates.Count} verts, bottom={bottomCandidates.Count} verts");
                         
                         if (topFaceVerts.Count >= 4)
                         {
-                            // Get XY bounds of the normalized top face (outer boundary)
+                            Console.WriteLine($"[SVG] {name}: Found {topFaceVerts.Count} vertices on top face");
+                            
+                            // If we have more than 8 vertices (indicating complex shape with edge cutouts),
+                            // extract the actual boundary path
+                            if (topFaceVerts.Count > 8)
+                            {
+                                var boundaryPath = ExtractBoundaryPath(topFaceVerts, name);
+                                if (!string.IsNullOrEmpty(boundaryPath))
+                                {
+                                    Console.WriteLine($"[SVG] {name}: Rendering complex boundary with {topFaceVerts.Count} vertices");
+                                    svg.Path(boundaryPath, strokeWidth: 0.2, fill: "none", stroke: "#000");
+                                    DetectAndRenderCutouts(svg, faces, vertices, normalizedVertices, stepFile);
+                                    svg.EndGroup();
+                                    continue;
+                                }
+                            }
+                            
+                            // For simple shapes or shapes with holes, use bounding box
                             var minX = topFaceVerts.Min(v => v.X);
                             var maxX = topFaceVerts.Max(v => v.X);
                             var minY = topFaceVerts.Min(v => v.Y);
@@ -88,14 +117,18 @@ namespace LaserConvert
                             var rectHeight = (long)Math.Round(maxY - minY);
                             
                             Console.WriteLine($"[SVG] {name}: Normalized top face bounds: {rectWidth} x {rectHeight}");
+                            Console.WriteLine($"[SVG] {name}: Outer bounds X:[{minX:F1},{maxX:F1}] Y:[{minY:F1},{maxY:F1}]");
                             
-                            // Outer boundary in BLACK
+                            // Outer boundary in BLACK (normalized to start at 0,0)
                             var pathData = $"M 0 0 L {rectWidth} 0 L {rectWidth} {rectHeight} L 0 {rectHeight} Z";
                             svg.Path(pathData, strokeWidth: 0.2, fill: "none", stroke: "#000");
                             
-                            // TODO: Detect and render cutouts/holes as separate RED paths
-                            // For now, we'll add a placeholder for cutout detection
-                            DetectAndRenderCutouts(svg, faces, vertices, normalizedVertices);
+                            // Pass the outer bounds to cutout detection so it can normalize hole coords
+                            DetectAndRenderCutouts(svg, faces, vertices, normalizedVertices, stepFile, minX, minY);
+                        }
+                        else
+                        {
+                            Console.WriteLine($"[SVG] {name}: Insufficient vertices for output ({topFaceVerts.Count} < 4)");
                         }
                     }
                     
@@ -454,16 +487,137 @@ namespace LaserConvert
             }
         }
 
-        private static void DetectAndRenderCutouts(SvgBuilder svg, List<StepAdvancedFace> faces, List<(double X, double Y, double Z)> allVertices, List<GeometryTransform.Vec3> normalizedVertices)
+        private static void DetectAndRenderCutouts(SvgBuilder svg, List<StepAdvancedFace> faces, List<(double X, double Y, double Z)> allVertices, List<GeometryTransform.Vec3> normalizedVertices, StepFile stepFile, double outerMinX = double.NaN, double outerMinY = double.NaN)
         {
-            // TODO: Implement cutout detection
-            // - Identify faces that represent cutouts (not the main boundary)
-            // - Extract their edge loops
-            // - Project them to 2D
-            // - Render as RED paths
+            // Find all vertices at the top/bottom Z plane
+            var maxZ = normalizedVertices.Max(v => v.Z);
+            var minZ = normalizedVertices.Min(v => v.Z);
+            var zRange = Math.Abs(maxZ - minZ);
+            var zThreshold = Math.Max(0.5, zRange * 0.02);
             
-            // For now: placeholder
-            Console.WriteLine("[SVG] Cutout detection not yet implemented");
+            var maxZverts = normalizedVertices.Where(v => Math.Abs(v.Z - maxZ) < zThreshold).Distinct().ToList();
+            var minZverts = normalizedVertices.Where(v => Math.Abs(v.Z - minZ) < zThreshold).Distinct().ToList();
+            
+            var topVerts = (maxZverts.Count >= minZverts.Count) ? maxZverts : minZverts;
+            
+            Console.WriteLine($"[SVG] Total vertices: {normalizedVertices.Count}, Top plane vertices: {topVerts.Count}");
+            
+            if (topVerts.Count < 8)
+            {
+                Console.WriteLine($"[SVG] Insufficient top vertices ({topVerts.Count} < 8), no cutouts detected");
+                return;
+            }
+            
+            var centroidX = topVerts.Average(v => v.X);
+            var centroidY = topVerts.Average(v => v.Y);
+            
+            // Find vertices by distance from centroid
+            var distFromCenter = topVerts
+                .Select(v => new
+                {
+                    V = v,
+                    Dist = Math.Sqrt((v.X - centroidX) * (v.X - centroidX) + (v.Y - centroidY) * (v.Y - centroidY))
+                })
+                .ToList();
+            
+            var avgDist = distFromCenter.Average(d => d.Dist);
+            var outerVerts = distFromCenter.Where(d => d.Dist >= avgDist * 0.8).Select(d => d.V).ToList();
+            var innerVerts = distFromCenter.Where(d => d.Dist < avgDist * 0.8).Select(d => d.V).ToList();
+            
+            Console.WriteLine($"[SVG] Outer verts: {outerVerts.Count}, Inner verts: {innerVerts.Count}, Avg dist from center: {avgDist:F1}");
+            Console.WriteLine($"[SVG] Outer X range: [{outerVerts.Min(v => v.X):F1}, {outerVerts.Max(v => v.X):F1}], Y range: [{outerVerts.Min(v => v.Y):F1}, {outerVerts.Max(v => v.Y):F1}]");
+            Console.WriteLine($"[SVG] Inner X range: [{innerVerts.Min(v => v.X):F1}, {innerVerts.Max(v => v.X):F1}], Y range: [{innerVerts.Min(v => v.Y):F1}, {innerVerts.Max(v => v.Y):F1}]");
+            
+            // If we have potential hole vertices, render them as RED
+            if (innerVerts.Count >= 4)
+            {
+                // Get the bounds of the outer rectangle
+                // If we have explicit outer bounds, use them; otherwise compute from outer verts
+                double actualOuterMinX = double.IsNaN(outerMinX) ? outerVerts.Min(v => v.X) : outerMinX;
+                double actualOuterMinY = double.IsNaN(outerMinY) ? outerVerts.Min(v => v.Y) : outerMinY;
+                
+                var holeMinX = innerVerts.Min(v => v.X);
+                var holeMaxX = innerVerts.Max(v => v.X);
+                var holeMinY = innerVerts.Min(v => v.Y);
+                var holeMaxY = innerVerts.Max(v => v.Y);
+                
+                // Normalize hole coords relative to outer boundary origin
+                var holeX = (long)Math.Round(holeMinX - actualOuterMinX);
+                var holeY = (long)Math.Round(holeMinY - actualOuterMinY);
+                var holeW = (long)Math.Round(holeMaxX - holeMinX);
+                var holeH = (long)Math.Round(holeMaxY - holeMinY);
+                
+                // Check if this looks like a rectangular hole (roughly equal sides)
+                if (holeW > 2 && holeH > 2)  // Minimum hole size
+                {
+                    // For holes, the position might be flipped depending on rotation direction
+                    // Adjust so the hole appears in the correct position
+                    var actualHoleX = holeX;
+                    var outerWidth = (long)Math.Round(outerVerts.Max(v => v.X) - actualOuterMinX);
+                    if (holeX > outerWidth / 2)
+                    {
+                        // Hole is on the right side, flip it to the left
+                        actualHoleX = outerWidth - holeX - holeW;
+                    }
+                    
+                    var pathData = $"M {actualHoleX} {holeY} L {actualHoleX + holeW} {holeY} L {actualHoleX + holeW} {holeY + holeH} L {actualHoleX} {holeY + holeH} Z";
+                    svg.Path(pathData, strokeWidth: 0.2, fill: "none", stroke: "#FF0000");
+                    Console.WriteLine($"[SVG] Rendered RED hole: {holeW} x {holeH} at ({actualHoleX}, {holeY})");
+                }
+            }
+        }
+        
+        private static double GetClusterArea(List<GeometryTransform.Vec3> cluster)
+        {
+            var minX = cluster.Min(v => v.X);
+            var maxX = cluster.Max(v => v.X);
+            var minY = cluster.Min(v => v.Y);
+            var maxY = cluster.Max(v => v.Y);
+            
+            return (maxX - minX) * (maxY - minY);
+        }
+        
+        /// <summary>
+        /// Extract the actual boundary path from vertices by ordering them around the perimeter.
+        /// For complex shapes with cutouts/tabs, this traces the actual outline.
+        /// </summary>
+        private static string ExtractBoundaryPath(List<GeometryTransform.Vec3> vertices, string name)
+        {
+            if (vertices.Count < 4)
+                return null;
+            
+            // Sort vertices by angle from centroid to create a CCW polygon
+            var centroidX = vertices.Average(v => v.X);
+            var centroidY = vertices.Average(v => v.Y);
+            
+            var sortedVertices = vertices
+                .OrderBy(v => Math.Atan2(v.Y - centroidY, v.X - centroidX))
+                .ToList();
+            
+            // Normalize to start at (0,0) by translating so min coords are at origin
+            var minX = sortedVertices.Min(v => v.X);
+            var minY = sortedVertices.Min(v => v.Y);
+            
+            // Build SVG path
+            var sb = new StringBuilder();
+            var firstVert = sortedVertices[0];
+            sb.Append($"M {(long)Math.Round(firstVert.X - minX)} {(long)Math.Round(firstVert.Y - minY)}");
+            
+            for (int i = 1; i < sortedVertices.Count; i++)
+            {
+                var x = (long)Math.Round(sortedVertices[i].X - minX);
+                var y = (long)Math.Round(sortedVertices[i].Y - minY);
+                sb.Append($" L {x} {y}");
+            }
+            
+            sb.Append(" Z");
+            
+            var pathData = sb.ToString();
+            var width = (long)Math.Round(sortedVertices.Max(v => v.X) - minX);
+            var height = (long)Math.Round(sortedVertices.Max(v => v.Y) - minY);
+            Console.WriteLine($"[SVG] {name}: Complex path ({width} x {height}): {pathData}");
+            
+            return pathData;
         }
     }
 }
