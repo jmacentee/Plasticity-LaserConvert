@@ -642,16 +642,6 @@ namespace LaserConvert
             }
         }
         
-        private static double GetClusterArea(List<GeometryTransform.Vec3> cluster)
-        {
-            var minX = cluster.Min(v => v.X);
-            var maxX = cluster.Max(v => v.X);
-            var minY = cluster.Min(v => v.Y);
-            var maxY = cluster.Max(v => v.Y);
-            
-            return (maxX - minX) * (maxY - minY);
-        }
-        
         /// <summary>
         /// Extract the actual boundary path from vertices.
         /// For complex shapes, build edges from the vertex pairs and trace the perimeter.
@@ -769,17 +759,18 @@ namespace LaserConvert
                 return;
             }
             
-            // For interior holes, check if the inner cluster is WELL SEPARATED from edges
-            var innerMinX = innerVerts.Min(v => v.X);
-            var innerMaxX = innerVerts.Max(v => v.X);
-            var innerMinY = innerVerts.Min(v => v.Y);
-            var innerMaxY = innerVerts.Max(v => v.Y);
+            // For complex shapes, just render all inner vertices as a single bounding box hole
+            // (This is a simplification; the actual holes may be more complex)
+            var holeMinX = innerVerts.Min(v => v.X);
+            var holeMaxX = innerVerts.Max(v => v.X);
+            var holeMinY = innerVerts.Min(v => v.Y);
+            var holeMaxY = innerVerts.Max(v => v.Y);
             
-            // Distance from inner cluster to each edge
-            var distToLeftEdge = innerMinX - minX;
-            var distToRightEdge = maxX - innerMaxX;
-            var distToTopEdge = maxY - innerMaxY;
-            var distToBottomEdge = innerMinY - minY;
+            // Distance from hole to each edge
+            var distToLeftEdge = holeMinX - minX;
+            var distToRightEdge = maxX - holeMaxX;
+            var distToTopEdge = maxY - holeMaxY;
+            var distToBottomEdge = holeMinY - minY;
             
             var minDistToEdge = Math.Min(Math.Min(distToLeftEdge, distToRightEdge), 
                                          Math.Min(distToTopEdge, distToBottomEdge));
@@ -787,24 +778,23 @@ namespace LaserConvert
             Console.WriteLine($"[SVG] {name}: Min distance to edge: {minDistToEdge:F1}mm, Min dimension: {minDim:F1}mm");
             
             // Only treat as a hole if it's well-separated from the edges
-            // If the hole is very close to an edge, it's probably part of an edge cutout (like a tab)
-            if (minDistToEdge < minDim * 0.10)  // Less than 10% of the smallest dimension away from edge
+            if (minDistToEdge < minDim * 0.10)  // Less than 10% away from edge
             {
                 Console.WriteLine($"[SVG] {name}: Inner cluster is too close to edges ({minDistToEdge:F1} < {minDim * 0.10:F1}), likely edge-based cutouts not holes");
                 return;
             }
             
             // This is a true interior hole - render it in RED
-            var holeW = (long)Math.Round(innerMaxX - innerMinX);
-            var holeH = (long)Math.Round(innerMaxY - innerMinY);
+            var holeW = (long)Math.Round(holeMaxX - holeMinX);
+            var holeH = (long)Math.Round(holeMaxY - holeMinY);
             
             if (holeW > 2 && holeH > 2)
             {
                 var outerMinXc = outerVerts.Min(v => v.X);
                 var outerMinYc = outerVerts.Min(v => v.Y);
                 
-                var holeX = (long)Math.Round(innerMinX - outerMinXc);
-                var holeY = (long)Math.Round(innerMinY - outerMinYc);
+                var holeX = (long)Math.Round(holeMinX - outerMinXc);
+                var holeY = (long)Math.Round(holeMinY - outerMinYc);
                 
                 var pathData = $"M {holeX} {holeY} L {holeX + holeW} {holeY} L {holeX + holeW} {holeY + holeH} L {holeX} {holeY + holeH} Z";
                 svg.Path(pathData, strokeWidth: 0.2, fill: "none", stroke: "#FF0000");
