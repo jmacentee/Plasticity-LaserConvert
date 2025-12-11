@@ -54,7 +54,7 @@ REM This file is the same as CBox.stp but repositioned rotated in 3d space.  The
 "C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBoxR.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBoxR.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBoxR_output.txt"
 
 
-REM This file contains a solid which is rotated in 3d space, has cutouts and tabs along the outer edge, and has two hols cut into it.
+REM This file contains a solid which is rotated in 3d space, has cutouts and tabs along the outer edge, and has two holes cut into it.
 REM The approximate correct output for this file can be found in KCBox_corrected.svg.  This KCBox_corrected.svg sample file may have rounding errors which do not need to be duplicated exactly.
 "C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox_output.txt"
 

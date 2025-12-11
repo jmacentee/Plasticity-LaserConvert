@@ -91,7 +91,34 @@ namespace LaserConvert
                         // Build projection frame from all vertices of the main face
                         var mainFaceAllVerts = StepTopologyResolver.ExtractVerticesFromFace(mainFace, stepFile);
                         var frame = BuildProjectionFrame(mainFaceAllVerts);
-
+                        
+                        // If single bound and likely rectangular, prefer normalized top-face bbox from rotated vertices
+                        if ((mainFace.Bounds?.Count ?? 0) == 1)
+                        {
+                            var maxZnf = normalizedVertices.Max(v => v.Z);
+                            var topVertsNf = normalizedVertices.Where(v => Math.Abs(v.Z - maxZnf) < 1.0).ToList();
+                            if (topVertsNf.Count >= 4)
+                            {
+                                var minXn = topVertsNf.Min(v => v.X);
+                                var maxXn = topVertsNf.Max(v => v.X);
+                                var minYn = topVertsNf.Min(v => v.Y);
+                                var maxYn = topVertsNf.Max(v => v.Y);
+                                var w = (long)Math.Round(maxXn - minXn);
+                                var h = (long)Math.Round(maxYn - minYn);
+                                if (w < h)
+                                {
+                                    // Prefer longer side along X-axis
+                                    var tmp = w;
+                                    w = h;
+                                    h = tmp;
+                                }
+                                var rectPath = $"M 0 0 L {w} 0 L {w} {h} L 0 {h} Z";
+                                svg.Path(rectPath, strokeWidth: 0.2, fill: "none", stroke: "#000");
+                                svg.EndGroup();
+                                continue;
+                            }
+                        }
+                        
                         // Helper: project a bound to ordered 2D points
                         List<(double X, double Y)> ProjectBoundPoints(StepFaceBound b)
                         {
@@ -125,7 +152,7 @@ namespace LaserConvert
                             }
                             return pts2D;
                         }
-
+                        
                         // Project outer and holes
                         var outerPts = ProjectBoundPoints(mainFace.Bounds[0]);
                         if (outerPts.Count >= 4)
@@ -134,6 +161,26 @@ namespace LaserConvert
                             var minOX = outerPts.Min(p => p.X);
                             var minOY = outerPts.Min(p => p.Y);
                             var normOuter = outerPts.Select(p => ((long)Math.Round(p.X - minOX), (long)Math.Round(p.Y - minOY))).ToList();
+
+                            // If single bound and rectangle, render clean bbox path
+                            if (mainFace.Bounds.Count == 1)
+                            {
+                                var xs = normOuter.Select(p => p.Item1).ToList();
+                                var ys = normOuter.Select(p => p.Item2).ToList();
+                                var minXr = xs.Min();
+                                var maxXr = xs.Max();
+                                var minYr = ys.Min();
+                                var maxYr = ys.Max();
+                                var uniqueCorners = new HashSet<(long, long)>(normOuter);
+                                if (uniqueCorners.Count == 4 && minXr == 0 && minYr == 0)
+                                {
+                                    var rectPath = $"M 0 0 L {maxXr} 0 L {maxXr} {maxYr} L 0 {maxYr} Z";
+                                    svg.Path(rectPath, strokeWidth: 0.2, fill: "none", stroke: "#000");
+                                    svg.EndGroup();
+                                    continue;
+                                }
+                            }
+
                             // Build path following point order; snap near-axis segments
                             string BuildPath(List<(long X, long Y)> pts)
                             {
