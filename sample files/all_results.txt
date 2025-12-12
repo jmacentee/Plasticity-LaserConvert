@@ -255,8 +255,8 @@ Found 2 solids
 [FILTER] Box1: dimensions [3.0, 150.0, 155.8] - PASS
 [TRANSFORM] Thin dimension: -85.0,28.2,3.0 -> -85.0,28.2,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
-[SVG] Box2: Z range [-3.0, 0.0] (range=3.0), using all 8 vertices for projection
-[SVG] Box2: After rotation - X:[-82.0,28.2] Y:[-85.0,85.0]
+[SVG] Box2: Z range [0.0, 3.0] (range=3.0), using all 8 vertices for projection
+[SVG] Box2: After rotation - X:[-85.0,85.0] Y:[-82.0,28.2]
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 170.0x110.2 (area=18736.6): (-85.0,28.2,0.0), (-85.0,-82.0,0.0), (85.0,28.2,0.0), (85.0,-82.0,0.0)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=18736.6)
@@ -310,8 +310,8 @@ Found 3 solids
 [FILTER] Box1: dimensions [3.0, 150.0, 155.8] - PASS
 [TRANSFORM] Thin dimension: -85.0,28.2,3.0 -> -85.0,28.2,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
-[SVG] Box2: Z range [-3.0, 0.0] (range=3.0), using all 8 vertices for projection
-[SVG] Box2: After rotation - X:[-82.0,28.2] Y:[-85.0,85.0]
+[SVG] Box2: Z range [0.0, 3.0] (range=3.0), using all 8 vertices for projection
+[SVG] Box2: After rotation - X:[-85.0,85.0] Y:[-82.0,28.2]
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 170.0x110.2 (area=18736.6): (-85.0,28.2,0.0), (-85.0,-82.0,0.0), (85.0,28.2,0.0), (85.0,-82.0,0.0)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=18736.6)
@@ -321,8 +321,8 @@ Found 3 solids
 [SVG] Box2: Generated outline from 4 outline points -> 4 ordered
 [TRANSFORM] Thin dimension: -13.2,-14.5,51.8 -> -14.5,-14.5,49.1 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
-[SVG] Box4: Z range [-41.0, -38.0] (range=3.0), using all 8 vertices for projection
-[SVG] Box4: After rotation - X:[-82.0,-14.5] Y:[-109.1,-34.3]
+[SVG] Box4: Z range [49.1, 84.1] (range=35.0), using all 8 vertices for projection
+[SVG] Box4: After rotation - X:[-82.0,-13.2] Y:[-82.0,-14.5]
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 67.5x67.5 (area=4553.9): (-82.0,-14.5,81.4), (-82.0,-82.0,81.4), (-14.5,-14.5,49.1), (-14.5,-82.0,49.1)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=4553.9)
@@ -374,8 +374,8 @@ Found 3 solids
 [FILTER] Box3: dimensions [170.0, 167.0, 150.0] - FAIL
 [TRANSFORM] Thin dimension: -85.0,28.2,3.0 -> -85.0,28.2,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
-[SVG] Box2: Z range [-3.0, 0.0] (range=3.0), using all 8 vertices for projection
-[SVG] Box2: After rotation - X:[-82.0,28.2] Y:[-85.0,85.0]
+[SVG] Box2: Z range [0.0, 3.0] (range=3.0), using all 8 vertices for projection
+[SVG] Box2: After rotation - X:[-85.0,85.0] Y:[-82.0,28.2]
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 170.0x110.2 (area=18736.6): (-85.0,28.2,0.0), (-85.0,-82.0,0.0), (85.0,28.2,0.0), (85.0,-82.0,0.0)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=18736.6)
@@ -451,8 +451,8 @@ Found 4 solids
 [SVG] Box1: Generated outline from 4 outline points -> 4 ordered
 [TRANSFORM] Thin dimension: -85.0,28.2,3.0 -> -85.0,28.2,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
-[SVG] Box2: Z range [-3.0, 0.0] (range=3.0), using all 8 vertices for projection
-[SVG] Box2: After rotation - X:[-82.0,28.2] Y:[-85.0,85.0]
+[SVG] Box2: Z range [0.0, 3.0] (range=3.0), using all 8 vertices for projection
+[SVG] Box2: After rotation - X:[-85.0,85.0] Y:[-82.0,28.2]
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 170.0x110.2 (area=18736.6): (-85.0,28.2,0.0), (-85.0,-82.0,0.0), (85.0,28.2,0.0), (85.0,-82.0,0.0)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=18736.6)
@@ -462,8 +462,8 @@ Found 4 solids
 [SVG] Box2: Generated outline from 4 outline points -> 4 ordered
 [TRANSFORM] Thin dimension: -13.2,-14.5,51.8 -> -14.5,-14.5,49.1 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
-[SVG] Box4: Z range [-41.0, -38.0] (range=3.0), using all 8 vertices for projection
-[SVG] Box4: After rotation - X:[-82.0,-14.5] Y:[-109.1,-34.3]
+[SVG] Box4: Z range [49.1, 84.1] (range=35.0), using all 8 vertices for projection
+[SVG] Box4: After rotation - X:[-82.0,-13.2] Y:[-82.0,-14.5]
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 67.5x67.5 (area=4553.9): (-82.0,-14.5,81.4), (-82.0,-82.0,81.4), (-14.5,-14.5,49.1), (-14.5,-82.0,49.1)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=4553.9)
@@ -498,8 +498,8 @@ Found 1 solids
 [FILTER] CBoxR: dimensions [7.6, 46.2, 50.1] - PASS
 [TRANSFORM] Thin dimension: 17.7,-17.0,74.6 -> 17.3,-15.3,72.1 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=-54.3ø
-[SVG] CBoxR: Z range [-72.9, -69.9] (range=3.0), using all 10 vertices for projection
-[SVG] CBoxR: After rotation - X:[-6.1,43.9] Y:[-12.7,27.3]
+[SVG] CBoxR: Z range [50.7, 85.8] (range=35.1), using all 10 vertices for projection
+[SVG] CBoxR: After rotation - X:[-4.9,45.3] Y:[-48.9,-2.7]
 [SVG] CBoxR: Found face with 2 bounds (has holes)
 [EXTRACT] ExtractFaceWithHoles: face has 2 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 12.0x9.5 (area=113.5): (8.0,-15.7,76.8), (17.7,-17.0,74.6), (10.3,-7.5,82.0), (20.0,-8.8,79.8)...
@@ -529,8 +529,8 @@ Found 1 solids
 [FILTER] CBox: dimensions [3.0, 40.0, 50.0] - PASS
 [TRANSFORM] Thin dimension: 5.0,-15.0,3.0 -> 5.0,-15.0,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
-[SVG] CBox: Z range [-3.0, 0.0] (range=3.0), using all 16 vertices for projection
-[SVG] CBox: After rotation - X:[-50.0,0.0] Y:[-0.0,40.0]
+[SVG] CBox: Z range [0.0, 3.0] (range=3.0), using all 16 vertices for projection
+[SVG] CBox: After rotation - X:[0.0,40.0] Y:[-50.0,0.0]
 [SVG] CBox: Found face with 2 bounds (has holes)
 [EXTRACT] ExtractFaceWithHoles: face has 2 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 10.0x10.0 (area=100.0): (5.0,-15.0,3.0), (15.0,-15.0,3.0), (5.0,-5.0,3.0), (15.0,-5.0,3.0)...
@@ -589,8 +589,8 @@ Found 1 solids
 [TRANSFORM] Thin dimension: 34.3,-6.2,0.0 -> 34.3,-5.2,0.0 (1.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
 [SVG] KCBoxFlat: Computing rotation from 8 vertices in thin faces
-[SVG] KCBoxFlat: Z range [-58.4, -0.2] (range=58.2), using all 80 vertices for projection
-[SVG] KCBoxFlat: After rotation - X:[-0.0,40.1] Y:[-3.0,-0.0]
+[SVG] KCBoxFlat: Z range [0.0, 3.0] (range=3.0), using all 80 vertices for projection
+[SVG] KCBoxFlat: After rotation - X:[-0.0,40.1] Y:[-58.4,-0.2]
 [SVG] KCBoxFlat: Searching 42 faces for main face with complex outline
 [SVG] KCBoxFlat: Selected face with 40 vertices as main face
 [EXTRACT] ExtractFaceWithHoles: face has 3 bounds
@@ -762,8 +762,8 @@ Found 1 solids
 [TRANSFORM] Thin dimension: 33.4,-6.3,33.9 -> 33.7,-5.4,34.3 (1.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=56.2ø
 [SVG] KCBox: Computing rotation from 8 vertices in thin faces
-[SVG] KCBox: Z range [-35.9, 22.1] (range=58.0), using all 84 vertices for projection
-[SVG] KCBox: After rotation - X:[-0.5,34.4] Y:[-45.2,-20.4]
+[SVG] KCBox: Z range [5.4, 36.9] (range=31.5), using all 84 vertices for projection
+[SVG] KCBox: After rotation - X:[-5.8,44.6] Y:[-55.1,8.6]
 [SVG] KCBox: Searching 44 faces for main face with complex outline
 [SVG] KCBox: Selected face with 42 vertices as main face
 [EXTRACT] ExtractFaceWithHoles: face has 3 bounds

@@ -11,8 +11,8 @@ Found 1 solids
 [FILTER] CBoxR: dimensions [7.6, 46.2, 50.1] - PASS
 [TRANSFORM] Thin dimension: 17.7,-17.0,74.6 -> 17.3,-15.3,72.1 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=-54.3ø
-[SVG] CBoxR: Z range [-72.9, -69.9] (range=3.0), using all 10 vertices for projection
-[SVG] CBoxR: After rotation - X:[-6.1,43.9] Y:[-12.7,27.3]
+[SVG] CBoxR: Z range [50.7, 85.8] (range=35.1), using all 10 vertices for projection
+[SVG] CBoxR: After rotation - X:[-4.9,45.3] Y:[-48.9,-2.7]
 [SVG] CBoxR: Found face with 2 bounds (has holes)
 [EXTRACT] ExtractFaceWithHoles: face has 2 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 12.0x9.5 (area=113.5): (8.0,-15.7,76.8), (17.7,-17.0,74.6), (10.3,-7.5,82.0), (20.0,-8.8,79.8)...

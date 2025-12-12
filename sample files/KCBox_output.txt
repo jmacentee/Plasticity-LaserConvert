@@ -12,8 +12,8 @@ Found 1 solids
 [TRANSFORM] Thin dimension: 33.4,-6.3,33.9 -> 33.7,-5.4,34.3 (1.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=56.2ø
 [SVG] KCBox: Computing rotation from 8 vertices in thin faces
-[SVG] KCBox: Z range [-35.9, 22.1] (range=58.0), using all 84 vertices for projection
-[SVG] KCBox: After rotation - X:[-0.5,34.4] Y:[-45.2,-20.4]
+[SVG] KCBox: Z range [5.4, 36.9] (range=31.5), using all 84 vertices for projection
+[SVG] KCBox: After rotation - X:[-5.8,44.6] Y:[-55.1,8.6]
 [SVG] KCBox: Searching 44 faces for main face with complex outline
 [SVG] KCBox: Selected face with 42 vertices as main face
 [EXTRACT] ExtractFaceWithHoles: face has 3 bounds

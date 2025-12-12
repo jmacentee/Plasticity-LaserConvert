@@ -22,8 +22,8 @@ Found 2 solids
 [FILTER] Box1: dimensions [3.0, 150.0, 155.8] - PASS
 [TRANSFORM] Thin dimension: -85.0,28.2,3.0 -> -85.0,28.2,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
-[SVG] Box2: Z range [-3.0, 0.0] (range=3.0), using all 8 vertices for projection
-[SVG] Box2: After rotation - X:[-82.0,28.2] Y:[-85.0,85.0]
+[SVG] Box2: Z range [0.0, 3.0] (range=3.0), using all 8 vertices for projection
+[SVG] Box2: After rotation - X:[-85.0,85.0] Y:[-82.0,28.2]
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 170.0x110.2 (area=18736.6): (-85.0,28.2,0.0), (-85.0,-82.0,0.0), (85.0,28.2,0.0), (85.0,-82.0,0.0)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=18736.6)

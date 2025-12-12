@@ -87,10 +87,26 @@ namespace LaserConvert
                         rotMatrix2 = m2;
                     }
                     
+                    // Check if the shape is already axis-aligned to avoid unnecessary rotation
+                    // ATTEMPTED: Apply rotMatrix1 to all shapes
+                    // RESULT: KCBoxFlat (already correctly aligned) gets Y dimension collapsed to 3mm
+                    // REASON: If shape is already aligned with thin dimension in Z, rotating collapses Y
+                    // FIX: Detect if already aligned and skip rotation matrices
+                    var minDimX = vertices.Max(v => v.X) - vertices.Min(v => v.X);
+                    var minDimY = vertices.Max(v => v.Y) - vertices.Min(v => v.Y);
+                    var minDimZ = vertices.Max(v => v.Z) - vertices.Min(v => v.Z);
+                    var sortedDims = new[] { minDimX, minDimY, minDimZ }.OrderBy(d => d).ToList();
+                    bool isAlreadyAligned = Math.Abs(minDimZ - sortedDims[0]) < 0.1; // Thin dimension is Z
+                    
                     // Now apply these rotation matrices to ALL vertices
                     normalizedVertices = vertices
                         .Select(v => {
                             var vec = new GeometryTransform.Vec3(v.X, v.Y, v.Z);
+                            if (isAlreadyAligned)
+                            {
+                                // Already correctly aligned - no rotation needed
+                                return vec;
+                            }
                             var rot1 = ApplyMatrix(vec, rotMatrix1);
                             // For complex shapes, skip the edge-alignment normalization (rotMatrix2)
                             // since the thin-face vertex set may not have enough top vertices for good alignment
