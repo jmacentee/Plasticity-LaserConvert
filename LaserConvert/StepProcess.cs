@@ -151,6 +151,11 @@ namespace LaserConvert
                         {
                             // For complex shapes: find the face with the most complex outer loop (most vertices)
                             // This is more likely to be the actual main face with holes/tabs
+                            // ATTEMPTED: Select face with most vertices
+                            // RESULT: Works for rotated KCBox but fails for flat KCBoxFlat
+                            // ISSUE: For already-aligned flat shapes, the "main face" is the TOP face with 2D perimeter,
+                            //        not a 3D side face. We need faces that project to show full bounding box.
+                            // TODO: For flat shapes, prefer side faces over top faces
                             Console.WriteLine($"[SVG] {name}: Searching {faces.Count} faces for main face with complex outline");
                             int maxVertexCount = 0;
                             int bestFaceIdx = face1Idx;
