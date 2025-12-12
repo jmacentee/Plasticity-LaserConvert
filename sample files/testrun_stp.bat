@@ -63,6 +63,7 @@ REM This file contains a solid which is rotated in 3d space, has cutouts and tab
 REM The approximate correct output for this file can be found in KCBox_corrected.svg.  This KCBox_corrected.svg sample file may have rounding errors which do not need to be duplicated exactly.
 REM the overall width is 40mm.  the overall height is 58mm including the tab at the bottom and the tall tab at the top.  the left side is only 50mm without those tabs.  the top hole is 10x10 and is 5mm from the top and left sides (not counting the tabs).
 REM We have discussed before -- if you think that the holes are in the other faces, not the main face, that means we have selected the mainface incorrectly.
+REM The outer edge of KCBox has 32 vertexes.
 "C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox_output.txt"
 
 

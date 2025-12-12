@@ -166,31 +166,31 @@ REM File: KCBox_corrected.svg
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="8"
-     inkscape:cx="91.3125"
-     inkscape:cy="46.9375"
+     inkscape:zoom="11.313708"
+     inkscape:cx="46.094523"
+     inkscape:cy="39.907339"
      inkscape:window-width="2560"
      inkscape:window-height="1369"
      inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-y="689"
      inkscape:window-maximized="1"
      inkscape:current-layer="g10" /><g
      id="g10"
      inkscape:label="KCBox"
      transform="matrix(0.06412759,0,0,0.06412759,13.739988,10.594985)"
      style="stroke-width:1.55939;stroke-dasharray:none"><path
-       style="fill:none;stroke:#ff0000;stroke-width:0.825178;stroke-dasharray:none"
+       style="fill:none;stroke:#ff0000;stroke-width:0.41258892;stroke-dasharray:none"
        d="m -110.68944,-36.775421 c -0.0567,11.759084 -0.0155,41.6113838 -0.0155,41.6113838 l 21.281462,0.02729 V -36.775391 h -10.632812 z"
        id="path9"
        sodipodi:nodetypes="cccccc" /><path
-       style="fill:none;stroke:#ff0000;stroke-width:0.825178;stroke-dasharray:none"
+       style="fill:none;stroke:#ff0000;stroke-width:0.41258892;stroke-dasharray:none"
        d="m -151.46875,-119.46096 -41.77148,0.1348 -0.2169,41.908197 41.98873,-0.13671 z"
        id="path7"
        sodipodi:nodetypes="ccccc" /><path
-       style="fill:none;stroke:#1a1a1a;stroke-width:0.825178;stroke-dasharray:none"
-       d="m -189.93359,-164.43751 v 12.48633 12.38476 h -23.54688 v 82.111332 l 12.30274,0.14062 v 41.441406 l -12.30274,0.14257 V 25.322243 66.37693 l 27.5,0.06641 27.40235,0.06836 0.1445,8.333984 h 27.29492 27.29492 l 0.0677,-8.445349 55.231238,-0.02147 V 45.962891 25.548828 l -8.333984,-0.14649 v -41.4414 l 8.333984,-0.14649 v -40.816401 l -8.333984,-0.14649 V -98.58985 l 8.333984,-0.14454 v -20.41407 -20.4121 l -23.68164,-0.1387 -0.15625,-4.10156 h -23.09375 v 4.24023 l -23.845708,-0.1387 -0.1426,-12.30273 h -11.54883 -11.54883 l -0.1426,12.30273 h -23.97656 l -0.0684,-12.31837 -0.0703,-12.41991 H -178.377 Z"
+       style="fill:none;stroke:#1a1a1a;stroke-width:0.412589;stroke-dasharray:none"
+       d="m -189.93359,-164.43751 v 24.87109 h -23.54688 v 82.111332 l 12.30274,0.14062 v 41.441406 l -12.30274,0.14257 V 66.37693 l 54.90235,0.13477 0.1445,8.333984 h 54.58984 l 0.0677,-8.445349 55.231238,-0.02147 V 25.548828 l -8.333984,-0.14649 v -41.4414 l 8.333984,-0.14649 v -40.816401 l -8.333984,-0.14649 V -98.58985 l 8.333984,-0.14454 v -40.82617 l -23.68164,-0.1387 -0.15625,-4.10156 h -23.09375 v 4.24023 l -23.845708,-0.1387 -0.1426,-12.30273 h -23.09766 l -0.1426,12.30273 h -23.97656 l -0.1387,-24.73828 z"
        id="path5"
-       sodipodi:nodetypes="cccccccccccccccccccccccccccccccccccccccccc" /></g></svg>
+       sodipodi:nodetypes="ccccccccccccccccccccccccccccccccc" /></g></svg>
  
 REM File: 1box_output.txt 
 Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.stp
