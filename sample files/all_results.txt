@@ -4,7 +4,7 @@ REM File: 1box.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="Box1">
-    <path d="M 0 0 L 150 0 L 150 170 L 0 170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 150,0 L 0,0 L 150,170 L 0,170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -12,10 +12,10 @@ REM File: 2boxes.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="Box2">
-    <path d="M 0 0 L 110 0 L 110 170 L 0 170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 110,0 L 0,0 L 110,170 L 0,170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box1">
-    <path d="M 0 0 L 150 0 L 150 170 L 0 170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 150,0 L 0,0 L 150,170 L 0,170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -23,10 +23,10 @@ REM File: 3boxes.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="Box2">
-    <path d="M 0 0 L 110 0 L 110 170 L 0 170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 110,0 L 0,0 L 110,170 L 0,170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box1">
-    <path d="M 0 0 L 150 0 L 150 170 L 0 170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 150,0 L 0,0 L 150,170 L 0,170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -34,13 +34,13 @@ REM File: 3boxesB.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="Box2">
-    <path d="M 0 0 L 110 0 L 110 170 L 0 170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 110,0 L 0,0 L 110,170 L 0,170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box4">
-    <path d="M 0 0 L 67 0 L 67 75 L 0 75 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 67,0 L 0,0 L 67,75 L 0,75 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box1">
-    <path d="M 0 0 L 150 0 L 150 170 L 0 170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 150,0 L 0,0 L 150,170 L 0,170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -48,16 +48,16 @@ REM File: 4boxes.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="Box1">
-    <path d="M 0 0 L 150 0 L 150 170 L 0 170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 150,0 L 0,0 L 150,170 L 0,170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box2">
-    <path d="M 0 0 L 110 0 L 110 170 L 0 170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 110,0 L 0,0 L 110,170 L 0,170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box4">
-    <path d="M 0 0 L 67 0 L 67 75 L 0 75 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 67,0 L 0,0 L 67,75 L 0,75 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box5">
-    <path d="M 0 0 L 44 0 L 44 58 L 0 58 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,58 L 44,58 L 0,0 L 44,0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -65,7 +65,7 @@ REM File: CBox.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="CBox">
-    <path d="M 0 0 L 50 0 L 50 40 L 0 40 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,40 L 0,0 L 50,40 L 50,0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
     <path d="M 35 5 L 45 5 L 45 15 L 35 15 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
@@ -74,7 +74,7 @@ REM File: CBoxR.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="CBoxR">
-    <path d="M 0 0 L 50 0 L 50 40 L 0 40 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,40 L 0,0 L 50,40 L 50,0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
     <path d="M 35 5 L 45 5 L 45 15 L 35 15 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
@@ -83,7 +83,7 @@ REM File: KBox.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="KBox">
-    <path d="M 0,0 L 170,0 L 170,145 L 155,145 L 155,150 L 121,150 L 121,140 L 87,140 L 87,145 L 53,145 L 53,150 L 0,150 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 0,150 L 170,0 L 170,145 L 155,145 L 155,150 L 121,150 L 121,140 L 87,140 L 87,145 L 53,145 L 53,150 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -135,7 +135,7 @@ REM File: KCBox.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="KCBox">
-    <path d="M 0 0 L 35 0 L 35 25 L 0 25 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 33,0 L 22,7 L 33,0 L 32,1 L 33,0 L 32,1 L 33,0 L 28,3 L 24,6 L 19,10 L 14,13 L 9,16 L 5,19 L 0,22 L 2,21 L 0,22 L 11,15 L 22,7 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
     <path d="M 4 14 L 12 14 L 12 20 L 4 20 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
     <path d="M 21 6 L 25 6 L 25 9 L 21 9 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
@@ -192,16 +192,6 @@ REM File: KCBox_corrected.svg
        id="path5"
        sodipodi:nodetypes="cccccccccccccccccccccccccccccccccccccccccc" /></g></svg>
  
-REM File: KCBox_test.svg 
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
-<defs/>
-  <g id="KCBox">
-    <path d="M 33,0 L 32,1 L 19,10 L 14,13 L 11,15 L 5,19 L 2,21 L 24,6 L 9,16 L 0,22 L 22,7 L 28,3 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 4 14 L 12 14 L 12 20 L 4 20 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 21 6 L 25 6 L 25 9 L 21 9 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-  </g>
-</svg>
- 
 REM File: 1box_output.txt 
 Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.stp
 File loaded. Total items: 154
@@ -221,7 +211,12 @@ Found 1 solids
 [TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
 [SVG] Box1: Z range [74.4, 77.4] (range=3.0), using all 8 vertices for projection
 [SVG] Box1: After rotation - X:[-150.0,0.0] Y:[-119.8,50.2]
-[SVG] Box1: Bounding box: 150 x 170
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 154.5x70.9 (area=10949.8): (-76.6,-120.3,0.0), (-76.6,-120.3,150.0), (77.9,-49.4,0.0), (77.9,-49.4,150.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=10949.8)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] Box1: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box1: Generated outline from 4 outline points
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.svg
  
 REM File: 2boxes_output.txt 
@@ -251,12 +246,22 @@ Found 2 solids
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
 [SVG] Box2: Z range [-3.0, 0.0] (range=3.0), using all 8 vertices for projection
 [SVG] Box2: After rotation - X:[-82.0,28.2] Y:[-85.0,85.0]
-[SVG] Box2: Bounding box: 110 x 170
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 170.0x110.2 (area=18736.6): (-85.0,28.2,0.0), (-85.0,-82.0,0.0), (85.0,28.2,0.0), (85.0,-82.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=18736.6)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] Box2: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box2: Generated outline from 4 outline points
 [TRANSFORM] Thin dimension: -77.9,-117.6,0.0 -> -76.6,-120.3,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
 [SVG] Box1: Z range [74.4, 77.4] (range=3.0), using all 8 vertices for projection
 [SVG] Box1: After rotation - X:[-150.0,0.0] Y:[-119.8,50.2]
-[SVG] Box1: Bounding box: 150 x 170
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 154.5x70.9 (area=10949.8): (-76.6,-120.3,0.0), (-76.6,-120.3,150.0), (77.9,-49.4,0.0), (77.9,-49.4,150.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=10949.8)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] Box1: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box1: Generated outline from 4 outline points
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\2boxes.svg
  
 REM File: 3boxesB_output.txt 
@@ -294,17 +299,32 @@ Found 3 solids
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
 [SVG] Box2: Z range [-3.0, 0.0] (range=3.0), using all 8 vertices for projection
 [SVG] Box2: After rotation - X:[-82.0,28.2] Y:[-85.0,85.0]
-[SVG] Box2: Bounding box: 110 x 170
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 170.0x110.2 (area=18736.6): (-85.0,28.2,0.0), (-85.0,-82.0,0.0), (85.0,28.2,0.0), (85.0,-82.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=18736.6)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] Box2: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box2: Generated outline from 4 outline points
 [TRANSFORM] Thin dimension: -13.2,-14.5,51.8 -> -14.5,-14.5,49.1 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
 [SVG] Box4: Z range [-41.0, -38.0] (range=3.0), using all 8 vertices for projection
 [SVG] Box4: After rotation - X:[-82.0,-14.5] Y:[-109.1,-34.3]
-[SVG] Box4: Bounding box: 67 x 75
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 67.5x67.5 (area=4553.9): (-82.0,-14.5,81.4), (-82.0,-82.0,81.4), (-14.5,-14.5,49.1), (-14.5,-82.0,49.1)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=4553.9)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] Box4: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box4: Generated outline from 4 outline points
 [TRANSFORM] Thin dimension: -77.9,-117.6,0.0 -> -76.6,-120.3,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
 [SVG] Box1: Z range [74.4, 77.4] (range=3.0), using all 8 vertices for projection
 [SVG] Box1: After rotation - X:[-150.0,0.0] Y:[-119.8,50.2]
-[SVG] Box1: Bounding box: 150 x 170
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 154.5x70.9 (area=10949.8): (-76.6,-120.3,0.0), (-76.6,-120.3,150.0), (77.9,-49.4,0.0), (77.9,-49.4,150.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=10949.8)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] Box1: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box1: Generated outline from 4 outline points
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxesB.svg
  
 REM File: 3boxes_output.txt 
@@ -340,12 +360,22 @@ Found 3 solids
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
 [SVG] Box2: Z range [-3.0, 0.0] (range=3.0), using all 8 vertices for projection
 [SVG] Box2: After rotation - X:[-82.0,28.2] Y:[-85.0,85.0]
-[SVG] Box2: Bounding box: 110 x 170
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 170.0x110.2 (area=18736.6): (-85.0,28.2,0.0), (-85.0,-82.0,0.0), (85.0,28.2,0.0), (85.0,-82.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=18736.6)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] Box2: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box2: Generated outline from 4 outline points
 [TRANSFORM] Thin dimension: -77.9,-117.6,0.0 -> -76.6,-120.3,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
 [SVG] Box1: Z range [74.4, 77.4] (range=3.0), using all 8 vertices for projection
 [SVG] Box1: After rotation - X:[-150.0,0.0] Y:[-119.8,50.2]
-[SVG] Box1: Bounding box: 150 x 170
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 154.5x70.9 (area=10949.8): (-76.6,-120.3,0.0), (-76.6,-120.3,150.0), (77.9,-49.4,0.0), (77.9,-49.4,150.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=10949.8)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] Box1: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box1: Generated outline from 4 outline points
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxes.svg
  
 REM File: 4boxes_output.txt 
@@ -394,22 +424,42 @@ Found 4 solids
 [TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
 [SVG] Box1: Z range [74.4, 77.4] (range=3.0), using all 8 vertices for projection
 [SVG] Box1: After rotation - X:[-150.0,0.0] Y:[-119.8,50.2]
-[SVG] Box1: Bounding box: 150 x 170
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 154.5x70.9 (area=10949.8): (-76.6,-120.3,0.0), (-76.6,-120.3,150.0), (77.9,-49.4,0.0), (77.9,-49.4,150.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=10949.8)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] Box1: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box1: Generated outline from 4 outline points
 [TRANSFORM] Thin dimension: -85.0,28.2,3.0 -> -85.0,28.2,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
 [SVG] Box2: Z range [-3.0, 0.0] (range=3.0), using all 8 vertices for projection
 [SVG] Box2: After rotation - X:[-82.0,28.2] Y:[-85.0,85.0]
-[SVG] Box2: Bounding box: 110 x 170
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 170.0x110.2 (area=18736.6): (-85.0,28.2,0.0), (-85.0,-82.0,0.0), (85.0,28.2,0.0), (85.0,-82.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=18736.6)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] Box2: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box2: Generated outline from 4 outline points
 [TRANSFORM] Thin dimension: -13.2,-14.5,51.8 -> -14.5,-14.5,49.1 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
 [SVG] Box4: Z range [-41.0, -38.0] (range=3.0), using all 8 vertices for projection
 [SVG] Box4: After rotation - X:[-82.0,-14.5] Y:[-109.1,-34.3]
-[SVG] Box4: Bounding box: 67 x 75
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 67.5x67.5 (area=4553.9): (-82.0,-14.5,81.4), (-82.0,-82.0,81.4), (-14.5,-14.5,49.1), (-14.5,-82.0,49.1)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=4553.9)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] Box4: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box4: Generated outline from 4 outline points
 [TRANSFORM] Thin dimension: -28.7,25.5,87.4 -> -30.0,23.0,86.4 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=53.9ø
 [SVG] Box5: Z range [-36.4, -33.4] (range=3.0), using all 8 vertices for projection
 [SVG] Box5: After rotation - X:[28.7,73.2] Y:[49.3,106.9]
-[SVG] Box5: Bounding box: 44 x 58
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 51.9x38.7 (area=2010.3): (-82.0,61.7,53.3), (-82.0,46.3,95.0), (-30.0,38.3,44.7), (-30.0,23.0,86.4)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=2010.3)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] Box5: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box5: Generated outline from 4 outline points
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\4boxes.svg
  
 REM File: CBoxR_output.txt 
@@ -429,14 +479,14 @@ Found 1 solids
 [SVG] CBoxR: Z range [-72.9, -69.9] (range=3.0), using all 10 vertices for projection
 [SVG] CBoxR: After rotation - X:[-6.1,43.9] Y:[-12.7,27.3]
 [SVG] CBoxR: Found face with 2 bounds (has holes)
-[SVG] CBoxR: Bounding box: 50 x 40
-[SVG] Rendering holes: Face has 2 bounds
 [EXTRACT] ExtractFaceWithHoles: face has 2 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 12.0x9.5 (area=113.5): (8.0,-15.7,76.8), (17.7,-17.0,74.6), (10.3,-7.5,82.0), (20.0,-8.8,79.8)...
 [EXTRACT] Bound 1 has 4 vertices, bbox 50.1x46.2 (area=2316.4): (33.7,-48.9,50.7), (-4.9,-43.8,59.7), (45.3,-7.8,76.7), (6.6,-2.7,85.8)...
 [EXTRACT] Identified bound 1 as outer loop (largest area=2316.4)
 [EXTRACT] Identified bound 0 as hole loop 1 (area=113.5)
 [EXTRACT] Returning 4 outer verts and 1 hole loops
+[SVG] CBoxR: Extracted outer loop with 4 vertices from face bounds
+[SVG] CBoxR: Generated outline from 4 outline points
 [SVG] Processing hole with 4 vertices in 3D
 [SVG] Hole 3D bounds: X:[28.9,38.9] Y:[-7.7,2.3], normalized: (35,5) 10x10
 [SVG] Added hole path
@@ -459,14 +509,14 @@ Found 1 solids
 [SVG] CBox: Z range [-3.0, 0.0] (range=3.0), using all 16 vertices for projection
 [SVG] CBox: After rotation - X:[-50.0,0.0] Y:[-0.0,40.0]
 [SVG] CBox: Found face with 2 bounds (has holes)
-[SVG] CBox: Bounding box: 50 x 40
-[SVG] Rendering holes: Face has 2 bounds
 [EXTRACT] ExtractFaceWithHoles: face has 2 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 10.0x10.0 (area=100.0): (5.0,-15.0,3.0), (15.0,-15.0,3.0), (5.0,-5.0,3.0), (15.0,-5.0,3.0)...
 [EXTRACT] Bound 1 has 4 vertices, bbox 40.0x50.0 (area=2000.0): (40.0,-50.0,3.0), (0.0,-50.0,3.0), (40.0,0.0,3.0), (0.0,0.0,3.0)...
 [EXTRACT] Identified bound 1 as outer loop (largest area=2000.0)
 [EXTRACT] Identified bound 0 as hole loop 1 (area=100.0)
 [EXTRACT] Returning 4 outer verts and 1 hole loops
+[SVG] CBox: Extracted outer loop with 4 vertices from face bounds
+[SVG] CBox: Generated outline from 4 outline points
 [SVG] Processing hole with 4 vertices in 3D
 [SVG] Hole 3D bounds: X:[-15.0,-5.0] Y:[5.0,15.0], normalized: (35,5) 10x10
 [SVG] Added hole path
@@ -491,9 +541,12 @@ Found 1 solids
 [TRANSFORM] Normalizing edge to X-axis: angle=24.6ø
 [SVG] KBox: Z range [19.7, 22.7] (range=3.0), using all 24 vertices for projection
 [SVG] KBox: After rotation - X:[-94.7,75.3] Y:[-0.0,150.0]
-[SVG] KBox: Face outline has 12 3D vertices (complex shape detected)
-[SVG] KBox: Face outline has 12 top-face vertices
-[SVG] KBox: Generated outline from 12 precise points -> 12 integer points (orthogonal sorted)
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 12 vertices, bbox 154.5x70.9 (area=10949.8): (-76.6,-60.1,0.0), (-76.6,-60.1,150.0), (77.9,10.8,0.0), (77.9,10.8,145.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=10949.8)
+[EXTRACT] Returning 12 outer verts and 0 hole loops
+[SVG] KBox: Extracted outer loop with 12 vertices from face bounds
+[SVG] KBox: Generated outline from 12 outline points
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox.svg
  
 REM File: KCBox_output.txt 
@@ -515,8 +568,6 @@ Found 1 solids
 [SVG] KCBox: After rotation - X:[-0.5,34.4] Y:[-45.2,-20.4]
 [SVG] KCBox: Searching 44 faces for main face with complex outline
 [SVG] KCBox: Selected face with 42 vertices as main face
-[SVG] KCBox: Bounding box: 35 x 25
-[SVG] Rendering holes: Face has 3 bounds
 [EXTRACT] ExtractFaceWithHoles: face has 3 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 7.2x10.8 (area=77.8): (27.7,-29.0,25.1), (23.3,-27.1,23.8), (24.9,-37.9,21.5), (20.5,-36.0,20.2)...
 [EXTRACT] Bound 1 has 4 vertices, bbox 11.6x12.7 (area=148.0): (8.4,-10.5,22.2), (17.2,-14.3,24.8), (11.2,-1.6,25.9), (20.0,-5.5,28.5)...
@@ -525,6 +576,8 @@ Found 1 solids
 [EXTRACT] Identified bound 1 as hole loop 1 (area=148.0)
 [EXTRACT] Identified bound 0 as hole loop 2 (area=77.8)
 [EXTRACT] Returning 34 outer verts and 2 hole loops
+[SVG] KCBox: Extracted outer loop with 34 vertices from face bounds
+[SVG] KCBox: Generated outline from 18 outline points
 [SVG] Processing hole with 4 vertices in 3D
 [SVG] Hole 3D bounds: X:[3.6,12.0] Y:[-31.2,-25.7], normalized: (4,14) 8x6
 [SVG] Added hole path
