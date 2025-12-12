@@ -135,7 +135,7 @@ REM File: KCBox.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="KCBox">
-    <path d="M 33,0 L 22,7 L 33,0 L 32,1 L 33,0 L 32,1 L 33,0 L 28,3 L 24,6 L 19,10 L 14,13 L 9,16 L 5,19 L 0,22 L 2,21 L 0,22 L 11,15 L 22,7 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 33,0 L 32,1 L 19,10 L 14,13 L 11,15 L 5,19 L 2,21 L 24,6 L 9,16 L 0,22 L 22,7 L 28,3 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
     <path d="M 4 14 L 12 14 L 12 20 L 4 20 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
     <path d="M 21 6 L 25 6 L 25 9 L 21 9 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
@@ -216,6 +216,7 @@ Found 1 solids
 [EXTRACT] Identified bound 0 as outer loop (largest area=10949.8)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
 [SVG] Box1: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box1: Orthogonal sort succeeded
 [SVG] Box1: Generated outline from 4 outline points -> 4 ordered
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.svg
  
@@ -251,6 +252,7 @@ Found 2 solids
 [EXTRACT] Identified bound 0 as outer loop (largest area=18736.6)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
 [SVG] Box2: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box2: Orthogonal sort succeeded
 [SVG] Box2: Generated outline from 4 outline points -> 4 ordered
 [TRANSFORM] Thin dimension: -77.9,-117.6,0.0 -> -76.6,-120.3,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
@@ -261,6 +263,7 @@ Found 2 solids
 [EXTRACT] Identified bound 0 as outer loop (largest area=10949.8)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
 [SVG] Box1: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box1: Orthogonal sort succeeded
 [SVG] Box1: Generated outline from 4 outline points -> 4 ordered
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\2boxes.svg
  
@@ -304,6 +307,7 @@ Found 3 solids
 [EXTRACT] Identified bound 0 as outer loop (largest area=18736.6)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
 [SVG] Box2: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box2: Orthogonal sort succeeded
 [SVG] Box2: Generated outline from 4 outline points -> 4 ordered
 [TRANSFORM] Thin dimension: -13.2,-14.5,51.8 -> -14.5,-14.5,49.1 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
@@ -314,6 +318,7 @@ Found 3 solids
 [EXTRACT] Identified bound 0 as outer loop (largest area=4553.9)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
 [SVG] Box4: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box4: Orthogonal sort succeeded
 [SVG] Box4: Generated outline from 4 outline points -> 4 ordered
 [TRANSFORM] Thin dimension: -77.9,-117.6,0.0 -> -76.6,-120.3,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
@@ -324,6 +329,7 @@ Found 3 solids
 [EXTRACT] Identified bound 0 as outer loop (largest area=10949.8)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
 [SVG] Box1: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box1: Orthogonal sort succeeded
 [SVG] Box1: Generated outline from 4 outline points -> 4 ordered
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxesB.svg
  
@@ -365,6 +371,7 @@ Found 3 solids
 [EXTRACT] Identified bound 0 as outer loop (largest area=18736.6)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
 [SVG] Box2: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box2: Orthogonal sort succeeded
 [SVG] Box2: Generated outline from 4 outline points -> 4 ordered
 [TRANSFORM] Thin dimension: -77.9,-117.6,0.0 -> -76.6,-120.3,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
@@ -375,6 +382,7 @@ Found 3 solids
 [EXTRACT] Identified bound 0 as outer loop (largest area=10949.8)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
 [SVG] Box1: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box1: Orthogonal sort succeeded
 [SVG] Box1: Generated outline from 4 outline points -> 4 ordered
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxes.svg
  
@@ -429,6 +437,7 @@ Found 4 solids
 [EXTRACT] Identified bound 0 as outer loop (largest area=10949.8)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
 [SVG] Box1: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box1: Orthogonal sort succeeded
 [SVG] Box1: Generated outline from 4 outline points -> 4 ordered
 [TRANSFORM] Thin dimension: -85.0,28.2,3.0 -> -85.0,28.2,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
@@ -439,6 +448,7 @@ Found 4 solids
 [EXTRACT] Identified bound 0 as outer loop (largest area=18736.6)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
 [SVG] Box2: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box2: Orthogonal sort succeeded
 [SVG] Box2: Generated outline from 4 outline points -> 4 ordered
 [TRANSFORM] Thin dimension: -13.2,-14.5,51.8 -> -14.5,-14.5,49.1 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
@@ -449,6 +459,7 @@ Found 4 solids
 [EXTRACT] Identified bound 0 as outer loop (largest area=4553.9)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
 [SVG] Box4: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box4: Orthogonal sort succeeded
 [SVG] Box4: Generated outline from 4 outline points -> 4 ordered
 [TRANSFORM] Thin dimension: -28.7,25.5,87.4 -> -30.0,23.0,86.4 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=53.9ø
@@ -459,6 +470,7 @@ Found 4 solids
 [EXTRACT] Identified bound 0 as outer loop (largest area=2010.3)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
 [SVG] Box5: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box5: Orthogonal sort succeeded
 [SVG] Box5: Generated outline from 4 outline points -> 4 ordered
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\4boxes.svg
  
@@ -486,6 +498,7 @@ Found 1 solids
 [EXTRACT] Identified bound 0 as hole loop 1 (area=113.5)
 [EXTRACT] Returning 4 outer verts and 1 hole loops
 [SVG] CBoxR: Extracted outer loop with 4 vertices from face bounds
+[SVG] CBoxR: Orthogonal sort succeeded
 [SVG] CBoxR: Generated outline from 4 outline points -> 4 ordered
 [SVG] Processing hole with 4 vertices in 3D
 [SVG] Hole 3D bounds: X:[28.9,38.9] Y:[-7.7,2.3], normalized: (35,5) 10x10
@@ -516,6 +529,7 @@ Found 1 solids
 [EXTRACT] Identified bound 0 as hole loop 1 (area=100.0)
 [EXTRACT] Returning 4 outer verts and 1 hole loops
 [SVG] CBox: Extracted outer loop with 4 vertices from face bounds
+[SVG] CBox: Orthogonal sort succeeded
 [SVG] CBox: Generated outline from 4 outline points -> 4 ordered
 [SVG] Processing hole with 4 vertices in 3D
 [SVG] Hole 3D bounds: X:[-15.0,-5.0] Y:[5.0,15.0], normalized: (35,5) 10x10
@@ -546,6 +560,7 @@ Found 1 solids
 [EXTRACT] Identified bound 0 as outer loop (largest area=10949.8)
 [EXTRACT] Returning 12 outer verts and 0 hole loops
 [SVG] KBox: Extracted outer loop with 12 vertices from face bounds
+[SVG] KBox: Orthogonal sort succeeded
 [SVG] KBox: Generated outline from 12 outline points -> 12 ordered
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox.svg
  
@@ -577,7 +592,8 @@ Found 1 solids
 [EXTRACT] Identified bound 0 as hole loop 2 (area=77.8)
 [EXTRACT] Returning 34 outer verts and 2 hole loops
 [SVG] KCBox: Extracted outer loop with 34 vertices from face bounds
-[SVG] KCBox: Generated outline from 18 outline points -> 18 ordered
+[SVG] KCBox: Orthogonal sort failed, using Graham scan
+[SVG] KCBox: Generated outline from 18 outline points -> 12 ordered
 [SVG] Processing hole with 4 vertices in 3D
 [SVG] Hole 3D bounds: X:[3.6,12.0] Y:[-31.2,-25.7], normalized: (4,14) 8x6
 [SVG] Added hole path

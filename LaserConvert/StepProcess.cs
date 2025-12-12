@@ -269,7 +269,22 @@ namespace LaserConvert
                                 // REASON: Polar angle sorting doesn't preserve orthogonal edge order
                                 // FIX: Try SortPerimeterVertices2D first for orthogonal constraints
                                 var orthogonalSort = SortPerimeterVertices2D(dedup);
-                                var finalDedup = (orthogonalSort.Count == dedup.Count) ? orthogonalSort : dedup;
+                                List<(long X, long Y)> finalDedup;
+                                if (orthogonalSort.Count == dedup.Count)
+                                {
+                                    // Orthogonal sort succeeded - use it for axis-aligned shapes
+                                    finalDedup = orthogonalSort;
+                                    Console.WriteLine($"[SVG] {name}: Orthogonal sort succeeded");
+                                }
+                                else
+                                {
+                                    // Orthogonal sort failed (complex non-orthogonal shape like KCBox)
+                                    // Apply Graham scan for general perimeter ordering
+                                    var vec3Points = dedup.Select(p => new GeometryTransform.Vec3(p.Item1, p.Item2, 0)).ToList();
+                                    var orderedVerts = OrderPerimeterVertices(vec3Points);
+                                    finalDedup = orderedVerts.Select(v => ((long)v.X, (long)v.Y)).ToList();
+                                    Console.WriteLine($"[SVG] {name}: Orthogonal sort failed, using Graham scan");
+                                }
                                 
                                 var faceOutlinePath = BuildPerimeterPath(finalDedup);
                                 Console.WriteLine($"[SVG] {name}: Generated outline from {dedup_precise.Count} outline points -> {finalDedup.Count} ordered");

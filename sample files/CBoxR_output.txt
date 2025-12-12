@@ -21,6 +21,7 @@ Found 1 solids
 [EXTRACT] Identified bound 0 as hole loop 1 (area=113.5)
 [EXTRACT] Returning 4 outer verts and 1 hole loops
 [SVG] CBoxR: Extracted outer loop with 4 vertices from face bounds
+[SVG] CBoxR: Orthogonal sort succeeded
 [SVG] CBoxR: Generated outline from 4 outline points -> 4 ordered
 [SVG] Processing hole with 4 vertices in 3D
 [SVG] Hole 3D bounds: X:[28.9,38.9] Y:[-7.7,2.3], normalized: (35,5) 10x10
