@@ -255,14 +255,76 @@ namespace LaserConvert
                                 })
                                 .ToList();
                             
-                            // Project to 2D
-                            var minXv = outlineNormalizedVerts.Min(v => v.X);
-                            var minYv = outlineNormalizedVerts.Min(v => v.Y);
+
+                            // Debug: check vertex ranges before projection
+                            if (outlineNormalizedVerts.Count > 0)
+                            {
+                                var outX = outlineNormalizedVerts.Select(v => v.X);
+                                var outY = outlineNormalizedVerts.Select(v => v.Y);
+                                var outZ = outlineNormalizedVerts.Select(v => v.Z);
+                                Console.WriteLine($"[SVG] {name}: Outline vertices after rotation - X:[{outX.Min():F1},{outX.Max():F1}] Y:[{outY.Min():F1},{outY.Max():F1}] Z:[{outZ.Min():F1},{outZ.Max():F1}]");
+                            }
                             
-                            var pts2d_precise = outlineNormalizedVerts
-                                .Select(v => (v.X - minXv, v.Y - minYv))
-                                .ToList();
+                            // Project to 2D - for complex shapes where rotMatrix2 is skipped,
+                            // we need to find which 2 axes actually contain the geometry
+                            // ATTEMPTED: Always project X-Y
+                            // RESULT: KCBoxFlat has geometry in X and Z, Y is collapsed to 3mm
+                            // FIX: For complex shapes, find the two axes with largest variance
+                            var rangeX = outlineNormalizedVerts.Max(v => v.X) - outlineNormalizedVerts.Min(v => v.X);
+                            var rangeY = outlineNormalizedVerts.Max(v => v.Y) - outlineNormalizedVerts.Min(v => v.Y);
+                            var rangeZ = outlineNormalizedVerts.Max(v => v.Z) - outlineNormalizedVerts.Min(v => v.Z);
                             
+                            List<(double X, double Y)> pts2d_precise;
+                            
+                            if (faces.Count > 20)
+                            {
+                                // For complex shapes, use the two axes with largest ranges
+                                var ranges = new[] { ("X", rangeX), ("Y", rangeY), ("Z", rangeZ) }
+                                    .OrderByDescending(r => r.Item2)
+                                    .ToList();
+                                
+                                Console.WriteLine($"[SVG] {name}: Axis ranges for projection: X={rangeX:F1}, Y={rangeY:F1}, Z={rangeZ:F1}");
+                                Console.WriteLine($"[SVG] {name}: Using axes {ranges[0].Item1} and {ranges[1].Item1} for 2D projection");
+                                
+                                // Project using the two largest axes
+                                if (ranges[0].Item1 == "X" && ranges[1].Item1 == "Y")
+                                {
+                                    // X-Y projection
+                                    var minXv = outlineNormalizedVerts.Min(v => v.X);
+                                    var minYv = outlineNormalizedVerts.Min(v => v.Y);
+                                    pts2d_precise = outlineNormalizedVerts.Select(v => (v.X - minXv, v.Y - minYv)).ToList();
+                                }
+                                else if (ranges[0].Item1 == "X" && ranges[1].Item1 == "Z")
+                                {
+                                    // X-Z projection (swap Z into Y for SVG)
+                                    var minXv = outlineNormalizedVerts.Min(v => v.X);
+                                    var minZv = outlineNormalizedVerts.Min(v => v.Z);
+                                    pts2d_precise = outlineNormalizedVerts.Select(v => (v.X - minXv, v.Z - minZv)).ToList();
+                                }
+                                else if (ranges[0].Item1 == "Y" && ranges[1].Item1 == "Z")
+                                {
+                                    // Y-Z projection (swap to X-Y for SVG)
+                                    var minYv = outlineNormalizedVerts.Min(v => v.Y);
+                                    var minZv = outlineNormalizedVerts.Min(v => v.Z);
+                                    pts2d_precise = outlineNormalizedVerts.Select(v => (v.Y - minYv, v.Z - minZv)).ToList();
+                                }
+                                else
+                                {
+                                    // Fallback: use X-Y
+                                    var minXv = outlineNormalizedVerts.Min(v => v.X);
+                                    var minYv = outlineNormalizedVerts.Min(v => v.Y);
+                                    pts2d_precise = outlineNormalizedVerts.Select(v => (v.X - minXv, v.Y - minYv)).ToList();
+                                }
+                            }
+                            else
+                            {
+                                // Simple shapes: use standard X-Y projection
+                                var minXv = outlineNormalizedVerts.Min(v => v.X);
+                                var minYv = outlineNormalizedVerts.Min(v => v.Y);
+                                pts2d_precise = outlineNormalizedVerts.Select(v => (v.X - minXv, v.Y - minYv)).ToList();
+                            }
+
+
                             // For complex shapes, don't dedup - keep all 32+ vertices to preserve outline detail
                             // For simple shapes, dedup consecutive points at high precision
                             // ATTEMPTED: Dedup all shapes - loses vertices for complex shapes

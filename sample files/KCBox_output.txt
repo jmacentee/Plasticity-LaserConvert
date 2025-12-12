@@ -211,6 +211,9 @@ Found 1 solids
 [EXTRACT] Identified bound 0 as hole loop 2 (area=77.8)
 [EXTRACT] Returning 34 outer verts and 2 hole loops
 [SVG] KCBox: Extracted outer loop with 34 vertices from face bounds
+[SVG] KCBox: Outline vertices after rotation - X:[-0.5,32.7] Y:[-45.2,-22.9] Z:[-35.9,22.1]
+[SVG] KCBox: Axis ranges for projection: X=33.2, Y=22.3, Z=58.0
+[SVG] KCBox: Using axes Z and X for 2D projection
 [SVG] KCBox: Keeping all 34 vertices for complex shape
 [SVG] KCBox: Complex shape detected, skipping orthogonal sort
 [SVG] KCBox: Generated outline from 34 outline points -> 34 ordered

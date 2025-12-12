@@ -21,6 +21,7 @@ Found 1 solids
 [EXTRACT] Identified bound 0 as hole loop 1 (area=100.0)
 [EXTRACT] Returning 4 outer verts and 1 hole loops
 [SVG] CBox: Extracted outer loop with 4 vertices from face bounds
+[SVG] CBox: Outline vertices after rotation - X:[-50.0,-0.0] Y:[-0.0,40.0] Z:[-3.0,-3.0]
 [SVG] CBox: Orthogonal sort succeeded
 [SVG] CBox: Generated outline from 4 outline points -> 4 ordered
 [SVG] Processing hole with 4 vertices in 3D
