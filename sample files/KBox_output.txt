@@ -17,8 +17,8 @@ Found 1 solids
 [SVG] KBox: Z range [19.7, 22.7] (range=3.0), using all 24 vertices for projection
 [SVG] KBox: After rotation - X:[-94.7,75.3] Y:[-0.0,150.0]
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 12 vertices, bbox 154.5x70.9 (area=10949.8): (-76.6,-60.1,0.0), (-76.6,-60.1,150.0), (77.9,10.8,0.0), (77.9,10.8,145.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=10949.8)
+[EXTRACT] Bound 0 has 12 vertices, bbox 154.5x70.9x150.0 (area=44758.0): (-76.6,-60.1,0.0), (-76.6,-60.1,150.0), (77.9,10.8,0.0), (77.9,10.8,145.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=44758.0)
 [EXTRACT] Returning 12 outer verts and 0 hole loops
 [SVG] KBox: Extracted outer loop with 12 vertices from face bounds
 [SVG] KBox: Outline vertices after rotation - X:[-94.7,75.3] Y:[-0.0,150.0] Z:[22.7,22.7]

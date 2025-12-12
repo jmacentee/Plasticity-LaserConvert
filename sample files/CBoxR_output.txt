@@ -15,10 +15,10 @@ Found 1 solids
 [SVG] CBoxR: After rotation - X:[-4.9,45.3] Y:[-48.9,-2.7]
 [SVG] CBoxR: Found face with 2 bounds (has holes)
 [EXTRACT] ExtractFaceWithHoles: face has 2 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 12.0x9.5 (area=113.5): (8.0,-15.7,76.8), (17.7,-17.0,74.6), (10.3,-7.5,82.0), (20.0,-8.8,79.8)...
-[EXTRACT] Bound 1 has 4 vertices, bbox 50.1x46.2 (area=2316.4): (33.7,-48.9,50.7), (-4.9,-43.8,59.7), (45.3,-7.8,76.7), (6.6,-2.7,85.8)...
-[EXTRACT] Identified bound 1 as outer loop (largest area=2316.4)
-[EXTRACT] Identified bound 0 as hole loop 1 (area=113.5)
+[EXTRACT] Bound 0 has 4 vertices, bbox 12.0x9.5x7.5 (area=273.8): (8.0,-15.7,76.8), (17.7,-17.0,74.6), (10.3,-7.5,82.0), (20.0,-8.8,79.8)...
+[EXTRACT] Bound 1 has 4 vertices, bbox 50.1x46.2x35.1 (area=5696.4): (33.7,-48.9,50.7), (-4.9,-43.8,59.7), (45.3,-7.8,76.7), (6.6,-2.7,85.8)...
+[EXTRACT] Identified bound 1 as outer loop (largest area=5696.4)
+[EXTRACT] Identified bound 0 as hole loop 1 (area=273.8)
 [EXTRACT] Returning 4 outer verts and 1 hole loops
 [SVG] CBoxR: Extracted outer loop with 4 vertices from face bounds
 [SVG] CBoxR: Outline vertices after rotation - X:[-6.1,43.9] Y:[-12.7,27.3] Z:[-72.9,-72.9]

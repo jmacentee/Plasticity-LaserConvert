@@ -263,28 +263,8 @@ namespace LaserConvert
                                 var outY = outlineNormalizedVerts.Select(v => v.Y);
                                 var outZ = outlineNormalizedVerts.Select(v => v.Z);
                                 Console.WriteLine($"[SVG] {name}: Outline vertices after rotation - X:[{outX.Min():F1},{outX.Max():F1}] Y:[{outY.Min():F1},{outY.Max():F1}] Z:[{outZ.Min():F1},{outZ.Max():F1}]");
-                                
-                                // DEGENERACY CHECK: For complex shapes, if one axis has near-zero range,
-                                // the extracted vertices are degenerate (from edge topology, not 2D face)
-                                // ATTEMPTED: Use vertices as-is from ExtractFaceWithHoles
-                                // RESULT: KCBoxFlat Y=0 range, geometry lost
-                                // FIX: Detect degeneracy and skip rendering if can't recover
-                                var degX = outX.Max() - outX.Min();
-                                var degY = outY.Max() - outY.Min();
-                                var degZ = outZ.Max() - outZ.Min();
-                                var minDegRange = Math.Min(Math.Min(degX, degY), degZ);
-                                
-                                if (faces.Count > 20 && minDegRange < 0.1)
-                                {
-                                    Console.WriteLine($"[SVG] {name}: DEGENERATE OUTLINE DETECTED - minimum axis range {minDegRange:F3}");
-                                    Console.WriteLine($"[SVG] {name}: This face has edge topology only, not 2D surface geometry");
-                                    Console.WriteLine($"[SVG] {name}: Skipping this solid (requires different extraction method)");
-                                    svg.EndGroup();
-                                    continue;
-                                }
                             }
                             
-
                             // Project to 2D - for complex shapes where rotMatrix2 is skipped,
                             // we need to find which 2 axes actually contain the geometry
                             // ATTEMPTED: Always project X-Y
@@ -296,49 +276,38 @@ namespace LaserConvert
                             
                             List<(double X, double Y)> pts2d_precise;
                             
-                            if (faces.Count > 20)
+                            // For ALL shapes, use the two axes with largest ranges
+                            // This works uniformly for both simple and complex geometries
+                            var ranges = new[] { ("X", rangeX), ("Y", rangeY), ("Z", rangeZ) }
+                                .OrderByDescending(r => r.Item2)
+                                .ToList();
+                            
+
+                            // Project using the two largest axes
+                            if (ranges[0].Item1 == "X" && ranges[1].Item1 == "Y")
                             {
-                                // For complex shapes, use the two axes with largest ranges
-                                var ranges = new[] { ("X", rangeX), ("Y", rangeY), ("Z", rangeZ) }
-                                    .OrderByDescending(r => r.Item2)
-                                    .ToList();
-                                
-                                Console.WriteLine($"[SVG] {name}: Axis ranges for projection: X={rangeX:F1}, Y={rangeY:F1}, Z={rangeZ:F1}");
-                                Console.WriteLine($"[SVG] {name}: Using axes {ranges[0].Item1} and {ranges[1].Item1} for 2D projection");
-                                
-                                // Project using the two largest axes
-                                if (ranges[0].Item1 == "X" && ranges[1].Item1 == "Y")
-                                {
-                                    // X-Y projection
-                                    var minXv = outlineNormalizedVerts.Min(v => v.X);
-                                    var minYv = outlineNormalizedVerts.Min(v => v.Y);
-                                    pts2d_precise = outlineNormalizedVerts.Select(v => (v.X - minXv, v.Y - minYv)).ToList();
-                                }
-                                else if (ranges[0].Item1 == "X" && ranges[1].Item1 == "Z")
-                                {
-                                    // X-Z projection (swap Z into Y for SVG)
-                                    var minXv = outlineNormalizedVerts.Min(v => v.X);
-                                    var minZv = outlineNormalizedVerts.Min(v => v.Z);
-                                    pts2d_precise = outlineNormalizedVerts.Select(v => (v.X - minXv, v.Z - minZv)).ToList();
-                                }
-                                else if (ranges[0].Item1 == "Y" && ranges[1].Item1 == "Z")
-                                {
-                                    // Y-Z projection (swap to X-Y for SVG)
-                                    var minYv = outlineNormalizedVerts.Min(v => v.Y);
-                                    var minZv = outlineNormalizedVerts.Min(v => v.Z);
-                                    pts2d_precise = outlineNormalizedVerts.Select(v => (v.Y - minYv, v.Z - minZv)).ToList();
-                                }
-                                else
-                                {
-                                    // Fallback: use X-Y
-                                    var minXv = outlineNormalizedVerts.Min(v => v.X);
-                                    var minYv = outlineNormalizedVerts.Min(v => v.Y);
-                                    pts2d_precise = outlineNormalizedVerts.Select(v => (v.X - minXv, v.Y - minYv)).ToList();
-                                }
+                                // X-Y projection
+                                var minXv = outlineNormalizedVerts.Min(v => v.X);
+                                var minYv = outlineNormalizedVerts.Min(v => v.Y);
+                                pts2d_precise = outlineNormalizedVerts.Select(v => (v.X - minXv, v.Y - minYv)).ToList();
+                            }
+                            else if (ranges[0].Item1 == "X" && ranges[1].Item1 == "Z")
+                            {
+                                // X-Z projection (swap Z into Y for SVG)
+                                var minXv = outlineNormalizedVerts.Min(v => v.X);
+                                var minZv = outlineNormalizedVerts.Min(v => v.Z);
+                                pts2d_precise = outlineNormalizedVerts.Select(v => (v.X - minXv, v.Z - minZv)).ToList();
+                            }
+                            else if (ranges[0].Item1 == "Y" && ranges[1].Item1 == "Z")
+                            {
+                                // Y-Z projection (swap to X-Y for SVG)
+                                var minYv = outlineNormalizedVerts.Min(v => v.Y);
+                                var minZv = outlineNormalizedVerts.Min(v => v.Z);
+                                pts2d_precise = outlineNormalizedVerts.Select(v => (v.Y - minYv, v.Z - minZv)).ToList();
                             }
                             else
                             {
-                                // Simple shapes: use standard X-Y projection
+                                // Fallback: use X-Y
                                 var minXv = outlineNormalizedVerts.Min(v => v.X);
                                 var minYv = outlineNormalizedVerts.Min(v => v.Y);
                                 pts2d_precise = outlineNormalizedVerts.Select(v => (v.X - minXv, v.Y - minYv)).ToList();

@@ -559,18 +559,23 @@ namespace LaserConvert
                 var processedPoints = new HashSet<string>();
                 ExtractVerticesFromFaceBound(bound, stepFile, verts, processedPoints);
                 
-                // Calculate bounding box area
+                // Calculate bounding box area - use 3D volume since faces can be in any orientation
                 if (verts.Count > 0)
                 {
                     var minX = verts.Min(v => v.Item1);
                     var maxX = verts.Max(v => v.Item1);
                     var minY = verts.Min(v => v.Item2);
                     var maxY = verts.Max(v => v.Item2);
+                    var minZ = verts.Min(v => v.Item3);
+                    var maxZ = verts.Max(v => v.Item3);
                     var width = maxX - minX;
                     var height = maxY - minY;
-                    var area = width * height;
+                    var depth = maxZ - minZ;
                     
-                    Console.WriteLine($"[EXTRACT] Bound {i} has {verts.Count} vertices, bbox {width:F1}x{height:F1} (area={area:F1}): {string.Join(", ", verts.Take(4).Select(v => $"({v.Item1:F1},{v.Item2:F1},{v.Item3:F1})"))}...");
+                    // Use 3D bounding box volume for better comparison across all orientations
+                    var area = width * height + height * depth + depth * width;
+                    
+                    Console.WriteLine($"[EXTRACT] Bound {i} has {verts.Count} vertices, bbox {width:F1}x{height:F1}x{depth:F1} (area={area:F1}): {string.Join(", ", verts.Take(4).Select(v => $"({v.Item1:F1},{v.Item2:F1},{v.Item3:F1})"))}...");
                     
                     allLoops.Add((i, verts, area));
                 }
