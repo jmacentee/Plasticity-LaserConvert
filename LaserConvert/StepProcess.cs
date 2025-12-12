@@ -235,12 +235,16 @@ namespace LaserConvert
                                     .Select(v => ((long)Math.Round(v.X - minXv), (long)Math.Round(v.Y - minYv)))
                                     .ToList();
                                 
-                                // Remove consecutive duplicates
+                                // Remove consecutive duplicates BEFORE processing (preserves perimeter order)
+                                // Remove ALL duplicates while preserving order
                                 var dedup = new List<(long X, long Y)>();
+                                var seen = new HashSet<(long, long)>();
                                 foreach (var p in pts2d)
                                 {
-                                    if (dedup.Count == 0 || dedup.Last().X != p.Item1 || dedup.Last().Y != p.Item2)
-                                        dedup.Add((p.Item1, p.Item2));
+                                    if (seen.Add((p.Item1, p.Item2)))
+                                    {
+                                        dedup.Add(p);
+                                    }
                                 }
                                 
                                 if (dedup.Count >= 4)
@@ -277,14 +281,13 @@ namespace LaserConvert
                             Console.WriteLine($"[SVG] {name}: Outer loop has {faceOutlineVerts3D.Count} vertices, checking for multi-bound face");
                             
                             var (outerLoopVerts, holeLoops) = StepTopologyResolver.ExtractFaceWithHoles(mainFace, stepFile);
-                            if (outerLoopVerts.Count > 4)
+                            if (outerLoopVerts.Count >= 4)
                             {
                                 // Found the real outer loop from bounds analysis
                                 Console.WriteLine($"[SVG] {name}: Face has {outerLoopVerts.Count} outer loop vertices from bounds");
-                                faceOutlineVerts3D = outerLoopVerts;
                                 
-                                // Now treat it as a normal complex outline
-                                var outlineNormalizedVerts = faceOutlineVerts3D
+                                // Transform outer loop vertices
+                                var outlineNormalizedVerts = outerLoopVerts
                                     .Select(v => {
                                         var vec = new GeometryTransform.Vec3(v.X, v.Y, v.Z);
                                         var rot1 = ApplyMatrix(vec, rotMatrix1);
@@ -292,8 +295,7 @@ namespace LaserConvert
                                     })
                                     .ToList();
                                 
-                                // For complex shapes with a multi-bound face, use ALL outer loop vertices
-                                // They all represent the top (projected) face. No need to filter by Z.
+                                // Use ALL outer loop vertices (they represent the top face)
                                 var topVerts = outlineNormalizedVerts;
                                 
                                 if (topVerts.Count >= 4)
@@ -307,20 +309,24 @@ namespace LaserConvert
                                         .Select(v => ((long)Math.Round(v.X - minXv), (long)Math.Round(v.Y - minYv)))
                                         .ToList();
                                     
-                                    // Remove consecutive duplicates
+                                    // Remove consecutive duplicates BEFORE processing (preserves perimeter order)
+                                    // Remove ALL duplicates while preserving order
                                     var dedup = new List<(long X, long Y)>();
+                                    var seen = new HashSet<(long, long)>();
                                     foreach (var p in pts2d)
                                     {
-                                        if (dedup.Count == 0 || dedup.Last().X != p.Item1 || dedup.Last().Y != p.Item2)
-                                            dedup.Add((p.Item1, p.Item2));
+                                        if (seen.Add((p.Item1, p.Item2)))
+                                        {
+                                            dedup.Add(p);
+                                        }
                                     }
                                     
                                     if (dedup.Count >= 4)
                                     {
-                                        // Sort vertices by perimeter
-                                        var sorted = SortPerimeterVertices2D(dedup);
-                                        var faceOutlinePath = BuildPerimeterPath(sorted);
-                                        Console.WriteLine($"[SVG] {name}: Generated outline from {dedup.Count} 2D points");
+                                        // The vertices from the outer loop are already in perimeter order
+                                        // Just use them as-is - BuildPerimeterPath will connect them in sequence
+                                        var faceOutlinePath = BuildPerimeterPath(dedup);
+                                        Console.WriteLine($"[SVG] {name}: Generated outline from {dedup.Count} 2D points (in order)");
                                         svg.Path(faceOutlinePath, strokeWidth: 0.2, fill: "none", stroke: "#000");
                                         
                                         // Render holes

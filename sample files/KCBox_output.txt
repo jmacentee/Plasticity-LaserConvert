@@ -26,8 +26,8 @@ Found 1 solids
 [EXTRACT] Identified bound 0 as hole loop 2 (area=77.8)
 [EXTRACT] Returning 34 outer verts and 2 hole loops
 [SVG] KCBox: Face has 34 outer loop vertices from bounds
-[SVG] KCBox: Could not extract complex outline, using bounding box
-[SVG] KCBox: Bounding box: 35 x 25
+[SVG] KCBox: Using all 34 outer loop vertices
+[SVG] KCBox: Generated outline from 12 2D points (in order)
 [SVG] Rendering holes: Face has 3 bounds
 [EXTRACT] ExtractFaceWithHoles: face has 3 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 7.2x10.8 (area=77.8): (27.7,-29.0,25.1), (23.3,-27.1,23.8), (24.9,-37.9,21.5), (20.5,-36.0,20.2)...

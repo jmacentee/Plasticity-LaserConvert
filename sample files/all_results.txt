@@ -134,7 +134,7 @@ REM File: KCBox.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="KCBox">
-    <path d="M 0 0 L 35 0 L 35 25 L 0 25 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 33,0 L 22,7 L 32,1 L 28,3 L 24,6 L 19,10 L 14,13 L 9,16 L 5,19 L 0,22 L 2,21 L 11,15 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
     <path d="M 4 14 L 12 14 L 12 20 L 4 20 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
     <path d="M 21 6 L 25 6 L 25 9 L 21 9 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
@@ -190,6 +190,16 @@ REM File: KCBox_corrected.svg
        d="m -189.93359,-164.43751 v 12.48633 12.38476 h -23.54688 v 82.111332 l 12.30274,0.14062 v 41.441406 l -12.30274,0.14257 V 25.322243 66.37693 l 27.5,0.06641 27.40235,0.06836 0.1445,8.333984 h 27.29492 27.29492 l 0.0677,-8.445349 55.231238,-0.02147 V 45.962891 25.548828 l -8.333984,-0.14649 v -41.4414 l 8.333984,-0.14649 v -40.816401 l -8.333984,-0.14649 V -98.58985 l 8.333984,-0.14454 v -20.41407 -20.4121 l -23.68164,-0.1387 -0.15625,-4.10156 h -23.09375 v 4.24023 l -23.845708,-0.1387 -0.1426,-12.30273 h -11.54883 -11.54883 l -0.1426,12.30273 h -23.97656 l -0.0684,-12.31837 -0.0703,-12.41991 H -178.377 Z"
        id="path5"
        sodipodi:nodetypes="cccccccccccccccccccccccccccccccccccccccccc" /></g></svg>
+ 
+REM File: KCBox_test.svg 
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
+<defs/>
+  <g id="KCBox">
+    <path d="M 33,0 L 32,1 L 19,10 L 14,13 L 11,15 L 5,19 L 2,21 L 24,6 L 9,16 L 0,22 L 22,7 L 28,3 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 4 14 L 12 14 L 12 20 L 4 20 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 21 6 L 25 6 L 25 9 L 21 9 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+</svg>
  
 REM File: 1box_output.txt 
 Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.stp
@@ -502,8 +512,8 @@ Found 1 solids
 [EXTRACT] Identified bound 0 as hole loop 2 (area=77.8)
 [EXTRACT] Returning 34 outer verts and 2 hole loops
 [SVG] KCBox: Face has 34 outer loop vertices from bounds
-[SVG] KCBox: Could not extract complex outline, using bounding box
-[SVG] KCBox: Bounding box: 35 x 25
+[SVG] KCBox: Using all 34 outer loop vertices
+[SVG] KCBox: Generated outline from 12 2D points (in order)
 [SVG] Rendering holes: Face has 3 bounds
 [EXTRACT] ExtractFaceWithHoles: face has 3 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 7.2x10.8 (area=77.8): (27.7,-29.0,25.1), (23.3,-27.1,23.8), (24.9,-37.9,21.5), (20.5,-36.0,20.2)...
