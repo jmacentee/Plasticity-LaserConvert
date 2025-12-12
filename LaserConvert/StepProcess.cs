@@ -263,13 +263,20 @@ namespace LaserConvert
                                     .Select(p => ((long)Math.Round(p.X), (long)Math.Round(p.Y)))
                                     .ToList();
                                 
-                                // Sort for orthogonal shapes
-                                // ATTEMPTED: SortPerimeterVertices2D
-                                // RESULT: Works for KBox (12 verts) but collapses complex shapes
-                                // REASON: Requires orthogonal nearest-neighbor, doesn't work for non-orthogonal after projection
-                                // For now: trust bounds extraction already gives perimeter order, just connect in sequence
-                                var faceOutlinePath = BuildPerimeterPath(dedup);
-                                Console.WriteLine($"[SVG] {name}: Generated outline from {dedup_precise.Count} outline points");
+                                // Convert to Vec3 for ordering (Graham scan)
+                                // ATTEMPTED: SortPerimeterVertices2D  
+                                // RESULT: Works for KBox (orthogonal) but collapses complex KCBox
+                                // REASON: Requires orthogonal nearest-neighbor, doesn't work for non-orthogonal projection
+                                // ATTEMPTED: Trusting ExtractFaceWithHoles perimeter order
+                                // RESULT: KCBox path has backtracking - vertices jump around non-sequentially
+                                // REASON: Bounds extraction doesn't guarantee perimeter traversal order
+                                // FIX: Use OrderPerimeterVertices (Graham scan) for proper ordering of all vertex types
+                                var vec3Points = dedup.Select(p => new GeometryTransform.Vec3(p.Item1, p.Item2, 0)).ToList();
+                                var orderedVerts = OrderPerimeterVertices(vec3Points);
+                                var orderedDedup = orderedVerts.Select(v => ((long)v.X, (long)v.Y)).ToList();
+                                
+                                var faceOutlinePath = BuildPerimeterPath(orderedDedup);
+                                Console.WriteLine($"[SVG] {name}: Generated outline from {dedup_precise.Count} outline points -> {orderedDedup.Count} ordered");
                                 svg.Path(faceOutlinePath, strokeWidth: 0.2, fill: "none", stroke: "#000");
                                 
                                 // Render holes

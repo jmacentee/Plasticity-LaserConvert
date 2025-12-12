@@ -25,7 +25,7 @@ Found 1 solids
 [EXTRACT] Identified bound 0 as hole loop 2 (area=77.8)
 [EXTRACT] Returning 34 outer verts and 2 hole loops
 [SVG] KCBox: Extracted outer loop with 34 vertices from face bounds
-[SVG] KCBox: Generated outline from 18 outline points
+[SVG] KCBox: Generated outline from 18 outline points -> 12 ordered
 [SVG] Processing hole with 4 vertices in 3D
 [SVG] Hole 3D bounds: X:[3.6,12.0] Y:[-31.2,-25.7], normalized: (4,14) 8x6
 [SVG] Added hole path
