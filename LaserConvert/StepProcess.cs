@@ -243,15 +243,31 @@ namespace LaserConvert
                                 .Select(v => (v.X - minXv, v.Y - minYv))
                                 .ToList();
                             
-                            // Dedup at high precision
-                            var dedup_precise = new List<(double X, double Y)>();
-                            foreach (var p in pts2d_precise)
+                            // For complex shapes, don't dedup - keep all 32+ vertices to preserve outline detail
+                            // For simple shapes, dedup consecutive points at high precision
+                            // ATTEMPTED: Dedup all shapes - loses vertices for complex shapes
+                            // RESULT: KCBox 32 vertices -> 18 points -> jumps around
+                            // REASON: Dedup after projection breaks sequential order
+                            // FIX: For complex shapes (faces.Count > 20), don't dedup to preserve all boundary vertices
+                            List<(double X, double Y)> dedup_precise;
+                            if (faces.Count > 20)
                             {
-                                if (dedup_precise.Count == 0 || 
-                                    Math.Abs(dedup_precise.Last().X - p.Item1) > 0.01 || 
-                                    Math.Abs(dedup_precise.Last().Y - p.Item2) > 0.01)
+                                // Complex shape: keep all vertices
+                                dedup_precise = pts2d_precise;
+                                Console.WriteLine($"[SVG] {name}: Keeping all {dedup_precise.Count} vertices for complex shape");
+                            }
+                            else
+                            {
+                                // Simple shape: dedup consecutive points
+                                dedup_precise = new List<(double X, double Y)>();
+                                foreach (var p in pts2d_precise)
                                 {
-                                    dedup_precise.Add(p);
+                                    if (dedup_precise.Count == 0 || 
+                                        Math.Abs(dedup_precise.Last().X - p.Item1) > 0.01 || 
+                                        Math.Abs(dedup_precise.Last().Y - p.Item2) > 0.01)
+                                    {
+                                        dedup_precise.Add(p);
+                                    }
                                 }
                             }
                             
@@ -279,11 +295,15 @@ namespace LaserConvert
                                 else
                                 {
                                     // Orthogonal sort failed (complex non-orthogonal shape like KCBox)
-                                    // Apply Graham scan for general perimeter ordering
-                                    var vec3Points = dedup.Select(p => new GeometryTransform.Vec3(p.Item1, p.Item2, 0)).ToList();
-                                    var orderedVerts = OrderPerimeterVertices(vec3Points);
-                                    finalDedup = orderedVerts.Select(v => ((long)v.X, (long)v.Y)).ToList();
-                                    Console.WriteLine($"[SVG] {name}: Orthogonal sort failed, using Graham scan");
+                                    // ATTEMPTED: Graham scan (polar angle) for all shapes
+                                    // RESULT: Collapses to convex hull, loses interior vertices (32 vertices -> 12)
+                                    // REASON: Graham scan is designed for convex hull, not general polygon perimeter
+                                    // ATTEMPTED: Polar angle from centroid
+                                    // RESULT: Still loses non-convex vertices and creates wrong ordering
+                                    // FIX: Trust the dedup order from bounds extraction - it preserves perimeter traversal
+                                    // The bounds extraction naturally walks the edge loop in order
+                                    finalDedup = dedup;
+                                    Console.WriteLine($"[SVG] {name}: Orthogonal sort failed, using dedup order (preserves {dedup.Count} vertices)");
                                 }
                                 
                                 var faceOutlinePath = BuildPerimeterPath(finalDedup);

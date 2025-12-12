@@ -135,7 +135,7 @@ REM File: KCBox.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="KCBox">
-    <path d="M 33,0 L 32,1 L 19,10 L 14,13 L 11,15 L 5,19 L 2,21 L 24,6 L 9,16 L 0,22 L 22,7 L 28,3 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 33,0 L 22,7 L 33,0 L 32,1 L 32,1 L 33,0 L 33,0 L 32,1 L 32,1 L 33,0 L 33,0 L 28,3 L 28,3 L 24,6 L 24,6 L 19,10 L 19,10 L 14,13 L 14,13 L 9,16 L 9,16 L 5,19 L 5,19 L 0,22 L 0,22 L 0,22 L 2,21 L 2,21 L 0,22 L 0,22 L 0,22 L 11,15 L 11,15 L 22,7 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
     <path d="M 4 14 L 12 14 L 12 20 L 4 20 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
     <path d="M 21 6 L 25 6 L 25 9 L 21 9 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
@@ -592,8 +592,9 @@ Found 1 solids
 [EXTRACT] Identified bound 0 as hole loop 2 (area=77.8)
 [EXTRACT] Returning 34 outer verts and 2 hole loops
 [SVG] KCBox: Extracted outer loop with 34 vertices from face bounds
-[SVG] KCBox: Orthogonal sort failed, using Graham scan
-[SVG] KCBox: Generated outline from 18 outline points -> 12 ordered
+[SVG] KCBox: Keeping all 34 vertices for complex shape
+[SVG] KCBox: Orthogonal sort failed, using dedup order (preserves 34 vertices)
+[SVG] KCBox: Generated outline from 34 outline points -> 34 ordered
 [SVG] Processing hole with 4 vertices in 3D
 [SVG] Hole 3D bounds: X:[3.6,12.0] Y:[-31.2,-25.7], normalized: (4,14) 8x6
 [SVG] Added hole path
