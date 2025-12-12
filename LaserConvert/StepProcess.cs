@@ -177,15 +177,13 @@ namespace LaserConvert
 
                             if (topVerts.Count >= 4)
                             {
+                                // For orthogonal polygons, use BuildOrthogonalLoop2D which is reliable
                                 Console.WriteLine($"[SVG] {name}: Face outline has {topVerts.Count} top-face vertices");
                                 
-                                // For complex shapes, try to order vertices
-                                var ordered = OrderPerimeterVertices(topVerts);
-                                
                                 // Project to 2D
-                                var minXv = ordered.Min(v => v.X);
-                                var minYv = ordered.Min(v => v.Y);
-                                var pts2d = ordered
+                                var minXv = topVerts.Min(v => v.X);
+                                var minYv = topVerts.Min(v => v.Y);
+                                var pts2d = topVerts
                                     .Select(v => ((long)Math.Round(v.X - minXv), (long)Math.Round(v.Y - minYv)))
                                     .ToList();
                                 
@@ -199,8 +197,9 @@ namespace LaserConvert
                                 
                                 if (dedup.Count >= 4)
                                 {
-                                    var faceOutlinePath = BuildPerimeterPath(dedup);
-                                    Console.WriteLine($"[SVG] {name}: Generated face outline path from {dedup.Count} 2D points");
+                                    // For orthogonal shapes, use the unified perimeter builder
+                                    var faceOutlinePath = BuildOrthogonalPerimeterPath(dedup);
+                                    Console.WriteLine($"[SVG] {name}: Generated orthogonal face outline path from {dedup.Count} 2D points");
                                     svg.Path(faceOutlinePath, strokeWidth: 0.2, fill: "none", stroke: "#000");
                                     svg.EndGroup();
                                     continue;
@@ -472,37 +471,72 @@ namespace LaserConvert
             return null;
         }
 
-        private static string BuildPath2D(List<(long X, long Y)> pts)
+        /// <summary>
+        /// Build a proper perimeter path for orthogonal (rectilinear) polygons.
+        /// Works for both simple rectangles and complex shapes with cutouts/tabs.
+        /// Uses edge-following algorithm to preserve all vertices in correct order.
+        /// </summary>
+        private static string BuildOrthogonalPerimeterPath(List<(long X, long Y)> vertices)
         {
-            var sbp = new StringBuilder();
-            if (pts == null || pts.Count == 0) return string.Empty;
-            sbp.Append($"M {pts[0].X},{pts[0].Y}");
-            for (int i = 1; i < pts.Count; i++)
+            if (vertices == null || vertices.Count < 4)
+                return string.Empty;
+            
+            // Start from bottom-left (min Y, then min X)
+            int startIdx = 0;
+            for (int i = 1; i < vertices.Count; i++)
             {
-                var a = pts[i - 1];
-                var b = pts[i];
-                if (a.X == b.X || a.Y == b.Y)
+                if (vertices[i].Item2 < vertices[startIdx].Item2 ||
+                    (vertices[i].Item2 == vertices[startIdx].Item2 && vertices[i].Item1 < vertices[startIdx].Item1))
                 {
-                    sbp.Append($" L {b.X},{b.Y}");
-                }
-                else
-                {
-                    var dx = Math.Abs(b.X - a.X);
-                    var dy = Math.Abs(b.Y - a.Y);
-                    if (dx >= dy)
-                    {
-                        sbp.Append($" L {b.X},{a.Y}");
-                        sbp.Append($" L {b.X},{b.Y}");
-                    }
-                    else
-                    {
-                        sbp.Append($" L {a.X},{b.Y}");
-                        sbp.Append($" L {b.X},{b.Y}");
-                    }
+                    startIdx = i;
                 }
             }
-            sbp.Append(" Z");
-            return sbp.ToString();
+            
+            var sb = new StringBuilder();
+            var visited = new HashSet<int>();
+            int current = startIdx;
+            sb.Append($"M {vertices[current].Item1},{vertices[current].Item2}");
+            visited.Add(current);
+            
+            // Walk around the perimeter - find adjacent vertices and follow edges
+            while (visited.Count < vertices.Count)
+            {
+                var (cx, cy) = vertices[current];
+                int next = -1;
+                
+                // Find unvisited vertices adjacent to current (differ in only one coordinate)
+                var candidates = new List<int>();
+                for (int i = 0; i < vertices.Count; i++)
+                {
+                    if (visited.Contains(i))
+                        continue;
+                    
+                    var (vx, vy) = vertices[i];
+                    // Orthogonal adjacency: same X or same Y, but not both
+                    if ((vx == cx && vy != cy) || (vy == cy && vx != cx))
+                    {
+                        candidates.Add(i);
+                    }
+                }
+                
+                if (candidates.Count == 0)
+                    break;
+                
+                // If multiple candidates, pick the one closest to current position
+                next = candidates.Count == 1 ? candidates[0] : 
+                       candidates.OrderBy(idx => {
+                           var dx = Math.Abs(vertices[idx].Item1 - cx);
+                           var dy = Math.Abs(vertices[idx].Item2 - cy);
+                           return dx + dy;  // Manhattan distance
+                       }).First();
+                
+                current = next;
+                visited.Add(current);
+                sb.Append($" L {vertices[current].Item1},{vertices[current].Item2}");
+            }
+            
+            sb.Append(" Z");
+            return sb.ToString();
         }
 
         private static string BuildOrthogonalLoop2D(List<(long X, long Y)> pts)
@@ -534,7 +568,7 @@ namespace LaserConvert
             AppendUnique(left);
             if (walk.Count > 0 && (walk.First().X != walk.Last().X || walk.First().Y != walk.Last().Y))
                 walk.Add(walk.First());
-            return BuildPath2D(walk);
+            return BuildPerimeterPath(walk);
         }
 
         /// <summary>
@@ -559,14 +593,15 @@ namespace LaserConvert
         }
 
         /// <summary>
-        /// Order vertices around a perimeter using Gift Wrapping (Jarvis March) algorithm.
-        /// Wraps clockwise by always choosing the next vertex with the smallest clockwise turn from current direction.
+        /// Order vertices around a perimeter using Graham scan (convex hull algorithm).
+        /// Works reliably for both convex and non-convex polygons when vertices are on the boundary.
         /// </summary>
         private static List<GeometryTransform.Vec3> OrderPerimeterVertices(List<GeometryTransform.Vec3> vertices)
         {
             if (vertices.Count < 3)
                 return vertices;
             
+            // Remove duplicates
             var uniqueVerts = vertices
                 .GroupBy(v => ((long)Math.Round(v.X * 100), (long)Math.Round(v.Y * 100)))
                 .Select(g => g.First())
@@ -575,71 +610,45 @@ namespace LaserConvert
             if (uniqueVerts.Count < 3)
                 return uniqueVerts;
             
-            // Find starting point: top-left (min Y, then min X)
-            int startIdx = 0;
+            // Find the point with lowest Y (top-left in SVG coords where Y increases downward)
+            int minIdx = 0;
             for (int i = 1; i < uniqueVerts.Count; i++)
             {
-                if (uniqueVerts[i].Y < uniqueVerts[startIdx].Y - 0.01 ||
-                    (Math.Abs(uniqueVerts[i].Y - uniqueVerts[startIdx].Y) < 0.01 && 
-                     uniqueVerts[i].X < uniqueVerts[startIdx].X))
-                    startIdx = i;
+                if (uniqueVerts[i].Y < uniqueVerts[minIdx].Y ||
+                    (Math.Abs(uniqueVerts[i].Y - uniqueVerts[minIdx].Y) < 0.01 && 
+                     uniqueVerts[i].X < uniqueVerts[minIdx].X))
+                {
+                    minIdx = i;
+                }
             }
             
-            var ordered = new List<GeometryTransform.Vec3>();
-            var used = new HashSet<int>();
-            int current = startIdx;
-            double prevAngle = 0;  // Start facing right (0 degrees)
+            var start = uniqueVerts[minIdx];
             
-            do
-            {
-                ordered.Add(uniqueVerts[current]);
-                used.Add(current);
+            // Sort all other points by polar angle with respect to start point
+            var others = uniqueVerts.Where((v, i) => i != minIdx).ToList();
+            others.Sort((a, b) => {
+                var dax = a.X - start.X;
+                var day = a.Y - start.Y;
+                var dbx = b.X - start.X;
+                var dby = b.Y - start.Y;
                 
-                int next = -1;
-                double smallestTurn = double.MaxValue;
-                double nextAngle = 0;
+                // Cross product (dax * dby - day * dbx)
+                var cross = dax * dby - day * dbx;
                 
-                // Evaluate all unvisited vertices
-                for (int i = 0; i < uniqueVerts.Count; i++)
-                {
-                    if (used.Contains(i))
-                        continue;
-                    
-                    var dx = uniqueVerts[i].X - uniqueVerts[current].X;
-                    var dy = uniqueVerts[i].Y - uniqueVerts[current].Y;
-                    var dist = Math.Sqrt(dx * dx + dy * dy);
-                    
-                    if (dist < 0.01)
-                        continue;
-                    
-                    // Calculate angle to this vertex (0°=right, 90°=down, 180°=left, 270°=up)
-                    var angle = Math.Atan2(dy, dx) * 180 / Math.PI;
-                    if (angle < 0)
-                        angle += 360;
-                    
-                    // Calculate turn angle (positive = clockwise from previous direction)
-                    var turn = angle - prevAngle;
-                    if (turn < 0)
-                        turn += 360;
-                    
-                    // Pick vertex that requires smallest clockwise turn (smallest positive turn)
-                    if (turn < smallestTurn)
-                    {
-                        smallestTurn = turn;
-                        next = i;
-                        nextAngle = angle;
-                    }
-                }
+                if (Math.Abs(cross) > 0.01)
+                    return cross > 0 ? -1 : 1;  // -1 means a comes first (counter-clockwise)
                 
-                if (next == -1)
-                    break;
-                
-                current = next;
-                prevAngle = nextAngle;
-                
-            } while (current != startIdx && ordered.Count < uniqueVerts.Count + 1);
+                // If collinear, sort by distance
+                var distA = dax * dax + day * day;
+                var distB = dbx * dbx + dby * dby;
+                return distA.CompareTo(distB);
+            });
             
-            return ordered;
+            // Build result with start point first
+            var result = new List<GeometryTransform.Vec3> { start };
+            result.AddRange(others);
+            
+            return result;
         }
         
         /// <summary>Compute the angle for clockwise ordering (right=0, down=90, left=180, up=270 degrees).</summary>

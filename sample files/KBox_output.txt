@@ -19,5 +19,5 @@ Found 1 solids
 [SVG] KBox: mainFace has 1 bounds
 [SVG] KBox: Face outline has 12 3D vertices (complex shape)
 [SVG] KBox: Face outline has 12 top-face vertices
-[SVG] KBox: Generated face outline path from 12 2D points
+[SVG] KBox: Generated orthogonal face outline path from 12 2D points
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox.svg
