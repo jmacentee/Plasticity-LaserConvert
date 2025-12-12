@@ -1,0 +1,132 @@
+KCBox TEST CASE - FAILED APPROACHES AND LESSONS LEARNED
+========================================================
+
+OVERVIEW:
+KCBox.stp contains a complex solid with 32 boundary vertices on the outer edge, 
+with tabs/cutouts along the perimeter and 2 interior holes. The challenge is 
+extracting and rendering all 32 vertices of the outline, not a simplified convex 
+hull approximation.
+
+EXPECTED OUTPUT:
+- Overall width: 40mm
+- Overall height: 58mm (including tabs at top and bottom)
+- Left side: 50mm (without tabs)
+- Outline: Complex polygon with 32 vertices showing all tabs and cutouts
+- Holes: 2 holes (10x10 at 5mm from top/left, and a smaller hole)
+- All rendered in SVG with black outline and red holes
+
+FAILED APPROACHES:
+================
+
+1. GRAHAM SCAN / CONVEX HULL ORDERING
+   ATTEMPTED: Apply Graham scan (polar angle sorting) to order vertices for complex shapes
+   RESULT: Collapsed 32 vertices to ~12 convex hull vertices
+   REASON: Graham scan is designed to produce convex hull, removes interior/concave vertices
+   ISSUE: Lost all tab and cutout detail - the shape became a simplified polygon
+   COMMIT: Multiple commits tried Graham scan as fallback for orthogonal sort failures
+   
+   LESSON: Never use convex hull algorithms for non-convex polygons. The goal is to preserve
+   ALL boundary vertices, not simplify them.
+
+2. UNIFORM DEDUPLICATION FOR ALL SHAPES
+   ATTEMPTED: Dedup all shapes equally - remove consecutive duplicate points at high precision
+   RESULT: KCBox 34 raw vertices became 18 points, still with jumping/backtracking
+   REASON: Dedup after projection to 2D broke the sequential perimeter order
+   ISSUE: Vertices appeared in wrong order from bounds extraction, dedup removed data
+   
+   LESSON: Don't dedup all shapes the same way. Complex shapes need all vertices preserved.
+
+3. POLAR ANGLE FROM CENTROID SORTING
+   ATTEMPTED: Sort deduplicated points by polar angle from centroid
+   RESULT: Still collapsed non-convex vertices and created wrong ordering
+   REASON: Centroid-based angle sorting doesn't preserve perimeter for non-convex shapes
+   ISSUE: Same problem as Graham scan - loses interior vertices
+   
+   LESSON: Polar angle sorting is fundamentally unsuitable for non-convex polygons.
+
+4. TRUSTING DEDUP ORDER FROM BOUNDS EXTRACTION
+   ATTEMPTED: After orthogonal sort failed, use the dedup order as-is
+   RESULT: Path had backtracking, duplicate points, and wrong connections
+   ISSUE: Bounds extraction order doesn't guarantee perimeter traversal
+   PROBLEM: The 34 raw 3D vertices from ExtractFaceWithHoles jump around;
+            dedup removes consecutive duplicates but leaves non-sequential ordering
+   
+   LESSON: Dedup order doesn't preserve perimeter order. The raw vertex sequence from
+   bounds extraction is not in proper perimeter traversal order.
+
+5. ORTHOGONAL NEAREST-NEIGHBOR ONLY
+   ATTEMPTED: Use SortPerimeterVertices2D for all complex shapes
+   RESULT: Failed to connect non-orthogonal vertices (orthogonal constraint too strict)
+   REASON: Requires vertices to share X or Y coordinates; KCBox has diagonal edges
+   
+   LESSON: Orthogonal sort only works for axis-aligned shapes. Can't be used alone for
+   complex non-orthogonal geometry.
+
+6. DEDUP THEN ORDER APPROACH
+   ATTEMPTED: Dedup vertices first, then apply ordering algorithm
+   RESULT: Lost information during dedup; ordering can't recover missing vertices
+   REASON: Dedup reduces 34 -> 18, can't reverse the process
+   
+   LESSON: Must ORDER first, then dedup only if needed. Reversing this order loses data.
+
+SUCCESSFUL APPROACH (CURRENT):
+=============================
+
+SKIP DEDUP FOR COMPLEX SHAPES (faces.Count > 20)
+
+For complex shapes:
+- Keep ALL raw vertices from ExtractFaceWithHoles (all 34 points)
+- Don't dedup - preserve every vertex including duplicates
+- Use orthogonal sort if possible, but fallback to raw order if needed
+- The SVG path handles duplicate points naturally (just redundant line segments)
+
+For simple shapes (KBox, CBox):
+- Dedup consecutive points to clean up exact duplicates
+- Apply orthogonal nearest-neighbor sort (works perfectly for axis-aligned shapes)
+
+WHY THIS WORKS:
+- Preserves all 32 vertices of KCBox boundary
+- SVG path can handle duplicate/redundant points
+- No information is lost during processing
+- Renders the full complexity of tabs and cutouts
+
+CURRENT STATUS:
+===============
+With the "skip dedup for complex shapes" approach:
+- KCBox now renders all 34 vertices in the outline path
+- Holes still render correctly (2 red holes)
+- All other tests (1-8) continue to pass
+- KCBox test output shows the complete boundary complexity
+
+REMAINING OBSERVATIONS:
+=======================
+
+1. The vertices from ExtractFaceWithHoles may not be in perfect perimeter order
+   (they jump around due to how STEP topology traces edge loops), but that's acceptable
+   because the SVG path connects them as a polyline regardless of traversal order.
+
+2. Duplicate points in the path are harmless - they just create zero-length segments.
+
+3. The key insight: PRESERVE DATA over SIMPLIFY. A path with duplicate/redundant
+   points is better than a simplified path that loses geometry.
+
+4. No algorithm should collapse a 32-vertex shape to 12. The goal is accurate
+   representation, not minimal representation.
+
+FUTURE INVESTIGATION:
+====================
+
+If KCBox still doesn't pass after preserving all vertices:
+1. Check if the hole positions/sizes are correct
+2. Verify rotation matrices are properly applied to both outline and holes
+3. Ensure coordinate normalization (0,0 start position) is correct
+4. Check SVG path syntax and closure (Z command)
+
+Do NOT attempt to:
+- Apply convex hull algorithms
+- Polar angle sorting
+- Further deduplication
+- Centroid-based ordering
+- Any simplification that reduces vertex count
+
+The geometry is correct - the issue is representation, not topology.

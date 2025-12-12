@@ -24,6 +24,15 @@ REM The holes in the solids in a STP file are clearly part of the standard. When
 
 REM we shouldn't have any special cases, we should just handle everything generally.  why do we have any "thresholds" at all?  We need to understand the real geometory generaly (what is an outside edge, what is the edge of a hole) and deal with it the same way from our most simple example to our most complex
 
+REM Preserve all boundary vertices for complex shapes instead of deduplicating them, which was collapsing the geometry to a simplified convex hull approximation.
+
+REM CURRENT STATE -- All but the last test successfully pass.  The last test KCBox.stp fails because we are not correctly identifying the outer edge of the face with cutouts and tabs.  Instead we are finding a simplified convex hull which loses all the cutout and tab detail.  We need to preserve all boundary vertexes to get this correct.
+REM in all of our many iterations, KCBox.stp has never passed
+REM It may be best to review the entire git history since the KCBox.stp test was introduced to avoid repeating any previous failed approaches.
+REM Document failed approaches in KCBox_failures.txt for future reference.
+
+REM TEST CASES START HERE
+
 REM This file contains a single object named Box1 which is 170x150x3mm and should result in a single square in the SVG of 170x150mm.
 "C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box_output.txt"
 
@@ -65,6 +74,17 @@ REM the overall width is 40mm.  the overall height is 58mm including the tab at 
 REM We have discussed before -- if you think that the holes are in the other faces, not the main face, that means we have selected the mainface incorrectly.
 REM The outer edge of KCBox has 32 vertexes.
 "C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox_output.txt"
+
+
+REM KCBoxFlat is the result of importing KCBox_corrected.svg into Plasticity, extruding it exactly 3mm tall and then exporting as a step file. 
+REM when al tests pass, the output from this test should be identical to KCBox.svg except for the different group name and possiblty it's rotation in the file
+REM There may be slight rounding errors in the scaling of KCBoxFlat.  The bottom edge is 40.084mm total.
+REM the left side is 56.087mm total.
+REM the big hole near the top left is 10.189mm x 10.165mm
+REM the small hole near the bottom right is 10.132mm x 5.175 mm
+REM KCBoxFlat is approximatly the same solid as KCBox except it is not rotated in 3d space.  It sits flat on the x-y plane. It's upper left corner is at 0,0.
+"C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBoxFlat.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBoxFlat.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBoxFlat_output.txt"
+
 
 
 

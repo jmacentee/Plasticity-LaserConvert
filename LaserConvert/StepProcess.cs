@@ -723,16 +723,41 @@ namespace LaserConvert
                 return;
             }
         
+            // Calculate bounding box in all 3 dimensions
             var hx = holeNormalizedVerts.Min(v => v.X);
             var hx2 = holeNormalizedVerts.Max(v => v.X);
             var hy = holeNormalizedVerts.Min(v => v.Y);
             var hy2 = holeNormalizedVerts.Max(v => v.Y);
+            var hz = holeNormalizedVerts.Min(v => v.Z);
+            var hz2 = holeNormalizedVerts.Max(v => v.Z);
+            
+            // Find the two dominant dimensions (the ones that form the hole rectangle)
+            var dimX = hx2 - hx;
+            var dimY = hy2 - hy;
+            var dimZ = hz2 - hz;
+            
+            // ATTEMPTED: Only use X and Y dimensions
+            // RESULT: Holes oriented along Z axis get zero height (KCBoxFlat case)
+            // REASON: For a flat plate with Z-oriented holes, X and Y are single values
+            // FIX: Find the two largest dimension deltas - those form the hole rectangle
+            var dims = new[] { 
+                ("X", dimX, hx, hx2),
+                ("Y", dimY, hy, hy2),
+                ("Z", dimZ, hz, hz2)
+            }.OrderByDescending(d => d.Item2).ToList();
+            
+            var dim1 = dims[0]; // Largest dimension
+            var dim2 = dims[1]; // Second largest dimension
+            
+            var holeW = (long)Math.Round(dim1.Item2);
+            var holeH = (long)Math.Round(dim2.Item2);
+            
+            // Position: Use X and Y for position (convert to outline-relative coordinates)
+            // Map position based on which dimension is which
             var holeX = (long)Math.Round(hx - outlineMinX);
             var holeY = (long)Math.Round(hy - outlineMinY);
-            var holeW = (long)Math.Round(hx2 - hx);
-            var holeH = (long)Math.Round(hy2 - hy);
             
-            Console.WriteLine($"[SVG] Hole 3D bounds: X:[{hx:F1},{hx2:F1}] Y:[{hy:F1},{hy2:F1}], normalized: ({holeX},{holeY}) {holeW}x{holeH}");
+            Console.WriteLine($"[SVG] Hole 3D bounds: X:[{hx:F1},{hx2:F1}] Y:[{hy:F1},{hy2:F1}] Z:[{hz:F1},{hz2:F1}], normalized: ({holeX},{holeY}) {holeW}x{holeH}");
             
             if (holeW > 1 && holeH > 1)
             {

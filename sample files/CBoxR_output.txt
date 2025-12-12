@@ -24,6 +24,6 @@ Found 1 solids
 [SVG] CBoxR: Orthogonal sort succeeded
 [SVG] CBoxR: Generated outline from 4 outline points -> 4 ordered
 [SVG] Processing hole with 4 vertices in 3D
-[SVG] Hole 3D bounds: X:[28.9,38.9] Y:[-7.7,2.3], normalized: (35,5) 10x10
+[SVG] Hole 3D bounds: X:[28.9,38.9] Y:[-7.7,2.3] Z:[-72.9,-72.9], normalized: (35,5) 10x10
 [SVG] Added hole path
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBoxR.svg
