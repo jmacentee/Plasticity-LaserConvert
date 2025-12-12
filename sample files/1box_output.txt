@@ -18,6 +18,6 @@ Found 1 solids
 [SVG] Box1: After rotation - X:[-150.0,0.0] Y:[-119.8,50.2]
 [SVG] Box1: mainFace has 1 bounds
 [SVG] Box1: Face outline has 4 3D vertices
-[SVG] Box1: Face outline has 4 top-face vertices (already in edge order)
+[SVG] Box1: Face outline has 4 top-face vertices
 [SVG] Box1: Generated face outline path from 4 2D points
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.svg

@@ -176,10 +176,10 @@ namespace LaserConvert
 
                             if (topVerts.Count >= 4)
                             {
-                                Console.WriteLine($"[SVG] {name}: Face outline has {topVerts.Count} top-face vertices (already in edge order)");
+                                Console.WriteLine($"[SVG] {name}: Face outline has {topVerts.Count} top-face vertices");
                                 
-                                // Vertices are already in order from face traversal - use directly
-                                var ordered = topVerts;
+                                // Order vertices around perimeter using Jarvis March
+                                var ordered = OrderPerimeterVertices(topVerts);
                                 
                                 // Project to 2D
                                 var minXv = ordered.Min(v => v.X);
@@ -537,92 +537,7 @@ namespace LaserConvert
         }
 
         /// <summary>
-        /// Order vertices around a perimeter using a 2D convex-hull-like walk algorithm.
-        /// Starts from the bottom-left, then walks around the edge by always choosing
-        /// the next unvisited vertex that is "most clockwise" from the current edge direction.
-        /// </summary>
-        private static List<GeometryTransform.Vec3> OrderPerimeterVertices(List<GeometryTransform.Vec3> vertices)
-        {
-            if (vertices.Count < 3)
-                return vertices;
-            
-            // Start from the vertex with minimum Y (bottom), then minimum X (leftmost)
-            var startVert = vertices.OrderBy(v => v.Y).ThenBy(v => v.X).First();
-            var ordered = new List<GeometryTransform.Vec3> { startVert };
-            var remaining = new HashSet<GeometryTransform.Vec3>(vertices);
-            remaining.Remove(startVert);
-            
-            var current = startVert;
-            var prevDirectionX = 1.0;
-            var prevDirectionY = 0.0;  // Start facing right
-            
-            while (remaining.Count > 0)
-            {
-                // Find the remaining vertex that requires the smallest left turn (most counter-clockwise)
-                GeometryTransform.Vec3? nextVert = null;
-                double bestCrossProduct = double.MaxValue;
-                
-                foreach (var candidate in remaining)
-                {
-                    var dx = candidate.X - current.X;
-                    var dy = candidate.Y - current.Y;
-                    var dist = Math.Sqrt(dx * dx + dy * dy);
-                    
-                    if (dist < 0.01)  // Skip duplicates
-                        continue;
-                    
-                    // Normalize direction
-                    var dirX = dx / dist;
-                    var dirY = dy / dist;
-                    
-                    // Cross product tells us if this direction is left or right of prevDirection
-                    // prevDirection × candidate = prevX * dirY - prevY * dirX
-                    var crossProduct = prevDirectionX * dirY - prevDirectionY * dirX;
-                    
-                    // We want the smallest left turn (smallest positive cross product)
-                    // If all remaining are to the right, pick the rightmost one
-                    if (crossProduct >= -0.01)  // Allow small negative values for numerical stability
-                    {
-                        if (crossProduct < bestCrossProduct)
-                        {
-                            bestCrossProduct = crossProduct;
-                            nextVert = candidate;
-                        }
-                    }
-                }
-                
-                // If all remaining vertices are to the right, just pick the closest one
-                if (nextVert == null)
-                {
-                    nextVert = remaining.OrderBy(v => {
-                        var dx = v.X - current.X;
-                        var dy = v.Y - current.Y;
-                        return dx * dx + dy * dy;
-                    }).First();
-                }
-                
-                var nextValue = nextVert.Value;
-                ordered.Add(nextValue);
-                remaining.Remove(nextValue);
-                
-                // Update direction for next iteration
-                prevDirectionX = nextValue.X - current.X;
-                prevDirectionY = nextValue.Y - current.Y;
-                var len = Math.Sqrt(prevDirectionX * prevDirectionX + prevDirectionY * prevDirectionY);
-                if (len > 0.01)
-                {
-                    prevDirectionX /= len;
-                    prevDirectionY /= len;
-                }
-                
-                current = nextValue;
-            }
-            
-            return ordered;
-        }
-
-        /// <summary>
-        /// Build an SVG path from 2D perimeter points, snapping to orthogonal (H/V only) movements.
+        /// Build an SVG path from 2D perimeter points, connecting them in order.
         /// </summary>
         private static string BuildPerimeterPath(List<(long X, long Y)> pts)
         {
@@ -640,6 +555,97 @@ namespace LaserConvert
             
             sb.Append(" Z");
             return sb.ToString();
+        }
+
+        /// <summary>
+        /// Order vertices around a perimeter using Gift Wrapping (Jarvis March) algorithm.
+        /// This guarantees correct ordering for any simple polygon, including non-convex shapes.
+        /// </summary>
+        private static List<GeometryTransform.Vec3> OrderPerimeterVertices(List<GeometryTransform.Vec3> vertices)
+        {
+            if (vertices.Count < 3)
+                return vertices;
+            
+            // Remove duplicates by rounding
+            var uniqueVerts = vertices
+                .GroupBy(v => ((long)Math.Round(v.X * 100), (long)Math.Round(v.Y * 100)))
+                .Select(g => g.First())
+                .ToList();
+            
+            if (uniqueVerts.Count < 3)
+                return uniqueVerts;
+            
+            // Find the starting point (minimum Y, then minimum X - bottom-left)
+            int startIdx = 0;
+            for (int i = 1; i < uniqueVerts.Count; i++)
+            {
+                var curr = uniqueVerts[i];
+                var start = uniqueVerts[startIdx];
+                if (curr.Y < start.Y - 0.01 || 
+                    (Math.Abs(curr.Y - start.Y) < 0.01 && curr.X < start.X))
+                {
+                    startIdx = i;
+                }
+            }
+            
+            var ordered = new List<GeometryTransform.Vec3>();
+            var used = new HashSet<int>();
+            int current = startIdx;
+            
+            // Jarvis March: wrap around the perimeter
+            do
+            {
+                ordered.Add(uniqueVerts[current]);
+                used.Add(current);
+                
+                // Find next vertex: the one that makes the smallest counter-clockwise turn
+                int next = -1;
+                for (int i = 0; i < uniqueVerts.Count; i++)
+                {
+                    if (used.Contains(i))
+                        continue;
+                    
+                    if (next == -1)
+                    {
+                        next = i;
+                    }
+                    else
+                    {
+                        // Cross product determines turn direction
+                        var cross = CrossProduct2D(uniqueVerts[current], uniqueVerts[next], uniqueVerts[i]);
+                        
+                        if (cross > 0.01)  // Counter-clockwise turn to i (i is more left)
+                        {
+                            next = i;
+                        }
+                        else if (Math.Abs(cross) < 0.01)  // Collinear - pick the farthest
+                        {
+                            var distNext = DistSquared(uniqueVerts[current], uniqueVerts[next]);
+                            var distI = DistSquared(uniqueVerts[current], uniqueVerts[i]);
+                            if (distI > distNext)
+                                next = i;
+                        }
+                    }
+                }
+                
+                current = next;
+            } while (current != startIdx && current != -1 && ordered.Count < uniqueVerts.Count + 1);
+            
+            return ordered;
+        }
+        
+        /// <summary>Calculate the 2D cross product of vectors (b-a) and (c-a).</summary>
+        private static double CrossProduct2D(GeometryTransform.Vec3 a, GeometryTransform.Vec3 b, GeometryTransform.Vec3 c)
+        {
+            return (b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X);
+        }
+        
+        /// <summary>Calculate squared distance between two points.</summary>
+        private static double DistSquared(GeometryTransform.Vec3 a, GeometryTransform.Vec3 b)
+        {
+            var dx = b.X - a.X;
+            var dy = b.Y - a.Y;
+            return dx * dx + dy * dy;
         }
 
         private static bool IsCloseToOriginal(GeometryTransform.Vec3 normVert, (double X, double Y, double Z) orig3D, 

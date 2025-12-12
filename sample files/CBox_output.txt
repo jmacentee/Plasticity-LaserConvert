@@ -15,6 +15,6 @@ Found 1 solids
 [SVG] CBox: After rotation - X:[-50.0,0.0] Y:[-0.0,40.0]
 [SVG] CBox: mainFace has 2 bounds
 [SVG] CBox: Face outline has 8 3D vertices
-[SVG] CBox: Face outline has 8 top-face vertices (already in edge order)
+[SVG] CBox: Face outline has 8 top-face vertices
 [SVG] CBox: Generated face outline path from 8 2D points
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBox.svg

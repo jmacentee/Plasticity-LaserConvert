@@ -59,6 +59,11 @@ REM The approximate correct output for this file can be found in KCBox_corrected
 REM the overall width is 40mm.  the overall height is 58mm including the tab at the bottom and the tall tab at the top.  the left side is only 50mm without those tabs.  the top hole is 10x10 and is 5mm from the top and left sides (not counting the tabs).
 "C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox_output.txt"
 
+REM Current KBox Issue: The 12 vertices are being extracted correctly, but they're coming from the B-rep edge list in a different order than the expected perimeter walk. The extracted vertices are correct, they just need to be sorted into proper perimeter order.
+REM Next Steps (for completion):
+REM 1.	Implement Jarvis March (Gift Wrapping) algorithm - Will order vertices into correct perimeter sequence
+REM 2.	Handle Holes for KCBox - Extract holes from face bounds and render as red paths
+REM 3.	Edge Normalization - Ensure edges align properly with X/Y axes
 
 
 @echo off
