@@ -276,18 +276,30 @@ namespace LaserConvert
                                         .Select(p => ((long)Math.Round(p.X), (long)Math.Round(p.Y)))
                                         .ToList();
                                     
-                                    var faceOutlinePath = BuildPerimeterPath(dedup);
-                                    Console.WriteLine($"[SVG] {name}: Generated outline from {dedup_precise.Count} precise points -> {dedup.Count} integer points");
-                                    svg.Path(faceOutlinePath, strokeWidth: 0.2, fill: "none", stroke: "#000");
-                                    
-                                    // Render holes
-                                    var outlineMinX = topVerts.Min(v => v.X);
-                                    var outlineMinY = topVerts.Min(v => v.Y);
-                                    
-                                    RenderHoles(svg, mainFace, stepFile, normalizedVertices, outlineMinX, outlineMinY, rotMatrix1, rotMatrix2, faces.Count > 20);
-                                    
-                                    svg.EndGroup();
-                                    continue;
+                                    // For axis-aligned complex outlines, use orthogonal greedy nearest-neighbor ordering
+                                    var sorted = SortPerimeterVertices2D(dedup);
+                                    if (sorted.Count >= 4)
+                                    {
+                                        var faceOutlinePath = BuildPerimeterPath(sorted);
+                                        Console.WriteLine($"[SVG] {name}: Generated outline from {dedup_precise.Count} precise points -> {sorted.Count} integer points (orthogonal sorted)");
+                                        svg.Path(faceOutlinePath, strokeWidth: 0.2, fill: "none", stroke: "#000");
+                                        
+                                        // Render holes
+                                        var outlineMinX = topVerts.Min(v => v.X);
+                                        var outlineMinY = topVerts.Min(v => v.Y);
+                                        
+                                        RenderHoles(svg, mainFace, stepFile, normalizedVertices, outlineMinX, outlineMinY, rotMatrix1, rotMatrix2, faces.Count > 20);
+                                        
+                                        svg.EndGroup();
+                                        continue;
+                                    }
+                                    else
+                                    {
+                                        // Fallback if sort failed
+                                        var faceOutlinePath = BuildPerimeterPath(dedup);
+                                        Console.WriteLine($"[SVG] {name}: Generated outline from {dedup_precise.Count} precise points -> {dedup.Count} integer points (unsorted fallback)");
+                                        svg.Path(faceOutlinePath, strokeWidth: 0.2, fill: "none", stroke: "#000");
+                                    }
                                 }
                                 else
                                 {
