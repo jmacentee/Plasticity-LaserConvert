@@ -149,29 +149,28 @@ namespace LaserConvert
                     {
                         if (faces.Count > 20)
                         {
-                            // For complex shapes: find the face with the most complex outer loop (most vertices)
-                            // This is more likely to be the actual main face with holes/tabs
-                            // ATTEMPTED: Select face with most vertices
-                            // RESULT: Works for rotated KCBox but fails for flat KCBoxFlat
-                            // ISSUE: For already-aligned flat shapes, the "main face" is the TOP face with 2D perimeter,
-                            //        not a 3D side face. We need faces that project to show full bounding box.
-                            // TODO: For flat shapes, prefer side faces over top faces
-                            Console.WriteLine($"[SVG] {name}: Searching {faces.Count} faces for main face with complex outline");
-                            int maxVertexCount = 0;
+                            // For complex shapes: pick the face that when extracted gives the MOST BOUNDARY VERTICES
+                            // This indicates a complex outline with holes/tabs
+                            // This works for both rotated shapes (KCBox) and axis-aligned shapes (KCBoxFlat)
+                            Console.WriteLine($"[SVG] {name}: Searching {faces.Count} faces for face with most boundary vertices");
+                            int maxBoundaryVerts = 0;
                             int bestFaceIdx = face1Idx;
                             
                             for (int i = 0; i < faces.Count; i++)
                             {
-                                var faceVerts = StepTopologyResolver.ExtractVerticesFromFace(faces[i], stepFile);
-                                if (faceVerts.Count > maxVertexCount)
+                                var (outerVerts, _) = StepTopologyResolver.ExtractFaceWithHoles(faces[i], stepFile);
+                                if (outerVerts.Count > maxBoundaryVerts)
                                 {
-                                    maxVertexCount = faceVerts.Count;
+                                    maxBoundaryVerts = outerVerts.Count;
                                     bestFaceIdx = i;
                                 }
+                                
+                                if (outerVerts.Count >= 10)  // Log verbose info for complex boundaries
+                                    Console.WriteLine($"[SVG] {name}:   Face {i}: {outerVerts.Count} boundary verts");
                             }
                             
                             mainFace = faces[bestFaceIdx];
-                            Console.WriteLine($"[SVG] {name}: Selected face with {maxVertexCount} vertices as main face");
+                            Console.WriteLine($"[SVG] {name}: Selected face with {maxBoundaryVerts} boundary vertices as main face");
                         }
                         else
                         {
