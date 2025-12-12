@@ -149,9 +149,10 @@ namespace LaserConvert
                     {
                         var faceOutlineVerts3D = StepTopologyResolver.ExtractVerticesFromFace(mainFace, stepFile);
                         
-                        if (faceOutlineVerts3D.Count >= 4)
+                        // Only use face outline for complex shapes (many vertices)
+                        if (faceOutlineVerts3D.Count > 8)
                         {
-                            Console.WriteLine($"[SVG] {name}: Face outline has {faceOutlineVerts3D.Count} 3D vertices");
+                            Console.WriteLine($"[SVG] {name}: Face outline has {faceOutlineVerts3D.Count} 3D vertices (complex shape)");
                             
                             // Transform these vertices to normalized coordinates
                             var outlineNormalizedVerts = faceOutlineVerts3D
@@ -178,7 +179,7 @@ namespace LaserConvert
                             {
                                 Console.WriteLine($"[SVG] {name}: Face outline has {topVerts.Count} top-face vertices");
                                 
-                                // Order vertices around perimeter using Jarvis March
+                                // For complex shapes, try to order vertices
                                 var ordered = OrderPerimeterVertices(topVerts);
                                 
                                 // Project to 2D
@@ -208,7 +209,7 @@ namespace LaserConvert
                         }
                     }
 
-                    // Fallback: use bounding box
+                    // Fallback: use simple bounding box (works for all rectangular shapes)
                     // Standard rectangular outline
                     var minX = topFaceVerts.Min(v => v.X);
                     var maxX = topFaceVerts.Max(v => v.X);
@@ -258,7 +259,7 @@ namespace LaserConvert
                                 Console.WriteLine($"[SVG] {name}: Hole skipped (only {holeNormalizedVerts.Count} vertices matched)");
                                 continue;
                             }
-                            
+                        
                             var hx = holeNormalizedVerts.Min(v => v.X);
                             var hx2 = holeNormalizedVerts.Max(v => v.X);
                             var hy = holeNormalizedVerts.Min(v => v.Y);
@@ -559,14 +560,13 @@ namespace LaserConvert
 
         /// <summary>
         /// Order vertices around a perimeter using Gift Wrapping (Jarvis March) algorithm.
-        /// This guarantees correct ordering for any simple polygon, including non-convex shapes.
+        /// Wraps clockwise by always choosing the next vertex with the smallest clockwise turn from current direction.
         /// </summary>
         private static List<GeometryTransform.Vec3> OrderPerimeterVertices(List<GeometryTransform.Vec3> vertices)
         {
             if (vertices.Count < 3)
                 return vertices;
             
-            // Remove duplicates by rounding
             var uniqueVerts = vertices
                 .GroupBy(v => ((long)Math.Round(v.X * 100), (long)Math.Round(v.Y * 100)))
                 .Select(g => g.First())
@@ -575,77 +575,87 @@ namespace LaserConvert
             if (uniqueVerts.Count < 3)
                 return uniqueVerts;
             
-            // Find the starting point (minimum Y, then minimum X - bottom-left)
+            // Find starting point: top-left (min Y, then min X)
             int startIdx = 0;
             for (int i = 1; i < uniqueVerts.Count; i++)
             {
-                var curr = uniqueVerts[i];
-                var start = uniqueVerts[startIdx];
-                if (curr.Y < start.Y - 0.01 || 
-                    (Math.Abs(curr.Y - start.Y) < 0.01 && curr.X < start.X))
-                {
+                if (uniqueVerts[i].Y < uniqueVerts[startIdx].Y - 0.01 ||
+                    (Math.Abs(uniqueVerts[i].Y - uniqueVerts[startIdx].Y) < 0.01 && 
+                     uniqueVerts[i].X < uniqueVerts[startIdx].X))
                     startIdx = i;
-                }
             }
             
             var ordered = new List<GeometryTransform.Vec3>();
             var used = new HashSet<int>();
             int current = startIdx;
+            double prevAngle = 0;  // Start facing right (0 degrees)
             
-            // Jarvis March: wrap around the perimeter
             do
             {
                 ordered.Add(uniqueVerts[current]);
                 used.Add(current);
                 
-                // Find next vertex: the one that makes the smallest counter-clockwise turn
                 int next = -1;
+                double smallestTurn = double.MaxValue;
+                double nextAngle = 0;
+                
+                // Evaluate all unvisited vertices
                 for (int i = 0; i < uniqueVerts.Count; i++)
                 {
                     if (used.Contains(i))
                         continue;
                     
-                    if (next == -1)
+                    var dx = uniqueVerts[i].X - uniqueVerts[current].X;
+                    var dy = uniqueVerts[i].Y - uniqueVerts[current].Y;
+                    var dist = Math.Sqrt(dx * dx + dy * dy);
+                    
+                    if (dist < 0.01)
+                        continue;
+                    
+                    // Calculate angle to this vertex (0°=right, 90°=down, 180°=left, 270°=up)
+                    var angle = Math.Atan2(dy, dx) * 180 / Math.PI;
+                    if (angle < 0)
+                        angle += 360;
+                    
+                    // Calculate turn angle (positive = clockwise from previous direction)
+                    var turn = angle - prevAngle;
+                    if (turn < 0)
+                        turn += 360;
+                    
+                    // Pick vertex that requires smallest clockwise turn (smallest positive turn)
+                    if (turn < smallestTurn)
                     {
+                        smallestTurn = turn;
                         next = i;
-                    }
-                    else
-                    {
-                        // Cross product determines turn direction
-                        var cross = CrossProduct2D(uniqueVerts[current], uniqueVerts[next], uniqueVerts[i]);
-                        
-                        if (cross > 0.01)  // Counter-clockwise turn to i (i is more left)
-                        {
-                            next = i;
-                        }
-                        else if (Math.Abs(cross) < 0.01)  // Collinear - pick the farthest
-                        {
-                            var distNext = DistSquared(uniqueVerts[current], uniqueVerts[next]);
-                            var distI = DistSquared(uniqueVerts[current], uniqueVerts[i]);
-                            if (distI > distNext)
-                                next = i;
-                        }
+                        nextAngle = angle;
                     }
                 }
                 
+                if (next == -1)
+                    break;
+                
                 current = next;
-            } while (current != startIdx && current != -1 && ordered.Count < uniqueVerts.Count + 1);
+                prevAngle = nextAngle;
+                
+            } while (current != startIdx && ordered.Count < uniqueVerts.Count + 1);
             
             return ordered;
         }
         
-        /// <summary>Calculate the 2D cross product of vectors (b-a) and (c-a).</summary>
-        private static double CrossProduct2D(GeometryTransform.Vec3 a, GeometryTransform.Vec3 b, GeometryTransform.Vec3 c)
+        /// <summary>Compute the angle for clockwise ordering (right=0, down=90, left=180, up=270 degrees).</summary>
+        private static double ComputeAngleForClockwise(GeometryTransform.Vec3 from, GeometryTransform.Vec3 to)
         {
-            return (b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X);
-        }
-        
-        /// <summary>Calculate squared distance between two points.</summary>
-        private static double DistSquared(GeometryTransform.Vec3 a, GeometryTransform.Vec3 b)
-        {
-            var dx = b.X - a.X;
-            var dy = b.Y - a.Y;
-            return dx * dx + dy * dy;
+            var dx = to.X - from.X;
+            var dy = to.Y - from.Y;
+            
+            // atan2 in SVG coords: 0° = right (+X), 90° = down (+Y), 180° = left (-X), 270° = up (-Y)
+            var angle = Math.Atan2(dy, dx) * 180.0 / Math.PI;
+            
+            // Normalize to [0, 360)
+            if (angle < 0)
+                angle += 360;
+            
+            return angle;
         }
 
         private static bool IsCloseToOriginal(GeometryTransform.Vec3 normVert, (double X, double Y, double Z) orig3D, 
