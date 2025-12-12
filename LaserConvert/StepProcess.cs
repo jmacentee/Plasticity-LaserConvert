@@ -154,31 +154,51 @@ namespace LaserConvert
                         }
                         else
                         {
-                            // For simple shapes: use the top face from the thin pair
-                            var face1Verts = StepTopologyResolver.ExtractVerticesFromFace(faces[face1Idx], stepFile);
-                            var face2Verts = StepTopologyResolver.ExtractVerticesFromFace(faces[face2Idx], stepFile);
+                            // For simple shapes: first try to find a face with holes (multiple bounds)
+                            // If found, use that. Otherwise use the top face from the thin pair
+                            StepAdvancedFace faceWithHoles = null;
+                            for (int i = 0; i < faces.Count; i++)
+                            {
+                                if (faces[i].Bounds?.Count > 1)
+                                {
+                                    faceWithHoles = faces[i];
+                                    break;
+                                }
+                            }
                             
-                            var face1RotatedZ = face1Verts
-                                .Select(v => {
-                                    var vec = new GeometryTransform.Vec3(v.X, v.Y, v.Z);
-                                    var rot1 = ApplyMatrix(vec, rotMatrix1);
-                                    if (faces.Count > 20)
-                                        return rot1;
-                                    return ApplyMatrix(rot1, rotMatrix2);
-                                })
-                                .Average(v => v.Z);
-                            
-                            var face2RotatedZ = face2Verts
-                                .Select(v => {
-                                    var vec = new GeometryTransform.Vec3(v.X, v.Y, v.Z);
-                                    var rot1 = ApplyMatrix(vec, rotMatrix1);
-                                    if (faces.Count > 20)
-                                        return rot1;
-                                    return ApplyMatrix(rot1, rotMatrix2);
-                                })
-                                .Average(v => v.Z);
-                            
-                            mainFace = face1RotatedZ > face2RotatedZ ? faces[face1Idx] : faces[face2Idx];
+                            if (faceWithHoles != null)
+                            {
+                                mainFace = faceWithHoles;
+                                Console.WriteLine($"[SVG] {name}: Found face with {faceWithHoles.Bounds.Count} bounds (has holes)");
+                            }
+                            else
+                            {
+                                // No face with holes found, use top face from thin pair
+                                var face1Verts = StepTopologyResolver.ExtractVerticesFromFace(faces[face1Idx], stepFile);
+                                var face2Verts = StepTopologyResolver.ExtractVerticesFromFace(faces[face2Idx], stepFile);
+                                
+                                var face1RotatedZ = face1Verts
+                                    .Select(v => {
+                                        var vec = new GeometryTransform.Vec3(v.X, v.Y, v.Z);
+                                        var rot1 = ApplyMatrix(vec, rotMatrix1);
+                                        if (faces.Count > 20)
+                                            return rot1;
+                                        return ApplyMatrix(rot1, rotMatrix2);
+                                    })
+                                    .Average(v => v.Z);
+                                
+                                var face2RotatedZ = face2Verts
+                                    .Select(v => {
+                                        var vec = new GeometryTransform.Vec3(v.X, v.Y, v.Z);
+                                        var rot1 = ApplyMatrix(vec, rotMatrix1);
+                                        if (faces.Count > 20)
+                                            return rot1;
+                                        return ApplyMatrix(rot1, rotMatrix2);
+                                    })
+                                    .Average(v => v.Z);
+                                
+                                mainFace = face1RotatedZ > face2RotatedZ ? faces[face1Idx] : faces[face2Idx];
+                            }
                         }
                     }
                     else if (face1Idx >= 0 && face1Idx < faces.Count)

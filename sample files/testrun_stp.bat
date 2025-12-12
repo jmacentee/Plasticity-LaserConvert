@@ -16,6 +16,8 @@ REM Normalize the projection so the rectangles appear axis-aligned in the SVG.
 REM start each object at 0,0 in the svg so we can read easily it's width and height in the SVG.  
 REM round the coordinate output in the SGV to the nearest whole number.
 
+REM there should be no "fallback bounding box cases".  Either read the geometry correctly or skip the solid entirely.
+
 REM Swapped X-Y dimensions in the SVG are not a problem, as long as the entire solid and it's cutuouts are rotated together.
 REM In these tests, there should not be any diagonal lines. (This is not a general rule, only true for these examples).  
 REM The holes in the solids in a STP file are clearly part of the standard. When I load KCBox.stp into https://3dviewer.net/ I see the solid with two holes in it, the same as I saw in Plasticity.  If any tests fail, try to look for the root problem and the general solution instead of any hacks.
