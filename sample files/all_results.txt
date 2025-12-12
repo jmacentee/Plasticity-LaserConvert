@@ -145,9 +145,6 @@ REM File: KCBoxFlat.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="KCBoxFlat">
-    <path d="M 17,0 L 11,0 L 11,0 L 6,0 L 6,0 L 0,0 L 0,0 L 3,0 L 3,0 L 0,0 L 0,0 L 13,0 L 13,0 L 27,0 L 27,0 L 40,0 L 40,0 L 38,0 L 38,0 L 40,0 L 40,0 L 38,0 L 38,0 L 40,0 L 40,0 L 34,0 L 34,0 L 29,0 L 29,0 L 23,0 L 23,0 L 17,0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 5 0 L 15 0 L 15 10 L 5 10 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 25 0 L 35 0 L 35 5 L 25 5 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -796,17 +793,9 @@ Found 1 solids
 [EXTRACT] Returning 32 outer verts and 2 hole loops
 [SVG] KCBoxFlat: Extracted outer loop with 32 vertices from face bounds
 [SVG] KCBoxFlat: Outline vertices after rotation - X:[-0.0,40.1] Y:[-3.0,-3.0] Z:[-58.4,-0.2]
-[SVG] KCBoxFlat: Axis ranges for projection: X=40.1, Y=0.0, Z=58.2
-[SVG] KCBoxFlat: Using axes Z and X for 2D projection
-[SVG] KCBoxFlat: Keeping all 32 vertices for complex shape
-[SVG] KCBoxFlat: Complex shape detected, skipping orthogonal sort
-[SVG] KCBoxFlat: Generated outline from 32 outline points -> 32 ordered
-[SVG] Processing hole with 4 vertices in 3D
-[SVG] Hole 3D bounds: X:[4.9,15.1] Y:[-3.0,-3.0] Z:[-21.4,-11.1], normalized: (5,0) 10x10
-[SVG] Added hole path
-[SVG] Processing hole with 4 vertices in 3D
-[SVG] Hole 3D bounds: X:[25.0,30.2] Y:[-3.0,-3.0] Z:[-41.4,-31.3], normalized: (25,0) 10x5
-[SVG] Added hole path
+[SVG] KCBoxFlat: DEGENERATE OUTLINE DETECTED - minimum axis range 0.000
+[SVG] KCBoxFlat: This face has edge topology only, not 2D surface geometry
+[SVG] KCBoxFlat: Skipping this solid (requires different extraction method)
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBoxFlat.svg
  
 REM File: KCBox_failures.txt 
@@ -881,67 +870,95 @@ FAILED APPROACHES:
    
    LESSON: Must ORDER first, then dedup only if needed. Reversing this order loses data.
 
-SUCCESSFUL APPROACH (CURRENT):
-=============================
+7. SELECTING FACE BY MOST VERTICES (KCBoxFlat issue)
+   ATTEMPTED: For complex shapes, pick face with most boundary vertices from ExtractFaceWithHoles
+   RESULT: KCBoxFlat got 32-vertex face with Y=0 range (degenerate 1D edge)
+   REASON: ExtractFaceWithHoles returns vertices from EDGE TOPOLOGY, not 2D face geometry
+   ISSUE: Selected face has complex edge structure but zero height in projected dimension
+           The 32 vertices from edge loops don't form a proper 2D outline
+   
+   LESSON: ExtractFaceWithHoles returns edge topology vertices, not face surface vertices.
+   For flat shapes, edge topology can be degenerate (1D lines instead of 2D outlines).
+   Can't use most-vertices heuristic - need a better face selection method.
 
-SKIP DEDUP FOR COMPLEX SHAPES (faces.Count > 20)
+8. DYNAMIC AXIS SELECTION FOR 2D PROJECTION (KCBoxFlat partial fix)
+   ATTEMPTED: Detect which two axes have largest variance and use those for projection
+   RESULT: KCBoxFlat correctly identified X and Z axes, but outline still Y=0
+   REASON: The underlying vertex data (from edge topology) only spans one dimension
+   ISSUE: Even with correct axis selection, if vertices are all Y=0, projection has no content
+   
+   LESSON: Axis selection is necessary but not sufficient. The real problem is that
+   the face vertices themselves are degenerate (extracted from 1D edge topology).
+   Need to fix the vertex extraction, not just the projection axes.
 
-For complex shapes:
-- Keep ALL raw vertices from ExtractFaceWithHoles (all 34 points)
-- Don't dedup - preserve every vertex including duplicates
-- Use orthogonal sort if possible, but fallback to raw order if needed
-- The SVG path handles duplicate points naturally (just redundant line segments)
+CURRENT INVESTIGATION - KCBoxFlat ROOT CAUSE:
+==============================================
 
-For simple shapes (KBox, CBox):
-- Dedup consecutive points to clean up exact duplicates
-- Apply orthogonal nearest-neighbor sort (works perfectly for axis-aligned shapes)
+DISCOVERED ISSUE:
+KCBoxFlat outline vertices have Y=0 range because they're from edge topology, not face geometry.
 
-WHY THIS WORKS:
-- Preserves all 32 vertices of KCBox boundary
-- SVG path can handle duplicate/redundant points
-- No information is lost during processing
-- Renders the full complexity of tabs and cutouts
+EVIDENCE FROM LOGS:
+[SVG] KCBoxFlat: Outline vertices after rotation - X:[-0.0,40.1] Y:[-3.0,-3.0] Z:[-58.4,-0.2]
 
-CURRENT STATUS:
-===============
-With the "skip dedup for complex shapes" approach:
-- KCBox now renders all 34 vertices in the outline path
-- Holes still render correctly (2 red holes)
-- All other tests (1-8) continue to pass
-- KCBox test output shows the complete boundary complexity
+All Y values are -3.0 (single value = degenerate). Meanwhile:
+- X ranges 0 to 40 (correct)
+- Z ranges -58.4 to -0.2 (correct - this is the 58mm height)
+- Y is constant -3.0 (this is just the 3mm thickness)
 
-REMAINING OBSERVATIONS:
-=======================
+WHAT'S HAPPENING:
+1. We selected the right face (32 vertices with complex outline)
+2. But ExtractFaceWithHoles returns vertices from the EDGE LOOPS of that face
+3. For KCBoxFlat, which is a flat extrusion, these edge loops are 1D lines on the edges
+4. A 1D edge has zero extent in the perpendicular direction
+5. Result: All extracted Y values are the same (degenerate)
 
-1. The vertices from ExtractFaceWithHoles may not be in perfect perimeter order
-   (they jump around due to how STEP topology traces edge loops), but that's acceptable
-   because the SVG path connects them as a polyline regardless of traversal order.
+WHY ExtractFaceWithHoles IS THE PROBLEM:
+The function extracts vertices from StepFaceBound -> StepEdgeLoop -> StepOrientedEdge chains.
+This traverses the BOUNDARY of the face, not the SURFACE of the face.
+For a flat extrusion (top surface), the boundary is a 1D curve with no extent perpendicular to it.
 
-2. Duplicate points in the path are harmless - they just create zero-length segments.
+THE REAL SOLUTION:
+Instead of using ExtractFaceWithHoles (which returns edge topology), we need to:
+1. Extract ALL unique vertices from the face's bounds (the corners/keypoints of the loops)
+2. Project them to 2D
+3. Reconstruct the perimeter by ordering them correctly around the boundary
 
-3. The key insight: PRESERVE DATA over SIMPLIFY. A path with duplicate/redundant
-   points is better than a simplified path that loses geometry.
+OR:
 
-4. No algorithm should collapse a 32-vertex shape to 12. The goal is accurate
-   representation, not minimal representation.
+Get the actual face normal and extract vertices that lie ON that face plane,
+rather than following edge topology.
 
-FUTURE INVESTIGATION:
-====================
+CURRENT PARTIAL SUCCESS:
+======================
 
-If KCBox still doesn't pass after preserving all vertices:
-1. Check if the hole positions/sizes are correct
-2. Verify rotation matrices are properly applied to both outline and holes
-3. Ensure coordinate normalization (0,0 start position) is correct
-4. Check SVG path syntax and closure (Z command)
+Tests 1-8 (simple shapes): PASS
+- Box1, Box2, etc all render correctly with 4-vertex rectangles
+- CBox and CBoxR render correctly with holes
+- KBox renders with 12 vertices (partial - may be missing detail)
 
-Do NOT attempt to:
-- Apply convex hull algorithms
-- Polar angle sorting
-- Further deduplication
-- Centroid-based ordering
-- Any simplification that reduces vertex count
+KCBox (rotated complex shape): PARTIAL
+- Renders with 34 vertices from face with 3 bounds
+- Has both holes rendered
+- But outline ordering may be wrong (uses dedup order, not proper perimeter order)
 
-The geometry is correct - the issue is representation, not topology.
+KCBoxFlat (flat complex shape): FAIL
+- Extracts 32 vertices but they're all at Y=-3 (degenerate)
+- Cannot render proper outline because outline is collapsed
+
+NEXT STEPS:
+===========
+
+The fix for KCBoxFlat requires addressing the root cause:
+ExtractFaceWithHoles returns degenerate vertices for flat faces.
+
+Options:
+A. Detect degenerate faces (zero extent in one axis) and handle specially
+B. Extract vertices differently for flat/complex shapes
+C. Use face plane equations to find properly distributed vertices
+D. Post-process: detect zero ranges and recover missing dimension from face bounds
+
+Most practical: Option A - detect when extracted vertices are degenerate and
+fall back to extracting vertices from ALL face bounds directly (not just outer loop).
  
 REM File: KCBox_output.txt 
 Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.stp

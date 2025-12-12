@@ -263,8 +263,28 @@ namespace LaserConvert
                                 var outY = outlineNormalizedVerts.Select(v => v.Y);
                                 var outZ = outlineNormalizedVerts.Select(v => v.Z);
                                 Console.WriteLine($"[SVG] {name}: Outline vertices after rotation - X:[{outX.Min():F1},{outX.Max():F1}] Y:[{outY.Min():F1},{outY.Max():F1}] Z:[{outZ.Min():F1},{outZ.Max():F1}]");
+                                
+                                // DEGENERACY CHECK: For complex shapes, if one axis has near-zero range,
+                                // the extracted vertices are degenerate (from edge topology, not 2D face)
+                                // ATTEMPTED: Use vertices as-is from ExtractFaceWithHoles
+                                // RESULT: KCBoxFlat Y=0 range, geometry lost
+                                // FIX: Detect degeneracy and skip rendering if can't recover
+                                var degX = outX.Max() - outX.Min();
+                                var degY = outY.Max() - outY.Min();
+                                var degZ = outZ.Max() - outZ.Min();
+                                var minDegRange = Math.Min(Math.Min(degX, degY), degZ);
+                                
+                                if (faces.Count > 20 && minDegRange < 0.1)
+                                {
+                                    Console.WriteLine($"[SVG] {name}: DEGENERATE OUTLINE DETECTED - minimum axis range {minDegRange:F3}");
+                                    Console.WriteLine($"[SVG] {name}: This face has edge topology only, not 2D surface geometry");
+                                    Console.WriteLine($"[SVG] {name}: Skipping this solid (requires different extraction method)");
+                                    svg.EndGroup();
+                                    continue;
+                                }
                             }
                             
+
                             // Project to 2D - for complex shapes where rotMatrix2 is skipped,
                             // we need to find which 2 axes actually contain the geometry
                             // ATTEMPTED: Always project X-Y
