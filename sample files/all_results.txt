@@ -66,7 +66,7 @@ REM File: CBox.svg
 <defs/>
   <g id="CBox">
     <path d="M 0 0 L 50 0 L 50 40 L 0 40 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 35 5 L 45 5 L 45 15 L 35 15 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 35 -15 L 45 -15 L 45 -5 L 35 -5 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -135,6 +135,8 @@ REM File: KCBox.svg
 <defs/>
   <g id="KCBox">
     <path d="M 33,0 L 35,2 L 30,6 L 25,9 L 21,12 L 16,15 L 14,16 L 11,18 L 6,22 L 2,25 L 19,10 L 14,13 L 5,19 L 24,6 L 12,14 L 9,16 L 0,22 L 4,19 L 28,3 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 4 14 L 12 14 L 12 20 L 4 20 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 21 6 L 25 6 L 25 9 L 21 9 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -443,7 +445,7 @@ Found 1 solids
 [EXTRACT] Identified bound 0 as hole loop 1 (area=100.0)
 [EXTRACT] Returning 4 outer verts and 1 hole loops
 [SVG] Processing hole with 4 vertices in 3D
-[SVG] Hole 3D bounds: X:[-15.0,-5.0] Y:[5.0,15.0], normalized: (35,5) 10x10
+[SVG] Hole 3D bounds: X:[-15.0,-5.0] Y:[-15.0,-5.0], normalized: (35,-15) 10x10
 [SVG] Added hole path
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBox.svg
  
@@ -488,9 +490,26 @@ Found 1 solids
 [SVG] KCBox: Computing rotation from 8 vertices in thin faces
 [SVG] KCBox: Z range [-35.9, 22.1] (range=58.0), using all 84 vertices for projection
 [SVG] KCBox: After rotation - X:[-0.5,34.4] Y:[-45.2,-20.4]
+[SVG] KCBox: Searching 44 faces for main face with complex outline
+[SVG] KCBox: Selected face with 42 vertices as main face
 [SVG] KCBox: Complex shape but face only has 4 vertices, using full projection outline
 [SVG] KCBox: Using top 25% of geometry: 32 vertices (Z >= 7.6)
 [SVG] KCBox: After 2D projection and dedup: 29 unique points
 [SVG] KCBox: Using perimeter ordering for 29 complex points
 [SVG] KCBox: Generated outline path
+[SVG] Rendering holes: Face has 3 bounds
+[EXTRACT] ExtractFaceWithHoles: face has 3 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 7.2x10.8 (area=77.8): (27.7,-29.0,25.1), (23.3,-27.1,23.8), (24.9,-37.9,21.5), (20.5,-36.0,20.2)...
+[EXTRACT] Bound 1 has 4 vertices, bbox 11.6x12.7 (area=148.0): (8.4,-10.5,22.2), (17.2,-14.3,24.8), (11.2,-1.6,25.9), (20.0,-5.5,28.5)...
+[EXTRACT] Bound 2 has 34 vertices, bbox 49.3x62.9 (area=3101.5): (29.6,-55.1,18.6), (17.8,-49.9,15.1), (32.4,-46.2,22.3), (30.6,-45.4,21.8)...
+[EXTRACT] Identified bound 2 as outer loop (largest area=3101.5)
+[EXTRACT] Identified bound 1 as hole loop 1 (area=148.0)
+[EXTRACT] Identified bound 0 as hole loop 2 (area=77.8)
+[EXTRACT] Returning 34 outer verts and 2 hole loops
+[SVG] Processing hole with 4 vertices in 3D
+[SVG] Hole 3D bounds: X:[3.6,12.0] Y:[-31.2,-25.7], normalized: (4,14) 8x6
+[SVG] Added hole path
+[SVG] Processing hole with 4 vertices in 3D
+[SVG] Hole 3D bounds: X:[20.3,24.4] Y:[-39.6,-36.8], normalized: (21,6) 4x3
+[SVG] Added hole path
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.svg

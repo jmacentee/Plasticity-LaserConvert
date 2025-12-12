@@ -22,6 +22,6 @@ Found 1 solids
 [EXTRACT] Identified bound 0 as hole loop 1 (area=100.0)
 [EXTRACT] Returning 4 outer verts and 1 hole loops
 [SVG] Processing hole with 4 vertices in 3D
-[SVG] Hole 3D bounds: X:[-15.0,-5.0] Y:[5.0,15.0], normalized: (35,5) 10x10
+[SVG] Hole 3D bounds: X:[-15.0,-5.0] Y:[-15.0,-5.0], normalized: (35,-15) 10x10
 [SVG] Added hole path
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBox.svg

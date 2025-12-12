@@ -131,34 +131,55 @@ namespace LaserConvert
                     StepAdvancedFace mainFace = null;
                     if (face1Idx >= 0 && face1Idx < faces.Count && face2Idx >= 0 && face2Idx < faces.Count)
                     {
-                        // For complex shapes, we have TWO thin faces (top and bottom).
-                        // Find which one is the actual TOP face (has highest average Z after rotation)
-                        var face1Verts = StepTopologyResolver.ExtractVerticesFromFace(faces[face1Idx], stepFile);
-                        var face2Verts = StepTopologyResolver.ExtractVerticesFromFace(faces[face2Idx], stepFile);
-                        
-                        // Transform both to rotated space and compare Z
-                        var face1RotatedZ = face1Verts
-                            .Select(v => {
-                                var vec = new GeometryTransform.Vec3(v.X, v.Y, v.Z);
-                                var rot1 = ApplyMatrix(vec, rotMatrix1);
-                                if (faces.Count > 20)
-                                    return rot1;
-                                return ApplyMatrix(rot1, rotMatrix2);
-                            })
-                            .Average(v => v.Z);
-                        
-                        var face2RotatedZ = face2Verts
-                            .Select(v => {
-                                var vec = new GeometryTransform.Vec3(v.X, v.Y, v.Z);
-                                var rot1 = ApplyMatrix(vec, rotMatrix1);
-                                if (faces.Count > 20)
-                                    return rot1;
-                                return ApplyMatrix(rot1, rotMatrix2);
-                            })
-                            .Average(v => v.Z);
-                        
-                        // Use the face with the HIGHEST Z as the main face (this is what we're projecting)
-                        mainFace = face1RotatedZ > face2RotatedZ ? faces[face1Idx] : faces[face2Idx];
+                        if (faces.Count > 20)
+                        {
+                            // For complex shapes: find the face with the most complex outer loop (most vertices)
+                            // This is more likely to be the actual main face with holes/tabs
+                            Console.WriteLine($"[SVG] {name}: Searching {faces.Count} faces for main face with complex outline");
+                            int maxVertexCount = 0;
+                            int bestFaceIdx = face1Idx;
+                            
+                            for (int i = 0; i < faces.Count; i++)
+                            {
+                                var faceVerts = StepTopologyResolver.ExtractVerticesFromFace(faces[i], stepFile);
+                                if (faceVerts.Count > maxVertexCount)
+                                {
+                                    maxVertexCount = faceVerts.Count;
+                                    bestFaceIdx = i;
+                                }
+                            }
+                            
+                            mainFace = faces[bestFaceIdx];
+                            Console.WriteLine($"[SVG] {name}: Selected face with {maxVertexCount} vertices as main face");
+                        }
+                        else
+                        {
+                            // For simple shapes: use the top face from the thin pair
+                            var face1Verts = StepTopologyResolver.ExtractVerticesFromFace(faces[face1Idx], stepFile);
+                            var face2Verts = StepTopologyResolver.ExtractVerticesFromFace(faces[face2Idx], stepFile);
+                            
+                            var face1RotatedZ = face1Verts
+                                .Select(v => {
+                                    var vec = new GeometryTransform.Vec3(v.X, v.Y, v.Z);
+                                    var rot1 = ApplyMatrix(vec, rotMatrix1);
+                                    if (faces.Count > 20)
+                                        return rot1;
+                                    return ApplyMatrix(rot1, rotMatrix2);
+                                })
+                                .Average(v => v.Z);
+                            
+                            var face2RotatedZ = face2Verts
+                                .Select(v => {
+                                    var vec = new GeometryTransform.Vec3(v.X, v.Y, v.Z);
+                                    var rot1 = ApplyMatrix(vec, rotMatrix1);
+                                    if (faces.Count > 20)
+                                        return rot1;
+                                    return ApplyMatrix(rot1, rotMatrix2);
+                                })
+                                .Average(v => v.Z);
+                            
+                            mainFace = face1RotatedZ > face2RotatedZ ? faces[face1Idx] : faces[face2Idx];
+                        }
                     }
                     else if (face1Idx >= 0 && face1Idx < faces.Count)
                     {
@@ -173,7 +194,7 @@ namespace LaserConvert
                     // Try to extract the actual face outline from the main face
                     if (mainFace != null)
                     {
-                        var faceOutlineVerts3D = StepTopologyResolver.ExtractVerticesFromFace(mainFace, stepFile);
+                        var faceOutlineVerts3D = StepTopologyResolver.ExtractOuterLoopVerticesFromFace(mainFace, stepFile);
                         
                         // Use face outline if we have enough vertices (indicates complexity worth preserving)
                         // OR if this is identified as a complex shape (>20 faces)
@@ -241,6 +262,14 @@ namespace LaserConvert
                                     svg.EndGroup();
                                     continue;
                                 }
+                                else
+                                {
+                                    Console.WriteLine($"[SVG] {name}: After dedup only {dedup.Count} points, using fallback");
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine($"[SVG] {name}: Only {topVerts.Count} top verts (need 4+), using fallback");
                             }
                         }
                         else if (faces.Count > 20 && faceOutlineVerts3D.Count == 4)
@@ -693,24 +722,31 @@ namespace LaserConvert
         {
             Console.WriteLine($"[SVG] Processing hole with {holeVertices3D.Count} vertices in 3D");
             
-            // Find which of our normalized vertices correspond to this hole
-            var holeNormalizedVerts = new List<GeometryTransform.Vec3>();
-            foreach (var hole3Dvert in holeVertices3D)
+            if (holeVertices3D.Count < 3)
             {
-                var key3D = (Math.Round(hole3Dvert.X, 1), Math.Round(hole3Dvert.Y, 1), Math.Round(hole3Dvert.Z, 1));
-                var matchingNormVert = normalizedVertices.FirstOrDefault(v => 
-                    (Math.Round(v.X, 1), Math.Round(v.Y, 1), Math.Round(v.Z, 1)) == key3D ||
-                    IsCloseToOriginal(v, hole3Dvert, rotMatrix1, rotMatrix2));
-                
-                if (!matchingNormVert.Equals(default(GeometryTransform.Vec3)))
-                {
-                    holeNormalizedVerts.Add(matchingNormVert);
-                }
+                Console.WriteLine($"[SVG] Hole skipped (only {holeVertices3D.Count} vertices)");
+                return;
             }
+            
+            // Transform hole vertices directly using the rotation matrices
+            var holeNormalizedVerts = holeVertices3D
+                .Select(v => {
+                    var vec = new GeometryTransform.Vec3(v.Item1, v.Item2, v.Item3);
+                    // Apply both rotations like we do for other vertices
+                    var rot1Result = new GeometryTransform.Vec3(
+                        rotMatrix1[0, 0] * vec.X + rotMatrix1[0, 1] * vec.Y + rotMatrix1[0, 2] * vec.Z,
+                        rotMatrix1[1, 0] * vec.X + rotMatrix1[1, 1] * vec.Y + rotMatrix1[1, 2] * vec.Z,
+                        rotMatrix1[2, 0] * vec.X + rotMatrix1[2, 1] * vec.Y + rotMatrix1[2, 2] * vec.Z
+                    );
+                    
+                    // Don't apply rotMatrix2 for complex shapes (it might not be valid)
+                    return rot1Result;
+                })
+                .ToList();
             
             if (holeNormalizedVerts.Count < 3)
             {
-                Console.WriteLine($"[SVG] Hole skipped (only {holeNormalizedVerts.Count} vertices matched)");
+                Console.WriteLine($"[SVG] Hole skipped after transformation");
                 return;
             }
         
