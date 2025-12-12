@@ -13,7 +13,6 @@ Found 1 solids
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
 [SVG] CBox: Z range [-3.0, 0.0] (range=3.0), using all 16 vertices for projection
 [SVG] CBox: After rotation - X:[-50.0,0.0] Y:[-0.0,40.0]
-[SVG] CBox: mainFace has 2 bounds
 [SVG] CBox: Bounding box: 50 x 40
 [SVG] Rendering holes: Face has 2 bounds
 [EXTRACT] ExtractFaceWithHoles: face has 2 bounds

@@ -192,14 +192,22 @@ namespace LaserConvert
             
             if (isComplexShape)
             {
-                Console.WriteLine($"[TOPO] Complex shape detected ({faces.Count} faces), using outer loop vertices from ALL faces");
-                // Extract outer loop vertices from all faces - these will be filtered by top face in StepProcess
+                Console.WriteLine($"[TOPO] Complex shape detected ({faces.Count} faces), extracting ALL vertices from all face bounds");
+                // For complex shapes, extract ALL bound vertices (not just outer loops)
+                // because tabs/cutouts are represented by intermediate faces with multiple bounds
                 foreach (var (face, faceVerts) in faceData)
                 {
-                    var outerVerts = ExtractOuterLoopVerticesFromFace(face, stepFile);
-                    if (outerVerts.Count > 0)
+                    if (face?.Bounds != null)
                     {
-                        allVertices.AddRange(outerVerts);
+                        // Extract from ALL bounds (outer + holes), not just outer loop
+                        foreach (var bound in face.Bounds)
+                        {
+                            var boundVerts = ExtractVerticesFromBound(bound, stepFile);
+                            if (boundVerts.Count > 0)
+                            {
+                                allVertices.AddRange(boundVerts);
+                            }
+                        }
                     }
                 }
             }

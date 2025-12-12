@@ -2,7 +2,7 @@ Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample file
 File loaded. Total items: 1414
 Found 1 solids
 [TOPO] Processing 44 faces
-[TOPO] Complex shape detected (44 faces), using outer loop vertices from ALL faces
+[TOPO] Complex shape detected (44 faces), extracting ALL vertices from all face bounds
 [TOPO] Extracted 84 unique vertices
 [TOPO] Vertex ranges: X[-5.8,44.6] Y[-55.1,8.6] Z[5.4,36.9]
 [TOPO] Computed dimensions: 50.4 x 63.7 x 31.5
@@ -14,6 +14,9 @@ Found 1 solids
 [SVG] KCBox: Computing rotation from 8 vertices in thin faces
 [SVG] KCBox: Z range [-35.9, 22.1] (range=58.0), using all 84 vertices for projection
 [SVG] KCBox: After rotation - X:[-0.5,34.4] Y:[-45.2,-20.4]
-[SVG] KCBox: mainFace has 1 bounds
-[SVG] KCBox: Bounding box: 35 x 25
+[SVG] KCBox: Complex shape but face only has 4 vertices, using full projection outline
+[SVG] KCBox: Using top 25% of geometry: 32 vertices (Z >= 7.6)
+[SVG] KCBox: After 2D projection and dedup: 29 unique points
+[SVG] KCBox: Using perimeter ordering for 29 complex points
+[SVG] KCBox: Generated outline path
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.svg

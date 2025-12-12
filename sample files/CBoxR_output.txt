@@ -13,6 +13,5 @@ Found 1 solids
 [TRANSFORM] Normalizing edge to X-axis: angle=-54.3ø
 [SVG] CBoxR: Z range [-72.9, -69.9] (range=3.0), using all 10 vertices for projection
 [SVG] CBoxR: After rotation - X:[-6.1,43.9] Y:[-12.7,27.3]
-[SVG] CBoxR: mainFace has 1 bounds
 [SVG] CBoxR: Bounding box: 50 x 40
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBoxR.svg

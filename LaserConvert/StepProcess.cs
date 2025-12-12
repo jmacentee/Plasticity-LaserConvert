@@ -249,12 +249,20 @@ namespace LaserConvert
                             // Use the TOP-LEVEL outline from all normalized vertices instead
                             Console.WriteLine($"[SVG] {name}: Complex shape but face only has {faceOutlineVerts3D.Count} vertices, using full projection outline");
                             
-                            // Find top-level vertices at max Z
+                            // Find top-level vertices - use a wider Z range to capture tabs/cutouts
                             var topZ = normalizedVertices.Max(v => v.Z);
+                            var bottomZ = normalizedVertices.Min(v => v.Z);
+                            var zRng = topZ - bottomZ;
+                            // For complex shapes, use top 25% of height to capture all edge geometry
+                            var zThreshold = topZ - (zRng * 0.25);
+                            
                             var topVerts = normalizedVertices
-                                .Where(v => Math.Abs(v.Z - topZ) < 1.5)
+                                .Where(v => v.Z >= zThreshold)
                                 .Distinct(new Vec3Comparer())
                                 .ToList();
+                            
+    
+                            Console.WriteLine($"[SVG] {name}: Using top 25% of geometry: {topVerts.Count} vertices (Z >= {zThreshold:F1})");
                             
                             if (topVerts.Count >= 4)
                             {
@@ -273,13 +281,27 @@ namespace LaserConvert
                                         dedup.Add((p.Item1, p.Item2));
                                 }
                                 
+                                Console.WriteLine($"[SVG] {name}: After 2D projection and dedup: {dedup.Count} unique points");
+                                
                                 if (dedup.Count >= 4)
                                 {
-                                    // Sort vertices by perimeter
-                                    var sorted = SortPerimeterVertices2D(dedup);
-                                    var outlinePathData = BuildPerimeterPath(sorted);
-                                    Console.WriteLine($"[SVG] {name}: Generated outline path from {dedup.Count} top-level 2D points");
-                                    svg.Path(outlinePathData, strokeWidth: 0.2, fill: "none", stroke: "#000");
+                                    // For many points, use OrderPerimeterVertices (convex hull) instead of orthogonal sort
+                                    if (dedup.Count > 8)
+                                    {
+                                        Console.WriteLine($"[SVG] {name}: Using perimeter ordering for {dedup.Count} complex points");
+                                        var vec3pts = dedup.Select(p => new GeometryTransform.Vec3(p.X, p.Y, 0)).ToList();
+                                        var ordered = OrderPerimeterVertices(vec3pts);
+                                        var outlinePathData = BuildPerimeterPath(ordered.Select(v => ((long)v.X, (long)v.Y)).ToList());
+                                        svg.Path(outlinePathData, strokeWidth: 0.2, fill: "none", stroke: "#000");
+                                    }
+                                    else
+                                    {
+                                        // For 4-8 points, use orthogonal sort
+                                        var sorted = SortPerimeterVertices2D(dedup);
+                                        var outlinePathData = BuildPerimeterPath(sorted);
+                                        svg.Path(outlinePathData, strokeWidth: 0.2, fill: "none", stroke: "#000");
+                                    }
+                                    Console.WriteLine($"[SVG] {name}: Generated outline path");
                                     
                                     // Render holes from main face
                                     var outlineMinX = topVerts.Min(v => v.X);
