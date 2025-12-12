@@ -307,7 +307,18 @@ namespace LaserConvert
                                 // FIX: Try SortPerimeterVertices2D first for orthogonal constraints
                                 var orthogonalSort = SortPerimeterVertices2D(dedup);
                                 List<(long X, long Y)> finalDedup;
-                                if (orthogonalSort.Count == dedup.Count)
+                                // For complex shapes, skip orthogonal sort since edges may not be axis-aligned
+                                // ATTEMPTED: Apply orthogonal sort to complex shapes
+                                // RESULT: KCBoxFlat produces collapsed path (all Y=0)
+                                // REASON: Orthogonal sort fails silently when edges have non-axis-aligned components
+                                // FIX: For complex shapes (>20 faces), use dedup order directly
+                                if (faces.Count > 20)
+                                {
+                                    // Complex shape: trust the bounds extraction order
+                                    finalDedup = dedup;
+                                    Console.WriteLine($"[SVG] {name}: Complex shape detected, skipping orthogonal sort");
+                                }
+                                else if (orthogonalSort.Count == dedup.Count)
                                 {
                                     // Orthogonal sort succeeded - use it for axis-aligned shapes
                                     finalDedup = orthogonalSort;
@@ -817,7 +828,7 @@ namespace LaserConvert
         private static List<(long X, long Y)> SortPerimeterVertices2D(List<(long X, long Y)> pts)
         {
             if (pts == null || pts.Count < 3)
-                return new List<(long X, long Y)>();
+                return new List<(long X, long Y)> ();
 
             // For orthogonal shapes, use pure greedy nearest-neighbor on orthogonal edges
             // Start from bottom-left corner

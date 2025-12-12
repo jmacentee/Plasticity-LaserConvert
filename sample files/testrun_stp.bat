@@ -16,6 +16,8 @@ REM Normalize the projection so the rectangles appear axis-aligned in the SVG.
 REM start each object at 0,0 in the svg so we can read easily it's width and height in the SVG.  
 REM round the coordinate output in the SGV to the nearest whole number.
 
+REM not "projecting" a solid onto a plane, you are rotating, perhaps multiple times, and moving to put the large face of the solid onto the plane.  Then you are describing the outside edge of the face and any holes in it.
+
 REM there should be no "fallback bounding box cases".  Either read the geometry correctly or skip the solid entirely.
 
 REM Swapped X-Y dimensions in the SVG are not a problem, as long as the entire solid and it's cutuouts are rotated together.

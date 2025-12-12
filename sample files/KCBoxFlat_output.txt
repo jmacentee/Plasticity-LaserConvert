@@ -26,7 +26,7 @@ Found 1 solids
 [EXTRACT] Returning 32 outer verts and 2 hole loops
 [SVG] KCBoxFlat: Extracted outer loop with 32 vertices from face bounds
 [SVG] KCBoxFlat: Keeping all 32 vertices for complex shape
-[SVG] KCBoxFlat: Orthogonal sort succeeded
+[SVG] KCBoxFlat: Complex shape detected, skipping orthogonal sort
 [SVG] KCBoxFlat: Generated outline from 32 outline points -> 32 ordered
 [SVG] Processing hole with 4 vertices in 3D
 [SVG] Hole 3D bounds: X:[4.9,15.1] Y:[-3.0,-3.0] Z:[-21.4,-11.1], normalized: (5,0) 10x10

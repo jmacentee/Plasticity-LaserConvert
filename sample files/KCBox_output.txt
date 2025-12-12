@@ -26,7 +26,7 @@ Found 1 solids
 [EXTRACT] Returning 34 outer verts and 2 hole loops
 [SVG] KCBox: Extracted outer loop with 34 vertices from face bounds
 [SVG] KCBox: Keeping all 34 vertices for complex shape
-[SVG] KCBox: Orthogonal sort failed, using dedup order (preserves 34 vertices)
+[SVG] KCBox: Complex shape detected, skipping orthogonal sort
 [SVG] KCBox: Generated outline from 34 outline points -> 34 ordered
 [SVG] Processing hole with 4 vertices in 3D
 [SVG] Hole 3D bounds: X:[3.6,12.0] Y:[-31.2,-25.7] Z:[1.1,11.1], normalized: (4,14) 10x8
