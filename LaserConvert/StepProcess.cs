@@ -646,19 +646,66 @@ namespace LaserConvert
             if (pts == null || pts.Count < 3)
                 return new List<(long X, long Y)>();
 
-            // Find the centroid (geometric center) of the points
-            var centroidX = pts.Average(p => p.X);
-            var centroidY = pts.Average(p => p.Y);
+            // For orthogonal shapes, use pure greedy nearest-neighbor on orthogonal edges
+            // Start from bottom-left corner
+            
+            int startIdx = 0;
+            for (int i = 1; i < pts.Count; i++)
+            {
+                if (pts[i].Y < pts[startIdx].Y || 
+                    (pts[i].Y == pts[startIdx].Y && pts[i].X < pts[startIdx].X))
+                {
+                    startIdx = i;
+                }
+            }
 
-            // Sort the points by polar angle around the centroid
-            // Angle computation: atan2(deltaY, deltaX)
-            var sortedPts = pts
-                .Select(p => (Point: p, Angle: Math.Atan2(p.Y - centroidY, p.X - centroidX)))
-                .OrderBy(tuple => tuple.Angle)
-                .Select(tuple => tuple.Point)
-                .ToList();
+            var result = new List<(long X, long Y)>();
+            var visited = new HashSet<int> { startIdx };
+            int current = startIdx;
+            result.Add(pts[current]);
+            bool firstStep = true;
 
-            return sortedPts;
+            // Greedy nearest-neighbor with right-bias on first step
+            while (visited.Count < pts.Count)
+            {
+                var (curX, curY) = pts[current];
+                int next = -1;
+                long minDist = long.MaxValue;
+                
+                for (int i = 0; i < pts.Count; i++)
+                {
+                    if (visited.Contains(i))
+                        continue;
+                    
+                    var (vx, vy) = pts[i];
+                    
+                    // Must share X or Y coordinate (orthogonal)
+                    if (vx == curX || vy == curY)
+                    {
+                        long dist = Math.Abs(vx - curX) + Math.Abs(vy - curY);
+                        
+                        // On first step, strongly prefer moving right
+                        if (firstStep && vy == curY && vx > curX)
+                            dist -= 10000;  // Big bonus for first step going right
+                        
+                        if (dist < minDist)
+                        {
+                            minDist = dist;
+                            next = i;
+                        }
+                    }
+                }
+                
+                if (next == -1)
+                    break;
+                
+                current = next;
+                visited.Add(current);
+                result.Add(pts[current]);
+                firstStep = false;
+            }
+
+            return result;
         }
     }
 }
