@@ -82,7 +82,7 @@ REM File: KBox.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="KBox">
-    <path d="M 0,0 L 170,0 L 170,145 L 155,145 L 155,150 L 121,150 L 121,140 L 87,140 L 87,145 L 53,145 L 53,150 L 0,150 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 0,150 L 170,0 L 170,145 L 155,145 L 155,150 L 121,150 L 121,140 L 87,140 L 87,145 L 53,145 L 53,150 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -134,7 +134,7 @@ REM File: KCBox.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="KCBox">
-    <path d="M 33,0 L 22,7 L 32,1 L 28,3 L 24,6 L 19,10 L 14,13 L 9,16 L 5,19 L 0,22 L 2,21 L 11,15 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0 0 L 35 0 L 35 25 L 0 25 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
     <path d="M 4 14 L 12 14 L 12 20 L 4 20 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
     <path d="M 21 6 L 25 6 L 25 9 L 21 9 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
@@ -480,7 +480,7 @@ Found 1 solids
 [SVG] KBox: After rotation - X:[-94.7,75.3] Y:[-0.0,150.0]
 [SVG] KBox: Face outline has 12 3D vertices (complex shape detected)
 [SVG] KBox: Face outline has 12 top-face vertices
-[SVG] KBox: Generated face outline path from 12 2D points
+[SVG] KBox: Generated outline from 12 precise points -> 12 integer points
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox.svg
  
 REM File: KCBox_output.txt 
@@ -502,18 +502,7 @@ Found 1 solids
 [SVG] KCBox: After rotation - X:[-0.5,34.4] Y:[-45.2,-20.4]
 [SVG] KCBox: Searching 44 faces for main face with complex outline
 [SVG] KCBox: Selected face with 42 vertices as main face
-[SVG] KCBox: Outer loop has 4 vertices, checking for multi-bound face
-[EXTRACT] ExtractFaceWithHoles: face has 3 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 7.2x10.8 (area=77.8): (27.7,-29.0,25.1), (23.3,-27.1,23.8), (24.9,-37.9,21.5), (20.5,-36.0,20.2)...
-[EXTRACT] Bound 1 has 4 vertices, bbox 11.6x12.7 (area=148.0): (8.4,-10.5,22.2), (17.2,-14.3,24.8), (11.2,-1.6,25.9), (20.0,-5.5,28.5)...
-[EXTRACT] Bound 2 has 34 vertices, bbox 49.3x62.9 (area=3101.5): (29.6,-55.1,18.6), (17.8,-49.9,15.1), (32.4,-46.2,22.3), (30.6,-45.4,21.8)...
-[EXTRACT] Identified bound 2 as outer loop (largest area=3101.5)
-[EXTRACT] Identified bound 1 as hole loop 1 (area=148.0)
-[EXTRACT] Identified bound 0 as hole loop 2 (area=77.8)
-[EXTRACT] Returning 34 outer verts and 2 hole loops
-[SVG] KCBox: Face has 34 outer loop vertices from bounds
-[SVG] KCBox: Using all 34 outer loop vertices
-[SVG] KCBox: Generated outline from 12 2D points (in order)
+[SVG] KCBox: Bounding box: 35 x 25
 [SVG] Rendering holes: Face has 3 bounds
 [EXTRACT] ExtractFaceWithHoles: face has 3 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 7.2x10.8 (area=77.8): (27.7,-29.0,25.1), (23.3,-27.1,23.8), (24.9,-37.9,21.5), (20.5,-36.0,20.2)...

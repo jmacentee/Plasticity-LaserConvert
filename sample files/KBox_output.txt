@@ -18,5 +18,5 @@ Found 1 solids
 [SVG] KBox: After rotation - X:[-94.7,75.3] Y:[-0.0,150.0]
 [SVG] KBox: Face outline has 12 3D vertices (complex shape detected)
 [SVG] KBox: Face outline has 12 top-face vertices
-[SVG] KBox: Generated face outline path from 12 2D points
+[SVG] KBox: Generated outline from 12 precise points -> 12 integer points
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox.svg

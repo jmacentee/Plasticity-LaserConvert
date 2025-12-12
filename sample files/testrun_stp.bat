@@ -3,6 +3,8 @@ REM when successful, the groups in the SVG files will have the ids which match t
 REM the box ordering in the SVG file is not important
 REM the solids are allowed to be placed and rotated anywhere in 3d space in the step file.  Our job is to find the faces which are perpendicular to the 3mm wide face and then make a 2d projection of that face into the svg file.  the outer edge of the solids may not be regular and there may be cutouts in the solids which should be included in the svg output as indepdent red paths.
 
+REM Every time you try something and it doesn't work, you should leave a comment on what you tried, why you tried it and what the result was to prevent future duplicate effort.
+
 REM 1.	discover the shortest line segment between to verticies on different faces
 REM 2.	discover the 3d rotation of the solid based on the angle between those two vertex
 REM 3.	apply a transform to the entire 3d solid to rotate it in memory so that the short segment is now along the z axis

@@ -231,28 +231,33 @@ namespace LaserConvert
                                 // Project to 2D
                                 var minXv = topVerts.Min(v => v.X);
                                 var minYv = topVerts.Min(v => v.Y);
-                                var pts2d = topVerts
-                                    .Select(v => ((long)Math.Round(v.X - minXv), (long)Math.Round(v.Y - minYv)))
+                                
+                                // Keep full precision until the end
+                                var pts2d_precise = topVerts
+                                    .Select(v => (v.X - minXv, v.Y - minYv))
                                     .ToList();
                                 
-                                // Remove consecutive duplicates BEFORE processing (preserves perimeter order)
-                                // Remove ALL duplicates while preserving order
-                                var dedup = new List<(long X, long Y)>();
-                                var seen = new HashSet<(long, long)>();
-                                foreach (var p in pts2d)
+                                // Remove consecutive duplicates BEFORE rounding (at high precision)
+                                var dedup_precise = new List<(double X, double Y)>();
+                                foreach (var p in pts2d_precise)
                                 {
-                                    if (seen.Add((p.Item1, p.Item2)))
+                                    if (dedup_precise.Count == 0 || 
+                                        Math.Abs(dedup_precise.Last().X - p.Item1) > 0.01 || 
+                                        Math.Abs(dedup_precise.Last().Y - p.Item2) > 0.01)
                                     {
-                                        dedup.Add(p);
+                                        dedup_precise.Add(p);
                                     }
                                 }
                                 
-                                if (dedup.Count >= 4)
+                                if (dedup_precise.Count >= 4)
                                 {
-                                    // Sort vertices by perimeter for complex shapes
-                                    var sorted = SortPerimeterVertices2D(dedup);
-                                    var faceOutlinePath = BuildPerimeterPath(sorted);
-                                    Console.WriteLine($"[SVG] {name}: Generated face outline path from {dedup.Count} 2D points");
+                                    // NOW round to integers for SVG output
+                                    var dedup = dedup_precise
+                                        .Select(p => ((long)Math.Round(p.X), (long)Math.Round(p.Y)))
+                                        .ToList();
+                                    
+                                    var faceOutlinePath = BuildPerimeterPath(dedup);
+                                    Console.WriteLine($"[SVG] {name}: Generated outline from {dedup_precise.Count} precise points -> {dedup.Count} integer points");
                                     svg.Path(faceOutlinePath, strokeWidth: 0.2, fill: "none", stroke: "#000");
                                     
                                     // Render holes
@@ -266,87 +271,83 @@ namespace LaserConvert
                                 }
                                 else
                                 {
-                                    Console.WriteLine($"[SVG] {name}: After dedup only {dedup.Count} points, using fallback");
+                                    Console.WriteLine($"[SVG] {name}: After precise dedup only {dedup_precise.Count} points, using fallback");
                                 }
                             }
-                            else
+                            else if (faces.Count > 20 && faceOutlineVerts3D.Count == 4)
                             {
-                                Console.WriteLine($"[SVG] {name}: Only {topVerts.Count} top verts (need 4+), using fallback");
-                            }
-                        }
-                        else if (faces.Count > 20 && faceOutlineVerts3D.Count == 4)
-                        {
-                            // Complex shape but outer loop only has 4 vertices
-                            // This might mean the face has multiple bounds and we need to extract the actual outer loop
-                            Console.WriteLine($"[SVG] {name}: Outer loop has {faceOutlineVerts3D.Count} vertices, checking for multi-bound face");
-                            
-                            var (outerLoopVerts, holeLoops) = StepTopologyResolver.ExtractFaceWithHoles(mainFace, stepFile);
-                            if (outerLoopVerts.Count >= 4)
-                            {
-                                // Found the real outer loop from bounds analysis
-                                Console.WriteLine($"[SVG] {name}: Face has {outerLoopVerts.Count} outer loop vertices from bounds");
+                                // Complex shape but outer loop only has 4 vertices
+                                // This might mean the face has multiple bounds and we need to extract the actual outer loop
+                                Console.WriteLine($"[SVG] {name}: Outer loop has {faceOutlineVerts3D.Count} vertices, checking for multi-bound face");
                                 
-                                // Transform outer loop vertices
-                                var outlineNormalizedVerts = outerLoopVerts
-                                    .Select(v => {
-                                        var vec = new GeometryTransform.Vec3(v.X, v.Y, v.Z);
-                                        var rot1 = ApplyMatrix(vec, rotMatrix1);
-                                        return rot1;  // Complex shape - don't apply rotMatrix2
-                                    })
-                                    .ToList();
-                                
-                                // Use ALL outer loop vertices (they represent the top face)
-                                var topVerts = outlineNormalizedVerts;
-                                
-                                if (topVerts.Count >= 4)
+                                var (outerLoopVerts, holeLoops) = StepTopologyResolver.ExtractFaceWithHoles(mainFace, stepFile);
+                                if (outerLoopVerts.Count >= 4)
                                 {
-                                    Console.WriteLine($"[SVG] {name}: Using all {topVerts.Count} outer loop vertices");
+                                    // Found the real outer loop from bounds analysis
+                                    Console.WriteLine($"[SVG] {name}: Face has {outerLoopVerts.Count} outer loop vertices from bounds");
                                     
-                                    // Project to 2D
-                                    var minXv = topVerts.Min(v => v.X);
-                                    var minYv = topVerts.Min(v => v.Y);
-                                    var pts2d = topVerts
-                                        .Select(v => ((long)Math.Round(v.X - minXv), (long)Math.Round(v.Y - minYv)))
+                                    // Transform outer loop vertices
+                                    var outlineNormalizedVertsMulti = outerLoopVerts
+                                        .Select(v => {
+                                            var vec = new GeometryTransform.Vec3(v.X, v.Y, v.Z);
+                                            var rot1 = ApplyMatrix(vec, rotMatrix1);
+                                            return rot1;  // Complex shape - don't apply rotMatrix2
+                                        })
                                         .ToList();
+    
+                                    // Use ALL outer loop vertices (they represent the top face)
+                                    var topVertsMulti = outlineNormalizedVertsMulti;
                                     
-                                    // Remove consecutive duplicates BEFORE processing (preserves perimeter order)
-                                    // Remove ALL duplicates while preserving order
-                                    var dedup = new List<(long X, long Y)>();
-                                    var seen = new HashSet<(long, long)>();
-                                    foreach (var p in pts2d)
+                                    if (topVertsMulti.Count >= 4)
                                     {
-                                        if (seen.Add((p.Item1, p.Item2)))
+                                        Console.WriteLine($"[SVG] {name}: Using all {topVertsMulti.Count} outer loop vertices");
+                                        
+                                        // Project to 2D
+                                        var minXv = topVertsMulti.Min(v => v.X);
+                                        var minYv = topVertsMulti.Min(v => v.Y);
+                                        var pts2d = topVertsMulti
+                                            .Select(v => ((long)Math.Round(v.X - minXv), (long)Math.Round(v.Y - minYv)))
+                                            .ToList();
+                                    
+                                        // Remove consecutive duplicates BEFORE processing (preserves perimeter order)
+                                        // Remove ALL duplicates while preserving order
+                                        var dedup = new List<(long X, long Y)>();
+                                        var seen = new HashSet<(long, long)>();
+                                        foreach (var p in pts2d)
                                         {
-                                            dedup.Add(p);
+                                            if (seen.Add((p.Item1, p.Item2)))
+                                            {
+                                                dedup.Add(p);
+                                            }
+                                        }
+                                        
+                                        if (dedup.Count >= 4)
+                                        {
+                                            // The vertices from the outer loop are already in perimeter order
+                                            // Just use them as-is - BuildPerimeterPath will connect them in sequence
+                                            var faceOutlinePath = BuildPerimeterPath(dedup);
+                                            Console.WriteLine($"[SVG] {name}: Generated outline from {dedup.Count} 2D points (in order)");
+                                            svg.Path(faceOutlinePath, strokeWidth: 0.2, fill: "none", stroke: "#000");
+                                            
+                                            // Render holes
+                                            var outlineMinX = topVertsMulti.Min(v => v.X);
+                                            var outlineMinY = topVertsMulti.Min(v => v.Y);
+                                            
+                                            RenderHoles(svg, mainFace, stepFile, normalizedVertices, outlineMinX, outlineMinY, rotMatrix1, rotMatrix2, faces.Count > 20);
+                                            
+                                            svg.EndGroup();
+                                            continue;
                                         }
                                     }
-                                    
-                                    if (dedup.Count >= 4)
-                                    {
-                                        // The vertices from the outer loop are already in perimeter order
-                                        // Just use them as-is - BuildPerimeterPath will connect them in sequence
-                                        var faceOutlinePath = BuildPerimeterPath(dedup);
-                                        Console.WriteLine($"[SVG] {name}: Generated outline from {dedup.Count} 2D points (in order)");
-                                        svg.Path(faceOutlinePath, strokeWidth: 0.2, fill: "none", stroke: "#000");
-                                        
-                                        // Render holes
-                                        var outlineMinX = topVerts.Min(v => v.X);
-                                        var outlineMinY = topVerts.Min(v => v.Y);
-                                        
-                                        RenderHoles(svg, mainFace, stepFile, normalizedVertices, outlineMinX, outlineMinY, rotMatrix1, rotMatrix2, faces.Count > 20);
-                                        
-                                        svg.EndGroup();
-                                        continue;
-                                    }
                                 }
+                                else
+                                {
+                                    Console.WriteLine($"[SVG] {name}: Could not get outer loop, found only {outerLoopVerts.Count} verts");
+                                }
+                                
+                                // If we still can't get a good outline, fall through to bounding box
+                                Console.WriteLine($"[SVG] {name}: Could not extract complex outline, using bounding box");
                             }
-                            else
-                            {
-                                Console.WriteLine($"[SVG] {name}: Could not get outer loop, found only {outerLoopVerts.Count} verts");
-                            }
-                            
-                            // If we still can't get a good outline, fall through to bounding box
-                            Console.WriteLine($"[SVG] {name}: Could not extract complex outline, using bounding box");
                         }
                     }
 
