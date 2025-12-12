@@ -257,7 +257,7 @@ namespace LaserConvert
                                     var outlineMinY = topVerts.Min(v => v.Y);
                                     var outlineMaxY = topVerts.Max(v => v.Y);
                                     
-                                    RenderHoles(svg, mainFace, stepFile, normalizedVertices, outlineMinX, outlineMinY, rotMatrix1, rotMatrix2);
+                                    RenderHoles(svg, mainFace, stepFile, normalizedVertices, outlineMinX, outlineMinY, rotMatrix1, rotMatrix2, faces.Count > 20);
                                     
                                     svg.EndGroup();
                                     continue;
@@ -338,7 +338,7 @@ namespace LaserConvert
                                     var outlineMinY = topVerts.Min(v => v.Y);
                                     var outlineMaxY = topVerts.Max(v => v.Y);
                                     
-                                    RenderHoles(svg, mainFace, stepFile, normalizedVertices, outlineMinX, outlineMinY, rotMatrix1, rotMatrix2);
+                                    RenderHoles(svg, mainFace, stepFile, normalizedVertices, outlineMinX, outlineMinY, rotMatrix1, rotMatrix2, faces.Count > 20);
                                     
                                     svg.EndGroup();
                                     continue;
@@ -361,7 +361,7 @@ namespace LaserConvert
                     svg.Path(pathData, strokeWidth: 0.2, fill: "none", stroke: "#000");
 
                     // Render holes
-                    RenderHoles(svg, mainFace, stepFile, normalizedVertices, minX, minY, rotMatrix1, rotMatrix2);
+                    RenderHoles(svg, mainFace, stepFile, normalizedVertices, minX, minY, rotMatrix1, rotMatrix2, faces.Count > 20);
 
                     svg.EndGroup();
                 }
@@ -699,7 +699,7 @@ namespace LaserConvert
         /// </summary>
         private static void RenderHoles(SvgBuilder svg, StepAdvancedFace mainFace, StepFile stepFile,
             List<GeometryTransform.Vec3> normalizedVertices, double outlineMinX, double outlineMinY,
-            double[,] rotMatrix1, double[,] rotMatrix2)
+            double[,] rotMatrix1, double[,] rotMatrix2, bool isComplexShape = false)
         {
             // UNIFIED APPROACH: Extract holes from mainFace bounds if available
             // If mainFace has multiple bounds, those are the holes
@@ -711,14 +711,14 @@ namespace LaserConvert
                 
                 foreach (var holeVertices3D in holeLoopsOriginal)
                 {
-                    RenderSingleHole(svg, holeVertices3D, normalizedVertices, outlineMinX, outlineMinY, rotMatrix1, rotMatrix2);
+                    RenderSingleHole(svg, holeVertices3D, normalizedVertices, outlineMinX, outlineMinY, rotMatrix1, rotMatrix2, isComplexShape);
                 }
             }
         }
 
         private static void RenderSingleHole(SvgBuilder svg, List<(double X, double Y, double Z)> holeVertices3D,
             List<GeometryTransform.Vec3> normalizedVertices, double outlineMinX, double outlineMinY,
-            double[,] rotMatrix1, double[,] rotMatrix2)
+            double[,] rotMatrix1, double[,] rotMatrix2, bool isComplexShape = false)
         {
             Console.WriteLine($"[SVG] Processing hole with {holeVertices3D.Count} vertices in 3D");
             
@@ -728,19 +728,20 @@ namespace LaserConvert
                 return;
             }
             
-            // Transform hole vertices directly using the rotation matrices
+            // Transform hole vertices using the same rotation matrices as outline vertices
             var holeNormalizedVerts = holeVertices3D
                 .Select(v => {
                     var vec = new GeometryTransform.Vec3(v.Item1, v.Item2, v.Item3);
-                    // Apply both rotations like we do for other vertices
-                    var rot1Result = new GeometryTransform.Vec3(
-                        rotMatrix1[0, 0] * vec.X + rotMatrix1[0, 1] * vec.Y + rotMatrix1[0, 2] * vec.Z,
-                        rotMatrix1[1, 0] * vec.X + rotMatrix1[1, 1] * vec.Y + rotMatrix1[1, 2] * vec.Z,
-                        rotMatrix1[2, 0] * vec.X + rotMatrix1[2, 1] * vec.Y + rotMatrix1[2, 2] * vec.Z
-                    );
+                    var rot1 = ApplyMatrix(vec, rotMatrix1);
                     
-                    // Don't apply rotMatrix2 for complex shapes (it might not be valid)
-                    return rot1Result;
+                    // For complex shapes, don't apply rotMatrix2 (thin faces may not align properly)
+                    // For simple shapes, apply both rotations just like outline vertices
+                    if (isComplexShape)
+                    {
+                        return rot1;
+                    }
+                    var rot2 = ApplyMatrix(rot1, rotMatrix2);
+                    return rot2;
                 })
                 .ToList();
             
