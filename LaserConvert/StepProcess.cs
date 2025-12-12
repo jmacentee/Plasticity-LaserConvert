@@ -566,69 +566,74 @@ namespace LaserConvert
         
         /// <summary>
         /// Unified hole rendering for any solid with holes.
-        /// Extracts holes from face bounds and renders them as red paths.
+        /// Extracts holes from the solid's geometry by finding faces that represent holes.
         /// </summary>
         private static void RenderHoles(SvgBuilder svg, StepAdvancedFace mainFace, StepFile stepFile,
-            List<GeometryTransform.Vec3> normalizedVertices, double minX, double minY,
+            List<GeometryTransform.Vec3> normalizedVertices, double outlineMinX, double outlineMinY,
             double[,] rotMatrix1, double[,] rotMatrix2)
         {
-            if (mainFace == null || (mainFace.Bounds?.Count ?? 0) <= 1)
-                return;  // No holes
-            
-            Console.WriteLine($"[SVG] Rendering holes: Face has {mainFace.Bounds.Count} bounds");
-            
-            // Extract hole vertices from face bounds (in original 3D space)
-            var (_, holeLoopsOriginal) = StepTopologyResolver.ExtractFaceWithHoles(mainFace, stepFile);
-            
-            foreach (var holeVertices3D in holeLoopsOriginal)
+            // UNIFIED APPROACH: Extract holes from mainFace bounds if available
+            // If mainFace has multiple bounds, those are the holes
+            if (mainFace != null && mainFace.Bounds?.Count > 1)
             {
-                Console.WriteLine($"[SVG] Processing hole with {holeVertices3D.Count} vertices in 3D");
+                Console.WriteLine($"[SVG] Rendering holes: Face has {mainFace.Bounds.Count} bounds");
                 
-                // Find which of our normalized vertices correspond to this hole
-                // by matching coordinates (with rounding tolerance)
-                var holeNormalizedVerts = new List<GeometryTransform.Vec3>();
-                foreach (var hole3Dvert in holeVertices3D)
-                {
-                    // Find the matching normalized vertex
-                    var key3D = (Math.Round(hole3Dvert.X, 1), Math.Round(hole3Dvert.Y, 1), Math.Round(hole3Dvert.Z, 1));
-                    var matchingNormVert = normalizedVertices.FirstOrDefault(v => 
-                        (Math.Round(v.X, 1), Math.Round(v.Y, 1), Math.Round(v.Z, 1)) == key3D ||
-                        // Also check original vertices transformed (for rotated coordinates)
-                        IsCloseToOriginal(v, hole3Dvert, rotMatrix1, rotMatrix2));
-                    
-                    if (!matchingNormVert.Equals(default(GeometryTransform.Vec3)))
-                    {
-                        holeNormalizedVerts.Add(matchingNormVert);
-                    }
-                }
+                var (_, holeLoopsOriginal) = StepTopologyResolver.ExtractFaceWithHoles(mainFace, stepFile);
                 
-                if (holeNormalizedVerts.Count < 3)
+                foreach (var holeVertices3D in holeLoopsOriginal)
                 {
-                    Console.WriteLine($"[SVG] Hole skipped (only {holeNormalizedVerts.Count} vertices matched)");
-                    continue;
+                    RenderSingleHole(svg, holeVertices3D, normalizedVertices, outlineMinX, outlineMinY, rotMatrix1, rotMatrix2);
                 }
+            }
+        }
+
+        private static void RenderSingleHole(SvgBuilder svg, List<(double X, double Y, double Z)> holeVertices3D,
+            List<GeometryTransform.Vec3> normalizedVertices, double outlineMinX, double outlineMinY,
+            double[,] rotMatrix1, double[,] rotMatrix2)
+        {
+            Console.WriteLine($"[SVG] Processing hole with {holeVertices3D.Count} vertices in 3D");
             
-                var hx = holeNormalizedVerts.Min(v => v.X);
-                var hx2 = holeNormalizedVerts.Max(v => v.X);
-                var hy = holeNormalizedVerts.Min(v => v.Y);
-                var hy2 = holeNormalizedVerts.Max(v => v.Y);
-                var holeX = (long)Math.Round(hx - minX);
-                var holeY = (long)Math.Round(hy - minY);
-                var holeW = (long)Math.Round(hx2 - hx);
-                var holeH = (long)Math.Round(hy2 - hy);
+            // Find which of our normalized vertices correspond to this hole
+            var holeNormalizedVerts = new List<GeometryTransform.Vec3>();
+            foreach (var hole3Dvert in holeVertices3D)
+            {
+                var key3D = (Math.Round(hole3Dvert.X, 1), Math.Round(hole3Dvert.Y, 1), Math.Round(hole3Dvert.Z, 1));
+                var matchingNormVert = normalizedVertices.FirstOrDefault(v => 
+                    (Math.Round(v.X, 1), Math.Round(v.Y, 1), Math.Round(v.Z, 1)) == key3D ||
+                    IsCloseToOriginal(v, hole3Dvert, rotMatrix1, rotMatrix2));
                 
-                Console.WriteLine($"[SVG] Hole 3D bounds: X:[{hx:F1},{hx2:F1}] Y:[{hy:F1},{hy2:F1}], normalized: ({holeX},{holeY}) {holeW}x{holeH}");
-                
-                if (holeW > 1 && holeH > 1)
+                if (!matchingNormVert.Equals(default(GeometryTransform.Vec3)))
                 {
-                    var holePath = $"M {holeX} {holeY} L {holeX + holeW} {holeY} L {holeX + holeW} {holeY + holeH} L {holeX} {holeY + holeH} Z";
-                    svg.Path(holePath, strokeWidth: 0.2, fill: "none", stroke: "#FF0000");
-                    Console.WriteLine($"[SVG] Added hole path");
+                    holeNormalizedVerts.Add(matchingNormVert);
                 }
-                else
-                {
-                    Console.WriteLine($"[SVG] Hole too small ({holeW}x{holeH})");
-                }
+            }
+            
+            if (holeNormalizedVerts.Count < 3)
+            {
+                Console.WriteLine($"[SVG] Hole skipped (only {holeNormalizedVerts.Count} vertices matched)");
+                return;
+            }
+        
+            var hx = holeNormalizedVerts.Min(v => v.X);
+            var hx2 = holeNormalizedVerts.Max(v => v.X);
+            var hy = holeNormalizedVerts.Min(v => v.Y);
+            var hy2 = holeNormalizedVerts.Max(v => v.Y);
+            var holeX = (long)Math.Round(hx - outlineMinX);
+            var holeY = (long)Math.Round(hy - outlineMinY);
+            var holeW = (long)Math.Round(hx2 - hx);
+            var holeH = (long)Math.Round(hy2 - hy);
+            
+            Console.WriteLine($"[SVG] Hole 3D bounds: X:[{hx:F1},{hx2:F1}] Y:[{hy:F1},{hy2:F1}], normalized: ({holeX},{holeY}) {holeW}x{holeH}");
+            
+            if (holeW > 1 && holeH > 1)
+            {
+                var holePath = $"M {holeX} {holeY} L {holeX + holeW} {holeY} L {holeX + holeW} {holeY + holeH} L {holeX} {holeY + holeH} Z";
+                svg.Path(holePath, strokeWidth: 0.2, fill: "none", stroke: "#FF0000");
+                Console.WriteLine($"[SVG] Added hole path");
+            }
+            else
+            {
+                Console.WriteLine($"[SVG] Hole too small ({holeW}x{holeH})");
             }
         }
         
