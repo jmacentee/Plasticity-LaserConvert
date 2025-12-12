@@ -197,7 +197,7 @@ namespace LaserConvert
                                 if (dedup.Count >= 4)
                                 {
                                     // For orthogonal shapes, use the unified perimeter builder
-                                    var faceOutlinePath = BuildOrthogonalPerimeterPath(dedup);
+                                    var faceOutlinePath = BuildOrthogonalLoop2D(dedup);
                                     Console.WriteLine($"[SVG] {name}: Generated orthogonal face outline path from {dedup.Count} 2D points");
                                     svg.Path(faceOutlinePath, strokeWidth: 0.2, fill: "none", stroke: "#000");
                                     
@@ -421,74 +421,6 @@ namespace LaserConvert
                 }
             }
             return null;
-        }
-
-        /// <summary>
-        /// Build a proper perimeter path for orthogonal (rectilinear) polygons.
-        /// Works for both simple rectangles and complex shapes with cutouts/tabs.
-        /// Uses edge-following algorithm to preserve all vertices in correct order.
-        /// </summary>
-        private static string BuildOrthogonalPerimeterPath(List<(long X, long Y)> vertices)
-        {
-            if (vertices == null || vertices.Count < 4)
-                return string.Empty;
-            
-            // Start from bottom-left (min Y, then min X)
-            int startIdx = 0;
-            for (int i = 1; i < vertices.Count; i++)
-            {
-                if (vertices[i].Item2 < vertices[startIdx].Item2 ||
-                    (vertices[i].Item2 == vertices[startIdx].Item2 && vertices[i].Item1 < vertices[startIdx].Item1))
-                {
-                    startIdx = i;
-                }
-            }
-            
-            var sb = new StringBuilder();
-            var visited = new HashSet<int>();
-            int current = startIdx;
-            sb.Append($"M {vertices[current].Item1},{vertices[current].Item2}");
-            visited.Add(current);
-            
-            // Walk around the perimeter - find adjacent vertices and follow edges
-            while (visited.Count < vertices.Count)
-            {
-                var (cx, cy) = vertices[current];
-                int next = -1;
-                
-                // Find unvisited vertices adjacent to current (differ in only one coordinate)
-                var candidates = new List<int>();
-                for (int i = 0; i < vertices.Count; i++)
-                {
-                    if (visited.Contains(i))
-                        continue;
-                    
-                    var (vx, vy) = vertices[i];
-                    // Orthogonal adjacency: same X or same Y, but not both
-                    if ((vx == cx && vy != cy) || (vy == cy && vx != cx))
-                    {
-                        candidates.Add(i);
-                    }
-                }
-                
-                if (candidates.Count == 0)
-                    break;
-                
-                // If multiple candidates, pick the one closest to current position
-                next = candidates.Count == 1 ? candidates[0] : 
-                       candidates.OrderBy(idx => {
-                           var dx = Math.Abs(vertices[idx].Item1 - cx);
-                           var dy = Math.Abs(vertices[idx].Item2 - cy);
-                           return dx + dy;  // Manhattan distance
-                       }).First();
-                
-                current = next;
-                visited.Add(current);
-                sb.Append($" L {vertices[current].Item1},{vertices[current].Item2}");
-            }
-            
-            sb.Append(" Z");
-            return sb.ToString();
         }
 
         private static string BuildOrthogonalLoop2D(List<(long X, long Y)> pts)
