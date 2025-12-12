@@ -144,52 +144,71 @@ namespace LaserConvert
                         Console.WriteLine($"[SVG] {name}: mainFace has {mainFace.Bounds?.Count ?? 0} bounds");
                     }
 
-                    bool complex = topFaceVerts.Count > 8;
-                    if (mainFace != null && complex && (mainFace.Bounds?.Count ?? 0) <= 1)
+                    // Try to extract the actual face outline from the main face
+                    if (mainFace != null)
                     {
-                        // Build projection frame from all vertices of the main face
-                        var mainFaceAllVerts = StepTopologyResolver.ExtractVerticesFromFace(mainFace, stepFile);
-                        var frame = BuildProjectionFrame(mainFaceAllVerts);
+                        var faceOutlineVerts3D = StepTopologyResolver.ExtractVerticesFromFace(mainFace, stepFile);
                         
-                        // If single bound and likely rectangular, prefer normalized top-face bbox from rotated vertices
-                        if ((mainFace.Bounds?.Count ?? 0) == 1)
+                        if (faceOutlineVerts3D.Count >= 4)
                         {
-                            var maxZnf = normalizedVertices.Max(v => v.Z);
-                            var topVertsNf = normalizedVertices.Where(v => Math.Abs(v.Z - maxZnf) < 1.0).ToList();
-                            if (topVertsNf.Count >= 6)
-                            {
-                                // Complex top face (tabs/steps): build from top vertices
-                                var minXn = topVertsNf.Min(v => v.X);
-                                var minYn = topVertsNf.Min(v => v.Y);
-                                var pts = topVertsNf
-                                    .Select(v => ((long)Math.Round(v.X - minXn), (long)Math.Round(v.Y - minYn)))
-                                    .ToList();
+                            Console.WriteLine($"[SVG] {name}: Face outline has {faceOutlineVerts3D.Count} 3D vertices");
+                            
+                            // Transform these vertices to normalized coordinates
+                            var outlineNormalizedVerts = faceOutlineVerts3D
+                                .Select(v => {
+                                    var vec = new GeometryTransform.Vec3(v.X, v.Y, v.Z);
+                                    var rot1 = ApplyMatrix(vec, rotMatrix1);
+                                    if (faces.Count > 20)
+                                    {
+                                        return rot1;
+                                    }
+                                    var rot2 = ApplyMatrix(rot1, rotMatrix2);
+                                    return rot2;
+                                })
+                                .ToList();
+                            
+                            // Find top-face vertices (those at max Z)
+                            var topZ = outlineNormalizedVerts.Max(v => v.Z);
+                            var topVerts = outlineNormalizedVerts
+                                .Where(v => Math.Abs(v.Z - topZ) < 1.5)
+                                .ToList();
+                            
 
+                            if (topVerts.Count >= 4)
+                            {
+                                Console.WriteLine($"[SVG] {name}: Face outline has {topVerts.Count} top-face vertices (already in edge order)");
+                                
+                                // Vertices are already in order from face traversal - use directly
+                                var ordered = topVerts;
+                                
+                                // Project to 2D
+                                var minXv = ordered.Min(v => v.X);
+                                var minYv = ordered.Min(v => v.Y);
+                                var pts2d = ordered
+                                    .Select(v => ((long)Math.Round(v.X - minXv), (long)Math.Round(v.Y - minYv)))
+                                    .ToList();
+                                
                                 // Remove consecutive duplicates
-                                var dedup = new List<(long X,long Y)>();
-                                foreach (var p in pts)
+                                var dedup = new List<(long X, long Y)>();
+                                foreach (var p in pts2d)
                                 {
                                     if (dedup.Count == 0 || dedup.Last().X != p.Item1 || dedup.Last().Y != p.Item2)
-                                        dedup.Add((p.Item1,p.Item2));
+                                        dedup.Add((p.Item1, p.Item2));
                                 }
-
-                                // Build orthogonal perimeter from sides
-                                string path = BuildOrthogonalLoop2D(dedup);
-                                svg.Path(path, strokeWidth: 0.2, fill: "none", stroke: "#000");
-                                svg.EndGroup();
-                                continue;
+                                
+                                if (dedup.Count >= 4)
+                                {
+                                    var faceOutlinePath = BuildPerimeterPath(dedup);
+                                    Console.WriteLine($"[SVG] {name}: Generated face outline path from {dedup.Count} 2D points");
+                                    svg.Path(faceOutlinePath, strokeWidth: 0.2, fill: "none", stroke: "#000");
+                                    svg.EndGroup();
+                                    continue;
+                                }
                             }
                         }
                     }
 
-                    // For complex shapes with multiple faces, use the actual top face only
-                    if (faces.Count > 20 && topFaceVerts.Count > 8)
-                    {
-                        // Don't try to trace complex perimeters - just use bounding box
-                        // The orthogonal loop builder is unreliable with mixed interior/boundary vertices
-                        Console.WriteLine($"[SVG] {name}: Complex shape - using bounding box instead of perimeter tracing");
-                    }
-
+                    // Fallback: use bounding box
                     // Standard rectangular outline
                     var minX = topFaceVerts.Min(v => v.X);
                     var maxX = topFaceVerts.Max(v => v.X);
@@ -515,6 +534,112 @@ namespace LaserConvert
             if (walk.Count > 0 && (walk.First().X != walk.Last().X || walk.First().Y != walk.Last().Y))
                 walk.Add(walk.First());
             return BuildPath2D(walk);
+        }
+
+        /// <summary>
+        /// Order vertices around a perimeter using a 2D convex-hull-like walk algorithm.
+        /// Starts from the bottom-left, then walks around the edge by always choosing
+        /// the next unvisited vertex that is "most clockwise" from the current edge direction.
+        /// </summary>
+        private static List<GeometryTransform.Vec3> OrderPerimeterVertices(List<GeometryTransform.Vec3> vertices)
+        {
+            if (vertices.Count < 3)
+                return vertices;
+            
+            // Start from the vertex with minimum Y (bottom), then minimum X (leftmost)
+            var startVert = vertices.OrderBy(v => v.Y).ThenBy(v => v.X).First();
+            var ordered = new List<GeometryTransform.Vec3> { startVert };
+            var remaining = new HashSet<GeometryTransform.Vec3>(vertices);
+            remaining.Remove(startVert);
+            
+            var current = startVert;
+            var prevDirectionX = 1.0;
+            var prevDirectionY = 0.0;  // Start facing right
+            
+            while (remaining.Count > 0)
+            {
+                // Find the remaining vertex that requires the smallest left turn (most counter-clockwise)
+                GeometryTransform.Vec3? nextVert = null;
+                double bestCrossProduct = double.MaxValue;
+                
+                foreach (var candidate in remaining)
+                {
+                    var dx = candidate.X - current.X;
+                    var dy = candidate.Y - current.Y;
+                    var dist = Math.Sqrt(dx * dx + dy * dy);
+                    
+                    if (dist < 0.01)  // Skip duplicates
+                        continue;
+                    
+                    // Normalize direction
+                    var dirX = dx / dist;
+                    var dirY = dy / dist;
+                    
+                    // Cross product tells us if this direction is left or right of prevDirection
+                    // prevDirection × candidate = prevX * dirY - prevY * dirX
+                    var crossProduct = prevDirectionX * dirY - prevDirectionY * dirX;
+                    
+                    // We want the smallest left turn (smallest positive cross product)
+                    // If all remaining are to the right, pick the rightmost one
+                    if (crossProduct >= -0.01)  // Allow small negative values for numerical stability
+                    {
+                        if (crossProduct < bestCrossProduct)
+                        {
+                            bestCrossProduct = crossProduct;
+                            nextVert = candidate;
+                        }
+                    }
+                }
+                
+                // If all remaining vertices are to the right, just pick the closest one
+                if (nextVert == null)
+                {
+                    nextVert = remaining.OrderBy(v => {
+                        var dx = v.X - current.X;
+                        var dy = v.Y - current.Y;
+                        return dx * dx + dy * dy;
+                    }).First();
+                }
+                
+                var nextValue = nextVert.Value;
+                ordered.Add(nextValue);
+                remaining.Remove(nextValue);
+                
+                // Update direction for next iteration
+                prevDirectionX = nextValue.X - current.X;
+                prevDirectionY = nextValue.Y - current.Y;
+                var len = Math.Sqrt(prevDirectionX * prevDirectionX + prevDirectionY * prevDirectionY);
+                if (len > 0.01)
+                {
+                    prevDirectionX /= len;
+                    prevDirectionY /= len;
+                }
+                
+                current = nextValue;
+            }
+            
+            return ordered;
+        }
+
+        /// <summary>
+        /// Build an SVG path from 2D perimeter points, snapping to orthogonal (H/V only) movements.
+        /// </summary>
+        private static string BuildPerimeterPath(List<(long X, long Y)> pts)
+        {
+            if (pts == null || pts.Count < 3)
+                return string.Empty;
+            
+            var sb = new StringBuilder();
+            sb.Append($"M {pts[0].X},{pts[0].Y}");
+            
+            for (int i = 1; i < pts.Count; i++)
+            {
+                var current = pts[i];
+                sb.Append($" L {current.X},{current.Y}");
+            }
+            
+            sb.Append(" Z");
+            return sb.ToString();
         }
 
         private static bool IsCloseToOriginal(GeometryTransform.Vec3 normVert, (double X, double Y, double Z) orig3D, 

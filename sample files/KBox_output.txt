@@ -17,4 +17,7 @@ Found 1 solids
 [SVG] KBox: Z range [19.7, 22.7] (range=3.0), using all 24 vertices for projection
 [SVG] KBox: After rotation - X:[-94.7,75.3] Y:[-0.0,150.0]
 [SVG] KBox: mainFace has 1 bounds
+[SVG] KBox: Face outline has 12 3D vertices
+[SVG] KBox: Face outline has 12 top-face vertices (already in edge order)
+[SVG] KBox: Generated face outline path from 12 2D points
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox.svg
