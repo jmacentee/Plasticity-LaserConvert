@@ -129,7 +129,38 @@ namespace LaserConvert
 
                     // If we have a usable thin face index, prefer using its bounds for outline/holes
                     StepAdvancedFace mainFace = null;
-                    if (face1Idx >= 0 && face1Idx < faces.Count)
+                    if (face1Idx >= 0 && face1Idx < faces.Count && face2Idx >= 0 && face2Idx < faces.Count)
+                    {
+                        // For complex shapes, we have TWO thin faces (top and bottom).
+                        // Find which one is the actual TOP face (has highest average Z after rotation)
+                        var face1Verts = StepTopologyResolver.ExtractVerticesFromFace(faces[face1Idx], stepFile);
+                        var face2Verts = StepTopologyResolver.ExtractVerticesFromFace(faces[face2Idx], stepFile);
+                        
+                        // Transform both to rotated space and compare Z
+                        var face1RotatedZ = face1Verts
+                            .Select(v => {
+                                var vec = new GeometryTransform.Vec3(v.X, v.Y, v.Z);
+                                var rot1 = ApplyMatrix(vec, rotMatrix1);
+                                if (faces.Count > 20)
+                                    return rot1;
+                                return ApplyMatrix(rot1, rotMatrix2);
+                            })
+                            .Average(v => v.Z);
+                        
+                        var face2RotatedZ = face2Verts
+                            .Select(v => {
+                                var vec = new GeometryTransform.Vec3(v.X, v.Y, v.Z);
+                                var rot1 = ApplyMatrix(vec, rotMatrix1);
+                                if (faces.Count > 20)
+                                    return rot1;
+                                return ApplyMatrix(rot1, rotMatrix2);
+                            })
+                            .Average(v => v.Z);
+                        
+                        // Use the face with the HIGHEST Z as the main face (this is what we're projecting)
+                        mainFace = face1RotatedZ > face2RotatedZ ? faces[face1Idx] : faces[face2Idx];
+                    }
+                    else if (face1Idx >= 0 && face1Idx < faces.Count)
                     {
                         mainFace = faces[face1Idx];
                     }
@@ -138,11 +169,6 @@ namespace LaserConvert
                         mainFace = faces[face2Idx];
                     }
                     
-                    // Debug: log mainFace details
-                    if (mainFace != null)
-                    {
-                        Console.WriteLine($"[SVG] {name}: mainFace has {mainFace.Bounds?.Count ?? 0} bounds");
-                    }
 
                     // Try to extract the actual face outline from the main face
                     if (mainFace != null)
@@ -153,6 +179,7 @@ namespace LaserConvert
                         // OR if this is identified as a complex shape (>20 faces)
                         if (faceOutlineVerts3D.Count > 4 && (faceOutlineVerts3D.Count > 8 || faces.Count > 20))
                         {
+                            // Standard case: face has explicit complex outline
                             Console.WriteLine($"[SVG] {name}: Face outline has {faceOutlineVerts3D.Count} 3D vertices (complex shape detected)");
                             
                             // Transform these vertices to normalized coordinates
@@ -194,7 +221,7 @@ namespace LaserConvert
                                     if (dedup.Count == 0 || dedup.Last().X != p.Item1 || dedup.Last().Y != p.Item2)
                                         dedup.Add((p.Item1, p.Item2));
                                 }
-                                
+                        
                                 if (dedup.Count >= 4)
                                 {
                                     // Sort vertices by perimeter for complex shapes
@@ -204,6 +231,57 @@ namespace LaserConvert
                                     svg.Path(faceOutlinePath, strokeWidth: 0.2, fill: "none", stroke: "#000");
                                     
                                     // Render holes
+                                    var outlineMinX = topVerts.Min(v => v.X);
+                                    var outlineMaxX = topVerts.Max(v => v.X);
+                                    var outlineMinY = topVerts.Min(v => v.Y);
+                                    var outlineMaxY = topVerts.Max(v => v.Y);
+                                    
+                                    RenderHoles(svg, mainFace, stepFile, normalizedVertices, outlineMinX, outlineMinY, rotMatrix1, rotMatrix2);
+                                    
+                                    svg.EndGroup();
+                                    continue;
+                                }
+                            }
+                        }
+                        else if (faces.Count > 20 && faceOutlineVerts3D.Count == 4)
+                        {
+                            // Complex shape but single face only has 4 vertices
+                            // Use the TOP-LEVEL outline from all normalized vertices instead
+                            Console.WriteLine($"[SVG] {name}: Complex shape but face only has {faceOutlineVerts3D.Count} vertices, using full projection outline");
+                            
+                            // Find top-level vertices at max Z
+                            var topZ = normalizedVertices.Max(v => v.Z);
+                            var topVerts = normalizedVertices
+                                .Where(v => Math.Abs(v.Z - topZ) < 1.5)
+                                .Distinct(new Vec3Comparer())
+                                .ToList();
+                            
+                            if (topVerts.Count >= 4)
+                            {
+                                // Project to 2D
+                                var minXv = topVerts.Min(v => v.X);
+                                var minYv = topVerts.Min(v => v.Y);
+                                var pts2d = topVerts
+                                    .Select(v => ((long)Math.Round(v.X - minXv), (long)Math.Round(v.Y - minYv)))
+                                    .ToList();
+                                
+                                // Remove consecutive duplicates
+                                var dedup = new List<(long X, long Y)>();
+                                foreach (var p in pts2d)
+                                {
+                                    if (dedup.Count == 0 || dedup.Last().X != p.Item1 || dedup.Last().Y != p.Item2)
+                                        dedup.Add((p.Item1, p.Item2));
+                                }
+                                
+                                if (dedup.Count >= 4)
+                                {
+                                    // Sort vertices by perimeter
+                                    var sorted = SortPerimeterVertices2D(dedup);
+                                    var outlinePathData = BuildPerimeterPath(sorted);
+                                    Console.WriteLine($"[SVG] {name}: Generated outline path from {dedup.Count} top-level 2D points");
+                                    svg.Path(outlinePathData, strokeWidth: 0.2, fill: "none", stroke: "#000");
+                                    
+                                    // Render holes from main face
                                     var outlineMinX = topVerts.Min(v => v.X);
                                     var outlineMaxX = topVerts.Max(v => v.X);
                                     var outlineMinY = topVerts.Min(v => v.Y);
@@ -644,6 +722,19 @@ namespace LaserConvert
                 matrix[1, 0] * v.X + matrix[1, 1] * v.Y + matrix[1, 2] * v.Z,
                 matrix[2, 0] * v.X + matrix[2, 1] * v.Y + matrix[2, 2] * v.Z
             );
+        }
+
+        private class Vec3Comparer : IEqualityComparer<GeometryTransform.Vec3>
+        {
+            public bool Equals(GeometryTransform.Vec3 a, GeometryTransform.Vec3 b)
+            {
+                return Math.Abs(a.X - b.X) < 0.01 && Math.Abs(a.Y - b.Y) < 0.01 && Math.Abs(a.Z - b.Z) < 0.01;
+            }
+
+            public int GetHashCode(GeometryTransform.Vec3 v)
+            {
+                return (Math.Round(v.X, 2), Math.Round(v.Y, 2), Math.Round(v.Z, 2)).GetHashCode();
+            }
         }
 
         private static List<(long X, long Y)> SortPerimeterVertices2D(List<(long X, long Y)> pts)
