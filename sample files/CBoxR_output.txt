@@ -14,8 +14,7 @@ Found 1 solids
 [SVG] CBoxR: Z range [-72.9, -69.9] (range=3.0), using all 10 vertices for projection
 [SVG] CBoxR: After rotation - X:[-6.1,43.9] Y:[-12.7,27.3]
 [SVG] CBoxR: mainFace has 2 bounds
-[SVG] CBoxR: Normalized top face bounds: 50 x 40
-[SVG] CBoxR: Outer bounds X:[-6.1,43.9] Y:[-12.7,27.3]
+[SVG] CBoxR: Bounding box: 50 x 40
 [SVG] Rendering holes: Face has 2 bounds
 [EXTRACT] ExtractFaceWithHoles: face has 2 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 12.0x9.5 (area=113.5): (8.0,-15.7,76.8), (17.7,-17.0,74.6), (10.3,-7.5,82.0), (20.0,-8.8,79.8)...

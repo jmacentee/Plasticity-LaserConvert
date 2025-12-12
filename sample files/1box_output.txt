@@ -17,6 +17,5 @@ Found 1 solids
 [SVG] Box1: Z range [74.4, 77.4] (range=3.0), using all 8 vertices for projection
 [SVG] Box1: After rotation - X:[-150.0,0.0] Y:[-119.8,50.2]
 [SVG] Box1: mainFace has 1 bounds
-[SVG] Box1: Normalized top face bounds: 150 x 170
-[SVG] Box1: Outer bounds X:[-150.0,0.0] Y:[-119.8,50.2]
+[SVG] Box1: Bounding box: 150 x 170
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.svg

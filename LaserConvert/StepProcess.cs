@@ -149,10 +149,11 @@ namespace LaserConvert
                     {
                         var faceOutlineVerts3D = StepTopologyResolver.ExtractVerticesFromFace(mainFace, stepFile);
                         
-                        // Use face outline if available (for complex shapes with cutouts/tabs)
-                        if (faceOutlineVerts3D.Count > 8)
+                        // Use face outline if we have enough vertices (indicates complexity worth preserving)
+                        // OR if this is identified as a complex shape (>20 faces)
+                        if (faceOutlineVerts3D.Count > 4 && (faceOutlineVerts3D.Count > 8 || faces.Count > 20))
                         {
-                            Console.WriteLine($"[SVG] {name}: Face outline has {faceOutlineVerts3D.Count} 3D vertices (complex shape)");
+                            Console.WriteLine($"[SVG] {name}: Face outline has {faceOutlineVerts3D.Count} 3D vertices (complex shape detected)");
                             
                             // Transform these vertices to normalized coordinates
                             var outlineNormalizedVerts = faceOutlineVerts3D
@@ -196,18 +197,18 @@ namespace LaserConvert
                                 
                                 if (dedup.Count >= 4)
                                 {
-                                    // For orthogonal shapes, use the unified perimeter builder
-                                    var faceOutlinePath = BuildOrthogonalLoop2D(dedup);
-                                    Console.WriteLine($"[SVG] {name}: Generated orthogonal face outline path from {dedup.Count} 2D points");
+                                    // Sort vertices by perimeter for complex shapes
+                                    var sorted = SortPerimeterVertices2D(dedup);
+                                    var faceOutlinePath = BuildPerimeterPath(sorted);
+                                    Console.WriteLine($"[SVG] {name}: Generated face outline path from {dedup.Count} 2D points");
                                     svg.Path(faceOutlinePath, strokeWidth: 0.2, fill: "none", stroke: "#000");
                                     
-                                    // For complex outlines, compute bounds for hole positioning
+                                    // Render holes
                                     var outlineMinX = topVerts.Min(v => v.X);
                                     var outlineMaxX = topVerts.Max(v => v.X);
                                     var outlineMinY = topVerts.Min(v => v.Y);
                                     var outlineMaxY = topVerts.Max(v => v.Y);
                                     
-                                    // Now render holes for this outline
                                     RenderHoles(svg, mainFace, stepFile, normalizedVertices, outlineMinX, outlineMinY, rotMatrix1, rotMatrix2);
                                     
                                     svg.EndGroup();
@@ -217,8 +218,7 @@ namespace LaserConvert
                         }
                     }
 
-                    // Fallback: use simple bounding box (works for all rectangular shapes)
-                    // Standard rectangular outline
+                    // Fallback: use simple bounding box for all other cases
                     var minX = topFaceVerts.Min(v => v.X);
                     var maxX = topFaceVerts.Max(v => v.X);
                     var minY = topFaceVerts.Min(v => v.Y);
@@ -226,13 +226,12 @@ namespace LaserConvert
 
                     var rectWidth = (long)Math.Round(maxX - minX);
                     var rectHeight = (long)Math.Round(maxY - minY);
-                    Console.WriteLine($"[SVG] {name}: Normalized top face bounds: {rectWidth} x {rectHeight}");
-                    Console.WriteLine($"[SVG] {name}: Outer bounds X:[{minX:F1},{maxX:F1}] Y:[{minY:F1},{maxY:F1}]");
+                    Console.WriteLine($"[SVG] {name}: Bounding box: {rectWidth} x {rectHeight}");
 
                     var pathData = $"M 0 0 L {rectWidth} 0 L {rectWidth} {rectHeight} L 0 {rectHeight} Z";
                     svg.Path(pathData, strokeWidth: 0.2, fill: "none", stroke: "#000");
 
-                    // Render holes for bounding box
+                    // Render holes
                     RenderHoles(svg, mainFace, stepFile, normalizedVertices, minX, minY, rotMatrix1, rotMatrix2);
 
                     svg.EndGroup();
@@ -640,6 +639,26 @@ namespace LaserConvert
                 matrix[1, 0] * v.X + matrix[1, 1] * v.Y + matrix[1, 2] * v.Z,
                 matrix[2, 0] * v.X + matrix[2, 1] * v.Y + matrix[2, 2] * v.Z
             );
+        }
+
+        private static List<(long X, long Y)> SortPerimeterVertices2D(List<(long X, long Y)> pts)
+        {
+            if (pts == null || pts.Count < 3)
+                return new List<(long X, long Y)>();
+
+            // Find the centroid (geometric center) of the points
+            var centroidX = pts.Average(p => p.X);
+            var centroidY = pts.Average(p => p.Y);
+
+            // Sort the points by polar angle around the centroid
+            // Angle computation: atan2(deltaY, deltaX)
+            var sortedPts = pts
+                .Select(p => (Point: p, Angle: Math.Atan2(p.Y - centroidY, p.X - centroidX)))
+                .OrderBy(tuple => tuple.Angle)
+                .Select(tuple => tuple.Point)
+                .ToList();
+
+            return sortedPts;
         }
     }
 }
