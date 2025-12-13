@@ -1,5 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="KCBox">
+    <path d="M 0,15 L 11,8 L 23,3 L 35,0 L 44,27 L 49,44 L 26,61 L 21,63 L 14,60 L 8,42 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 8,-10 L 17,-14 L 20,-5 L 11,-2 Z" stroke="#f00" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 21,-36 L 25,-38 L 28,-29 L 23,-27 Z" stroke="#f00" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>

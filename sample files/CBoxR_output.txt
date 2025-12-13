@@ -1,6 +1,6 @@
-[IxMilia.Step] Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBoxR.stp
-[IxMilia.Step] File loaded. Total items: 290
-[IxMilia.Step] Found 1 solids
+[LaserConvert] Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBoxR.stp
+[LaserConvert] File loaded. Total items: 290
+[LaserConvert] Found 1 solids
 [TOPO] Processing 10 faces
 [TOPO] Found pair of faces with separation: 7.6mm
 [TOPO] Extracted 10 unique vertices
@@ -8,5 +8,55 @@
 [TOPO] Computed dimensions: 50.1 x 46.2 x 35.1
 [TOPO] Thin dimension detected from face separation: 7.6mm
 [TOPO] Adjusted dimensions: 7.6 x 46.2 x 50.1
-[IxMilia.Step] [FILTER] CBoxR: dimensions [7.6, 46.2, 50.1] - PASS
-[IxMilia.Step] Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBoxR.svg
+[LaserConvert] [FILTER] CBoxR: dimensions [7.6, 46.2, 50.1] - PASS
+[EXTRACT] ExtractFaceWithHoles: face has 2 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 12.0x9.5x7.5 (area=273.8): (8.0,-15.7,76.8), (17.7,-17.0,74.6), (10.3,-7.5,82.0), (20.0,-8.8,79.8)...
+[EXTRACT] Bound 1 has 4 vertices, bbox 50.1x46.2x35.1 (area=5696.4): (33.7,-48.9,50.7), (-4.9,-43.8,59.7), (45.3,-7.8,76.7), (6.6,-2.7,85.8)...
+[EXTRACT] Identified bound 1 as outer loop (largest area=5696.4)
+[EXTRACT] Identified bound 0 as hole loop 1 (area=273.8)
+[EXTRACT] Returning 4 outer verts and 1 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 39.0x6.8x11.5 (area=790.3): (33.4,-47.3,48.2), (33.7,-48.9,50.7), (-4.9,-43.8,59.7), (-5.3,-42.2,57.3)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=790.3)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 11.9x42.8x28.5 (area=2065.5): (-5.3,-42.2,57.3), (-4.9,-43.8,59.7), (6.6,-2.7,85.8), (6.3,-1.1,83.3)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=2065.5)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 39.0x6.8x11.5 (area=790.3): (6.3,-1.1,83.3), (6.6,-2.7,85.8), (45.3,-7.8,76.7), (44.9,-6.2,74.2)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=790.3)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 2 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 12.0x9.5x7.5 (area=273.8): (17.3,-15.3,72.1), (7.6,-14.0,74.4), (19.6,-7.1,77.3), (9.9,-5.8,79.6)...
+[EXTRACT] Bound 1 has 4 vertices, bbox 50.1x46.2x35.1 (area=5696.4): (33.4,-47.3,48.2), (44.9,-6.2,74.2), (-5.3,-42.2,57.3), (6.3,-1.1,83.3)...
+[EXTRACT] Identified bound 1 as outer loop (largest area=5696.4)
+[EXTRACT] Identified bound 0 as hole loop 1 (area=273.8)
+[EXTRACT] Returning 4 outer verts and 1 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 11.9x42.8x28.5 (area=2065.5): (33.4,-47.3,48.2), (44.9,-6.2,74.2), (45.3,-7.8,76.7), (33.7,-48.9,50.7)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=2065.5)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 10.0x2.9x4.7 (area=90.7): (8.0,-15.7,76.8), (17.7,-17.0,74.6), (17.3,-15.3,72.1), (7.6,-14.0,74.4)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=90.7)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 2.7x9.9x7.7 (area=122.6): (10.3,-7.5,82.0), (8.0,-15.7,76.8), (7.6,-14.0,74.4), (9.9,-5.8,79.6)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=122.6)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 10.0x2.9x4.7 (area=90.7): (20.0,-8.8,79.8), (10.3,-7.5,82.0), (9.9,-5.8,79.6), (19.6,-7.1,77.3)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=90.7)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 2.7x9.9x7.7 (area=122.6): (17.7,-17.0,74.6), (20.0,-8.8,79.8), (19.6,-7.1,77.3), (17.3,-15.3,72.1)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=122.6)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 2 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 12.0x9.5x7.5 (area=273.8): (8.0,-15.7,76.8), (17.7,-17.0,74.6), (10.3,-7.5,82.0), (20.0,-8.8,79.8)...
+[EXTRACT] Bound 1 has 4 vertices, bbox 50.1x46.2x35.1 (area=5696.4): (33.7,-48.9,50.7), (-4.9,-43.8,59.7), (45.3,-7.8,76.7), (6.6,-2.7,85.8)...
+[EXTRACT] Identified bound 1 as outer loop (largest area=5696.4)
+[EXTRACT] Identified bound 0 as hole loop 1 (area=273.8)
+[EXTRACT] Returning 4 outer verts and 1 hole loops
+[LaserConvert] Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBoxR.svg

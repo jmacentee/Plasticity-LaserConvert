@@ -21,6 +21,8 @@ REM not "projecting" a solid onto a plane, you are rotating, perhaps multiple ti
 
 REM there should be no "fallback bounding box cases".  Either read the geometry correctly or skip the solid entirely.
 
+REM StepProcess.cs is our own custom code, which we worked on for 5 days and never got to have a successful test of KCBox or KCBoxFlat.  We abondoned StepProcess in favor of HelixProcess to use the HelixToolkit to solve the problems we never could.
+
 REM Swapped X-Y dimensions in the SVG are not a problem, as long as the entire solid and it's cutuouts are rotated together.
 REM In these tests, there should not be any diagonal lines. (This is not a general rule, only true for these examples).  
 REM The holes in the solids in a STP file are clearly part of the standard. When I load KCBox.stp into https://3dviewer.net/ I see the solid with two holes in it, the same as I saw in Plasticity.  If any tests fail, try to look for the root problem and the general solution instead of any hacks.
