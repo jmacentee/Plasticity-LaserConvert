@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="KCBoxFlat">
-    <path d="M 0,0 L 3,0 L 5,0 L 6,0 L 11,0 L 13,0 L 15,0 L 17,0 L 17,0 L 23,0 L 25,0 L 27,0 L 29,0 L 30,0 L 34,0 L 38,0 L 40,0 L 40,3 L 38,3 L 34,3 L 30,3 L 29,3 L 27,3 L 25,3 L 23,3 L 17,3 L 17,3 L 15,3 L 13,3 L 11,3 L 6,3 L 5,3 L 3,3 L 0,3 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 11,52 L 6,52 L 0,52 L 5,47 L 15,47 L 17,52 L 17,55 L 23,55 L 23,52 L 29,52 L 29,53 L 34,53 L 34,52 L 40,52 L 40,42 L 38,42 L 38,32 L 40,32 L 40,22 L 38,22 L 38,12 L 40,12 L 40,2 L 27,2 L 27,0 L 13,0 L 13,2 L 0,2 L 0,22 L 3,22 L 3,32 L 0,32 L 5,37 L 15,37 L 25,27 L 30,27 L 30,17 L 25,17 L 11,58 L 6,58 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
