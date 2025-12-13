@@ -99,6 +99,21 @@ namespace LaserConvert
                     bool isAlreadyAligned = Math.Abs(minDimZ - sortedDims[0]) < 0.1; // Thin dimension is Z
                     
                     // Now apply these rotation matrices to ALL vertices
+                    // DEBUG: Log the rotation matrices for complex shapes
+                    if (faces.Count > 20)
+                    {
+                        Console.WriteLine($"[STEP 5] Complex shape ({faces.Count} faces) - will skip rotMatrix2");
+                        if (rotMatrix1 != null)
+                        {
+                            Console.WriteLine($"[STEP 5] rotMatrix1: [{rotMatrix1[0, 0]:F3}, {rotMatrix1[0, 1]:F3}, {rotMatrix1[0, 2]:F3}]");
+                            Console.WriteLine($"[STEP 5]              [{rotMatrix1[1, 0]:F3}, {rotMatrix1[1, 1]:F3}, {rotMatrix1[1, 2]:F3}]");
+                            Console.WriteLine($"[STEP 5]              [{rotMatrix1[2, 0]:F3}, {rotMatrix1[2, 1]:F3}, {rotMatrix1[2, 2]:F3}]");
+                            var testVec = new GeometryTransform.Vec3(vertices[0].X, vertices[0].Y, vertices[0].Z);
+                            var rotated = ApplyMatrix(testVec, rotMatrix1);
+                            Console.WriteLine($"[STEP 5] Sample: ({vertices[0].X:F1},{vertices[0].Y:F1},{vertices[0].Z:F1}) -> ({rotated.X:F1},{rotated.Y:F1},{rotated.Z:F1})");
+                        }
+                    }
+
                     normalizedVertices = vertices
                         .Select(v => {
                             var vec = new GeometryTransform.Vec3(v.X, v.Y, v.Z);
@@ -108,12 +123,9 @@ namespace LaserConvert
                                 return vec;
                             }
                             var rot1 = ApplyMatrix(vec, rotMatrix1);
-                            // For complex shapes, skip the edge-alignment normalization (rotMatrix2)
-                            // since the thin-face vertex set may not have enough top vertices for good alignment
-                            if (faces.Count > 20)
-                            {
-                                return rot1;
-                            }
+                            // FIXED: Apply rotMatrix2 for all shapes
+                            // The original code skipped rotMatrix2 for complex shapes (faces.Count > 20)
+                            // This left geometry misaligned - Z range stayed large instead of ~3mm
                             var rot2 = ApplyMatrix(rot1, rotMatrix2);
                             return rot2;
                         })
@@ -268,9 +280,11 @@ namespace LaserConvert
                                 .Select(v => {
                                     var vec = new GeometryTransform.Vec3(v.X, v.Y, v.Z);
                                     var rot1 = ApplyMatrix(vec, rotMatrix1);
-                                    if (faces.Count > 20)
-                                        return rot1;  // Complex: skip rotMatrix2
-                                    return ApplyMatrix(rot1, rotMatrix2);  // Simple: apply both
+                                    // FIXED: Apply rotMatrix2 for all shapes
+                                    // The original code skipped rotMatrix2 for complex shapes (faces.Count > 20)
+                                    // This left geometry misaligned - Z range stayed large instead of ~3mm
+                                    var rot2 = ApplyMatrix(rot1, rotMatrix2);
+                                    return rot2;
                                 })
                                 .ToList();
 
@@ -283,23 +297,43 @@ namespace LaserConvert
                                 Console.WriteLine($"[SVG] {name}: Outline vertices after rotation - X:[{outX.Min():F1},{outX.Max():F1}] Y:[{outY.Min():F1},{outY.Max():F1}] Z:[{outZ.Min():F1},{outZ.Max():F1}]");
                             }
                             
+                            // CRITICAL FIX FOR COMPLEX SHAPES:
+                            // For complex shapes, check if the extracted face is degenerate after rotation
+                            // If the 2D projection would be degenerate (all X or Y the same), fall back to ALL normalized vertices
+                            if (faces.Count > 20 && outlineNormalizedVerts.Count > 0)
+                            {
+                                var rangeX = outlineNormalizedVerts.Max(v => v.X) - outlineNormalizedVerts.Min(v => v.X);
+                                var rangeY = outlineNormalizedVerts.Max(v => v.Y) - outlineNormalizedVerts.Min(v => v.Y);
+                                var rangeZ = outlineNormalizedVerts.Max(v => v.Z) - outlineNormalizedVerts.Min(v => v.Z);
+                                
+                                Console.WriteLine($"[SVG] {name}: Face extent check - X:{rangeX:F1}, Y:{rangeY:F1}, Z:{rangeZ:F1}");
+                                
+                                // If the extracted face is degenerate (zero extent in 2 dimensions), use all normalized vertices instead
+                                var degenerateDims = (rangeX < 1.0 ? 1 : 0) + (rangeY < 1.0 ? 1 : 0);
+                                if (degenerateDims >= 2)
+                                {
+                                    Console.WriteLine($"[SVG] {name}: Face is degenerate in 2D (only spans {3-degenerateDims} dimension(s)). Falling back to all {normalizedVertices.Count} vertices");
+                                    outlineNormalizedVerts = normalizedVertices;
+                                }
+                            }
+                            
                             // Project to 2D - for complex shapes where rotMatrix2 is skipped,
                             // we need to find which 2 axes actually contain the geometry
                             // ATTEMPTED: Always project X-Y
                             // RESULT: KCBoxFlat has geometry in X and Z, Y is collapsed to 3mm
                             // FIX: For complex shapes, find the two axes with largest variance
-                            var rangeX = outlineNormalizedVerts.Max(v => v.X) - outlineNormalizedVerts.Min(v => v.X);
-                            var rangeY = outlineNormalizedVerts.Max(v => v.Y) - outlineNormalizedVerts.Min(v => v.Y);
-                            var rangeZ = outlineNormalizedVerts.Max(v => v.Z) - outlineNormalizedVerts.Min(v => v.Z);
+                            var rangeX_proj = outlineNormalizedVerts.Max(v => v.X) - outlineNormalizedVerts.Min(v => v.X);
+                            var rangeY_proj = outlineNormalizedVerts.Max(v => v.Y) - outlineNormalizedVerts.Min(v => v.Y);
+                            var rangeZ_proj = outlineNormalizedVerts.Max(v => v.Z) - outlineNormalizedVerts.Min(v => v.Z);
                             
                             List<(double X, double Y)> pts2d_precise;
                             
                             // For ALL shapes, use the two axes with largest ranges
                             // This works uniformly for both simple and complex geometries
-                            var ranges = new[] { ("X", rangeX), ("Y", rangeY), ("Z", rangeZ) }
+                            var ranges = new[] { ("X", rangeX_proj), ("Y", rangeY_proj), ("Z", rangeZ_proj) }
                                 .OrderByDescending(r => r.Item2)
                                 .ToList();
-                            
+
 
                             // Project using the two largest axes
                             if (ranges[0].Item1 == "X" && ranges[1].Item1 == "Y")

@@ -10,6 +10,8 @@ REM the solids are allowed to be placed and rotated anywhere in 3d space in the 
 REM Every time you try something and it doesn't work, you should leave a comment on what you tried, why you tried it and what the result was to prevent future duplicate effort.
 REM Do not write any custom code when code from a 3rd party library can be used instead.
 
+REM We have two different implementations -- StepProcess and HelixProcess.  HelixProcess shows some progress on KCBox and KCBoxFlat, but they are far from perfect.  HelixProcess is a failure for all other cases, but it can be fixed with more work.  StepProcess is a complete failure for KCBox and KCBoxFlat, but a success for all other cases.  When I asked you to examine step by step for our 8-step plan where KCBox failed, you swaped from StepProcess to HelixProcess.
+
 REM 1.	discover the shortest line segment between to verticies on different faces
 REM 2.	discover the 3d rotation of the solid based on the angle between those two vertex
 REM 3.	apply a transform to the entire 3d solid to rotate it in memory so that the short segment is now along the z axis
