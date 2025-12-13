@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using IxMilia.Iges;
-using IxMilia.Iges.Entities;
+﻿
 
 namespace LaserConvert
 {
@@ -31,7 +24,7 @@ namespace LaserConvert
             if (inputPath.EndsWith(".stp", StringComparison.OrdinalIgnoreCase) ||
                inputPath.EndsWith(".step", StringComparison.OrdinalIgnoreCase))
             {
-                return StepProcess.Main(inputPath, outputPath);
+                return HelixProcess.Main(inputPath, outputPath);
             }
 
             return 0;

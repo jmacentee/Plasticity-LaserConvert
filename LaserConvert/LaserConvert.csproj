@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="HelixToolkit" Version="3.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\external\iges\src\IxMilia.Iges\IxMilia.Iges.csproj" />
     <ProjectReference Include="..\external\step\src\IxMilia.Step\IxMilia.Step.csproj" />
   </ItemGroup>
