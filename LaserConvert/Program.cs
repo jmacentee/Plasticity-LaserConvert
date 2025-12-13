@@ -1,6 +1,4 @@
-﻿
-
-namespace LaserConvert
+﻿namespace LaserConvert
 {
     internal static class Program
     {
@@ -24,7 +22,7 @@ namespace LaserConvert
             if (inputPath.EndsWith(".stp", StringComparison.OrdinalIgnoreCase) ||
                inputPath.EndsWith(".step", StringComparison.OrdinalIgnoreCase))
             {
-                return HelixProcess.Main(inputPath, outputPath);
+                return StepProcess.Main(inputPath, outputPath);
             }
 
             return 0;

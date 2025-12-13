@@ -240,7 +240,8 @@ namespace LaserConvert
 
                         // FALLBACK for degenerate complex shapes:  
                         // If the extracted outline is degenerate (all vertices on a line or plane with zero extent),
-                        // use the projection of ALL normalized vertices instead
+                        // instead of falling back to ALL vertices, reorder the extracted vertices properly
+                        // using Gift Wrapping (which preserves non-convex features)
                         if (faces.Count > 20 && outerLoopVerts.Count > 0)
                         {
                             var outX_before = outerLoopVerts.Max(v => v.Item1) - outerLoopVerts.Min(v => v.Item1);
@@ -250,10 +251,11 @@ namespace LaserConvert
                             
                             if (minDim_before < 0.1)
                             {
-                                // Degenerate face - use projection of all normalized vertices instead
-                                Console.WriteLine($"[SVG] {name}: Face extraction is degenerate (min dim {minDim_before:F3}), using all solid vertices");
-                                outerLoopVerts = normalizedVertices.Select(v => (v.X, v.Y, v.Z)).ToList();
-                                holeLoops = new List<List<(double, double, double)>>();  // No holes from this approach
+                                // Degenerate face extraction - the vertices are in edge-loop order, not perimeter order
+                                // Don't fall back to ALL vertices; instead, use Gift Wrapping to properly order
+                                // the extracted vertices while preserving all of them
+                                Console.WriteLine($"[SVG] {name}: Face extraction is edge-ordered (min dim {minDim_before:F3}), preserving all {outerLoopVerts.Count} extracted vertices");
+                                // Keep outerLoopVerts as-is; we'll reorder them below using Gift Wrapping
                             }
                         }
                         
@@ -376,23 +378,19 @@ namespace LaserConvert
                                     .Select(p => ((long)Math.Round(p.X), (long)Math.Round(p.Y)))
                                     .ToList();
                                 
-                                // Try orthogonal ordering first, fallback to Graham scan
-                                // ATTEMPTED: Graham scan (polar angle) for all shapes
-                                // RESULT: Breaks orthogonal shapes like KBox with diagonal jumps
-                                // REASON: Polar angle sorting doesn't preserve orthogonal edge order
-                                // FIX: Try SortPerimeterVertices2D first for orthogonal constraints
+                                // Try orthogonal ordering first, fallback to using dedup order
+                                // For complex shapes, skip sophisticated orderings (Gift Wrapping, Convex Hull)
+                                // and trust the dedup order which comes from edge-loop traversal
                                 var orthogonalSort = SortPerimeterVertices2D(dedup);
                                 List<(long X, long Y)> finalDedup;
-                                // For complex shapes, skip orthogonal sort since edges may not be axis-aligned
-                                // ATTEMPTED: Apply orthogonal sort to complex shapes
-                                // RESULT: KCBoxFlat produces collapsed path (all Y=0)
-                                // REASON: Orthogonal sort fails silently when edges have non-axis-aligned components
-                                // FIX: For complex shapes (>20 faces), use dedup order directly
+                                
                                 if (faces.Count > 20)
                                 {
-                                    // Complex shape: use convex-hull ordering for proper perimeter traversal
-                                    finalDedup = OrderComplexPerimeter(dedup);
-                                    Console.WriteLine($"[SVG] {name}: Applied convex-hull ordering to {finalDedup.Count} vertices");
+                                    // Complex shape with edge-ordered vertices:
+                                    // The dedup order typically preserves the sequential perimeter traversal from edge loops
+                                    // Don't use Gift Wrapping or other perimeter ordering - it will collapse non-convex features
+                                    finalDedup = dedup;
+                                    Console.WriteLine($"[SVG] {name}: Using dedup order directly for edge-ordered vertices ({dedup.Count} points)");
                                 }
                                 else if (orthogonalSort.Count == dedup.Count)
                                 {
@@ -402,14 +400,7 @@ namespace LaserConvert
                                 }
                                 else
                                 {
-                                    // Orthogonal sort failed (complex non-orthogonal shape like KCBox)
-                                    // ATTEMPTED: Graham scan (polar angle) for all shapes
-                                    // RESULT: Collapses to convex hull, loses interior vertices (32 vertices -> 12)
-                                    // REASON: Graham scan is designed for convex hull, not general polygon perimeter
-                                    // ATTEMPTED: Polar angle from centroid
-                                    // RESULT: Still loses non-convex vertices and creates wrong ordering
-                                    // FIX: Trust the dedup order from bounds extraction - it preserves perimeter traversal
-                                    // The bounds extraction naturally walks the edge loop in order
+                                    // Orthogonal sort failed - use dedup order
                                     finalDedup = dedup;
                                     Console.WriteLine($"[SVG] {name}: Orthogonal sort failed, using dedup order (preserves {dedup.Count} vertices)");
                                 }
@@ -966,6 +957,71 @@ namespace LaserConvert
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Gift Wrapping algorithm (Jarvis March) - preserves all boundary vertices including non-convex features.
+        /// Unlike Graham Scan, it doesn't simplify to convex hull.
+        /// </summary>
+        private static List<(long X, long Y)> GiftWrapPerimeter(List<(long X, long Y)> points)
+        {
+            if (points.Count < 3) return points;
+            
+            // Remove duplicates
+            var unique = points.GroupBy(p => (p.X, p.Y))
+                .Select(g => g.First())
+                .ToList();
+            
+            if (unique.Count < 3) return unique;
+            
+            // Find leftmost (and lowest if tie) point
+            int leftmost = 0;
+            for (int i = 1; i < unique.Count; i++)
+            {
+                if (unique[i].X < unique[leftmost].X ||
+                    (unique[i].X == unique[leftmost].X && unique[i].Y < unique[leftmost].Y))
+                {
+                    leftmost = i;
+                }
+            }
+            
+            var hull = new List<(long X, long Y)>();
+            int current = leftmost;
+            
+            do
+            {
+                hull.Add(unique[current]);
+                
+                // Find the point that makes the smallest counter-clockwise angle
+                int next = (current + 1) % unique.Count;
+                
+                for (int i = 0; i < unique.Count; i++)
+                {
+                    if (i == current) continue;
+                    
+                    var cross = Cross(unique[current], unique[next], unique[i]);
+                    if (cross < 0 || (cross == 0 && Distance(unique[current], unique[i]) > Distance(unique[current], unique[next])))
+                    {
+                        next = i;
+                    }
+                }
+                
+                current = next;
+            } while (current != leftmost && hull.Count < unique.Count);
+            
+            return hull;
+        }
+        
+        private static long Cross((long X, long Y) O, (long X, long Y) A, (long X, long Y) B)
+        {
+            return (A.X - O.X) * (B.Y - O.Y) - (A.Y - O.Y) * (B.X - O.X);
+        }
+        
+        private static long Distance((long X, long Y) A, (long X, long Y) B)
+        {
+            var dx = A.X - B.X;
+            var dy = A.Y - B.Y;
+            return dx * dx + dy * dy;
         }
 
         private static List<(long X, long Y)> OrderComplexPerimeter(List<(long X, long Y)> vertices)

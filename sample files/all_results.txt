@@ -4,7 +4,7 @@ REM File: 1box.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="Box1">
-    <path d="M 0,0 L 155,0 L 0,150 L 155,150 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 150,0 L 150,170 L 0,170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -20,10 +20,10 @@ REM File: 2boxes.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="Box2">
-    <path d="M 0,110 L 170,110 L 0,0 L 170,0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 110,0 L 110,170 L 0,170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box1">
-    <path d="M 0,0 L 155,0 L 0,150 L 155,150 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 150,0 L 150,170 L 0,170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -31,10 +31,10 @@ REM File: 3boxes.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="Box2">
-    <path d="M 0,110 L 170,110 L 0,0 L 170,0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 110,0 L 110,170 L 0,170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box1">
-    <path d="M 0,0 L 155,0 L 0,150 L 155,150 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 150,0 L 150,170 L 0,170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -42,13 +42,13 @@ REM File: 3boxesB.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="Box2">
-    <path d="M 0,110 L 170,110 L 0,0 L 170,0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 110,0 L 110,170 L 0,170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box4">
-    <path d="M 0,67 L 67,67 L 0,0 L 67,0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 67,0 L 67,75 L 0,75 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box1">
-    <path d="M 0,0 L 155,0 L 0,150 L 155,150 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 150,0 L 150,170 L 0,170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -56,16 +56,16 @@ REM File: 4boxes.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="Box1">
-    <path d="M 0,0 L 155,0 L 0,150 L 155,150 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 150,0 L 150,170 L 0,170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box2">
-    <path d="M 0,110 L 170,110 L 0,0 L 170,0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 110,0 L 110,170 L 0,170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box4">
-    <path d="M 0,67 L 67,67 L 0,0 L 67,0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 67,0 L 67,75 L 0,75 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box5">
-    <path d="M 0,9 L 52,0 L 0,50 L 52,42 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 44,0 L 44,58 L 0,58 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -73,8 +73,8 @@ REM File: CBox.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="CBox">
-    <path d="M 40,0 L 0,0 L 40,50 L 0,50 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 5,35 L 15,35 L 5,45 L 15,45 Z" stroke="#f00" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 50,0 L 50,40 L 0,40 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 35 5 L 45 5 L 45 15 L 35 15 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -82,8 +82,8 @@ REM File: CBoxR.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="CBoxR">
-    <path d="M 39,0 L 0,5 L 50,41 L 12,46 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 13,33 L 23,32 L 15,41 L 25,40 Z" stroke="#f00" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 50,0 L 50,40 L 0,40 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 35 5 L 45 5 L 45 15 L 35 15 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -127,7 +127,7 @@ REM File: KBox.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="KBox">
-    <path d="M 0,0 L 155,0 L 0,150 L 48,150 L 48,145 L 79,145 L 79,140 L 110,140 L 110,150 L 141,150 L 141,145 L 155,145 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 170,0 L 170,145 L 155,145 L 155,150 L 121,150 L 121,140 L 87,140 L 87,145 L 53,145 L 53,150 L 0,150 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -195,9 +195,9 @@ REM File: KCBox.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="KCBox">
-    <path d="M 35,0 L 24,5 L 38,9 L 36,10 L 39,19 L 41,18 L 44,27 L 42,27 L 45,36 L 46,36 L 49,44 L 44,47 L 39,50 L 39,49 L 34,51 L 35,54 L 30,56 L 29,53 L 24,55 L 26,61 L 21,63 L 19,58 L 14,60 L 11,51 L 8,42 L 11,41 L 8,32 L 6,33 L 3,24 L 0,15 L 12,10 L 11,8 L 23,3 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 14,45 L 23,41 L 17,53 L 26,50 Z" stroke="#f00" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 33,26 L 29,28 L 31,17 L 26,19 Z" stroke="#f00" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 33,0 L 22,7 L 32,1 L 28,3 L 24,6 L 19,10 L 14,13 L 9,16 L 5,19 L 0,22 L 2,21 L 11,15 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 4 14 L 14 14 L 14 22 L 4 22 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 21 6 L 31 6 L 31 10 L 21 10 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -205,9 +205,9 @@ REM File: KCBoxFlat.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="KCBoxFlat">
-    <path d="M 17,52 L 11,52 L 11,58 L 6,58 L 6,52 L 0,52 L 0,32 L 3,32 L 3,22 L 0,22 L 0,2 L 13,2 L 13,0 L 27,0 L 27,2 L 40,2 L 40,12 L 38,12 L 38,22 L 40,22 L 40,32 L 38,32 L 38,42 L 40,42 L 40,52 L 34,52 L 34,53 L 29,53 L 29,52 L 23,52 L 23,55 L 17,55 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 15,37 L 15,47 L 5,37 L 5,47 Z" stroke="#f00" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 30,17 L 30,27 L 25,17 L 25,27 Z" stroke="#f00" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 17,0 L 11,0 L 6,0 L 0,0 L 3,0 L 13,0 L 27,0 L 40,0 L 38,0 L 34,0 L 29,0 L 23,0 L 17,0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 5 0 L 15 0 L 15 10 L 5 10 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 25 0 L 35 0 L 35 5 L 25 5 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -273,9 +273,9 @@ REM File: KCBox_fix.svg
 </svg>
  
 REM File: 1box_output.txt 
-[LaserConvert] Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.stp
-[LaserConvert] File loaded. Total items: 154
-[LaserConvert] Found 1 solids
+Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.stp
+File loaded. Total items: 154
+Found 1 solids
 [TOPO] Processing 6 faces
 [TOPO] Found pair of faces with separation: 3.0mm
 [TOPO] Extracted 8 unique vertices
@@ -286,42 +286,25 @@ REM File: 1box_output.txt
 [TOPO] Recomputed with all faces: 155.8 x 73.6 x 150.0
 [TOPO] Thin dimension detected from face separation: 3.0mm
 [TOPO] Adjusted dimensions: 3.0 x 150.0 x 155.8
-[LaserConvert] [FILTER] Box1: dimensions [3.0, 150.0, 155.8] - PASS
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 154.5x70.9x150.0 (area=44758.0): (-77.9,-117.6,0.0), (76.6,-46.7,0.0), (-77.9,-117.6,150.0), (76.6,-46.7,150.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=44758.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 155.8x73.6x0.0 (area=11463.2): (-76.6,-120.3,0.0), (-77.9,-117.6,0.0), (76.6,-46.7,0.0), (77.9,-49.4,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=11463.2)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 1.3x2.7x150.0 (area=600.0): (77.9,-49.4,0.0), (76.6,-46.7,0.0), (76.6,-46.7,150.0), (77.9,-49.4,150.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=600.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 155.8x73.6x0.0 (area=11463.2): (77.9,-49.4,150.0), (76.6,-46.7,150.0), (-77.9,-117.6,150.0), (-76.6,-120.3,150.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=11463.2)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
+[FILTER] Box1: dimensions [3.0, 150.0, 155.8] - PASS
+[TRANSFORM] Thin dimension: -77.9,-117.6,0.0 -> -76.6,-120.3,0.0 (3.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
+[SVG] Box1: Z range [74.4, 77.4] (range=3.0), using all 8 vertices for projection
+[SVG] Box1: After rotation - X:[-150.0,0.0] Y:[-119.8,50.2]
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 154.5x70.9x150.0 (area=44758.0): (-76.6,-120.3,0.0), (-76.6,-120.3,150.0), (77.9,-49.4,0.0), (77.9,-49.4,150.0)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=44758.0)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 1.3x2.7x150.0 (area=600.0): (-76.6,-120.3,0.0), (-76.6,-120.3,150.0), (-77.9,-117.6,150.0), (-77.9,-117.6,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=600.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 154.5x70.9x150.0 (area=44758.0): (-77.9,-117.6,0.0), (76.6,-46.7,0.0), (-77.9,-117.6,150.0), (76.6,-46.7,150.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=44758.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[SVG] Outer path: 4 vertices
-[LaserConvert] Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.svg
+[SVG] Box1: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box1: Outline vertices after rotation - X:[-150.0,0.0] Y:[-119.8,50.2] Z:[77.4,77.4]
+[SVG] Box1: Orthogonal sort succeeded
+[SVG] Box1: Generated outline from 4 outline points -> 4 ordered
+Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.svg
  
 REM File: 2boxes_output.txt 
-[LaserConvert] Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\2boxes.stp
-[LaserConvert] File loaded. Total items: 304
-[LaserConvert] Found 2 solids
+Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\2boxes.stp
+File loaded. Total items: 304
+Found 2 solids
 [TOPO] Processing 6 faces
 [TOPO] Found pair of faces with separation: 3.0mm
 [TOPO] Extracted 8 unique vertices
@@ -329,7 +312,7 @@ REM File: 2boxes_output.txt
 [TOPO] Computed dimensions: 170.0 x 110.2 x 3.0
 [TOPO] Thin dimension detected from face separation: 3.0mm
 [TOPO] Adjusted dimensions: 3.0 x 110.2 x 170.0
-[LaserConvert] [FILTER] Box2: dimensions [3.0, 110.2, 170.0] - PASS
+[FILTER] Box2: dimensions [3.0, 110.2, 170.0] - PASS
 [TOPO] Processing 6 faces
 [TOPO] Found pair of faces with separation: 3.0mm
 [TOPO] Extracted 8 unique vertices
@@ -340,71 +323,37 @@ REM File: 2boxes_output.txt
 [TOPO] Recomputed with all faces: 155.8 x 73.6 x 150.0
 [TOPO] Thin dimension detected from face separation: 3.0mm
 [TOPO] Adjusted dimensions: 3.0 x 150.0 x 155.8
-[LaserConvert] [FILTER] Box1: dimensions [3.0, 150.0, 155.8] - PASS
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 170.0x110.2x0.0 (area=18736.6): (-85.0,28.2,3.0), (85.0,28.2,3.0), (-85.0,-82.0,3.0), (85.0,-82.0,3.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=18736.6)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 170.0x0.0x3.0 (area=510.0): (-85.0,28.2,0.0), (-85.0,28.2,3.0), (85.0,28.2,3.0), (85.0,28.2,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=510.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x110.2x3.0 (area=330.6): (85.0,28.2,0.0), (85.0,28.2,3.0), (85.0,-82.0,3.0), (85.0,-82.0,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=330.6)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 170.0x0.0x3.0 (area=510.0): (85.0,-82.0,0.0), (85.0,-82.0,3.0), (-85.0,-82.0,3.0), (-85.0,-82.0,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=510.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
+[FILTER] Box1: dimensions [3.0, 150.0, 155.8] - PASS
+[TRANSFORM] Thin dimension: -85.0,28.2,3.0 -> -85.0,28.2,0.0 (3.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
+[SVG] Box2: Z range [0.0, 3.0] (range=3.0), using all 8 vertices for projection
+[SVG] Box2: After rotation - X:[-85.0,85.0] Y:[-82.0,28.2]
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 170.0x110.2x0.0 (area=18736.6): (-85.0,28.2,0.0), (-85.0,-82.0,0.0), (85.0,28.2,0.0), (85.0,-82.0,0.0)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=18736.6)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x110.2x3.0 (area=330.6): (-85.0,28.2,0.0), (-85.0,-82.0,0.0), (-85.0,-82.0,3.0), (-85.0,28.2,3.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=330.6)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 170.0x110.2x0.0 (area=18736.6): (-85.0,28.2,3.0), (85.0,28.2,3.0), (-85.0,-82.0,3.0), (85.0,-82.0,3.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=18736.6)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[SVG] Outer path: 4 vertices
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 154.5x70.9x150.0 (area=44758.0): (-77.9,-117.6,0.0), (76.6,-46.7,0.0), (-77.9,-117.6,150.0), (76.6,-46.7,150.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=44758.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 155.8x73.6x0.0 (area=11463.2): (-76.6,-120.3,0.0), (-77.9,-117.6,0.0), (76.6,-46.7,0.0), (77.9,-49.4,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=11463.2)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 1.3x2.7x150.0 (area=600.0): (77.9,-49.4,0.0), (76.6,-46.7,0.0), (76.6,-46.7,150.0), (77.9,-49.4,150.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=600.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 155.8x73.6x0.0 (area=11463.2): (77.9,-49.4,150.0), (76.6,-46.7,150.0), (-77.9,-117.6,150.0), (-76.6,-120.3,150.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=11463.2)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] Box2: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box2: Outline vertices after rotation - X:[-82.0,28.2] Y:[-85.0,85.0] Z:[-0.0,0.0]
+[SVG] Box2: Orthogonal sort succeeded
+[SVG] Box2: Generated outline from 4 outline points -> 4 ordered
+[TRANSFORM] Thin dimension: -77.9,-117.6,0.0 -> -76.6,-120.3,0.0 (3.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
+[SVG] Box1: Z range [74.4, 77.4] (range=3.0), using all 8 vertices for projection
+[SVG] Box1: After rotation - X:[-150.0,0.0] Y:[-119.8,50.2]
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 154.5x70.9x150.0 (area=44758.0): (-76.6,-120.3,0.0), (-76.6,-120.3,150.0), (77.9,-49.4,0.0), (77.9,-49.4,150.0)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=44758.0)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 1.3x2.7x150.0 (area=600.0): (-76.6,-120.3,0.0), (-76.6,-120.3,150.0), (-77.9,-117.6,150.0), (-77.9,-117.6,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=600.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 154.5x70.9x150.0 (area=44758.0): (-77.9,-117.6,0.0), (76.6,-46.7,0.0), (-77.9,-117.6,150.0), (76.6,-46.7,150.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=44758.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[SVG] Outer path: 4 vertices
-[LaserConvert] Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\2boxes.svg
+[SVG] Box1: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box1: Outline vertices after rotation - X:[-150.0,0.0] Y:[-119.8,50.2] Z:[77.4,77.4]
+[SVG] Box1: Orthogonal sort succeeded
+[SVG] Box1: Generated outline from 4 outline points -> 4 ordered
+Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\2boxes.svg
  
 REM File: 3boxesB_output.txt 
-[LaserConvert] Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxesB.stp
-[LaserConvert] File loaded. Total items: 454
-[LaserConvert] Found 3 solids
+Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxesB.stp
+File loaded. Total items: 454
+Found 3 solids
 [TOPO] Processing 6 faces
 [TOPO] Found pair of faces with separation: 3.0mm
 [TOPO] Extracted 8 unique vertices
@@ -412,7 +361,7 @@ REM File: 3boxesB_output.txt
 [TOPO] Computed dimensions: 170.0 x 110.2 x 3.0
 [TOPO] Thin dimension detected from face separation: 3.0mm
 [TOPO] Adjusted dimensions: 3.0 x 110.2 x 170.0
-[LaserConvert] [FILTER] Box2: dimensions [3.0, 110.2, 170.0] - PASS
+[FILTER] Box2: dimensions [3.0, 110.2, 170.0] - PASS
 [TOPO] Processing 6 faces
 [TOPO] Found pair of faces with separation: 3.0mm
 [TOPO] Extracted 8 unique vertices
@@ -420,7 +369,7 @@ REM File: 3boxesB_output.txt
 [TOPO] Computed dimensions: 68.8 x 67.5 x 35.0
 [TOPO] Thin dimension detected from face separation: 3.0mm
 [TOPO] Adjusted dimensions: 3.0 x 67.5 x 68.8
-[LaserConvert] [FILTER] Box4: dimensions [3.0, 67.5, 68.8] - PASS
+[FILTER] Box4: dimensions [3.0, 67.5, 68.8] - PASS
 [TOPO] Processing 6 faces
 [TOPO] Found pair of faces with separation: 3.0mm
 [TOPO] Extracted 8 unique vertices
@@ -431,100 +380,49 @@ REM File: 3boxesB_output.txt
 [TOPO] Recomputed with all faces: 155.8 x 73.6 x 150.0
 [TOPO] Thin dimension detected from face separation: 3.0mm
 [TOPO] Adjusted dimensions: 3.0 x 150.0 x 155.8
-[LaserConvert] [FILTER] Box1: dimensions [3.0, 150.0, 155.8] - PASS
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 170.0x110.2x0.0 (area=18736.6): (-85.0,28.2,3.0), (85.0,28.2,3.0), (-85.0,-82.0,3.0), (85.0,-82.0,3.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=18736.6)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 170.0x0.0x3.0 (area=510.0): (-85.0,28.2,0.0), (-85.0,28.2,3.0), (85.0,28.2,3.0), (85.0,28.2,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=510.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x110.2x3.0 (area=330.6): (85.0,28.2,0.0), (85.0,28.2,3.0), (85.0,-82.0,3.0), (85.0,-82.0,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=330.6)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 170.0x0.0x3.0 (area=510.0): (85.0,-82.0,0.0), (85.0,-82.0,3.0), (-85.0,-82.0,3.0), (-85.0,-82.0,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=510.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
+[FILTER] Box1: dimensions [3.0, 150.0, 155.8] - PASS
+[TRANSFORM] Thin dimension: -85.0,28.2,3.0 -> -85.0,28.2,0.0 (3.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
+[SVG] Box2: Z range [0.0, 3.0] (range=3.0), using all 8 vertices for projection
+[SVG] Box2: After rotation - X:[-85.0,85.0] Y:[-82.0,28.2]
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 170.0x110.2x0.0 (area=18736.6): (-85.0,28.2,0.0), (-85.0,-82.0,0.0), (85.0,28.2,0.0), (85.0,-82.0,0.0)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=18736.6)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x110.2x3.0 (area=330.6): (-85.0,28.2,0.0), (-85.0,-82.0,0.0), (-85.0,-82.0,3.0), (-85.0,28.2,3.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=330.6)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 170.0x110.2x0.0 (area=18736.6): (-85.0,28.2,3.0), (85.0,28.2,3.0), (-85.0,-82.0,3.0), (85.0,-82.0,3.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=18736.6)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[SVG] Outer path: 4 vertices
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 67.5x67.5x32.3 (area=8916.4): (-80.7,-14.5,84.1), (-13.2,-14.5,51.8), (-80.7,-82.0,84.1), (-13.2,-82.0,51.8)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=8916.4)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 68.8x0.0x35.0 (area=2409.0): (-82.0,-14.5,81.4), (-80.7,-14.5,84.1), (-13.2,-14.5,51.8), (-14.5,-14.5,49.1)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=2409.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 1.3x67.5x2.7 (area=273.6): (-14.5,-14.5,49.1), (-13.2,-14.5,51.8), (-13.2,-82.0,51.8), (-14.5,-82.0,49.1)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=273.6)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 68.8x0.0x35.0 (area=2409.0): (-14.5,-82.0,49.1), (-13.2,-82.0,51.8), (-80.7,-82.0,84.1), (-82.0,-82.0,81.4)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=2409.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] Box2: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box2: Outline vertices after rotation - X:[-82.0,28.2] Y:[-85.0,85.0] Z:[-0.0,0.0]
+[SVG] Box2: Orthogonal sort succeeded
+[SVG] Box2: Generated outline from 4 outline points -> 4 ordered
+[TRANSFORM] Thin dimension: -13.2,-14.5,51.8 -> -14.5,-14.5,49.1 (3.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
+[SVG] Box4: Z range [49.1, 84.1] (range=35.0), using all 8 vertices for projection
+[SVG] Box4: After rotation - X:[-82.0,-13.2] Y:[-82.0,-14.5]
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 67.5x67.5x32.3 (area=8916.4): (-82.0,-14.5,81.4), (-82.0,-82.0,81.4), (-14.5,-14.5,49.1), (-14.5,-82.0,49.1)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=8916.4)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 1.3x67.5x2.7 (area=273.6): (-82.0,-14.5,81.4), (-82.0,-82.0,81.4), (-80.7,-82.0,84.1), (-80.7,-14.5,84.1)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=273.6)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 67.5x67.5x32.3 (area=8916.4): (-80.7,-14.5,84.1), (-13.2,-14.5,51.8), (-80.7,-82.0,84.1), (-13.2,-82.0,51.8)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=8916.4)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[SVG] Outer path: 4 vertices
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 154.5x70.9x150.0 (area=44758.0): (-77.9,-117.6,0.0), (76.6,-46.7,0.0), (-77.9,-117.6,150.0), (76.6,-46.7,150.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=44758.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 155.8x73.6x0.0 (area=11463.2): (-76.6,-120.3,0.0), (-77.9,-117.6,0.0), (76.6,-46.7,0.0), (77.9,-49.4,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=11463.2)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 1.3x2.7x150.0 (area=600.0): (77.9,-49.4,0.0), (76.6,-46.7,0.0), (76.6,-46.7,150.0), (77.9,-49.4,150.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=600.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 155.8x73.6x0.0 (area=11463.2): (77.9,-49.4,150.0), (76.6,-46.7,150.0), (-77.9,-117.6,150.0), (-76.6,-120.3,150.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=11463.2)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] Box4: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box4: Outline vertices after rotation - X:[-82.0,-14.5] Y:[-109.1,-34.3] Z:[-38.0,-38.0]
+[SVG] Box4: Orthogonal sort succeeded
+[SVG] Box4: Generated outline from 4 outline points -> 4 ordered
+[TRANSFORM] Thin dimension: -77.9,-117.6,0.0 -> -76.6,-120.3,0.0 (3.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
+[SVG] Box1: Z range [74.4, 77.4] (range=3.0), using all 8 vertices for projection
+[SVG] Box1: After rotation - X:[-150.0,0.0] Y:[-119.8,50.2]
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 154.5x70.9x150.0 (area=44758.0): (-76.6,-120.3,0.0), (-76.6,-120.3,150.0), (77.9,-49.4,0.0), (77.9,-49.4,150.0)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=44758.0)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 1.3x2.7x150.0 (area=600.0): (-76.6,-120.3,0.0), (-76.6,-120.3,150.0), (-77.9,-117.6,150.0), (-77.9,-117.6,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=600.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 154.5x70.9x150.0 (area=44758.0): (-77.9,-117.6,0.0), (76.6,-46.7,0.0), (-77.9,-117.6,150.0), (76.6,-46.7,150.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=44758.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[SVG] Outer path: 4 vertices
-[LaserConvert] Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxesB.svg
+[SVG] Box1: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box1: Outline vertices after rotation - X:[-150.0,0.0] Y:[-119.8,50.2] Z:[77.4,77.4]
+[SVG] Box1: Orthogonal sort succeeded
+[SVG] Box1: Generated outline from 4 outline points -> 4 ordered
+Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxesB.svg
  
 REM File: 3boxes_output.txt 
-[LaserConvert] Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxes.stp
-[LaserConvert] File loaded. Total items: 454
-[LaserConvert] Found 3 solids
+Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxes.stp
+File loaded. Total items: 454
+Found 3 solids
 [TOPO] Processing 6 faces
 [TOPO] Found pair of faces with separation: 3.0mm
 [TOPO] Extracted 8 unique vertices
@@ -532,7 +430,7 @@ REM File: 3boxes_output.txt
 [TOPO] Computed dimensions: 170.0 x 110.2 x 3.0
 [TOPO] Thin dimension detected from face separation: 3.0mm
 [TOPO] Adjusted dimensions: 3.0 x 110.2 x 170.0
-[LaserConvert] [FILTER] Box2: dimensions [3.0, 110.2, 170.0] - PASS
+[FILTER] Box2: dimensions [3.0, 110.2, 170.0] - PASS
 [TOPO] Processing 6 faces
 [TOPO] Found pair of faces with separation: 3.0mm
 [TOPO] Extracted 8 unique vertices
@@ -543,77 +441,43 @@ REM File: 3boxes_output.txt
 [TOPO] Recomputed with all faces: 155.8 x 73.6 x 150.0
 [TOPO] Thin dimension detected from face separation: 3.0mm
 [TOPO] Adjusted dimensions: 3.0 x 150.0 x 155.8
-[LaserConvert] [FILTER] Box1: dimensions [3.0, 150.0, 155.8] - PASS
+[FILTER] Box1: dimensions [3.0, 150.0, 155.8] - PASS
 [TOPO] Processing 6 faces
 [TOPO] Found pair of faces with separation: 150.0mm
 [TOPO] Extracted 8 unique vertices
 [TOPO] Vertex ranges: X[-85.0,85.0] Y[-82.0,85.0] Z[0.0,150.0]
 [TOPO] Computed dimensions: 170.0 x 167.0 x 150.0
-[LaserConvert] [FILTER] Box3: dimensions [170.0, 167.0, 150.0] - FAIL
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 170.0x110.2x0.0 (area=18736.6): (-85.0,28.2,3.0), (85.0,28.2,3.0), (-85.0,-82.0,3.0), (85.0,-82.0,3.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=18736.6)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 170.0x0.0x3.0 (area=510.0): (-85.0,28.2,0.0), (-85.0,28.2,3.0), (85.0,28.2,3.0), (85.0,28.2,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=510.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x110.2x3.0 (area=330.6): (85.0,28.2,0.0), (85.0,28.2,3.0), (85.0,-82.0,3.0), (85.0,-82.0,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=330.6)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 170.0x0.0x3.0 (area=510.0): (85.0,-82.0,0.0), (85.0,-82.0,3.0), (-85.0,-82.0,3.0), (-85.0,-82.0,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=510.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
+[FILTER] Box3: dimensions [170.0, 167.0, 150.0] - FAIL
+[TRANSFORM] Thin dimension: -85.0,28.2,3.0 -> -85.0,28.2,0.0 (3.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
+[SVG] Box2: Z range [0.0, 3.0] (range=3.0), using all 8 vertices for projection
+[SVG] Box2: After rotation - X:[-85.0,85.0] Y:[-82.0,28.2]
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 170.0x110.2x0.0 (area=18736.6): (-85.0,28.2,0.0), (-85.0,-82.0,0.0), (85.0,28.2,0.0), (85.0,-82.0,0.0)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=18736.6)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x110.2x3.0 (area=330.6): (-85.0,28.2,0.0), (-85.0,-82.0,0.0), (-85.0,-82.0,3.0), (-85.0,28.2,3.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=330.6)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 170.0x110.2x0.0 (area=18736.6): (-85.0,28.2,3.0), (85.0,28.2,3.0), (-85.0,-82.0,3.0), (85.0,-82.0,3.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=18736.6)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[SVG] Outer path: 4 vertices
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 154.5x70.9x150.0 (area=44758.0): (-77.9,-117.6,0.0), (76.6,-46.7,0.0), (-77.9,-117.6,150.0), (76.6,-46.7,150.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=44758.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 155.8x73.6x0.0 (area=11463.2): (-76.6,-120.3,0.0), (-77.9,-117.6,0.0), (76.6,-46.7,0.0), (77.9,-49.4,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=11463.2)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 1.3x2.7x150.0 (area=600.0): (77.9,-49.4,0.0), (76.6,-46.7,0.0), (76.6,-46.7,150.0), (77.9,-49.4,150.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=600.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 155.8x73.6x0.0 (area=11463.2): (77.9,-49.4,150.0), (76.6,-46.7,150.0), (-77.9,-117.6,150.0), (-76.6,-120.3,150.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=11463.2)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] Box2: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box2: Outline vertices after rotation - X:[-82.0,28.2] Y:[-85.0,85.0] Z:[-0.0,0.0]
+[SVG] Box2: Orthogonal sort succeeded
+[SVG] Box2: Generated outline from 4 outline points -> 4 ordered
+[TRANSFORM] Thin dimension: -77.9,-117.6,0.0 -> -76.6,-120.3,0.0 (3.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
+[SVG] Box1: Z range [74.4, 77.4] (range=3.0), using all 8 vertices for projection
+[SVG] Box1: After rotation - X:[-150.0,0.0] Y:[-119.8,50.2]
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 154.5x70.9x150.0 (area=44758.0): (-76.6,-120.3,0.0), (-76.6,-120.3,150.0), (77.9,-49.4,0.0), (77.9,-49.4,150.0)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=44758.0)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 1.3x2.7x150.0 (area=600.0): (-76.6,-120.3,0.0), (-76.6,-120.3,150.0), (-77.9,-117.6,150.0), (-77.9,-117.6,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=600.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 154.5x70.9x150.0 (area=44758.0): (-77.9,-117.6,0.0), (76.6,-46.7,0.0), (-77.9,-117.6,150.0), (76.6,-46.7,150.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=44758.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[SVG] Outer path: 4 vertices
-[LaserConvert] Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxes.svg
+[SVG] Box1: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box1: Outline vertices after rotation - X:[-150.0,0.0] Y:[-119.8,50.2] Z:[77.4,77.4]
+[SVG] Box1: Orthogonal sort succeeded
+[SVG] Box1: Generated outline from 4 outline points -> 4 ordered
+Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxes.svg
  
 REM File: 4boxes_output.txt 
-[LaserConvert] Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\4boxes.stp
-[LaserConvert] File loaded. Total items: 604
-[LaserConvert] Found 4 solids
+Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\4boxes.stp
+File loaded. Total items: 604
+Found 4 solids
 [TOPO] Processing 6 faces
 [TOPO] Found pair of faces with separation: 3.0mm
 [TOPO] Extracted 8 unique vertices
@@ -624,7 +488,7 @@ REM File: 4boxes_output.txt
 [TOPO] Recomputed with all faces: 155.8 x 73.6 x 150.0
 [TOPO] Thin dimension detected from face separation: 3.0mm
 [TOPO] Adjusted dimensions: 3.0 x 150.0 x 155.8
-[LaserConvert] [FILTER] Box1: dimensions [3.0, 150.0, 155.8] - PASS
+[FILTER] Box1: dimensions [3.0, 150.0, 155.8] - PASS
 [TOPO] Processing 6 faces
 [TOPO] Found pair of faces with separation: 3.0mm
 [TOPO] Extracted 8 unique vertices
@@ -632,7 +496,7 @@ REM File: 4boxes_output.txt
 [TOPO] Computed dimensions: 170.0 x 110.2 x 3.0
 [TOPO] Thin dimension detected from face separation: 3.0mm
 [TOPO] Adjusted dimensions: 3.0 x 110.2 x 170.0
-[LaserConvert] [FILTER] Box2: dimensions [3.0, 110.2, 170.0] - PASS
+[FILTER] Box2: dimensions [3.0, 110.2, 170.0] - PASS
 [TOPO] Processing 6 faces
 [TOPO] Found pair of faces with separation: 3.0mm
 [TOPO] Extracted 8 unique vertices
@@ -640,7 +504,7 @@ REM File: 4boxes_output.txt
 [TOPO] Computed dimensions: 68.8 x 67.5 x 35.0
 [TOPO] Thin dimension detected from face separation: 3.0mm
 [TOPO] Adjusted dimensions: 3.0 x 67.5 x 68.8
-[LaserConvert] [FILTER] Box4: dimensions [3.0, 67.5, 68.8] - PASS
+[FILTER] Box4: dimensions [3.0, 67.5, 68.8] - PASS
 [TOPO] Processing 6 faces
 [TOPO] Found pair of faces with separation: 3.0mm
 [TOPO] Extracted 8 unique vertices
@@ -651,129 +515,61 @@ REM File: 4boxes_output.txt
 [TOPO] Recomputed with all faces: 53.2 x 41.3 x 51.2
 [TOPO] Thin dimension detected from face separation: 3.0mm
 [TOPO] Adjusted dimensions: 3.0 x 51.2 x 53.2
-[LaserConvert] [FILTER] Box5: dimensions [3.0, 51.2, 53.2] - PASS
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 154.5x70.9x150.0 (area=44758.0): (-77.9,-117.6,0.0), (76.6,-46.7,0.0), (-77.9,-117.6,150.0), (76.6,-46.7,150.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=44758.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 155.8x73.6x0.0 (area=11463.2): (-76.6,-120.3,0.0), (-77.9,-117.6,0.0), (76.6,-46.7,0.0), (77.9,-49.4,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=11463.2)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 1.3x2.7x150.0 (area=600.0): (77.9,-49.4,0.0), (76.6,-46.7,0.0), (76.6,-46.7,150.0), (77.9,-49.4,150.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=600.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 155.8x73.6x0.0 (area=11463.2): (77.9,-49.4,150.0), (76.6,-46.7,150.0), (-77.9,-117.6,150.0), (-76.6,-120.3,150.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=11463.2)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
+[FILTER] Box5: dimensions [3.0, 51.2, 53.2] - PASS
+[TRANSFORM] Thin dimension: -77.9,-117.6,0.0 -> -76.6,-120.3,0.0 (3.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
+[SVG] Box1: Z range [74.4, 77.4] (range=3.0), using all 8 vertices for projection
+[SVG] Box1: After rotation - X:[-150.0,0.0] Y:[-119.8,50.2]
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 154.5x70.9x150.0 (area=44758.0): (-76.6,-120.3,0.0), (-76.6,-120.3,150.0), (77.9,-49.4,0.0), (77.9,-49.4,150.0)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=44758.0)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 1.3x2.7x150.0 (area=600.0): (-76.6,-120.3,0.0), (-76.6,-120.3,150.0), (-77.9,-117.6,150.0), (-77.9,-117.6,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=600.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 154.5x70.9x150.0 (area=44758.0): (-77.9,-117.6,0.0), (76.6,-46.7,0.0), (-77.9,-117.6,150.0), (76.6,-46.7,150.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=44758.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[SVG] Outer path: 4 vertices
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 170.0x110.2x0.0 (area=18736.6): (-85.0,28.2,3.0), (85.0,28.2,3.0), (-85.0,-82.0,3.0), (85.0,-82.0,3.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=18736.6)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 170.0x0.0x3.0 (area=510.0): (-85.0,28.2,0.0), (-85.0,28.2,3.0), (85.0,28.2,3.0), (85.0,28.2,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=510.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x110.2x3.0 (area=330.6): (85.0,28.2,0.0), (85.0,28.2,3.0), (85.0,-82.0,3.0), (85.0,-82.0,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=330.6)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 170.0x0.0x3.0 (area=510.0): (85.0,-82.0,0.0), (85.0,-82.0,3.0), (-85.0,-82.0,3.0), (-85.0,-82.0,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=510.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] Box1: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box1: Outline vertices after rotation - X:[-150.0,0.0] Y:[-119.8,50.2] Z:[77.4,77.4]
+[SVG] Box1: Orthogonal sort succeeded
+[SVG] Box1: Generated outline from 4 outline points -> 4 ordered
+[TRANSFORM] Thin dimension: -85.0,28.2,3.0 -> -85.0,28.2,0.0 (3.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
+[SVG] Box2: Z range [0.0, 3.0] (range=3.0), using all 8 vertices for projection
+[SVG] Box2: After rotation - X:[-85.0,85.0] Y:[-82.0,28.2]
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 170.0x110.2x0.0 (area=18736.6): (-85.0,28.2,0.0), (-85.0,-82.0,0.0), (85.0,28.2,0.0), (85.0,-82.0,0.0)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=18736.6)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x110.2x3.0 (area=330.6): (-85.0,28.2,0.0), (-85.0,-82.0,0.0), (-85.0,-82.0,3.0), (-85.0,28.2,3.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=330.6)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 170.0x110.2x0.0 (area=18736.6): (-85.0,28.2,3.0), (85.0,28.2,3.0), (-85.0,-82.0,3.0), (85.0,-82.0,3.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=18736.6)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[SVG] Outer path: 4 vertices
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 67.5x67.5x32.3 (area=8916.4): (-80.7,-14.5,84.1), (-13.2,-14.5,51.8), (-80.7,-82.0,84.1), (-13.2,-82.0,51.8)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=8916.4)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 68.8x0.0x35.0 (area=2409.0): (-82.0,-14.5,81.4), (-80.7,-14.5,84.1), (-13.2,-14.5,51.8), (-14.5,-14.5,49.1)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=2409.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 1.3x67.5x2.7 (area=273.6): (-14.5,-14.5,49.1), (-13.2,-14.5,51.8), (-13.2,-82.0,51.8), (-14.5,-82.0,49.1)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=273.6)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 68.8x0.0x35.0 (area=2409.0): (-14.5,-82.0,49.1), (-13.2,-82.0,51.8), (-80.7,-82.0,84.1), (-82.0,-82.0,81.4)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=2409.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] Box2: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box2: Outline vertices after rotation - X:[-82.0,28.2] Y:[-85.0,85.0] Z:[-0.0,0.0]
+[SVG] Box2: Orthogonal sort succeeded
+[SVG] Box2: Generated outline from 4 outline points -> 4 ordered
+[TRANSFORM] Thin dimension: -13.2,-14.5,51.8 -> -14.5,-14.5,49.1 (3.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
+[SVG] Box4: Z range [49.1, 84.1] (range=35.0), using all 8 vertices for projection
+[SVG] Box4: After rotation - X:[-82.0,-13.2] Y:[-82.0,-14.5]
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 67.5x67.5x32.3 (area=8916.4): (-82.0,-14.5,81.4), (-82.0,-82.0,81.4), (-14.5,-14.5,49.1), (-14.5,-82.0,49.1)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=8916.4)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 1.3x67.5x2.7 (area=273.6): (-82.0,-14.5,81.4), (-82.0,-82.0,81.4), (-80.7,-82.0,84.1), (-80.7,-14.5,84.1)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=273.6)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 67.5x67.5x32.3 (area=8916.4): (-80.7,-14.5,84.1), (-13.2,-14.5,51.8), (-80.7,-82.0,84.1), (-13.2,-82.0,51.8)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=8916.4)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[SVG] Outer path: 4 vertices
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 51.9x38.7x50.3 (area=6570.2): (-80.7,64.2,54.3), (-28.7,40.9,45.7), (-80.7,48.8,96.0), (-28.7,25.5,87.4)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=6570.2)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 53.2x25.9x9.5 (area=2132.1): (-82.0,61.7,53.3), (-80.7,64.2,54.3), (-28.7,40.9,45.7), (-30.0,38.3,44.7)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=2132.1)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 1.3x17.9x42.6 (area=842.1): (-30.0,38.3,44.7), (-28.7,40.9,45.7), (-28.7,25.5,87.4), (-30.0,23.0,86.4)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=842.1)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 53.2x25.9x9.5 (area=2132.1): (-30.0,23.0,86.4), (-28.7,25.5,87.4), (-80.7,48.8,96.0), (-82.0,46.3,95.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=2132.1)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] Box4: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box4: Outline vertices after rotation - X:[-82.0,-14.5] Y:[-109.1,-34.3] Z:[-38.0,-38.0]
+[SVG] Box4: Orthogonal sort succeeded
+[SVG] Box4: Generated outline from 4 outline points -> 4 ordered
+[TRANSFORM] Thin dimension: -28.7,25.5,87.4 -> -30.0,23.0,86.4 (3.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=53.9ø
+[SVG] Box5: Z range [-36.4, -33.4] (range=3.0), using all 8 vertices for projection
+[SVG] Box5: After rotation - X:[28.7,73.2] Y:[49.3,106.9]
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 51.9x38.7x50.3 (area=6570.2): (-82.0,61.7,53.3), (-82.0,46.3,95.0), (-30.0,38.3,44.7), (-30.0,23.0,86.4)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=6570.2)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 1.3x17.9x42.6 (area=842.1): (-82.0,61.7,53.3), (-82.0,46.3,95.0), (-80.7,48.8,96.0), (-80.7,64.2,54.3)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=842.1)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 51.9x38.7x50.3 (area=6570.2): (-80.7,64.2,54.3), (-28.7,40.9,45.7), (-80.7,48.8,96.0), (-28.7,25.5,87.4)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=6570.2)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[SVG] Outer path: 4 vertices
-[LaserConvert] Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\4boxes.svg
+[SVG] Box5: Extracted outer loop with 4 vertices from face bounds
+[SVG] Box5: Outline vertices after rotation - X:[28.7,73.2] Y:[49.3,106.9] Z:[-33.4,-33.4]
+[SVG] Box5: Orthogonal sort succeeded
+[SVG] Box5: Generated outline from 4 outline points -> 4 ordered
+Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\4boxes.svg
  
 REM File: CBoxR_output.txt 
-[LaserConvert] Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBoxR.stp
-[LaserConvert] File loaded. Total items: 290
-[LaserConvert] Found 1 solids
+Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBoxR.stp
+File loaded. Total items: 290
+Found 1 solids
 [TOPO] Processing 10 faces
 [TOPO] Found pair of faces with separation: 7.6mm
 [TOPO] Extracted 10 unique vertices
@@ -781,65 +577,31 @@ REM File: CBoxR_output.txt
 [TOPO] Computed dimensions: 50.1 x 46.2 x 35.1
 [TOPO] Thin dimension detected from face separation: 7.6mm
 [TOPO] Adjusted dimensions: 7.6 x 46.2 x 50.1
-[LaserConvert] [FILTER] CBoxR: dimensions [7.6, 46.2, 50.1] - PASS
+[FILTER] CBoxR: dimensions [7.6, 46.2, 50.1] - PASS
+[TRANSFORM] Thin dimension: 17.7,-17.0,74.6 -> 17.3,-15.3,72.1 (3.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=-54.3ø
+[SVG] CBoxR: Z range [50.7, 85.8] (range=35.1), using all 10 vertices for projection
+[SVG] CBoxR: After rotation - X:[-4.9,45.3] Y:[-48.9,-2.7]
+[SVG] CBoxR: Found face with 2 bounds (has holes)
 [EXTRACT] ExtractFaceWithHoles: face has 2 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 12.0x9.5x7.5 (area=273.8): (8.0,-15.7,76.8), (17.7,-17.0,74.6), (10.3,-7.5,82.0), (20.0,-8.8,79.8)...
 [EXTRACT] Bound 1 has 4 vertices, bbox 50.1x46.2x35.1 (area=5696.4): (33.7,-48.9,50.7), (-4.9,-43.8,59.7), (45.3,-7.8,76.7), (6.6,-2.7,85.8)...
 [EXTRACT] Identified bound 1 as outer loop (largest area=5696.4)
 [EXTRACT] Identified bound 0 as hole loop 1 (area=273.8)
 [EXTRACT] Returning 4 outer verts and 1 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 39.0x6.8x11.5 (area=790.3): (33.4,-47.3,48.2), (33.7,-48.9,50.7), (-4.9,-43.8,59.7), (-5.3,-42.2,57.3)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=790.3)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 11.9x42.8x28.5 (area=2065.5): (-5.3,-42.2,57.3), (-4.9,-43.8,59.7), (6.6,-2.7,85.8), (6.3,-1.1,83.3)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=2065.5)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 39.0x6.8x11.5 (area=790.3): (6.3,-1.1,83.3), (6.6,-2.7,85.8), (45.3,-7.8,76.7), (44.9,-6.2,74.2)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=790.3)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 2 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 12.0x9.5x7.5 (area=273.8): (17.3,-15.3,72.1), (7.6,-14.0,74.4), (19.6,-7.1,77.3), (9.9,-5.8,79.6)...
-[EXTRACT] Bound 1 has 4 vertices, bbox 50.1x46.2x35.1 (area=5696.4): (33.4,-47.3,48.2), (44.9,-6.2,74.2), (-5.3,-42.2,57.3), (6.3,-1.1,83.3)...
-[EXTRACT] Identified bound 1 as outer loop (largest area=5696.4)
-[EXTRACT] Identified bound 0 as hole loop 1 (area=273.8)
-[EXTRACT] Returning 4 outer verts and 1 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 11.9x42.8x28.5 (area=2065.5): (33.4,-47.3,48.2), (44.9,-6.2,74.2), (45.3,-7.8,76.7), (33.7,-48.9,50.7)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=2065.5)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 10.0x2.9x4.7 (area=90.7): (8.0,-15.7,76.8), (17.7,-17.0,74.6), (17.3,-15.3,72.1), (7.6,-14.0,74.4)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=90.7)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 2.7x9.9x7.7 (area=122.6): (10.3,-7.5,82.0), (8.0,-15.7,76.8), (7.6,-14.0,74.4), (9.9,-5.8,79.6)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=122.6)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 10.0x2.9x4.7 (area=90.7): (20.0,-8.8,79.8), (10.3,-7.5,82.0), (9.9,-5.8,79.6), (19.6,-7.1,77.3)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=90.7)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 2.7x9.9x7.7 (area=122.6): (17.7,-17.0,74.6), (20.0,-8.8,79.8), (19.6,-7.1,77.3), (17.3,-15.3,72.1)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=122.6)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 2 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 12.0x9.5x7.5 (area=273.8): (8.0,-15.7,76.8), (17.7,-17.0,74.6), (10.3,-7.5,82.0), (20.0,-8.8,79.8)...
-[EXTRACT] Bound 1 has 4 vertices, bbox 50.1x46.2x35.1 (area=5696.4): (33.7,-48.9,50.7), (-4.9,-43.8,59.7), (45.3,-7.8,76.7), (6.6,-2.7,85.8)...
-[EXTRACT] Identified bound 1 as outer loop (largest area=5696.4)
-[EXTRACT] Identified bound 0 as hole loop 1 (area=273.8)
-[EXTRACT] Returning 4 outer verts and 1 hole loops
-[SVG] Outer path: 4 vertices
-[SVG] Hole path: 4 vertices
-[LaserConvert] Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBoxR.svg
+[SVG] CBoxR: Extracted outer loop with 4 vertices from face bounds
+[SVG] CBoxR: Outline vertices after rotation - X:[-6.1,43.9] Y:[-12.7,27.3] Z:[-72.9,-72.9]
+[SVG] CBoxR: Orthogonal sort succeeded
+[SVG] CBoxR: Generated outline from 4 outline points -> 4 ordered
+[SVG] Processing hole with 4 vertices in 3D
+[SVG] Hole 3D bounds: X:[28.9,38.9] Y:[-7.7,2.3] Z:[-72.9,-72.9], normalized: (35,5) 10x10
+[SVG] Added hole path
+Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBoxR.svg
  
 REM File: CBox_output.txt 
-[LaserConvert] Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBox.stp
-[LaserConvert] File loaded. Total items: 290
-[LaserConvert] Found 1 solids
+Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBox.stp
+File loaded. Total items: 290
+Found 1 solids
 [TOPO] Processing 10 faces
 [TOPO] Found pair of faces with separation: 3.0mm
 [TOPO] Extracted 16 unique vertices
@@ -847,65 +609,31 @@ REM File: CBox_output.txt
 [TOPO] Computed dimensions: 40.0 x 50.0 x 3.0
 [TOPO] Thin dimension detected from face separation: 3.0mm
 [TOPO] Adjusted dimensions: 3.0 x 40.0 x 50.0
-[LaserConvert] [FILTER] CBox: dimensions [3.0, 40.0, 50.0] - PASS
+[FILTER] CBox: dimensions [3.0, 40.0, 50.0] - PASS
+[TRANSFORM] Thin dimension: 5.0,-15.0,3.0 -> 5.0,-15.0,0.0 (3.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
+[SVG] CBox: Z range [0.0, 3.0] (range=3.0), using all 16 vertices for projection
+[SVG] CBox: After rotation - X:[0.0,40.0] Y:[-50.0,0.0]
+[SVG] CBox: Found face with 2 bounds (has holes)
 [EXTRACT] ExtractFaceWithHoles: face has 2 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 10.0x10.0x0.0 (area=100.0): (5.0,-15.0,3.0), (15.0,-15.0,3.0), (5.0,-5.0,3.0), (15.0,-5.0,3.0)...
 [EXTRACT] Bound 1 has 4 vertices, bbox 40.0x50.0x0.0 (area=2000.0): (40.0,-50.0,3.0), (0.0,-50.0,3.0), (40.0,0.0,3.0), (0.0,0.0,3.0)...
 [EXTRACT] Identified bound 1 as outer loop (largest area=2000.0)
 [EXTRACT] Identified bound 0 as hole loop 1 (area=100.0)
 [EXTRACT] Returning 4 outer verts and 1 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 40.0x0.0x3.0 (area=120.0): (40.0,-50.0,0.0), (40.0,-50.0,3.0), (0.0,-50.0,3.0), (0.0,-50.0,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=120.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x50.0x3.0 (area=150.0): (0.0,-50.0,0.0), (0.0,-50.0,3.0), (0.0,0.0,3.0), (0.0,0.0,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 40.0x0.0x3.0 (area=120.0): (0.0,0.0,0.0), (0.0,0.0,3.0), (40.0,0.0,3.0), (40.0,0.0,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=120.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 2 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 10.0x10.0x0.0 (area=100.0): (15.0,-15.0,0.0), (5.0,-15.0,0.0), (15.0,-5.0,0.0), (5.0,-5.0,0.0)...
-[EXTRACT] Bound 1 has 4 vertices, bbox 40.0x50.0x0.0 (area=2000.0): (40.0,-50.0,0.0), (40.0,0.0,0.0), (0.0,-50.0,0.0), (0.0,0.0,0.0)...
-[EXTRACT] Identified bound 1 as outer loop (largest area=2000.0)
-[EXTRACT] Identified bound 0 as hole loop 1 (area=100.0)
-[EXTRACT] Returning 4 outer verts and 1 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x50.0x3.0 (area=150.0): (40.0,-50.0,0.0), (40.0,0.0,0.0), (40.0,0.0,3.0), (40.0,-50.0,3.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 10.0x0.0x3.0 (area=30.0): (5.0,-15.0,3.0), (15.0,-15.0,3.0), (15.0,-15.0,0.0), (5.0,-15.0,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=30.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x10.0x3.0 (area=30.0): (5.0,-5.0,3.0), (5.0,-15.0,3.0), (5.0,-15.0,0.0), (5.0,-5.0,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=30.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 10.0x0.0x3.0 (area=30.0): (15.0,-5.0,3.0), (5.0,-5.0,3.0), (5.0,-5.0,0.0), (15.0,-5.0,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=30.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x10.0x3.0 (area=30.0): (15.0,-15.0,3.0), (15.0,-5.0,3.0), (15.0,-5.0,0.0), (15.0,-15.0,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=30.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 2 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 10.0x10.0x0.0 (area=100.0): (5.0,-15.0,3.0), (15.0,-15.0,3.0), (5.0,-5.0,3.0), (15.0,-5.0,3.0)...
-[EXTRACT] Bound 1 has 4 vertices, bbox 40.0x50.0x0.0 (area=2000.0): (40.0,-50.0,3.0), (0.0,-50.0,3.0), (40.0,0.0,3.0), (0.0,0.0,3.0)...
-[EXTRACT] Identified bound 1 as outer loop (largest area=2000.0)
-[EXTRACT] Identified bound 0 as hole loop 1 (area=100.0)
-[EXTRACT] Returning 4 outer verts and 1 hole loops
-[SVG] Outer path: 4 vertices
-[SVG] Hole path: 4 vertices
-[LaserConvert] Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBox.svg
+[SVG] CBox: Extracted outer loop with 4 vertices from face bounds
+[SVG] CBox: Outline vertices after rotation - X:[-50.0,-0.0] Y:[-0.0,40.0] Z:[-3.0,-3.0]
+[SVG] CBox: Orthogonal sort succeeded
+[SVG] CBox: Generated outline from 4 outline points -> 4 ordered
+[SVG] Processing hole with 4 vertices in 3D
+[SVG] Hole 3D bounds: X:[-15.0,-5.0] Y:[5.0,15.0] Z:[-3.0,-3.0], normalized: (35,5) 10x10
+[SVG] Added hole path
+Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBox.svg
  
 REM File: KBox_output.txt 
-[LaserConvert] Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox.stp
-[LaserConvert] File loaded. Total items: 418
-[LaserConvert] Found 1 solids
+Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox.stp
+File loaded. Total items: 418
+Found 1 solids
 [TOPO] Processing 14 faces
 [TOPO] Found pair of faces with separation: 3.0mm
 [TOPO] Extracted 24 unique vertices
@@ -916,74 +644,25 @@ REM File: KBox_output.txt
 [TOPO] Recomputed with all faces: 155.8 x 73.6 x 150.0
 [TOPO] Thin dimension detected from face separation: 3.0mm
 [TOPO] Adjusted dimensions: 3.0 x 150.0 x 155.8
-[LaserConvert] [FILTER] KBox: dimensions [3.0, 150.0, 155.8] - PASS
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 1.3x2.7x5.0 (area=23.3): (1.5,-21.0,145.0), (2.8,-23.7,145.0), (2.8,-23.7,140.0), (1.5,-21.0,140.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=23.3)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 1.3x2.7x5.0 (area=23.3): (-29.4,-35.1,150.0), (-28.2,-37.9,150.0), (-28.2,-37.9,145.0), (-29.4,-35.1,145.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=23.3)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 1.3x2.7x5.0 (area=23.3): (63.3,7.4,150.0), (64.6,4.6,150.0), (64.6,4.6,145.0), (63.3,7.4,145.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=23.3)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 1.3x2.7x10.0 (area=43.2): (32.4,-6.8,150.0), (33.7,-9.5,150.0), (32.4,-6.8,140.0), (33.7,-9.5,140.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=43.2)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 32.2x16.9x0.0 (area=543.4): (63.3,7.4,150.0), (32.4,-6.8,150.0), (33.7,-9.5,150.0), (64.6,4.6,150.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=543.4)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 32.2x16.9x0.0 (area=543.4): (32.4,-6.8,140.0), (33.7,-9.5,140.0), (1.5,-21.0,140.0), (2.8,-23.7,140.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=543.4)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 32.2x16.9x0.0 (area=543.4): (1.5,-21.0,145.0), (2.8,-23.7,145.0), (-29.4,-35.1,145.0), (-28.2,-37.9,145.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=543.4)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 14.6x8.8x0.0 (area=128.8): (76.6,13.5,145.0), (63.3,7.4,145.0), (64.6,4.6,145.0), (77.9,10.8,145.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=128.8)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 12 vertices, bbox 154.5x70.9x150.0 (area=44758.0): (-77.9,-57.4,0.0), (76.6,13.5,0.0), (-77.9,-57.4,150.0), (-29.4,-35.1,150.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=44758.0)
-[EXTRACT] Returning 12 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 155.8x73.6x0.0 (area=11463.2): (-76.6,-60.1,0.0), (-77.9,-57.4,0.0), (76.6,13.5,0.0), (77.9,10.8,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=11463.2)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 1.3x2.7x145.0 (area=580.1): (77.9,10.8,0.0), (76.6,13.5,0.0), (76.6,13.5,145.0), (77.9,10.8,145.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=580.1)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 49.7x25.0x0.0 (area=1241.6): (-29.4,-35.1,150.0), (-28.2,-37.9,150.0), (-77.9,-57.4,150.0), (-76.6,-60.1,150.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=1241.6)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
+[FILTER] KBox: dimensions [3.0, 150.0, 155.8] - PASS
+[TRANSFORM] Thin dimension: -29.4,-35.1,150.0 -> -28.2,-37.9,150.0 (3.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=24.6ø
+[SVG] KBox: Z range [19.7, 22.7] (range=3.0), using all 24 vertices for projection
+[SVG] KBox: After rotation - X:[-94.7,75.3] Y:[-0.0,150.0]
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 12 vertices, bbox 154.5x70.9x150.0 (area=44758.0): (-76.6,-60.1,0.0), (-76.6,-60.1,150.0), (77.9,10.8,0.0), (77.9,10.8,145.0)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=44758.0)
 [EXTRACT] Returning 12 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 1.3x2.7x150.0 (area=600.0): (-76.6,-60.1,0.0), (-76.6,-60.1,150.0), (-77.9,-57.4,150.0), (-77.9,-57.4,0.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=600.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 12 vertices, bbox 154.5x70.9x150.0 (area=44758.0): (-77.9,-57.4,0.0), (76.6,13.5,0.0), (-77.9,-57.4,150.0), (-29.4,-35.1,150.0)...
-[EXTRACT] Identified bound 0 as outer loop (largest area=44758.0)
-[EXTRACT] Returning 12 outer verts and 0 hole loops
-[SVG] Outer path: 12 vertices
-[LaserConvert] Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox.svg
+[SVG] KBox: Extracted outer loop with 12 vertices from face bounds
+[SVG] KBox: Outline vertices after rotation - X:[-94.7,75.3] Y:[-0.0,150.0] Z:[22.7,22.7]
+[SVG] KBox: Orthogonal sort succeeded
+[SVG] KBox: Generated outline from 12 outline points -> 12 ordered
+Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox.svg
  
 REM File: KCBoxFlat_output.txt 
-[LaserConvert] Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBoxFlat.stp
-[LaserConvert] File loaded. Total items: 1350
-[LaserConvert] Found 1 solids
+Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBoxFlat.stp
+File loaded. Total items: 1350
+Found 1 solids
 [TOPO] Processing 42 faces
 [TOPO] Complex shape detected (42 faces), extracting ALL vertices from all face bounds
 [TOPO] Extracted 80 unique vertices
@@ -991,7 +670,13 @@ REM File: KCBoxFlat_output.txt
 [TOPO] Computed dimensions: 40.1 x 58.2 x 3.0
 [TOPO] Thin dimension detected from face separation: 2.9mm
 [TOPO] Adjusted dimensions: 2.9 x 40.1 x 58.2
-[LaserConvert] [FILTER] KCBoxFlat: dimensions [2.9, 40.1, 58.2] - PASS
+[FILTER] KCBoxFlat: dimensions [2.9, 40.1, 58.2] - PASS
+[TRANSFORM] Thin dimension: 34.3,-6.2,0.0 -> 34.3,-5.2,0.0 (1.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
+[SVG] KCBoxFlat: Computing rotation from 8 vertices in thin faces
+[SVG] KCBoxFlat: Z range [0.0, 3.0] (range=3.0), using all 80 vertices for projection
+[SVG] KCBoxFlat: After rotation - X:[-0.0,40.1] Y:[-58.4,-0.2]
+[SVG] KCBoxFlat: Searching 42 faces for face with most boundary vertices
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 5.8x0.0x3.0 (area=17.5): (17.2,-6.2,0.0), (11.4,-6.2,0.0), (11.4,-6.2,3.0), (17.2,-6.2,3.0)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=17.5)
@@ -1160,6 +845,7 @@ REM File: KCBoxFlat_output.txt
 [EXTRACT] Identified bound 1 as hole loop 1 (area=104.5)
 [EXTRACT] Identified bound 0 as hole loop 2 (area=52.5)
 [EXTRACT] Returning 32 outer verts and 2 hole loops
+[SVG] KCBoxFlat:   Face 40: 32 boundary verts
 [EXTRACT] ExtractFaceWithHoles: face has 3 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 5.2x10.1x0.0 (area=52.5): (30.2,-41.4,0.0), (30.2,-31.3,0.0), (25.0,-31.3,0.0), (25.0,-41.4,0.0)...
 [EXTRACT] Bound 1 has 4 vertices, bbox 10.2x10.2x0.0 (area=104.5): (15.1,-21.3,0.0), (15.1,-11.1,0.0), (4.9,-11.2,0.0), (4.9,-21.4,0.0)...
@@ -1168,6 +854,8 @@ REM File: KCBoxFlat_output.txt
 [EXTRACT] Identified bound 1 as hole loop 1 (area=104.5)
 [EXTRACT] Identified bound 0 as hole loop 2 (area=52.5)
 [EXTRACT] Returning 32 outer verts and 2 hole loops
+[SVG] KCBoxFlat:   Face 41: 32 boundary verts
+[SVG] KCBoxFlat: Selected face with 32 boundary vertices as main face
 [EXTRACT] ExtractFaceWithHoles: face has 3 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 5.2x10.1x0.0 (area=52.5): (30.2,-41.4,3.0), (30.2,-31.3,3.0), (25.0,-41.4,3.0), (25.0,-31.3,3.0)...
 [EXTRACT] Bound 1 has 4 vertices, bbox 10.2x10.2x0.0 (area=104.5): (15.1,-21.3,3.0), (15.1,-11.1,3.0), (4.9,-21.4,3.0), (4.9,-11.2,3.0)...
@@ -1176,10 +864,19 @@ REM File: KCBoxFlat_output.txt
 [EXTRACT] Identified bound 1 as hole loop 1 (area=104.5)
 [EXTRACT] Identified bound 0 as hole loop 2 (area=52.5)
 [EXTRACT] Returning 32 outer verts and 2 hole loops
-[SVG] Outer path: 32 vertices
-[SVG] Hole path: 4 vertices
-[SVG] Hole path: 4 vertices
-[LaserConvert] Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBoxFlat.svg
+[SVG] KCBoxFlat: Face extraction is edge-ordered (min dim 0.000), preserving all 32 extracted vertices
+[SVG] KCBoxFlat: Extracted outer loop with 32 vertices from face bounds
+[SVG] KCBoxFlat: Outline vertices after rotation - X:[-0.0,40.1] Y:[-3.0,-3.0] Z:[-58.4,-0.2]
+[SVG] KCBoxFlat: Keeping 13 unique vertices (deduped from 32) for complex shape
+[SVG] KCBoxFlat: Using dedup order directly for edge-ordered vertices (13 points)
+[SVG] KCBoxFlat: Generated outline from 13 outline points -> 13 ordered
+[SVG] Processing hole with 4 vertices in 3D
+[SVG] Hole 3D bounds: X:[4.9,15.1] Y:[-3.0,-3.0] Z:[-21.4,-11.1], normalized: (5,0) 10x10
+[SVG] Added hole path
+[SVG] Processing hole with 4 vertices in 3D
+[SVG] Hole 3D bounds: X:[25.0,30.2] Y:[-3.0,-3.0] Z:[-41.4,-31.3], normalized: (25,0) 10x5
+[SVG] Added hole path
+Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBoxFlat.svg
  
 REM File: KCBox_failures.txt 
 KCBox TEST CASE - FAILED APPROACHES AND LESSONS LEARNED
@@ -1342,9 +1039,9 @@ Most practical: Option A - detect when extracted vertices are degenerate and
 fall back to extracting vertices from ALL face bounds directly (not just outer loop).
  
 REM File: KCBox_output.txt 
-[LaserConvert] Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.stp
-[LaserConvert] File loaded. Total items: 1414
-[LaserConvert] Found 1 solids
+Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.stp
+File loaded. Total items: 1414
+Found 1 solids
 [TOPO] Processing 44 faces
 [TOPO] Complex shape detected (44 faces), extracting ALL vertices from all face bounds
 [TOPO] Extracted 84 unique vertices
@@ -1352,7 +1049,13 @@ REM File: KCBox_output.txt
 [TOPO] Computed dimensions: 50.4 x 63.7 x 31.5
 [TOPO] Thin dimension detected from face separation: 2.9mm
 [TOPO] Adjusted dimensions: 2.9 x 50.4 x 63.7
-[LaserConvert] [FILTER] KCBox: dimensions [2.9, 50.4, 63.7] - PASS
+[FILTER] KCBox: dimensions [2.9, 50.4, 63.7] - PASS
+[TRANSFORM] Thin dimension: 33.4,-6.3,33.9 -> 33.7,-5.4,34.3 (1.0mm)
+[TRANSFORM] Normalizing edge to X-axis: angle=56.2ø
+[SVG] KCBox: Computing rotation from 8 vertices in thin faces
+[SVG] KCBox: Z range [5.4, 36.9] (range=31.5), using all 84 vertices for projection
+[SVG] KCBox: After rotation - X:[-5.8,44.6] Y:[-55.1,8.6]
+[SVG] KCBox: Searching 44 faces for face with most boundary vertices
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 2.9x1.5x3.2 (area=18.6): (40.7,-19.5,33.3), (41.9,-18.8,30.6), (39.0,-18.8,32.7), (40.1,-18.0,30.1)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=18.6)
@@ -1481,6 +1184,7 @@ REM File: KCBox_output.txt
 [EXTRACT] Identified bound 1 as hole loop 1 (area=301.4)
 [EXTRACT] Identified bound 0 as hole loop 2 (area=167.5)
 [EXTRACT] Returning 34 outer verts and 2 hole loops
+[SVG] KCBox:   Face 30: 34 boundary verts
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 12.9x5.9x6.2 (area=192.5): (6.0,-44.8,11.6), (7.2,-44.0,8.9), (-5.8,-39.6,8.1), (-4.6,-38.9,5.4)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=192.5)
@@ -1501,6 +1205,7 @@ REM File: KCBox_output.txt
 [EXTRACT] Identified bound 1 as hole loop 1 (area=301.4)
 [EXTRACT] Identified bound 0 as hole loop 2 (area=167.5)
 [EXTRACT] Returning 34 outer verts and 2 hole loops
+[SVG] KCBox:   Face 34: 34 boundary verts
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 3.9x9.6x6.3 (area=123.4): (32.4,-46.2,22.3), (33.5,-45.4,19.6), (29.6,-55.1,18.6), (30.7,-54.3,15.9)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=123.4)
@@ -1537,6 +1242,7 @@ REM File: KCBox_output.txt
 [EXTRACT] Bound 0 has 4 vertices, bbox 3.9x9.6x6.3 (area=123.4): (23.3,-27.1,23.8), (20.5,-36.0,20.2), (21.6,-35.2,17.5), (24.4,-26.3,21.1)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=123.4)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] KCBox: Selected face with 34 boundary vertices as main face
 [EXTRACT] ExtractFaceWithHoles: face has 3 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 7.2x10.8x5.0 (area=167.5): (27.7,-29.0,25.1), (23.3,-27.1,23.8), (24.9,-37.9,21.5), (20.5,-36.0,20.2)...
 [EXTRACT] Bound 1 has 4 vertices, bbox 11.6x12.7x6.3 (area=301.4): (8.4,-10.5,22.2), (17.2,-14.3,24.8), (11.2,-1.6,25.9), (20.0,-5.5,28.5)...
@@ -1545,7 +1251,15 @@ REM File: KCBox_output.txt
 [EXTRACT] Identified bound 1 as hole loop 1 (area=301.4)
 [EXTRACT] Identified bound 0 as hole loop 2 (area=167.5)
 [EXTRACT] Returning 34 outer verts and 2 hole loops
-[SVG] Outer path: 33 vertices
-[SVG] Hole path: 4 vertices
-[SVG] Hole path: 4 vertices
-[LaserConvert] Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.svg
+[SVG] KCBox: Extracted outer loop with 34 vertices from face bounds
+[SVG] KCBox: Outline vertices after rotation - X:[-0.5,32.7] Y:[-45.2,-22.9] Z:[-35.9,22.1]
+[SVG] KCBox: Keeping 12 unique vertices (deduped from 34) for complex shape
+[SVG] KCBox: Using dedup order directly for edge-ordered vertices (12 points)
+[SVG] KCBox: Generated outline from 12 outline points -> 12 ordered
+[SVG] Processing hole with 4 vertices in 3D
+[SVG] Hole 3D bounds: X:[3.6,12.0] Y:[-31.2,-25.7] Z:[1.1,11.1], normalized: (4,14) 10x8
+[SVG] Added hole path
+[SVG] Processing hole with 4 vertices in 3D
+[SVG] Hole 3D bounds: X:[20.3,24.4] Y:[-39.6,-36.8] Z:[-18.9,-8.9], normalized: (21,6) 10x4
+[SVG] Added hole path
+Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.svg
