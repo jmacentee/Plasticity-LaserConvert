@@ -57,436 +57,61 @@ namespace LaserConvert
                 {
                     svg.BeginGroup(name);
 
-                    // Compute rotation from thin face pair (guaranteed to align with thin dimension)
-                    // For complex shapes, the FindThinDimension algorithm on all vertices may find spurious pairs
-                    double[,] rotMatrix1 = null;
-                    double[,] rotMatrix2 = null;
-                    List<GeometryTransform.Vec3> normalizedVertices = null;
+                    // GENERAL APPROACH: No special cases for complex vs simple shapes
+                    // Find the face with most boundary vertices - this is the main surface
+                    StepAdvancedFace bestFace = null;
+                    int maxBoundaryVerts = 0;
                     
-                    if (faces.Count > 20 && face1Idx >= 0 && face1Idx < faces.Count && face2Idx >= 0 && face2Idx < faces.Count)
+                    foreach (var face in faces)
                     {
-                        // For complex shapes: get rotation from the identified thin faces only
-                        var thinFaceVerts = new List<(double X, double Y, double Z)>();
-                        thinFaceVerts.AddRange(StepTopologyResolver.ExtractVerticesFromFace(faces[face1Idx], stepFile));
-                        thinFaceVerts.AddRange(StepTopologyResolver.ExtractVerticesFromFace(faces[face2Idx], stepFile));
-                        if (thinFaceVerts.Count > 0)
+                        var (outerVerts, _) = StepTopologyResolver.ExtractFaceWithHoles(face, stepFile);
+                        if (outerVerts.Count > maxBoundaryVerts)
                         {
-                            // Compute rotation matrices from thin faces
-                            var (_, m1, m2) = GeometryTransform.RotateAndNormalizeWithMatrices(thinFaceVerts);
-                            rotMatrix1 = m1;
-                            rotMatrix2 = m2;
-                            Console.WriteLine($"[SVG] {name}: Computing rotation from {thinFaceVerts.Count} vertices in thin faces");
+                            maxBoundaryVerts = outerVerts.Count;
+                            bestFace = face;
                         }
                     }
                     
-                    // If we didn't get rotation matrices, compute them from all vertices
-                    if (rotMatrix1 == null || rotMatrix2 == null)
+                    if (bestFace != null && maxBoundaryVerts >= 3)
                     {
-                        var (_, m1, m2) = GeometryTransform.RotateAndNormalizeWithMatrices(vertices);
-                        rotMatrix1 = m1;
-                        rotMatrix2 = m2;
-                    }
-                    
-                    // Check if the shape is already axis-aligned to avoid unnecessary rotation
-                    // ATTEMPTED: Apply rotMatrix1 to all shapes
-                    // RESULT: KCBoxFlat (already correctly aligned) gets Y dimension collapsed to 3mm
-                    // REASON: If shape is already aligned with thin dimension in Z, rotating collapses Y
-                    // FIX: Detect if already aligned and skip rotation matrices
-                    var minDimX = vertices.Max(v => v.X) - vertices.Min(v => v.X);
-                    var minDimY = vertices.Max(v => v.Y) - vertices.Min(v => v.Y);
-                    var minDimZ = vertices.Max(v => v.Z) - vertices.Min(v => v.Z);
-                    var sortedDims = new[] { minDimX, minDimY, minDimZ }.OrderBy(d => d).ToList();
-                    bool isAlreadyAligned = Math.Abs(minDimZ - sortedDims[0]) < 0.1; // Thin dimension is Z
-                    
-                    // Now apply these rotation matrices to ALL vertices
-                    // DEBUG: Log the rotation matrices for complex shapes
-                    if (faces.Count > 20)
-                    {
-                        Console.WriteLine($"[STEP 5] Complex shape ({faces.Count} faces) - will skip rotMatrix2");
-                        if (rotMatrix1 != null)
-                        {
-                            Console.WriteLine($"[STEP 5] rotMatrix1: [{rotMatrix1[0, 0]:F3}, {rotMatrix1[0, 1]:F3}, {rotMatrix1[0, 2]:F3}]");
-                            Console.WriteLine($"[STEP 5]              [{rotMatrix1[1, 0]:F3}, {rotMatrix1[1, 1]:F3}, {rotMatrix1[1, 2]:F3}]");
-                            Console.WriteLine($"[STEP 5]              [{rotMatrix1[2, 0]:F3}, {rotMatrix1[2, 1]:F3}, {rotMatrix1[2, 2]:F3}]");
-                            var testVec = new GeometryTransform.Vec3(vertices[0].X, vertices[0].Y, vertices[0].Z);
-                            var rotated = ApplyMatrix(testVec, rotMatrix1);
-                            Console.WriteLine($"[STEP 5] Sample: ({vertices[0].X:F1},{vertices[0].Y:F1},{vertices[0].Z:F1}) -> ({rotated.X:F1},{rotated.Y:F1},{rotated.Z:F1})");
-                        }
-                    }
-
-                    normalizedVertices = vertices
-                        .Select(v => {
-                            var vec = new GeometryTransform.Vec3(v.X, v.Y, v.Z);
-                            if (isAlreadyAligned)
-                            {
-                                // Already correctly aligned - no rotation needed
-                                return vec;
-                            }
-                            var rot1 = ApplyMatrix(vec, rotMatrix1);
-                            // FIXED: Apply rotMatrix2 for all shapes
-                            // The original code skipped rotMatrix2 for complex shapes (faces.Count > 20)
-                            // This left geometry misaligned - Z range stayed large instead of ~3mm
-                            var rot2 = ApplyMatrix(rot1, rotMatrix2);
-                            return rot2;
-                        })
-                        .ToList();
-
-                    if (normalizedVertices.Count < 4)
-                    {
-                        svg.EndGroup();
-                        continue;
-                    }
-
-                    var maxZ = normalizedVertices.Max(v => v.Z);
-                    var minZ = normalizedVertices.Min(v => v.Z);
-                    var zRange = maxZ - minZ;
-                    
-                    // For complex shapes, we need to use ALL vertices since they represent
-                    // the full geometry. If Z discrimination doesn't work well (too few vertices),
-                    // use all normalized vertices as the projection source.
-                    var topFaceVerts = normalizedVertices;
-                    
-                    Console.WriteLine($"[SVG] {name}: Z range [{minZ:F1}, {maxZ:F1}] (range={zRange:F1}), using all {topFaceVerts.Count} vertices for projection");
-                    
-                    // Debug: Print X and Y ranges too
-                    var projMinX = topFaceVerts.Min(v => v.X);
-                    var projMaxX = topFaceVerts.Max(v => v.X);
-                    var projMinY = topFaceVerts.Min(v => v.Y);
-                    var projMaxY = topFaceVerts.Max(v => v.Y);
-                    Console.WriteLine($"[SVG] {name}: After rotation - X:[{projMinX:F1},{projMaxX:F1}] Y:[{projMinY:F1},{projMaxY:F1}]");
-
-                    // If we have a usable thin face index, prefer using its bounds for outline/holes
-                    StepAdvancedFace mainFace = null;
-                    if (face1Idx >= 0 && face1Idx < faces.Count && face2Idx >= 0 && face2Idx < faces.Count)
-                    {
-                        if (faces.Count > 20)
-                        {
-                            // For complex shapes: pick the face that when extracted gives the MOST BOUNDARY VERTICES
-                            // This indicates a complex outline with holes/tabs
-                            // This works for both rotated shapes (KCBox) and axis-aligned shapes (KCBoxFlat)
-                            Console.WriteLine($"[SVG] {name}: Searching {faces.Count} faces for face with most boundary vertices");
-                            int maxBoundaryVerts = 0;
-                            int bestFaceIdx = face1Idx;
-                            
-                            for (int i = 0; i < faces.Count; i++)
-                            {
-                                var (outerVerts, _) = StepTopologyResolver.ExtractFaceWithHoles(faces[i], stepFile);
-                                if (outerVerts.Count > maxBoundaryVerts)
-                                {
-                                    maxBoundaryVerts = outerVerts.Count;
-                                    bestFaceIdx = i;
-                                }
-                                
-                                if (outerVerts.Count >= 10)  // Log verbose info for complex boundaries
-                                    Console.WriteLine($"[SVG] {name}:   Face {i}: {outerVerts.Count} boundary verts");
-                            }
-                            
-                            mainFace = faces[bestFaceIdx];
-                            Console.WriteLine($"[SVG] {name}: Selected face with {maxBoundaryVerts} boundary vertices as main face");
-                        }
-                        else
-                        {
-                            // For simple shapes: first try to find a face with holes (multiple bounds)
-                            // If found, use that. Otherwise use the top face from the thin pair
-                            StepAdvancedFace faceWithHoles = null;
-                            for (int i = 0; i < faces.Count; i++)
-                            {
-                                if (faces[i].Bounds?.Count > 1)
-                                {
-                                    faceWithHoles = faces[i];
-                                    break;
-                                }
-                            }
-                            
-                            if (faceWithHoles != null)
-                            {
-                                mainFace = faceWithHoles;
-                                Console.WriteLine($"[SVG] {name}: Found face with {faceWithHoles.Bounds.Count} bounds (has holes)");
-                            }
-                            else
-                            {
-                                // No face with holes found, use top face from thin pair
-                                var face1Verts = StepTopologyResolver.ExtractVerticesFromFace(faces[face1Idx], stepFile);
-                                var face2Verts = StepTopologyResolver.ExtractVerticesFromFace(faces[face2Idx], stepFile);
-                                
-                                var face1RotatedZ = face1Verts
-                                    .Select(v => {
-                                        var vec = new GeometryTransform.Vec3(v.X, v.Y, v.Z);
-                                        var rot1 = ApplyMatrix(vec, rotMatrix1);
-                                        if (faces.Count > 20)
-                                            return rot1;
-                                        return ApplyMatrix(rot1, rotMatrix2);
-                                    })
-                                    .Average(v => v.Z);
-                                
-                                var face2RotatedZ = face2Verts
-                                    .Select(v => {
-                                        var vec = new GeometryTransform.Vec3(v.X, v.Y, v.Z);
-                                        var rot1 = ApplyMatrix(vec, rotMatrix1);
-                                        if (faces.Count > 20)
-                                            return rot1;
-                                        return ApplyMatrix(rot1, rotMatrix2);
-                                    })
-                                    .Average(v => v.Z);
-                                
-                                mainFace = face1RotatedZ > face2RotatedZ ? faces[face1Idx] : faces[face2Idx];
-                            }
-                        }
-                    }
-                    else if (face1Idx >= 0 && face1Idx < faces.Count)
-                    {
-                        mainFace = faces[face1Idx];
-                    }
-                    else if (face2Idx >= 0 && face2Idx < faces.Count)
-                    {
-                        mainFace = faces[face2Idx];
-                    }
-                    
-
-                    // Try to extract the actual face outline from the main face
-                    if (mainFace != null)
-                    {
-                        // For complex shapes, use corner vertex extraction to avoid degenerate edge topology
-                        // For simple shapes, use traditional bound-based extraction
-                        var (outerLoopVerts, holeLoops) = StepTopologyResolver.ExtractFaceWithHoles(mainFace, stepFile);
-
-                        // FALLBACK for degenerate complex shapes:  
-                        // If the extracted outline is degenerate (all vertices on a line or plane with zero extent),
-                        // instead of falling back to ALL vertices, reorder the extracted vertices properly
-                        // using Gift Wrapping (which preserves non-convex features)
-                        if (faces.Count > 20 && outerLoopVerts.Count > 0)
-                        {
-                            var outX_before = outerLoopVerts.Max(v => v.Item1) - outerLoopVerts.Min(v => v.Item1);
-                            var outY_before = outerLoopVerts.Max(v => v.Item2) - outerLoopVerts.Min(v => v.Item2);
-                            var outZ_before = outerLoopVerts.Max(v => v.Item3) - outerLoopVerts.Min(v => v.Item3);
-                            var minDim_before = Math.Min(Math.Min(outX_before, outY_before), outZ_before);
-                            
-                            if (minDim_before < 0.1)
-                            {
-                                // Degenerate face extraction - the vertices are in edge-loop order, not perimeter order
-                                // Don't fall back to ALL vertices; instead, use Gift Wrapping to properly order
-                                // the extracted vertices while preserving all of them
-                                Console.WriteLine($"[SVG] {name}: Face extraction is edge-ordered (min dim {minDim_before:F3}), preserving all {outerLoopVerts.Count} extracted vertices");
-                                // Keep outerLoopVerts as-is; we'll reorder them below using Gift Wrapping
-                            }
-                        }
+                        var (outerPerimeter, holePerimeters) = StepTopologyResolver.ExtractFaceWithHoles(bestFace, stepFile);
                         
-                        if (outerLoopVerts.Count >= 4)
+                        // STEP 6: Project to 2D - choose the two axes with largest ranges
+                        var projected = ProjectTo2D(outerPerimeter);
+                        var normalized = NormalizeAndRound(projected);
+                        
+                        // STEP 7: Remove only consecutive duplicates (preserves all boundary vertices)
+                        var deduplicated = RemoveConsecutiveDuplicates(normalized);
+                        
+                        if (deduplicated.Count >= 3)
                         {
-                            Console.WriteLine($"[SVG] {name}: Extracted outer loop with {outerLoopVerts.Count} vertices from face bounds");
+                            // STEP 8: Build SVG path
+                            var outerPath = BuildPath(deduplicated);
+                            svg.Path(outerPath, 0.2, "none", "#000");
+                            Console.WriteLine($"[SVG] {name}: Generated outline from {deduplicated.Count} vertices");
                             
-                            // Transform outer loop vertices using the appropriate rotations
-                            var outlineNormalizedVerts = outerLoopVerts
-                                .Select(v => {
-                                    var vec = new GeometryTransform.Vec3(v.X, v.Y, v.Z);
-                                    var rot1 = ApplyMatrix(vec, rotMatrix1);
-                                    // FIXED: Apply rotMatrix2 for all shapes
-                                    // The original code skipped rotMatrix2 for complex shapes (faces.Count > 20)
-                                    // This left geometry misaligned - Z range stayed large instead of ~3mm
-                                    var rot2 = ApplyMatrix(rot1, rotMatrix2);
-                                    return rot2;
-                                })
-                                .ToList();
-
-                            // Debug: check vertex ranges before projection
-                            if (outlineNormalizedVerts.Count > 0)
-                            {
-                                var outX = outlineNormalizedVerts.Select(v => v.X);
-                                var outY = outlineNormalizedVerts.Select(v => v.Y);
-                                var outZ = outlineNormalizedVerts.Select(v => v.Z);
-                                Console.WriteLine($"[SVG] {name}: Outline vertices after rotation - X:[{outX.Min():F1},{outX.Max():F1}] Y:[{outY.Min():F1},{outY.Max():F1}] Z:[{outZ.Min():F1},{outZ.Max():F1}]");
-                            }
+                            // Handle holes
+                            var outerMinX = projected.Min(p => p.X);
+                            var outerMinY = projected.Min(p => p.Y);
                             
-                            // CRITICAL FIX FOR COMPLEX SHAPES:
-                            // For complex shapes, check if the extracted face is degenerate after rotation
-                            // If the 2D projection would be degenerate (all X or Y the same), fall back to ALL normalized vertices
-                            if (faces.Count > 20 && outlineNormalizedVerts.Count > 0)
+                            foreach (var holePeri in holePerimeters)
                             {
-                                var rangeX = outlineNormalizedVerts.Max(v => v.X) - outlineNormalizedVerts.Min(v => v.X);
-                                var rangeY = outlineNormalizedVerts.Max(v => v.Y) - outlineNormalizedVerts.Min(v => v.Y);
-                                var rangeZ = outlineNormalizedVerts.Max(v => v.Z) - outlineNormalizedVerts.Min(v => v.Z);
-                                
-                                Console.WriteLine($"[SVG] {name}: Face extent check - X:{rangeX:F1}, Y:{rangeY:F1}, Z:{rangeZ:F1}");
-                                
-                                // If the extracted face is degenerate (zero extent in 2 dimensions), use all normalized vertices instead
-                                var degenerateDims = (rangeX < 1.0 ? 1 : 0) + (rangeY < 1.0 ? 1 : 0);
-                                if (degenerateDims >= 2)
+                                if (holePeri.Count >= 3)
                                 {
-                                    Console.WriteLine($"[SVG] {name}: Face is degenerate in 2D (only spans {3-degenerateDims} dimension(s)). Falling back to all {normalizedVertices.Count} vertices");
-                                    outlineNormalizedVerts = normalizedVertices;
-                                }
-                            }
-                            
-                            // Project to 2D - for complex shapes where rotMatrix2 is skipped,
-                            // we need to find which 2 axes actually contain the geometry
-                            // ATTEMPTED: Always project X-Y
-                            // RESULT: KCBoxFlat has geometry in X and Z, Y is collapsed to 3mm
-                            // FIX: For complex shapes, find the two axes with largest variance
-                            var rangeX_proj = outlineNormalizedVerts.Max(v => v.X) - outlineNormalizedVerts.Min(v => v.X);
-                            var rangeY_proj = outlineNormalizedVerts.Max(v => v.Y) - outlineNormalizedVerts.Min(v => v.Y);
-                            var rangeZ_proj = outlineNormalizedVerts.Max(v => v.Z) - outlineNormalizedVerts.Min(v => v.Z);
-                            
-                            List<(double X, double Y)> pts2d_precise;
-                            
-                            // For ALL shapes, use the two axes with largest ranges
-                            // This works uniformly for both simple and complex geometries
-                            var ranges = new[] { ("X", rangeX_proj), ("Y", rangeY_proj), ("Z", rangeZ_proj) }
-                                .OrderByDescending(r => r.Item2)
-                                .ToList();
-
-
-                            // Project using the two largest axes
-                            if (ranges[0].Item1 == "X" && ranges[1].Item1 == "Y")
-                            {
-                                // X-Y projection
-                                var minXv = outlineNormalizedVerts.Min(v => v.X);
-                                var minYv = outlineNormalizedVerts.Min(v => v.Y);
-                                pts2d_precise = outlineNormalizedVerts.Select(v => (v.X - minXv, v.Y - minYv)).ToList();
-                            }
-                            else if (ranges[0].Item1 == "X" && ranges[1].Item1 == "Z")
-                            {
-                                // X-Z projection (swap Z into Y for SVG)
-                                var minXv = outlineNormalizedVerts.Min(v => v.X);
-                                var minZv = outlineNormalizedVerts.Min(v => v.Z);
-                                pts2d_precise = outlineNormalizedVerts.Select(v => (v.X - minXv, v.Z - minZv)).ToList();
-                            }
-                            else if (ranges[0].Item1 == "Y" && ranges[1].Item1 == "Z")
-                            {
-                                // Y-Z projection (swap to X-Y for SVG)
-                                var minYv = outlineNormalizedVerts.Min(v => v.Y);
-                                var minZv = outlineNormalizedVerts.Min(v => v.Z);
-                                pts2d_precise = outlineNormalizedVerts.Select(v => (v.Y - minYv, v.Z - minZv)).ToList();
-                            }
-                            else
-                            {
-                                // Fallback: use X-Y
-                                var minXv = outlineNormalizedVerts.Min(v => v.X);
-                                var minYv = outlineNormalizedVerts.Min(v => v.Y);
-                                pts2d_precise = outlineNormalizedVerts.Select(v => (v.X - minXv, v.Y - minYv)).ToList();
-                            }
-
-
-                            // For complex shapes, don't dedup - keep all 32+ vertices to preserve outline detail
-                            // For simple shapes, dedup consecutive points at high precision
-                            // ATTEMPTED: Dedup all shapes - loses vertices for complex shapes
-                            // RESULT: KCBox 32 vertices -> 18 points -> jumps around
-                            // REASON: Dedup after projection breaks sequential order
-                            // FIX: For complex shapes (faces.Count > 20), don't dedup to preserve all boundary vertices
-                            List<(double X, double Y)> dedup_precise;
-                            if (faces.Count > 20)
-                            {
-                                // Complex shape: don't dedup by string matching - this loses geometry
-                                // Instead, check if vertices are actually distinct in 2D
-                                // If all have same X or Y (degenerate 1D line), it means extraction failed
-                                var uniqueX = pts2d_precise.Select(p => Math.Round(p.X, 1)).Distinct().Count();
-                                var uniqueY = pts2d_precise.Select(p => Math.Round(p.Y, 1)).Distinct().Count();
-                
-                                if (uniqueX < 2 || uniqueY < 2)
-                                {
-                                    // Degenerate - vertices are essentially 1D line, not a 2D outline
-                                    Console.WriteLine($"[SVG] {name}: Degenerate geometry detected - vertices form 1D line (X variants: {uniqueX}, Y variants: {uniqueY})");
-                                    dedup_precise = new List<(double X, double Y)>();  // Will skip this solid
-                                }
-                                else
-                                {
-                                    // Proper 2D geometry - DON'T DEDUP, pass all points directly to Gift Wrapping
-                                    // Gift Wrapping will internally handle duplicates via Distinct()
-                                    dedup_precise = pts2d_precise;
-                                    Console.WriteLine($"[SVG] {name}: Passing all {dedup_precise.Count} vertices to Gift Wrapping (no pre-dedup)");
-                                }
-                            }
-                            else
-                            {
-                                // Simple shape: dedup consecutive points
-                                dedup_precise = new List<(double X, double Y)>();
-                                foreach (var p in pts2d_precise)
-                                {
-                                    if (dedup_precise.Count == 0 || 
-                                        Math.Abs(dedup_precise.Last().X - p.Item1) > 0.01 || 
-                                        Math.Abs(dedup_precise.Last().Y - p.Item2) > 0.01)
+                                    var projHole = ProjectTo2D(holePeri);
+                                    var normHole = NormalizeAndRoundRelative(projHole, outerMinX, outerMinY);
+                                    var dedupHole = RemoveConsecutiveDuplicates(normHole);
+                                    
+                                    if (dedupHole.Count >= 3)
                                     {
-                                        dedup_precise.Add(p);
+                                        var holePath = BuildPath(dedupHole);
+                                        svg.Path(holePath, 0.2, "none", "#f00");
                                     }
                                 }
                             }
-                            
-
-                            if (dedup_precise.Count >= 3)
-                            {
-                                // For complex shapes with many vertices, the extraction order from 
-                                // ExtractFaceWithHoles already provides proper edge-loop order.
-                                // We should trust this order and NOT reorder with Gift Wrapping,
-                                // because Gift Wrapping finds the convex hull, losing concave vertices (tabs/cutouts).
-                                
-                                // For simple shapes (4 vertices for rectangles), Gift Wrapping is fine.
-                                // For complex shapes (12+ vertices), keep the extraction order as-is.
-                                
-                                List<Geometry2D.Point2D> orderedPerimeter;
-                                
-                                if (dedup_precise.Count <= 4)
-                                {
-                                    // Simple shape - use Gift Wrapping to ensure proper ordering
-                                    var points_for_wrapping = dedup_precise
-                                        .Select(p => new Geometry2D.Point2D(
-                                            (long)Math.Round(p.X),
-                                            (long)Math.Round(p.Y)
-                                        ))
-                                        .ToList();
-
-                                    orderedPerimeter = Geometry2D.GiftWrapPerimeter(points_for_wrapping);
-                                    Console.WriteLine($"[SVG] {name}: Gift Wrapped {dedup_precise.Count} points -> {orderedPerimeter.Count} perimeter points");
-                                }
-                                else
-                                {
-                                    // Complex shape - preserve extraction order (already in edge-loop sequence)
-                                    // Extraction order from ExtractFaceWithHoles follows edge connectivity
-                                    // which naturally preserves all boundary vertices including concave ones
-                                    orderedPerimeter = dedup_precise
-                                        .Select(p => new Geometry2D.Point2D(
-                                            (long)Math.Round(p.X),
-                                            (long)Math.Round(p.Y)
-                                        ))
-                                        .Distinct()  // Remove exact duplicates
-                                        .ToList();
-                                    Console.WriteLine($"[SVG] {name}: Using extraction order for {orderedPerimeter.Count} complex shape vertices");
-                                }
-                                
-                                if (orderedPerimeter.Count >= 3)
-                                {
-                                    var faceOutlinePath = Geometry2D.BuildSvgPath(orderedPerimeter);
-                                    Console.WriteLine($"[SVG] {name}: Generated outline from {orderedPerimeter.Count} vertices");
-                                    svg.Path(faceOutlinePath, strokeWidth: 0.2, fill: "none", stroke: "#000");
-                                    
-                                    // Render holes
-                                    var outlineMinX = outlineNormalizedVerts.Min(v => v.X);
-                                    var outlineMinY = outlineNormalizedVerts.Min(v => v.Y);
-                                    
-                                    foreach (var holeVerts3D in holeLoops)
-                                    {
-                                        RenderSingleHole(svg, holeVerts3D, normalizedVertices, outlineMinX, outlineMinY, rotMatrix1, rotMatrix2, faces.Count > 20);
-                                    }
-                                    
-                                    svg.EndGroup();
-                                    continue;
-                                }
-                                else
-                                {
-                                    Console.WriteLine($"[SVG] {name}: Gift Wrapping returned too few points ({orderedPerimeter.Count}), skipping solid");
-                                }
-                            }
-                            else
-                            {
-                                Console.WriteLine($"[SVG] {name}: After dedup only {dedup_precise.Count} points, skipping solid");
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine($"[SVG] {name}: Could not extract outer loop, got {outerLoopVerts.Count} vertices, skipping solid");
                         }
                     }
-
-                    // NO FALLBACK: Skip solids where we can't extract proper geometry
-                    Console.WriteLine($"[SVG] {name}: Could not extract geometry, skipping solid");
+                    
                     svg.EndGroup();
                 }
 
@@ -501,6 +126,93 @@ namespace LaserConvert
             }
         }
 
+        private static List<(double X, double Y)> ProjectTo2D(List<(double X, double Y, double Z)> points3D)
+        {
+            if (points3D.Count == 0) return new List<(double, double)>();
+            
+            // Find ranges in each dimension
+            var minX = points3D.Min(p => p.X);
+            var maxX = points3D.Max(p => p.X);
+            var minY = points3D.Min(p => p.Y);
+            var maxY = points3D.Max(p => p.Y);
+            var minZ = points3D.Min(p => p.Z);
+            var maxZ = points3D.Max(p => p.Z);
+            
+            var rangeX = maxX - minX;
+            var rangeY = maxY - minY;
+            var rangeZ = maxZ - minZ;
+            
+            // Project by dropping the axis with smallest range
+            var ranges = new[] { ("X", rangeX), ("Y", rangeY), ("Z", rangeZ) }
+                .OrderByDescending(r => r.Item2)
+                .ToArray();
+            
+            if (ranges[0].Item1 == "X" && ranges[1].Item1 == "Y")
+                return points3D.Select(p => (p.X, p.Y)).ToList();
+            else if (ranges[0].Item1 == "X" && ranges[1].Item1 == "Z")
+                return points3D.Select(p => (p.X, p.Z)).ToList();
+            else if (ranges[0].Item1 == "Y" && ranges[1].Item1 == "Z")
+                return points3D.Select(p => (p.Y, p.Z)).ToList();
+            else
+                return points3D.Select(p => (p.X, p.Y)).ToList();
+        }
+
+        private static List<(long X, long Y)> NormalizeAndRound(List<(double X, double Y)> points2D)
+        {
+            if (points2D.Count == 0) return new List<(long, long)>();
+            
+            var minX = points2D.Min(p => p.X);
+            var minY = points2D.Min(p => p.Y);
+            
+            return points2D.Select(p => (
+                (long)Math.Round(p.X - minX),
+                (long)Math.Round(p.Y - minY)
+            )).ToList();
+        }
+
+        private static List<(long X, long Y)> NormalizeAndRoundRelative(List<(double X, double Y)> points2D, double outerMinX, double outerMinY)
+        {
+            if (points2D.Count == 0) return new List<(long, long)>();
+            
+            return points2D.Select(p => (
+                (long)Math.Round(p.X - outerMinX),
+                (long)Math.Round(p.Y - outerMinY)
+            )).ToList();
+        }
+
+        private static List<(long X, long Y)> RemoveConsecutiveDuplicates(List<(long X, long Y)> points)
+        {
+            if (points.Count <= 1) return points;
+            
+            var result = new List<(long X, long Y)> { points[0] };
+            for (int i = 1; i < points.Count; i++)
+            {
+                if (points[i] != points[i - 1])
+                {
+                    result.Add(points[i]);
+                }
+            }
+            
+            // Also check if last point equals first (closing loop)
+            if (result.Count > 2 && result.Last() == result[0])
+            {
+                result.RemoveAt(result.Count - 1);
+            }
+            
+            return result;
+        }
+
+        private static string BuildPath(List<(long X, long Y)> points)
+        {
+            if (points == null || points.Count < 3) return string.Empty;
+            
+            var sb = new StringBuilder();
+            sb.Append($"M {points[0].X},{points[0].Y}");
+            for (int i = 1; i < points.Count; i++)
+                sb.Append($" L {points[i].X},{points[i].Y}");
+            sb.Append(" Z");
+            return sb.ToString();
+        }
 
         private static Dimensions ComputeDimensions(List<(double X, double Y, double Z)> points)
         {

@@ -1,6 +1,6 @@
-[LaserConvert] Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.stp
-[LaserConvert] File loaded. Total items: 1414
-[LaserConvert] Found 1 solids
+Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.stp
+File loaded. Total items: 1414
+Found 1 solids
 [TOPO] Processing 44 faces
 [TOPO] Complex shape detected (44 faces), extracting ALL vertices from all face bounds
 [TOPO] Extracted 84 unique vertices
@@ -8,9 +8,7 @@
 [TOPO] Computed dimensions: 50.4 x 63.7 x 31.5
 [TOPO] Thin dimension detected from face separation: 2.9mm
 [TOPO] Adjusted dimensions: 2.9 x 50.4 x 63.7
-[LaserConvert] [FILTER] KCBox: dimensions [2.9, 50.4, 63.7] - PASS
-
-[STEP 1-5] Processing KCBox with 44 faces
+[FILTER] KCBox: dimensions [2.9, 50.4, 63.7] - PASS
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 2.9x1.5x3.2 (area=18.6): (40.7,-19.5,33.3), (41.9,-18.8,30.6), (39.0,-18.8,32.7), (40.1,-18.0,30.1)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=18.6)
@@ -195,7 +193,6 @@
 [EXTRACT] Bound 0 has 4 vertices, bbox 3.9x9.6x6.3 (area=123.4): (23.3,-27.1,23.8), (20.5,-36.0,20.2), (21.6,-35.2,17.5), (24.4,-26.3,21.1)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=123.4)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
-[STEP 1-5] Selected face with 34 boundary vertices
 [EXTRACT] ExtractFaceWithHoles: face has 3 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 7.2x10.8x5.0 (area=167.5): (27.7,-29.0,25.1), (23.3,-27.1,23.8), (24.9,-37.9,21.5), (20.5,-36.0,20.2)...
 [EXTRACT] Bound 1 has 4 vertices, bbox 11.6x12.7x6.3 (area=301.4): (8.4,-10.5,22.2), (17.2,-14.3,24.8), (11.2,-1.6,25.9), (20.0,-5.5,28.5)...
@@ -204,13 +201,5 @@
 [EXTRACT] Identified bound 1 as hole loop 1 (area=301.4)
 [EXTRACT] Identified bound 0 as hole loop 2 (area=167.5)
 [EXTRACT] Returning 34 outer verts and 2 hole loops
-[STEP 6] Outer perimeter has 34 vertices (3D)
-[STEP 6] 3D ranges - X:[-5.8,43.5] Y:[-55.1,7.9] Z:[8.1,36.9]
-[STEP 6] After projection to 2D - 2D ranges:
-[STEP 6] 2D ranges - X:[-5.8,43.5] (extent=49.3) Y:[-55.1,7.9] (extent=62.9)
-[STEP 6] After normalization and rounding: 34 vertices
-[STEP 7] After removing consecutive duplicates: 33 vertices
-[STEP 8] Generated SVG path for outer perimeter
-[STEP 8] Generated SVG path for hole with 4 vertices
-[STEP 8] Generated SVG path for hole with 4 vertices
-[STEP 8] Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.svg
+[SVG] KCBox: Generated outline from 33 vertices
+Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.svg

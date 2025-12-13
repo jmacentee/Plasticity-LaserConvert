@@ -1,6 +1,6 @@
-[LaserConvert] Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.stp
-[LaserConvert] File loaded. Total items: 154
-[LaserConvert] Found 1 solids
+Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.stp
+File loaded. Total items: 154
+Found 1 solids
 [TOPO] Processing 6 faces
 [TOPO] Found pair of faces with separation: 3.0mm
 [TOPO] Extracted 8 unique vertices
@@ -11,9 +11,7 @@
 [TOPO] Recomputed with all faces: 155.8 x 73.6 x 150.0
 [TOPO] Thin dimension detected from face separation: 3.0mm
 [TOPO] Adjusted dimensions: 3.0 x 150.0 x 155.8
-[LaserConvert] [FILTER] Box1: dimensions [3.0, 150.0, 155.8] - PASS
-
-[STEP 1-5] Processing Box1 with 6 faces
+[FILTER] Box1: dimensions [3.0, 150.0, 155.8] - PASS
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 154.5x70.9x150.0 (area=44758.0): (-77.9,-117.6,0.0), (76.6,-46.7,0.0), (-77.9,-117.6,150.0), (76.6,-46.7,150.0)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=44758.0)
@@ -38,16 +36,9 @@
 [EXTRACT] Bound 0 has 4 vertices, bbox 1.3x2.7x150.0 (area=600.0): (-76.6,-120.3,0.0), (-76.6,-120.3,150.0), (-77.9,-117.6,150.0), (-77.9,-117.6,0.0)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=600.0)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
-[STEP 1-5] Selected face with 4 boundary vertices
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 154.5x70.9x150.0 (area=44758.0): (-77.9,-117.6,0.0), (76.6,-46.7,0.0), (-77.9,-117.6,150.0), (76.6,-46.7,150.0)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=44758.0)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
-[STEP 6] Outer perimeter has 4 vertices (3D)
-[STEP 6] 3D ranges - X:[-77.9,76.6] Y:[-117.6,-46.7] Z:[0.0,150.0]
-[STEP 6] After projection to 2D - 2D ranges:
-[STEP 6] 2D ranges - X:[-77.9,76.6] (extent=154.5) Y:[0.0,150.0] (extent=150.0)
-[STEP 6] After normalization and rounding: 4 vertices
-[STEP 7] After removing consecutive duplicates: 4 vertices
-[STEP 8] Generated SVG path for outer perimeter
-[STEP 8] Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.svg
+[SVG] Box1: Generated outline from 4 vertices
+Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.svg
