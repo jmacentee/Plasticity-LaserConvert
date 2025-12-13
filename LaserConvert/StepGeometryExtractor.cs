@@ -612,5 +612,85 @@ namespace LaserConvert
             ExtractVerticesFromFaceBound(bound, stepFile, vertices, processedPoints);
             return vertices;
         }
+
+        /// <summary>
+        /// Extract UNIQUE corner vertices from all bounds (not traversing edge order).
+        /// This gives us the actual geometric corners of the face, even for degenerate flat faces.
+        /// </summary>
+        public static (List<(double X, double Y, double Z)> OuterVertices, List<List<(double X, double Y, double Z)>> HoleVertices) ExtractFaceCornerVertices(
+            StepAdvancedFace face,
+            StepFile stepFile)
+        {
+            var allBoundVertices = new List<(int BoundIndex, List<(double, double, double)> Vertices)>();
+            
+            if (face?.Bounds == null || face.Bounds.Count == 0)
+                return (new List<(double, double, double)>(), new List<List<(double, double, double)>>());
+            
+            // Extract unique vertices from each bound (without following edge order)
+            for (int boundIdx = 0; boundIdx < face.Bounds.Count; boundIdx++)
+            {
+                var bound = face.Bounds[boundIdx];
+                var uniqueCornerVertices = new Dictionary<string, (double, double, double)>();
+                
+                // Traverse edge loop and collect END POINTS (corners), not intermediate edge points
+                var edgeLoop = GetEdgeLoopFromBound(bound);
+                if (edgeLoop?.EdgeList != null)
+                {
+                    foreach (var orientedEdge in edgeLoop.EdgeList)
+                    {
+                        if (orientedEdge?.EdgeElement?.EdgeStart is StepVertexPoint startVertex && startVertex.Location != null)
+                        {
+                            var pt = startVertex.Location;
+                            var key = $"{pt.X:F4},{pt.Y:F4},{pt.Z:F4}";
+                            if (!uniqueCornerVertices.ContainsKey(key))
+                            {
+                                uniqueCornerVertices[key] = (pt.X, pt.Y, pt.Z);
+                            }
+                        }
+                    }
+                }
+                
+                allBoundVertices.Add((boundIdx, uniqueCornerVertices.Values.ToList()));
+            }
+            
+            // Classify bounds by size
+            var boundsBySize = allBoundVertices
+                .Select(b => (
+                    Index: b.BoundIndex,
+                    Vertices: b.Vertices,
+                    Area: b.Vertices.Count > 0 ? ComputeConvexHullArea(b.Vertices) : 0.0
+                ))
+                .OrderByDescending(b => b.Area)
+                .ToList();
+            
+            if (boundsBySize.Count == 0)
+                return (new List<(double, double, double)>(), new List<List<(double, double, double)>>());
+            
+            // Largest is outer, rest are holes
+            var outer = boundsBySize[0].Vertices;
+            var holes = boundsBySize.Skip(1).Select(b => b.Vertices).ToList();
+            
+            return (outer, holes);
+        }
+        
+        private static double ComputeConvexHullArea(List<(double X, double Y, double Z)> verts)
+        {
+            if (verts.Count < 3) return 0;
+            
+            // Project onto best-fit plane and compute area
+            // For now, use simple bounding box diagonal as proxy
+            var minX = verts.Min(v => v.X);
+            var maxX = verts.Max(v => v.X);
+            var minY = verts.Min(v => v.Y);
+            var maxY = verts.Max(v => v.Y);
+            var minZ = verts.Min(v => v.Z);
+            var maxZ = verts.Max(v => v.Z);
+            
+            var dx = maxX - minX;
+            var dy = maxY - minY;
+            var dz = maxZ - minZ;
+            
+            return dx * dy + dy * dz + dz * dx;
+        }
     }
 }

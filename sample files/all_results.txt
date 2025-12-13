@@ -135,7 +135,7 @@ REM File: KCBox.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="KCBox">
-    <path d="M 33,0 L 22,7 L 33,0 L 32,1 L 32,1 L 33,0 L 33,0 L 32,1 L 32,1 L 33,0 L 33,0 L 28,3 L 28,3 L 24,6 L 24,6 L 19,10 L 19,10 L 14,13 L 14,13 L 9,16 L 9,16 L 5,19 L 5,19 L 0,22 L 0,22 L 0,22 L 2,21 L 2,21 L 0,22 L 0,22 L 0,22 L 11,15 L 11,15 L 22,7 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 28,3 L 22,7 L 33,0 L 32,1 L 24,6 L 19,10 L 14,13 L 11,15 L 5,19 L 9,16 L 2,21 L 0,22 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
     <path d="M 4 14 L 14 14 L 14 22 L 4 22 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
     <path d="M 21 6 L 31 6 L 31 10 L 21 10 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
@@ -145,9 +145,7 @@ REM File: KCBoxFlat.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="KCBoxFlat">
-    <path d="M 17,0 L 11,0 L 11,0 L 6,0 L 6,0 L 0,0 L 0,0 L 3,0 L 3,0 L 0,0 L 0,0 L 13,0 L 13,0 L 27,0 L 27,0 L 40,0 L 40,0 L 38,0 L 38,0 L 40,0 L 40,0 L 38,0 L 38,0 L 40,0 L 40,0 L 34,0 L 34,0 L 29,0 L 29,0 L 23,0 L 23,0 L 17,0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 5 0 L 15 0 L 15 10 L 5 10 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 25 0 L 35 0 L 35 5 L 25 5 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 3,0 L 5,0 L 6,0 L 11,0 L 13,0 L 15,0 L 17,0 L 17,0 L 23,0 L 25,0 L 27,0 L 29,0 L 30,0 L 34,0 L 38,0 L 40,0 L 40,3 L 38,3 L 34,3 L 30,3 L 29,3 L 27,3 L 25,3 L 23,3 L 17,3 L 17,3 L 15,3 L 13,3 L 11,3 L 6,3 L 5,3 L 3,3 L 0,3 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -786,25 +784,12 @@ Found 1 solids
 [EXTRACT] Returning 32 outer verts and 2 hole loops
 [SVG] KCBoxFlat:   Face 41: 32 boundary verts
 [SVG] KCBoxFlat: Selected face with 32 boundary vertices as main face
-[EXTRACT] ExtractFaceWithHoles: face has 3 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 5.2x10.1x0.0 (area=52.5): (30.2,-41.4,3.0), (30.2,-31.3,3.0), (25.0,-41.4,3.0), (25.0,-31.3,3.0)...
-[EXTRACT] Bound 1 has 4 vertices, bbox 10.2x10.2x0.0 (area=104.5): (15.1,-21.3,3.0), (15.1,-11.1,3.0), (4.9,-21.4,3.0), (4.9,-11.2,3.0)...
-[EXTRACT] Bound 2 has 32 vertices, bbox 40.1x58.2x0.0 (area=2336.9): (17.2,-6.2,3.0), (11.4,-6.2,3.0), (11.3,-0.2,3.0), (5.7,-0.2,3.0)...
-[EXTRACT] Identified bound 2 as outer loop (largest area=2336.9)
-[EXTRACT] Identified bound 1 as hole loop 1 (area=104.5)
-[EXTRACT] Identified bound 0 as hole loop 2 (area=52.5)
-[EXTRACT] Returning 32 outer verts and 2 hole loops
-[SVG] KCBoxFlat: Extracted outer loop with 32 vertices from face bounds
-[SVG] KCBoxFlat: Outline vertices after rotation - X:[-0.0,40.1] Y:[-3.0,-3.0] Z:[-58.4,-0.2]
-[SVG] KCBoxFlat: Keeping all 32 vertices for complex shape
-[SVG] KCBoxFlat: Complex shape detected, skipping orthogonal sort
-[SVG] KCBoxFlat: Generated outline from 32 outline points -> 32 ordered
-[SVG] Processing hole with 4 vertices in 3D
-[SVG] Hole 3D bounds: X:[4.9,15.1] Y:[-3.0,-3.0] Z:[-21.4,-11.1], normalized: (5,0) 10x10
-[SVG] Added hole path
-[SVG] Processing hole with 4 vertices in 3D
-[SVG] Hole 3D bounds: X:[25.0,30.2] Y:[-3.0,-3.0] Z:[-41.4,-31.3], normalized: (25,0) 10x5
-[SVG] Added hole path
+[SVG] KCBoxFlat: Face extraction is degenerate (min dim 0.000), using all solid vertices
+[SVG] KCBoxFlat: Extracted outer loop with 80 vertices from face bounds
+[SVG] KCBoxFlat: Outline vertices after rotation - X:[-0.0,40.1] Y:[-3.0,-0.0] Z:[-58.4,-0.2]
+[SVG] KCBoxFlat: Keeping 34 unique vertices (deduped from 80) for complex shape
+[SVG] KCBoxFlat: Applied convex-hull ordering to 34 vertices
+[SVG] KCBoxFlat: Generated outline from 34 outline points -> 34 ordered
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBoxFlat.svg
  
 REM File: KCBox_failures.txt 
@@ -1174,19 +1159,11 @@ Found 1 solids
 [EXTRACT] Identified bound 0 as outer loop (largest area=123.4)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
 [SVG] KCBox: Selected face with 34 boundary vertices as main face
-[EXTRACT] ExtractFaceWithHoles: face has 3 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 7.2x10.8x5.0 (area=167.5): (27.7,-29.0,25.1), (23.3,-27.1,23.8), (24.9,-37.9,21.5), (20.5,-36.0,20.2)...
-[EXTRACT] Bound 1 has 4 vertices, bbox 11.6x12.7x6.3 (area=301.4): (8.4,-10.5,22.2), (17.2,-14.3,24.8), (11.2,-1.6,25.9), (20.0,-5.5,28.5)...
-[EXTRACT] Bound 2 has 34 vertices, bbox 49.3x62.9x28.8 (area=6338.0): (29.6,-55.1,18.6), (17.8,-49.9,15.1), (32.4,-46.2,22.3), (30.6,-45.4,21.8)...
-[EXTRACT] Identified bound 2 as outer loop (largest area=6338.0)
-[EXTRACT] Identified bound 1 as hole loop 1 (area=301.4)
-[EXTRACT] Identified bound 0 as hole loop 2 (area=167.5)
-[EXTRACT] Returning 34 outer verts and 2 hole loops
-[SVG] KCBox: Extracted outer loop with 34 vertices from face bounds
+[SVG] KCBox: Extracted outer loop with 27 vertices from face bounds
 [SVG] KCBox: Outline vertices after rotation - X:[-0.5,32.7] Y:[-45.2,-22.9] Z:[-35.9,22.1]
-[SVG] KCBox: Keeping all 34 vertices for complex shape
-[SVG] KCBox: Complex shape detected, skipping orthogonal sort
-[SVG] KCBox: Generated outline from 34 outline points -> 34 ordered
+[SVG] KCBox: Keeping 12 unique vertices (deduped from 27) for complex shape
+[SVG] KCBox: Applied convex-hull ordering to 12 vertices
+[SVG] KCBox: Generated outline from 12 outline points -> 12 ordered
 [SVG] Processing hole with 4 vertices in 3D
 [SVG] Hole 3D bounds: X:[3.6,12.0] Y:[-31.2,-25.7] Z:[1.1,11.1], normalized: (4,14) 10x8
 [SVG] Added hole path

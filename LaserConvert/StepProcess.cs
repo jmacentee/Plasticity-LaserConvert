@@ -234,11 +234,30 @@ namespace LaserConvert
                     // Try to extract the actual face outline from the main face
                     if (mainFace != null)
                     {
-                        // STRATEGY: For ALL faces, try to use ExtractFaceWithHoles first
-                        // This gives us the true outer loop (which may have multiple bounds for holes)
-                        // ATTEMPTED: Using ExtractFaceWithHoles for all faces uniformly
-                        // RESULT: This is the canonical way to get outline+holes together
-                        var (outerLoopVerts, holeLoops) = StepTopologyResolver.ExtractFaceWithHoles(mainFace, stepFile);
+                        // For complex shapes, use corner vertex extraction to avoid degenerate edge topology
+                        // For simple shapes, use traditional bound-based extraction
+                        var (outerLoopVerts, holeLoops) = faces.Count > 20
+                            ? StepTopologyResolver.ExtractFaceCornerVertices(mainFace, stepFile)
+                            : StepTopologyResolver.ExtractFaceWithHoles(mainFace, stepFile);
+                        
+                        // FALLBACK for degenerate complex shapes:  
+                        // If the extracted outline is degenerate (all vertices on a line or plane with zero extent),
+                        // use the projection of ALL normalized vertices instead
+                        if (faces.Count > 20 && outerLoopVerts.Count > 0)
+                        {
+                            var outX_before = outerLoopVerts.Max(v => v.Item1) - outerLoopVerts.Min(v => v.Item1);
+                            var outY_before = outerLoopVerts.Max(v => v.Item2) - outerLoopVerts.Min(v => v.Item2);
+                            var outZ_before = outerLoopVerts.Max(v => v.Item3) - outerLoopVerts.Min(v => v.Item3);
+                            var minDim_before = Math.Min(Math.Min(outX_before, outY_before), outZ_before);
+                            
+                            if (minDim_before < 0.1)
+                            {
+                                // Degenerate face - use projection of all normalized vertices instead
+                                Console.WriteLine($"[SVG] {name}: Face extraction is degenerate (min dim {minDim_before:F3}), using all solid vertices");
+                                outerLoopVerts = normalizedVertices.Select(v => (v.X, v.Y, v.Z)).ToList();
+                                holeLoops = new List<List<(double, double, double)>>();  // No holes from this approach
+                            }
+                        }
                         
                         if (outerLoopVerts.Count >= 4)
                         {
@@ -254,7 +273,6 @@ namespace LaserConvert
                                     return ApplyMatrix(rot1, rotMatrix2);  // Simple: apply both
                                 })
                                 .ToList();
-                            
 
                             // Debug: check vertex ranges before projection
                             if (outlineNormalizedVerts.Count > 0)
@@ -323,9 +341,19 @@ namespace LaserConvert
                             List<(double X, double Y)> dedup_precise;
                             if (faces.Count > 20)
                             {
-                                // Complex shape: keep all vertices
-                                dedup_precise = pts2d_precise;
-                                Console.WriteLine($"[SVG] {name}: Keeping all {dedup_precise.Count} vertices for complex shape");
+                                // Complex shape: dedup by 2D projected position (remove duplicates from top/bottom faces)
+                                // then keep all unique points to preserve outline detail
+                                var unique2d = new Dictionary<string, (double X, double Y)>();
+                                foreach (var p in pts2d_precise)
+                                {
+                                    var key = $"{Math.Round(p.X, 1):F1},{Math.Round(p.Y, 1):F1}";
+                                    if (!unique2d.ContainsKey(key))
+                                    {
+                                        unique2d[key] = p;
+                                    }
+                                }
+                                dedup_precise = unique2d.Values.ToList();
+                                Console.WriteLine($"[SVG] {name}: Keeping {dedup_precise.Count} unique vertices (deduped from {pts2d_precise.Count}) for complex shape");
                             }
                             else
                             {
@@ -364,9 +392,9 @@ namespace LaserConvert
                                 // FIX: For complex shapes (>20 faces), use dedup order directly
                                 if (faces.Count > 20)
                                 {
-                                    // Complex shape: trust the bounds extraction order
-                                    finalDedup = dedup;
-                                    Console.WriteLine($"[SVG] {name}: Complex shape detected, skipping orthogonal sort");
+                                    // Complex shape: use convex-hull ordering for proper perimeter traversal
+                                    finalDedup = OrderComplexPerimeter(dedup);
+                                    Console.WriteLine($"[SVG] {name}: Applied convex-hull ordering to {finalDedup.Count} vertices");
                                 }
                                 else if (orthogonalSort.Count == dedup.Count)
                                 {
@@ -723,7 +751,7 @@ namespace LaserConvert
             var dx = to.X - from.X;
             var dy = to.Y - from.Y;
             
-            // atan2 in SVG coords: 0° = right (+X), 90° = down (+Y), 180° = left (-X), 270° = up (-Y)
+            // atan2 in SVG coords: 0° = right (+X), 90° = down (+Y), 180° = left (-Y), 270° = up (-X)
             var angle = Math.Atan2(dy, dx) * 180.0 / Math.PI;
             
             // Normalize to [0, 360)
@@ -879,7 +907,7 @@ namespace LaserConvert
         {
             if (pts == null || pts.Count < 3)
                 return new List<(long X, long Y)> ();
-
+            
             // For orthogonal shapes, use pure greedy nearest-neighbor on orthogonal edges
             // Start from bottom-left corner
             
@@ -940,6 +968,25 @@ namespace LaserConvert
             }
 
             return result;
+        }
+
+        private static List<(long X, long Y)> OrderComplexPerimeter(List<(long X, long Y)> vertices)
+        {
+            if (vertices.Count < 3)
+                return vertices;
+
+            // Find the centroid (approximate center) of the shape
+            long centerX = (vertices.Min(v => v.X) + vertices.Max(v => v.X)) / 2;
+            long centerY = (vertices.Min(v => v.Y) + vertices.Max(v => v.Y)) / 2;
+
+            // Sort by angle around the centroid
+            var sorted = vertices
+                .Select(v => (Vertex: v, Angle: Math.Atan2(v.Y - centerY, v.X - centerX)))
+                .OrderBy(v => v.Angle)
+                .Select(v => v.Vertex)
+                .ToList();
+
+            return sorted;
         }
     }
 }
