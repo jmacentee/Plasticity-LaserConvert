@@ -22,6 +22,7 @@ Found 1 solids
 [EXTRACT] Returning 4 outer verts and 0 hole loops
 [SVG] Box1: Extracted outer loop with 4 vertices from face bounds
 [SVG] Box1: Outline vertices after rotation - X:[-150.0,0.0] Y:[-119.8,50.2] Z:[77.4,77.4]
-[SVG] Box1: Orthogonal sort succeeded
-[SVG] Box1: Generated outline from 4 outline points -> 4 ordered
+[GEOMETRY2D] Gift Wrapping: 4 input points -> 4 perimeter points (4 iterations)
+[SVG] Box1: Gift Wrapped 4 points -> 4 perimeter points
+[SVG] Box1: Generated outline from 4 vertices
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.svg

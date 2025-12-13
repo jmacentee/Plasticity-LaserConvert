@@ -22,8 +22,9 @@ Found 1 solids
 [EXTRACT] Returning 4 outer verts and 1 hole loops
 [SVG] CBox: Extracted outer loop with 4 vertices from face bounds
 [SVG] CBox: Outline vertices after rotation - X:[-50.0,-0.0] Y:[-0.0,40.0] Z:[-3.0,-3.0]
-[SVG] CBox: Orthogonal sort succeeded
-[SVG] CBox: Generated outline from 4 outline points -> 4 ordered
+[GEOMETRY2D] Gift Wrapping: 4 input points -> 4 perimeter points (4 iterations)
+[SVG] CBox: Gift Wrapped 4 points -> 4 perimeter points
+[SVG] CBox: Generated outline from 4 vertices
 [SVG] Processing hole with 4 vertices in 3D
 [SVG] Hole 3D bounds: X:[-15.0,-5.0] Y:[5.0,15.0] Z:[-3.0,-3.0], normalized: (35,5) 10x10
 [SVG] Added hole path

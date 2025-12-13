@@ -341,19 +341,25 @@ namespace LaserConvert
                             List<(double X, double Y)> dedup_precise;
                             if (faces.Count > 20)
                             {
-                                // Complex shape: dedup by 2D projected position (remove duplicates from top/bottom faces)
-                                // then keep all unique points to preserve outline detail
-                                var unique2d = new Dictionary<string, (double X, double Y)>();
-                                foreach (var p in pts2d_precise)
+                                // Complex shape: don't dedup by string matching - this loses geometry
+                                // Instead, check if vertices are actually distinct in 2D
+                                // If all have same X or Y (degenerate 1D line), it means extraction failed
+                                var uniqueX = pts2d_precise.Select(p => Math.Round(p.X, 1)).Distinct().Count();
+                                var uniqueY = pts2d_precise.Select(p => Math.Round(p.Y, 1)).Distinct().Count();
+                
+                                if (uniqueX < 2 || uniqueY < 2)
                                 {
-                                    var key = $"{Math.Round(p.X, 1):F1},{Math.Round(p.Y, 1):F1}";
-                                    if (!unique2d.ContainsKey(key))
-                                    {
-                                        unique2d[key] = p;
-                                    }
+                                    // Degenerate - vertices are essentially 1D line, not a 2D outline
+                                    Console.WriteLine($"[SVG] {name}: Degenerate geometry detected - vertices form 1D line (X variants: {uniqueX}, Y variants: {uniqueY})");
+                                    dedup_precise = new List<(double X, double Y)>();  // Will skip this solid
                                 }
-                                dedup_precise = unique2d.Values.ToList();
-                                Console.WriteLine($"[SVG] {name}: Keeping {dedup_precise.Count} unique vertices (deduped from {pts2d_precise.Count}) for complex shape");
+                                else
+                                {
+                                    // Proper 2D geometry - DON'T DEDUP, pass all points directly to Gift Wrapping
+                                    // Gift Wrapping will internally handle duplicates via Distinct()
+                                    dedup_precise = pts2d_precise;
+                                    Console.WriteLine($"[SVG] {name}: Passing all {dedup_precise.Count} vertices to Gift Wrapping (no pre-dedup)");
+                                }
                             }
                             else
                             {
@@ -371,55 +377,67 @@ namespace LaserConvert
                             }
                             
 
-                            if (dedup_precise.Count >= 4)
+                            if (dedup_precise.Count >= 3)
                             {
-                                // Round to integers
-                                var dedup = dedup_precise
-                                    .Select(p => ((long)Math.Round(p.X), (long)Math.Round(p.Y)))
-                                    .ToList();
+                                // For complex shapes with many vertices, the extraction order from 
+                                // ExtractFaceWithHoles already provides proper edge-loop order.
+                                // We should trust this order and NOT reorder with Gift Wrapping,
+                                // because Gift Wrapping finds the convex hull, losing concave vertices (tabs/cutouts).
                                 
-                                // Try orthogonal ordering first, fallback to using dedup order
-                                // For complex shapes, skip sophisticated orderings (Gift Wrapping, Convex Hull)
-                                // and trust the dedup order which comes from edge-loop traversal
-                                var orthogonalSort = SortPerimeterVertices2D(dedup);
-                                List<(long X, long Y)> finalDedup;
+                                // For simple shapes (4 vertices for rectangles), Gift Wrapping is fine.
+                                // For complex shapes (12+ vertices), keep the extraction order as-is.
                                 
-                                if (faces.Count > 20)
+                                List<Geometry2D.Point2D> orderedPerimeter;
+                                
+                                if (dedup_precise.Count <= 4)
                                 {
-                                    // Complex shape with edge-ordered vertices:
-                                    // The dedup order typically preserves the sequential perimeter traversal from edge loops
-                                    // Don't use Gift Wrapping or other perimeter ordering - it will collapse non-convex features
-                                    finalDedup = dedup;
-                                    Console.WriteLine($"[SVG] {name}: Using dedup order directly for edge-ordered vertices ({dedup.Count} points)");
-                                }
-                                else if (orthogonalSort.Count == dedup.Count)
-                                {
-                                    // Orthogonal sort succeeded - use it for axis-aligned shapes
-                                    finalDedup = orthogonalSort;
-                                    Console.WriteLine($"[SVG] {name}: Orthogonal sort succeeded");
+                                    // Simple shape - use Gift Wrapping to ensure proper ordering
+                                    var points_for_wrapping = dedup_precise
+                                        .Select(p => new Geometry2D.Point2D(
+                                            (long)Math.Round(p.X),
+                                            (long)Math.Round(p.Y)
+                                        ))
+                                        .ToList();
+
+                                    orderedPerimeter = Geometry2D.GiftWrapPerimeter(points_for_wrapping);
+                                    Console.WriteLine($"[SVG] {name}: Gift Wrapped {dedup_precise.Count} points -> {orderedPerimeter.Count} perimeter points");
                                 }
                                 else
                                 {
-                                    // Orthogonal sort failed - use dedup order
-                                    finalDedup = dedup;
-                                    Console.WriteLine($"[SVG] {name}: Orthogonal sort failed, using dedup order (preserves {dedup.Count} vertices)");
+                                    // Complex shape - preserve extraction order (already in edge-loop sequence)
+                                    // Extraction order from ExtractFaceWithHoles follows edge connectivity
+                                    // which naturally preserves all boundary vertices including concave ones
+                                    orderedPerimeter = dedup_precise
+                                        .Select(p => new Geometry2D.Point2D(
+                                            (long)Math.Round(p.X),
+                                            (long)Math.Round(p.Y)
+                                        ))
+                                        .ToList();
+                                    Console.WriteLine($"[SVG] {name}: Using extraction order for {orderedPerimeter.Count} complex shape vertices");
                                 }
                                 
-                                var faceOutlinePath = BuildPerimeterPath(finalDedup);
-                                Console.WriteLine($"[SVG] {name}: Generated outline from {dedup_precise.Count} outline points -> {finalDedup.Count} ordered");
-                                svg.Path(faceOutlinePath, strokeWidth: 0.2, fill: "none", stroke: "#000");
-                                
-                                // Render holes
-                                var outlineMinX = outlineNormalizedVerts.Min(v => v.X);
-                                var outlineMinY = outlineNormalizedVerts.Min(v => v.Y);
-                                
-                                foreach (var holeVerts3D in holeLoops)
+                                if (orderedPerimeter.Count >= 3)
                                 {
-                                    RenderSingleHole(svg, holeVerts3D, normalizedVertices, outlineMinX, outlineMinY, rotMatrix1, rotMatrix2, faces.Count > 20);
+                                    var faceOutlinePath = Geometry2D.BuildSvgPath(orderedPerimeter);
+                                    Console.WriteLine($"[SVG] {name}: Generated outline from {orderedPerimeter.Count} vertices");
+                                    svg.Path(faceOutlinePath, strokeWidth: 0.2, fill: "none", stroke: "#000");
+                                    
+                                    // Render holes
+                                    var outlineMinX = outlineNormalizedVerts.Min(v => v.X);
+                                    var outlineMinY = outlineNormalizedVerts.Min(v => v.Y);
+                                    
+                                    foreach (var holeVerts3D in holeLoops)
+                                    {
+                                        RenderSingleHole(svg, holeVerts3D, normalizedVertices, outlineMinX, outlineMinY, rotMatrix1, rotMatrix2, faces.Count > 20);
+                                    }
+                                    
+                                    svg.EndGroup();
+                                    continue;
                                 }
-                                
-                                svg.EndGroup();
-                                continue;
+                                else
+                                {
+                                    Console.WriteLine($"[SVG] {name}: Gift Wrapping returned too few points ({orderedPerimeter.Count}), skipping solid");
+                                }
                             }
                             else
                             {
@@ -447,6 +465,7 @@ namespace LaserConvert
                 return 2;
             }
         }
+
 
         private static Dimensions ComputeDimensions(List<(double X, double Y, double Z)> points)
         {

@@ -212,9 +212,9 @@ Found 1 solids
 [EXTRACT] Returning 34 outer verts and 2 hole loops
 [SVG] KCBox: Extracted outer loop with 34 vertices from face bounds
 [SVG] KCBox: Outline vertices after rotation - X:[-0.5,32.7] Y:[-45.2,-22.9] Z:[-35.9,22.1]
-[SVG] KCBox: Keeping 12 unique vertices (deduped from 34) for complex shape
-[SVG] KCBox: Using dedup order directly for edge-ordered vertices (12 points)
-[SVG] KCBox: Generated outline from 12 outline points -> 12 ordered
+[SVG] KCBox: Passing all 34 vertices to Gift Wrapping (no pre-dedup)
+[SVG] KCBox: Using extraction order for 34 complex shape vertices
+[SVG] KCBox: Generated outline from 34 vertices
 [SVG] Processing hole with 4 vertices in 3D
 [SVG] Hole 3D bounds: X:[3.6,12.0] Y:[-31.2,-25.7] Z:[1.1,11.1], normalized: (4,14) 10x8
 [SVG] Added hole path

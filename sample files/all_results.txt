@@ -127,7 +127,7 @@ REM File: KBox.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="KBox">
-    <path d="M 0,0 L 170,0 L 170,145 L 155,145 L 155,150 L 121,150 L 121,140 L 87,140 L 87,145 L 53,145 L 53,150 L 0,150 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 0,150 L 170,0 L 170,145 L 155,145 L 155,150 L 121,150 L 121,140 L 87,140 L 87,145 L 53,145 L 53,150 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -195,7 +195,7 @@ REM File: KCBox.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="KCBox">
-    <path d="M 33,0 L 22,7 L 32,1 L 28,3 L 24,6 L 19,10 L 14,13 L 9,16 L 5,19 L 0,22 L 2,21 L 11,15 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 33,0 L 22,7 L 33,0 L 32,1 L 32,1 L 33,0 L 33,0 L 32,1 L 32,1 L 33,0 L 33,0 L 28,3 L 28,3 L 24,6 L 24,6 L 19,10 L 19,10 L 14,13 L 14,13 L 9,16 L 9,16 L 5,19 L 5,19 L 0,22 L 0,22 L 0,22 L 2,21 L 2,21 L 0,22 L 0,22 L 0,22 L 11,15 L 11,15 L 22,7 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
     <path d="M 4 14 L 14 14 L 14 22 L 4 22 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
     <path d="M 21 6 L 31 6 L 31 10 L 21 10 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
@@ -205,9 +205,6 @@ REM File: KCBoxFlat.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
 <defs/>
   <g id="KCBoxFlat">
-    <path d="M 17,0 L 11,0 L 6,0 L 0,0 L 3,0 L 13,0 L 27,0 L 40,0 L 38,0 L 34,0 L 29,0 L 23,0 L 17,0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 5 0 L 15 0 L 15 10 L 5 10 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 25 0 L 35 0 L 35 5 L 25 5 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -272,6 +269,16 @@ REM File: KCBox_fix.svg
   </g>
 </svg>
  
+REM File: test_KCBox.svg 
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="1000" viewBox="0 0 1000 1000">
+<defs/>
+  <g id="KCBox">
+    <path d="M 0,22 L 22,7 L 28,3 L 33,0 L 32,1 L 19,10 L 2,21 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 4 14 L 14 14 L 14 22 L 4 22 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 21 6 L 31 6 L 31 10 L 21 10 Z" stroke="#FF0000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+</svg>
+ 
 REM File: 1box_output.txt 
 Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.stp
 File loaded. Total items: 154
@@ -297,8 +304,9 @@ Found 1 solids
 [EXTRACT] Returning 4 outer verts and 0 hole loops
 [SVG] Box1: Extracted outer loop with 4 vertices from face bounds
 [SVG] Box1: Outline vertices after rotation - X:[-150.0,0.0] Y:[-119.8,50.2] Z:[77.4,77.4]
-[SVG] Box1: Orthogonal sort succeeded
-[SVG] Box1: Generated outline from 4 outline points -> 4 ordered
+[GEOMETRY2D] Gift Wrapping: 4 input points -> 4 perimeter points (4 iterations)
+[SVG] Box1: Gift Wrapped 4 points -> 4 perimeter points
+[SVG] Box1: Generated outline from 4 vertices
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.svg
  
 REM File: 2boxes_output.txt 
@@ -334,8 +342,9 @@ Found 2 solids
 [EXTRACT] Returning 4 outer verts and 0 hole loops
 [SVG] Box2: Extracted outer loop with 4 vertices from face bounds
 [SVG] Box2: Outline vertices after rotation - X:[-82.0,28.2] Y:[-85.0,85.0] Z:[-0.0,0.0]
-[SVG] Box2: Orthogonal sort succeeded
-[SVG] Box2: Generated outline from 4 outline points -> 4 ordered
+[GEOMETRY2D] Gift Wrapping: 4 input points -> 4 perimeter points (4 iterations)
+[SVG] Box2: Gift Wrapped 4 points -> 4 perimeter points
+[SVG] Box2: Generated outline from 4 vertices
 [TRANSFORM] Thin dimension: -77.9,-117.6,0.0 -> -76.6,-120.3,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
 [SVG] Box1: Z range [74.4, 77.4] (range=3.0), using all 8 vertices for projection
@@ -346,8 +355,9 @@ Found 2 solids
 [EXTRACT] Returning 4 outer verts and 0 hole loops
 [SVG] Box1: Extracted outer loop with 4 vertices from face bounds
 [SVG] Box1: Outline vertices after rotation - X:[-150.0,0.0] Y:[-119.8,50.2] Z:[77.4,77.4]
-[SVG] Box1: Orthogonal sort succeeded
-[SVG] Box1: Generated outline from 4 outline points -> 4 ordered
+[GEOMETRY2D] Gift Wrapping: 4 input points -> 4 perimeter points (4 iterations)
+[SVG] Box1: Gift Wrapped 4 points -> 4 perimeter points
+[SVG] Box1: Generated outline from 4 vertices
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\2boxes.svg
  
 REM File: 3boxesB_output.txt 
@@ -391,8 +401,9 @@ Found 3 solids
 [EXTRACT] Returning 4 outer verts and 0 hole loops
 [SVG] Box2: Extracted outer loop with 4 vertices from face bounds
 [SVG] Box2: Outline vertices after rotation - X:[-82.0,28.2] Y:[-85.0,85.0] Z:[-0.0,0.0]
-[SVG] Box2: Orthogonal sort succeeded
-[SVG] Box2: Generated outline from 4 outline points -> 4 ordered
+[GEOMETRY2D] Gift Wrapping: 4 input points -> 4 perimeter points (4 iterations)
+[SVG] Box2: Gift Wrapped 4 points -> 4 perimeter points
+[SVG] Box2: Generated outline from 4 vertices
 [TRANSFORM] Thin dimension: -13.2,-14.5,51.8 -> -14.5,-14.5,49.1 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
 [SVG] Box4: Z range [49.1, 84.1] (range=35.0), using all 8 vertices for projection
@@ -403,8 +414,9 @@ Found 3 solids
 [EXTRACT] Returning 4 outer verts and 0 hole loops
 [SVG] Box4: Extracted outer loop with 4 vertices from face bounds
 [SVG] Box4: Outline vertices after rotation - X:[-82.0,-14.5] Y:[-109.1,-34.3] Z:[-38.0,-38.0]
-[SVG] Box4: Orthogonal sort succeeded
-[SVG] Box4: Generated outline from 4 outline points -> 4 ordered
+[GEOMETRY2D] Gift Wrapping: 4 input points -> 4 perimeter points (4 iterations)
+[SVG] Box4: Gift Wrapped 4 points -> 4 perimeter points
+[SVG] Box4: Generated outline from 4 vertices
 [TRANSFORM] Thin dimension: -77.9,-117.6,0.0 -> -76.6,-120.3,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
 [SVG] Box1: Z range [74.4, 77.4] (range=3.0), using all 8 vertices for projection
@@ -415,8 +427,9 @@ Found 3 solids
 [EXTRACT] Returning 4 outer verts and 0 hole loops
 [SVG] Box1: Extracted outer loop with 4 vertices from face bounds
 [SVG] Box1: Outline vertices after rotation - X:[-150.0,0.0] Y:[-119.8,50.2] Z:[77.4,77.4]
-[SVG] Box1: Orthogonal sort succeeded
-[SVG] Box1: Generated outline from 4 outline points -> 4 ordered
+[GEOMETRY2D] Gift Wrapping: 4 input points -> 4 perimeter points (4 iterations)
+[SVG] Box1: Gift Wrapped 4 points -> 4 perimeter points
+[SVG] Box1: Generated outline from 4 vertices
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxesB.svg
  
 REM File: 3boxes_output.txt 
@@ -458,8 +471,9 @@ Found 3 solids
 [EXTRACT] Returning 4 outer verts and 0 hole loops
 [SVG] Box2: Extracted outer loop with 4 vertices from face bounds
 [SVG] Box2: Outline vertices after rotation - X:[-82.0,28.2] Y:[-85.0,85.0] Z:[-0.0,0.0]
-[SVG] Box2: Orthogonal sort succeeded
-[SVG] Box2: Generated outline from 4 outline points -> 4 ordered
+[GEOMETRY2D] Gift Wrapping: 4 input points -> 4 perimeter points (4 iterations)
+[SVG] Box2: Gift Wrapped 4 points -> 4 perimeter points
+[SVG] Box2: Generated outline from 4 vertices
 [TRANSFORM] Thin dimension: -77.9,-117.6,0.0 -> -76.6,-120.3,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=-65.4ø
 [SVG] Box1: Z range [74.4, 77.4] (range=3.0), using all 8 vertices for projection
@@ -470,8 +484,9 @@ Found 3 solids
 [EXTRACT] Returning 4 outer verts and 0 hole loops
 [SVG] Box1: Extracted outer loop with 4 vertices from face bounds
 [SVG] Box1: Outline vertices after rotation - X:[-150.0,0.0] Y:[-119.8,50.2] Z:[77.4,77.4]
-[SVG] Box1: Orthogonal sort succeeded
-[SVG] Box1: Generated outline from 4 outline points -> 4 ordered
+[GEOMETRY2D] Gift Wrapping: 4 input points -> 4 perimeter points (4 iterations)
+[SVG] Box1: Gift Wrapped 4 points -> 4 perimeter points
+[SVG] Box1: Generated outline from 4 vertices
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxes.svg
  
 REM File: 4boxes_output.txt 
@@ -526,8 +541,9 @@ Found 4 solids
 [EXTRACT] Returning 4 outer verts and 0 hole loops
 [SVG] Box1: Extracted outer loop with 4 vertices from face bounds
 [SVG] Box1: Outline vertices after rotation - X:[-150.0,0.0] Y:[-119.8,50.2] Z:[77.4,77.4]
-[SVG] Box1: Orthogonal sort succeeded
-[SVG] Box1: Generated outline from 4 outline points -> 4 ordered
+[GEOMETRY2D] Gift Wrapping: 4 input points -> 4 perimeter points (4 iterations)
+[SVG] Box1: Gift Wrapped 4 points -> 4 perimeter points
+[SVG] Box1: Generated outline from 4 vertices
 [TRANSFORM] Thin dimension: -85.0,28.2,3.0 -> -85.0,28.2,0.0 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
 [SVG] Box2: Z range [0.0, 3.0] (range=3.0), using all 8 vertices for projection
@@ -538,8 +554,9 @@ Found 4 solids
 [EXTRACT] Returning 4 outer verts and 0 hole loops
 [SVG] Box2: Extracted outer loop with 4 vertices from face bounds
 [SVG] Box2: Outline vertices after rotation - X:[-82.0,28.2] Y:[-85.0,85.0] Z:[-0.0,0.0]
-[SVG] Box2: Orthogonal sort succeeded
-[SVG] Box2: Generated outline from 4 outline points -> 4 ordered
+[GEOMETRY2D] Gift Wrapping: 4 input points -> 4 perimeter points (4 iterations)
+[SVG] Box2: Gift Wrapped 4 points -> 4 perimeter points
+[SVG] Box2: Generated outline from 4 vertices
 [TRANSFORM] Thin dimension: -13.2,-14.5,51.8 -> -14.5,-14.5,49.1 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=90.0ø
 [SVG] Box4: Z range [49.1, 84.1] (range=35.0), using all 8 vertices for projection
@@ -550,8 +567,9 @@ Found 4 solids
 [EXTRACT] Returning 4 outer verts and 0 hole loops
 [SVG] Box4: Extracted outer loop with 4 vertices from face bounds
 [SVG] Box4: Outline vertices after rotation - X:[-82.0,-14.5] Y:[-109.1,-34.3] Z:[-38.0,-38.0]
-[SVG] Box4: Orthogonal sort succeeded
-[SVG] Box4: Generated outline from 4 outline points -> 4 ordered
+[GEOMETRY2D] Gift Wrapping: 4 input points -> 4 perimeter points (4 iterations)
+[SVG] Box4: Gift Wrapped 4 points -> 4 perimeter points
+[SVG] Box4: Generated outline from 4 vertices
 [TRANSFORM] Thin dimension: -28.7,25.5,87.4 -> -30.0,23.0,86.4 (3.0mm)
 [TRANSFORM] Normalizing edge to X-axis: angle=53.9ø
 [SVG] Box5: Z range [-36.4, -33.4] (range=3.0), using all 8 vertices for projection
@@ -562,8 +580,9 @@ Found 4 solids
 [EXTRACT] Returning 4 outer verts and 0 hole loops
 [SVG] Box5: Extracted outer loop with 4 vertices from face bounds
 [SVG] Box5: Outline vertices after rotation - X:[28.7,73.2] Y:[49.3,106.9] Z:[-33.4,-33.4]
-[SVG] Box5: Orthogonal sort succeeded
-[SVG] Box5: Generated outline from 4 outline points -> 4 ordered
+[GEOMETRY2D] Gift Wrapping: 4 input points -> 4 perimeter points (4 iterations)
+[SVG] Box5: Gift Wrapped 4 points -> 4 perimeter points
+[SVG] Box5: Generated outline from 4 vertices
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\4boxes.svg
  
 REM File: CBoxR_output.txt 
@@ -591,8 +610,9 @@ Found 1 solids
 [EXTRACT] Returning 4 outer verts and 1 hole loops
 [SVG] CBoxR: Extracted outer loop with 4 vertices from face bounds
 [SVG] CBoxR: Outline vertices after rotation - X:[-6.1,43.9] Y:[-12.7,27.3] Z:[-72.9,-72.9]
-[SVG] CBoxR: Orthogonal sort succeeded
-[SVG] CBoxR: Generated outline from 4 outline points -> 4 ordered
+[GEOMETRY2D] Gift Wrapping: 4 input points -> 4 perimeter points (4 iterations)
+[SVG] CBoxR: Gift Wrapped 4 points -> 4 perimeter points
+[SVG] CBoxR: Generated outline from 4 vertices
 [SVG] Processing hole with 4 vertices in 3D
 [SVG] Hole 3D bounds: X:[28.9,38.9] Y:[-7.7,2.3] Z:[-72.9,-72.9], normalized: (35,5) 10x10
 [SVG] Added hole path
@@ -623,8 +643,9 @@ Found 1 solids
 [EXTRACT] Returning 4 outer verts and 1 hole loops
 [SVG] CBox: Extracted outer loop with 4 vertices from face bounds
 [SVG] CBox: Outline vertices after rotation - X:[-50.0,-0.0] Y:[-0.0,40.0] Z:[-3.0,-3.0]
-[SVG] CBox: Orthogonal sort succeeded
-[SVG] CBox: Generated outline from 4 outline points -> 4 ordered
+[GEOMETRY2D] Gift Wrapping: 4 input points -> 4 perimeter points (4 iterations)
+[SVG] CBox: Gift Wrapped 4 points -> 4 perimeter points
+[SVG] CBox: Generated outline from 4 vertices
 [SVG] Processing hole with 4 vertices in 3D
 [SVG] Hole 3D bounds: X:[-15.0,-5.0] Y:[5.0,15.0] Z:[-3.0,-3.0], normalized: (35,5) 10x10
 [SVG] Added hole path
@@ -655,8 +676,8 @@ Found 1 solids
 [EXTRACT] Returning 12 outer verts and 0 hole loops
 [SVG] KBox: Extracted outer loop with 12 vertices from face bounds
 [SVG] KBox: Outline vertices after rotation - X:[-94.7,75.3] Y:[-0.0,150.0] Z:[22.7,22.7]
-[SVG] KBox: Orthogonal sort succeeded
-[SVG] KBox: Generated outline from 12 outline points -> 12 ordered
+[SVG] KBox: Using extraction order for 12 complex shape vertices
+[SVG] KBox: Generated outline from 12 vertices
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox.svg
  
 REM File: KCBoxFlat_output.txt 
@@ -867,15 +888,9 @@ Found 1 solids
 [SVG] KCBoxFlat: Face extraction is edge-ordered (min dim 0.000), preserving all 32 extracted vertices
 [SVG] KCBoxFlat: Extracted outer loop with 32 vertices from face bounds
 [SVG] KCBoxFlat: Outline vertices after rotation - X:[-0.0,40.1] Y:[-3.0,-3.0] Z:[-58.4,-0.2]
-[SVG] KCBoxFlat: Keeping 13 unique vertices (deduped from 32) for complex shape
-[SVG] KCBoxFlat: Using dedup order directly for edge-ordered vertices (13 points)
-[SVG] KCBoxFlat: Generated outline from 13 outline points -> 13 ordered
-[SVG] Processing hole with 4 vertices in 3D
-[SVG] Hole 3D bounds: X:[4.9,15.1] Y:[-3.0,-3.0] Z:[-21.4,-11.1], normalized: (5,0) 10x10
-[SVG] Added hole path
-[SVG] Processing hole with 4 vertices in 3D
-[SVG] Hole 3D bounds: X:[25.0,30.2] Y:[-3.0,-3.0] Z:[-41.4,-31.3], normalized: (25,0) 10x5
-[SVG] Added hole path
+[SVG] KCBoxFlat: Degenerate geometry detected - vertices form 1D line (X variants: 13, Y variants: 1)
+[SVG] KCBoxFlat: After dedup only 0 points, skipping solid
+[SVG] KCBoxFlat: Could not extract geometry, skipping solid
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBoxFlat.svg
  
 REM File: KCBox_failures.txt 
@@ -1253,9 +1268,9 @@ Found 1 solids
 [EXTRACT] Returning 34 outer verts and 2 hole loops
 [SVG] KCBox: Extracted outer loop with 34 vertices from face bounds
 [SVG] KCBox: Outline vertices after rotation - X:[-0.5,32.7] Y:[-45.2,-22.9] Z:[-35.9,22.1]
-[SVG] KCBox: Keeping 12 unique vertices (deduped from 34) for complex shape
-[SVG] KCBox: Using dedup order directly for edge-ordered vertices (12 points)
-[SVG] KCBox: Generated outline from 12 outline points -> 12 ordered
+[SVG] KCBox: Passing all 34 vertices to Gift Wrapping (no pre-dedup)
+[SVG] KCBox: Using extraction order for 34 complex shape vertices
+[SVG] KCBox: Generated outline from 34 vertices
 [SVG] Processing hole with 4 vertices in 3D
 [SVG] Hole 3D bounds: X:[3.6,12.0] Y:[-31.2,-25.7] Z:[1.1,11.1], normalized: (4,14) 10x8
 [SVG] Added hole path

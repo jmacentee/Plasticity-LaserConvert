@@ -15,7 +15,10 @@ REM 2.	discover the 3d rotation of the solid based on the angle between those tw
 REM 3.	apply a transform to the entire 3d solid to rotate it in memory so that the short segment is now along the z axis
 REM 4.	pick the topmost face along the z axis
 REM 5.  apply a transform to the entire 3d solid to rotate it so that 1 edge is aligned with the x axis. This rotation should include all the holes in the solid at the same time, so they can be properly made into SVG paths in the next step.
-REM 6.	use the newly rotated x/y vertexes of that topmost face as the coordinates of the path in the svg file.  export the solid outline as a black path and the holes as a red path into a single group per solid into the SVG file.
+REM 6. Project to 2D (X, Y only after rotation/normalization)
+REM 7. RECONSTRUCT PERIMETER ORDER IN 2D using computational geometry
+REM      (Gift Wrapping algorithm - now works correctly because we're in 2D!)
+REM 8. Output to SVG
 
 REM Normalize the projection so the rectangles appear axis-aligned in the SVG.  
 REM start each object at 0,0 in the svg so we can read easily it's width and height in the SVG.  
