@@ -412,6 +412,7 @@ namespace LaserConvert
                                             (long)Math.Round(p.X),
                                             (long)Math.Round(p.Y)
                                         ))
+                                        .Distinct()  // Remove exact duplicates
                                         .ToList();
                                     Console.WriteLine($"[SVG] {name}: Using extraction order for {orderedPerimeter.Count} complex shape vertices");
                                 }

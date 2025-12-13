@@ -22,7 +22,7 @@
             if (inputPath.EndsWith(".stp", StringComparison.OrdinalIgnoreCase) ||
                inputPath.EndsWith(".step", StringComparison.OrdinalIgnoreCase))
             {
-                return StepProcess.Main(inputPath, outputPath);
+                return HelixProcess.Main(inputPath, outputPath);
             }
 
             return 0;

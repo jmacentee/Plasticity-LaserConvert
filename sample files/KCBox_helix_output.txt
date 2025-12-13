@@ -213,4 +213,4 @@
 [STEP 8] Generated SVG path for outer perimeter
 [STEP 8] Generated SVG path for hole with 4 vertices
 [STEP 8] Generated SVG path for hole with 4 vertices
-[STEP 8] Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.svg
+[STEP 8] Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox_helix.svg

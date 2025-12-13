@@ -67,8 +67,16 @@ namespace LaserConvert
                 foreach (var (name, faces) in thinSolids)
                 {
                     svg.BeginGroup(name);
+                    Console.WriteLine($"\n[STEP 1-5] Processing {name} with {faces.Count} faces");
                     
-                    // Find face with most boundary vertices (best representation of geometry)
+                    // STEP 1-5: Find the best face (with most boundary vertices) that represents the geometry
+                    // The StepTopologyResolver should have already done steps 1-5:
+                    // 1. Find thin dimension (shortest distance between faces)
+                    // 2. Calculate rotation to align thin dimension
+                    // 3. Apply rotation so thin dimension is along Z
+                    // 4. Pick topmost face along Z
+                    // 5. Apply edge alignment rotation so outline aligns with X axis
+                    
                     StepAdvancedFace bestFace = null;
                     int maxVerts = 0;
                     
@@ -82,23 +90,40 @@ namespace LaserConvert
                         }
                     }
                     
+                    Console.WriteLine($"[STEP 1-5] Selected face with {maxVerts} boundary vertices");
+                    
                     if (bestFace != null && maxVerts >= 3)
                     {
                         var (outerPerimeter, holePerimeters) = StepTopologyResolver.ExtractFaceWithHoles(bestFace, stepFile);
                         
-                        // Project outer perimeter to 2D
-                        var projectedOuter = ProjectTo2D(outerPerimeter);
-                        var normalizedOuter = NormalizeAndRound(projectedOuter);
+                        Console.WriteLine($"[STEP 6] Outer perimeter has {outerPerimeter.Count} vertices (3D)");
+                        var rangeX = outerPerimeter.Max(p => p.X) - outerPerimeter.Min(p => p.X);
+                        var rangeY = outerPerimeter.Max(p => p.Y) - outerPerimeter.Min(p => p.Y);
+                        var rangeZ = outerPerimeter.Max(p => p.Z) - outerPerimeter.Min(p => p.Z);
+                        Console.WriteLine($"[STEP 6] 3D ranges - X:[{outerPerimeter.Min(p => p.X):F1},{outerPerimeter.Max(p => p.X):F1}] Y:[{outerPerimeter.Min(p => p.Y):F1},{outerPerimeter.Max(p => p.Y):F1}] Z:[{outerPerimeter.Min(p => p.Z):F1},{outerPerimeter.Max(p => p.Z):F1}]");
                         
-                        // DON'T use Gift Wrapping on outer - it converts to convex hull which loses cutouts
-                        // The vertices from ExtractFaceWithHoles should already be in proper edge order
-                        // Only remove consecutive duplicates (might happen after rounding)
+                        // STEP 6: Project to 2D
+                        var projectedOuter = ProjectTo2D(outerPerimeter);
+                        Console.WriteLine($"[STEP 6] After projection to 2D - 2D ranges:");
+                        if (projectedOuter.Count > 0)
+                        {
+                            var p2dRangeX = projectedOuter.Max(p => p.X) - projectedOuter.Min(p => p.X);
+                            var p2dRangeY = projectedOuter.Max(p => p.Y) - projectedOuter.Min(p => p.Y);
+                            Console.WriteLine($"[STEP 6] 2D ranges - X:[{projectedOuter.Min(p => p.X):F1},{projectedOuter.Max(p => p.X):F1}] (extent={p2dRangeX:F1}) Y:[{projectedOuter.Min(p => p.Y):F1},{projectedOuter.Max(p => p.Y):F1}] (extent={p2dRangeY:F1})");
+                        }
+                        
+                        var normalizedOuter = NormalizeAndRound(projectedOuter);
+                        Console.WriteLine($"[STEP 6] After normalization and rounding: {normalizedOuter.Count} vertices");
+                        
+                        // STEP 7: Remove consecutive duplicates to preserve all boundary vertices
                         var orderedOuter = RemoveConsecutiveDuplicates(normalizedOuter);
+                        Console.WriteLine($"[STEP 7] After removing consecutive duplicates: {orderedOuter.Count} vertices");
+                        
                         if (orderedOuter.Count >= 3)
                         {
                             var outerPath = BuildPath(orderedOuter);
                             svg.Path(outerPath, 0.2, "none", "#000");
-                            Console.WriteLine($"[SVG] Outer path: {orderedOuter.Count} vertices");
+                            Console.WriteLine($"[STEP 8] Generated SVG path for outer perimeter");
                         }
                         
                         // Handle holes - normalize relative to original (not rounded) outer min
@@ -122,7 +147,7 @@ namespace LaserConvert
                                 {
                                     var holePath = BuildPath(orderedHole);
                                     svg.Path(holePath, 0.2, "none", "#f00");
-                                    Console.WriteLine($"[SVG] Hole path: {orderedHole.Count} vertices");
+                                    Console.WriteLine($"[STEP 8] Generated SVG path for hole with {orderedHole.Count} vertices");
                                 }
                             }
                         }
@@ -132,7 +157,7 @@ namespace LaserConvert
                 }
                 
                 File.WriteAllText(outputPath, svg.Build());
-                Console.WriteLine($"[LaserConvert] Wrote SVG: {outputPath}");
+                Console.WriteLine($"[STEP 8] Wrote SVG: {outputPath}");
                 return 0;
             }
             catch (Exception ex)
