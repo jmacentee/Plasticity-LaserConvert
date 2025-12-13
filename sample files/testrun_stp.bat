@@ -1,3 +1,7 @@
+REM the correct way to run these tests is to execute this batch file from the command line.
+REM the correct way to read the test results is to read the contents of all_results.txt after the test run is complete.
+
+
 REM all 3 STP files have been validated as correct with the geometry described below. never assume there is a problem in an STP file and that is why test is failing.
 REM when successful, the groups in the SVG files will have the ids which match the solids in the STP file (Box1, Box2, etc)
 REM the box ordering in the SVG file is not important

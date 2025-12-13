@@ -201,4 +201,7 @@
 [EXTRACT] Identified bound 1 as hole loop 1 (area=301.4)
 [EXTRACT] Identified bound 0 as hole loop 2 (area=167.5)
 [EXTRACT] Returning 34 outer verts and 2 hole loops
+[SVG] Outer path: 33 vertices
+[SVG] Hole path: 4 vertices
+[SVG] Hole path: 4 vertices
 [LaserConvert] Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.svg

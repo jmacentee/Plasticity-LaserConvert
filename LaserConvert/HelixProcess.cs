@@ -87,37 +87,42 @@ namespace LaserConvert
                         var (outerPerimeter, holePerimeters) = StepTopologyResolver.ExtractFaceWithHoles(bestFace, stepFile);
                         
                         // Project outer perimeter to 2D
-                        var projected = ProjectTo2D(outerPerimeter);
-                        var normalized = NormalizeAndRound(projected);
+                        var projectedOuter = ProjectTo2D(outerPerimeter);
+                        var normalizedOuter = NormalizeAndRound(projectedOuter);
                         
-                        // Order vertices using Gift Wrapping to preserve all boundary points
-                        var ordered = GiftWrapPerimeter(normalized);
-                        if (ordered.Count >= 3)
+                        // DON'T use Gift Wrapping on outer - it converts to convex hull which loses cutouts
+                        // The vertices from ExtractFaceWithHoles should already be in proper edge order
+                        // Only remove consecutive duplicates (might happen after rounding)
+                        var orderedOuter = RemoveConsecutiveDuplicates(normalizedOuter);
+                        if (orderedOuter.Count >= 3)
                         {
-                            var path = BuildPath(ordered);
-                            svg.Path(path, 0.2, "none", "#000");
+                            var outerPath = BuildPath(orderedOuter);
+                            svg.Path(outerPath, 0.2, "none", "#000");
+                            Console.WriteLine($"[SVG] Outer path: {orderedOuter.Count} vertices");
                         }
                         
-                        // Handle holes
-                        var outerMinX = normalized.Min(p => p.X);
-                        var outerMinY = normalized.Min(p => p.Y);
+                        // Handle holes - normalize relative to original (not rounded) outer min
+                        var outerMinX = projectedOuter.Min(p => p.X);
+                        var outerMinY = projectedOuter.Min(p => p.Y);
                         
                         foreach (var holePerim in holePerimeters)
                         {
                             if (holePerim.Count >= 3)
                             {
                                 var projHole = ProjectTo2D(holePerim);
-                                // Normalize holes relative to outer perimeter
+                                // Normalize using original 3D/2D coordinates, not rounded ones
                                 var normHole = projHole.Select(p => (
                                     (long)Math.Round(p.X - outerMinX),
                                     (long)Math.Round(p.Y - outerMinY)
                                 )).ToList();
                                 
-                                var orderedHole = GiftWrapPerimeter(normHole);
+                                // For holes, only remove consecutive duplicates (not convex hull)
+                                var orderedHole = RemoveConsecutiveDuplicates(normHole);
                                 if (orderedHole.Count >= 3)
                                 {
                                     var holePath = BuildPath(orderedHole);
                                     svg.Path(holePath, 0.2, "none", "#f00");
+                                    Console.WriteLine($"[SVG] Hole path: {orderedHole.Count} vertices");
                                 }
                             }
                         }
@@ -201,6 +206,32 @@ namespace LaserConvert
             var dx = A.X - B.X;
             var dy = A.Y - B.Y;
             return dx * dx + dy * dy;
+        }
+
+        /// <summary>
+        /// Remove consecutive duplicate points while preserving all unique vertices in order.
+        /// This is safe for non-convex shapes and preserves cutouts/tabs.
+        /// </summary>
+        private static List<(long X, long Y)> RemoveConsecutiveDuplicates(List<(long X, long Y)> points)
+        {
+            if (points.Count <= 1) return points;
+            
+            var result = new List<(long X, long Y)> { points[0] };
+            for (int i = 1; i < points.Count; i++)
+            {
+                if (points[i] != points[i - 1])
+                {
+                    result.Add(points[i]);
+                }
+            }
+            
+            // Also check if last point equals first (closing loop)
+            if (result.Count > 2 && result.Last() == result[0])
+            {
+                result.RemoveAt(result.Count - 1);
+            }
+            
+            return result;
         }
 
         private static List<(double X, double Y)> ProjectTo2D(List<(double X, double Y, double Z)> points3D)
