@@ -144,9 +144,7 @@ KCBoxFlat (flat complex shape): FAIL
 - Extracts 32 vertices but they're all at Y=-3 (degenerate)
 - Cannot render proper outline because outline is collapsed
 
-NEXT STEPS:
-===========
-
+NEXT WORK ITEM:
 The fix for KCBoxFlat requires addressing the root cause:
 ExtractFaceWithHoles returns degenerate vertices for flat faces.
 

@@ -236,10 +236,8 @@ namespace LaserConvert
                     {
                         // For complex shapes, use corner vertex extraction to avoid degenerate edge topology
                         // For simple shapes, use traditional bound-based extraction
-                        var (outerLoopVerts, holeLoops) = faces.Count > 20
-                            ? StepTopologyResolver.ExtractFaceCornerVertices(mainFace, stepFile)
-                            : StepTopologyResolver.ExtractFaceWithHoles(mainFace, stepFile);
-                        
+                        var (outerLoopVerts, holeLoops) = StepTopologyResolver.ExtractFaceWithHoles(mainFace, stepFile);
+
                         // FALLBACK for degenerate complex shapes:  
                         // If the extracted outline is degenerate (all vertices on a line or plane with zero extent),
                         // use the projection of ALL normalized vertices instead
