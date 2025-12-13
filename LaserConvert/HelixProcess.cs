@@ -4,8 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Globalization;
 using System.Text;
-using HelixToolkit.Wpf; // HelixToolkit for STEP import and mesh/geometry
-using System.Windows.Media.Media3D;
+using Assimp;
 
 namespace LaserConvert
 {
@@ -15,29 +14,34 @@ namespace LaserConvert
         {
             try
             {
-                Console.WriteLine($"[Helix] Loading STEP file: {inputPath}");
-                var importer = new HelixToolkit.Wpf.StepReader();
-                var model3D = importer.Read(inputPath);
-                if (model3D == null)
+                Console.WriteLine($"[Assimp] Loading STEP file: {inputPath}");
+                var context = new AssimpContext();
+                var scene = context.ImportFile(inputPath, PostProcessSteps.Triangulate | PostProcessSteps.JoinIdenticalVertices);
+                if (scene == null || scene.MeshCount == 0)
                 {
-                    Console.WriteLine("[Helix] No geometry found in STEP file.");
+                    Console.WriteLine("[Assimp] No geometry found in STEP file.");
                     return 1;
                 }
 
-                // Traverse the Model3D tree to find all MeshGeometry3D objects (one per solid)
-                var meshes = new List<(string Name, MeshGeometry3D Mesh)>();
-                TraverseModel(model3D, meshes);
-                Console.WriteLine($"[Helix] Found {meshes.Count} solids");
+                // Each mesh is a solid
+                var meshes = new List<(string Name, Mesh Mesh)>();
+                for (int i = 0; i < scene.MeshCount; i++)
+                {
+                    var mesh = scene.Meshes[i];
+                    var name = !string.IsNullOrWhiteSpace(mesh.Name) ? mesh.Name : $"Solid{i + 1}";
+                    meshes.Add((name, mesh));
+                }
+                Console.WriteLine($"[Assimp] Found {meshes.Count} solids");
                 if (meshes.Count == 0)
                 {
-                    Console.WriteLine("[Helix] No solids found in STEP file.");
+                    Console.WriteLine("[Assimp] No solids found in STEP file.");
                     return 0;
                 }
 
                 // Filter solids by thin dimension (3mm)
                 const double minThickness = 2.5;
                 const double maxThickness = 10.0;
-                var thinSolids = new List<(string Name, MeshGeometry3D Mesh, double[] Dims, int ThinAxis)>();
+                var thinSolids = new List<(string Name, Mesh Mesh, double[] Dims, int ThinAxis)>();
                 foreach (var (name, mesh) in meshes)
                 {
                     var dims = GetMeshDimensions(mesh);
@@ -46,16 +50,16 @@ namespace LaserConvert
                     if (thin.d >= minThickness && thin.d <= maxThickness)
                     {
                         thinSolids.Add((name, mesh, dims, thin.i));
-                        Console.WriteLine($"[Helix] [FILTER] {name}: dimensions [{dims[0]:F1}, {dims[1]:F1}, {dims[2]:F1}] - PASS");
+                        Console.WriteLine($"[Assimp] [FILTER] {name}: dimensions [{dims[0]:F1}, {dims[1]:F1}, {dims[2]:F1}] - PASS");
                     }
                     else
                     {
-                        Console.WriteLine($"[Helix] [FILTER] {name}: dimensions [{dims[0]:F1}, {dims[1]:F1}, {dims[2]:F1}] - FAIL");
+                        Console.WriteLine($"[Assimp] [FILTER] {name}: dimensions [{dims[0]:F1}, {dims[1]:F1}, {dims[2]:F1}] - FAIL");
                     }
                 }
                 if (thinSolids.Count == 0)
                 {
-                    Console.WriteLine("[Helix] No thin solids found.");
+                    Console.WriteLine("[Assimp] No thin solids found.");
                     return 0;
                 }
 
@@ -64,10 +68,9 @@ namespace LaserConvert
                 {
                     svg.BeginGroup(name);
                     // 1. Rotate mesh so thin axis is Z
-                    var transform = GetAxisAlignmentTransform(mesh, thinAxis);
-                    var transformedVerts = mesh.Positions.Select(p => transform.Transform(p)).ToList();
+                    var transformedVerts = mesh.Vertices.Select(v => TransformToZ(v, thinAxis)).ToList();
                     // 2. Find the topmost face (max Z)
-                    var topFaceIndices = FindTopFaceIndices(mesh, transform);
+                    var topFaceIndices = FindTopFaceIndices(mesh, transformedVerts);
                     if (topFaceIndices == null)
                     {
                         svg.EndGroup();
@@ -83,98 +86,64 @@ namespace LaserConvert
                     // 5. Build SVG path
                     var path = BuildPerimeterPath(pts2d);
                     svg.Path(path, 0.2, "none", "#000");
-                    // 6. Find and render holes (inner loops)
-                    var holes = FindHoles(mesh, transform, topFaceIndices);
-                    foreach (var hole in holes)
-                    {
-                        var hminX = hole.Min(v => v.X);
-                        var hminY = hole.Min(v => v.Y);
-                        var hpts2d = hole.Select(v => ((long)Math.Round(v.X - minX), (long)Math.Round(v.Y - minY))).ToList();
-                        var hpath = BuildPerimeterPath(hpts2d);
-                        svg.Path(hpath, 0.2, "none", "#FF0000");
-                    }
+                    // 6. Holes: not implemented (Assimp mesh does not expose face holes directly)
                     svg.EndGroup();
                 }
                 File.WriteAllText(outputPath, svg.Build());
-                Console.WriteLine($"[Helix] Wrote SVG: {outputPath}");
+                Console.WriteLine($"[Assimp] Wrote SVG: {outputPath}");
                 return 0;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[Helix] Error: {ex.Message}");
+                Console.WriteLine($"[Assimp] Error: {ex.Message}");
                 return 2;
             }
         }
 
-        // Recursively traverse Model3D tree to collect all MeshGeometry3D
-        private static void TraverseModel(Model3D model, List<(string Name, MeshGeometry3D Mesh)> meshes)
-        {
-            if (model is GeometryModel3D geom && geom.Geometry is MeshGeometry3D mesh)
-            {
-                var name = geom.GetName() ?? $"Solid{meshes.Count + 1}";
-                meshes.Add((name, mesh));
-            }
-            if (model is Model3DGroup group)
-            {
-                foreach (var child in group.Children)
-                    TraverseModel(child, meshes);
-            }
-        }
-
         // Get bounding box dimensions (X, Y, Z) for mesh
-        private static double[] GetMeshDimensions(MeshGeometry3D mesh)
+        private static double[] GetMeshDimensions(Mesh mesh)
         {
-            var xs = mesh.Positions.Select(p => p.X);
-            var ys = mesh.Positions.Select(p => p.Y);
-            var zs = mesh.Positions.Select(p => p.Z);
+            var xs = mesh.Vertices.Select(p => p.X);
+            var ys = mesh.Vertices.Select(p => p.Y);
+            var zs = mesh.Vertices.Select(p => p.Z);
             return new[] { xs.Max() - xs.Min(), ys.Max() - ys.Min(), zs.Max() - zs.Min() };
         }
 
-        // Build a transform that aligns the thin axis to Z
-        private static Transform3D GetAxisAlignmentTransform(MeshGeometry3D mesh, int thinAxis)
+        // Transform vertex so thin axis is Z
+        private static Assimp.Vector3D TransformToZ(Assimp.Vector3D v, int thinAxis)
         {
             // thinAxis: 0=X, 1=Y, 2=Z
-            if (thinAxis == 2) return Transform3D.Identity;
-            // Build rotation matrix to swap thinAxis to Z
-            if (thinAxis == 0)
-            {
-                // X->Z: rotate -90° about Y
-                return new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), -90));
-            }
-            else
-            {
-                // Y->Z: rotate 90° about X
-                return new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1, 0, 0), 90));
-            }
+            if (thinAxis == 2) return v;
+            if (thinAxis == 0) return new Assimp.Vector3D(v.Y, v.Z, v.X); // X->Z
+            return new Assimp.Vector3D(v.X, v.Z, v.Y); // Y->Z
         }
 
         // Find the indices of the topmost face (max Z) in the mesh
-        private static List<int> FindTopFaceIndices(MeshGeometry3D mesh, Transform3D transform)
+        private static List<int> FindTopFaceIndices(Mesh mesh, List<Assimp.Vector3D> verts)
         {
-            // For each triangle, compute average Z after transform
             var tris = new List<(int[] Indices, double AvgZ)>();
-            for (int i = 0; i < mesh.TriangleIndices.Count; i += 3)
+            for (int i = 0; i < mesh.FaceCount; i++)
             {
-                var idx = new[] { mesh.TriangleIndices[i], mesh.TriangleIndices[i + 1], mesh.TriangleIndices[i + 2] };
-                var zs = idx.Select(j => transform.Transform(mesh.Positions[j]).Z).ToArray();
+                var face = mesh.Faces[i];
+                if (face.IndexCount != 3) continue;
+                var idx = new[] { face.Indices[0], face.Indices[1], face.Indices[2] };
+                var zs = idx.Select(j => verts[j].Z).ToArray();
                 tris.Add((idx, zs.Average()));
             }
             if (tris.Count == 0) return null;
             var maxZ = tris.Max(t => t.AvgZ);
-            // Get all triangles at maxZ (tolerance)
             var topTris = tris.Where(t => Math.Abs(t.AvgZ - maxZ) < 0.1).ToList();
             if (topTris.Count == 0) return null;
-            // Collect all unique vertex indices from these triangles
             var indices = topTris.SelectMany(t => t.Indices).Distinct().ToList();
             return indices;
         }
 
         // Order perimeter vertices in 2D (X/Y) using nearest-neighbor
-        private static List<Point3D> OrderPerimeter2D(List<Point3D> verts)
+        private static List<Assimp.Vector3D> OrderPerimeter2D(List<Assimp.Vector3D> verts)
         {
             if (verts.Count < 3) return verts;
             var used = new HashSet<int>();
-            var ordered = new List<Point3D> { verts[0] };
+            var ordered = new List<Assimp.Vector3D> { verts[0] };
             used.Add(0);
             for (int i = 1; i < verts.Count; i++)
             {
@@ -196,14 +165,6 @@ namespace LaserConvert
                 used.Add(next);
             }
             return ordered;
-        }
-
-        // Find holes (inner loops) in the top face
-        private static List<List<Point3D>> FindHoles(MeshGeometry3D mesh, Transform3D transform, List<int> topFaceIndices)
-        {
-            // This is a placeholder: HelixToolkit does not expose face topology directly.
-            // For now, return empty (no holes). Advanced: use mesh adjacency to find inner loops.
-            return new List<List<Point3D>>();
         }
 
         // Build SVG path from ordered 2D points
