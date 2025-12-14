@@ -265,8 +265,7 @@ Found 1 solids
   [1] (155, 0)
   [2] (0, 150)
   [3] (155, 150)
-[ORDER] Centroid: (77.5, 75.0)
-[ORDER] Reordered 4 vertices by polar angle from centroid
+[ORDER] Used edge-walking perimeter reconstruction
 [SVG] Box1: Generated outline from 4 vertices
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\1box.svg
  
@@ -341,8 +340,7 @@ Found 2 solids
   [1] (170, 110)
   [2] (0, 0)
   [3] (170, 0)
-[ORDER] Centroid: (85.0, 55.0)
-[ORDER] Reordered 4 vertices by polar angle from centroid
+[ORDER] Used edge-walking perimeter reconstruction
 [SVG] Box2: Generated outline from 4 vertices
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 154.5x70.9x150.0 (area=44758.0): (-77.9,-117.6,0.0), (76.6,-46.7,0.0), (-77.9,-117.6,150.0), (76.6,-46.7,150.0)...
@@ -392,8 +390,7 @@ Found 2 solids
   [1] (155, 0)
   [2] (0, 150)
   [3] (155, 150)
-[ORDER] Centroid: (77.5, 75.0)
-[ORDER] Reordered 4 vertices by polar angle from centroid
+[ORDER] Used edge-walking perimeter reconstruction
 [SVG] Box1: Generated outline from 4 vertices
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\2boxes.svg
  
@@ -476,8 +473,7 @@ Found 3 solids
   [1] (170, 110)
   [2] (0, 0)
   [3] (170, 0)
-[ORDER] Centroid: (85.0, 55.0)
-[ORDER] Reordered 4 vertices by polar angle from centroid
+[ORDER] Used edge-walking perimeter reconstruction
 [SVG] Box2: Generated outline from 4 vertices
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 67.5x67.5x32.3 (area=8916.4): (-80.7,-14.5,84.1), (-13.2,-14.5,51.8), (-80.7,-82.0,84.1), (-13.2,-82.0,51.8)...
@@ -527,8 +523,7 @@ Found 3 solids
   [1] (67, 67)
   [2] (0, 0)
   [3] (67, 0)
-[ORDER] Centroid: (33.5, 33.5)
-[ORDER] Reordered 4 vertices by polar angle from centroid
+[ORDER] Used edge-walking perimeter reconstruction
 [SVG] Box4: Generated outline from 4 vertices
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 154.5x70.9x150.0 (area=44758.0): (-77.9,-117.6,0.0), (76.6,-46.7,0.0), (-77.9,-117.6,150.0), (76.6,-46.7,150.0)...
@@ -578,8 +573,7 @@ Found 3 solids
   [1] (155, 0)
   [2] (0, 150)
   [3] (155, 150)
-[ORDER] Centroid: (77.5, 75.0)
-[ORDER] Reordered 4 vertices by polar angle from centroid
+[ORDER] Used edge-walking perimeter reconstruction
 [SVG] Box1: Generated outline from 4 vertices
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxesB.svg
  
@@ -660,8 +654,7 @@ Found 3 solids
   [1] (170, 110)
   [2] (0, 0)
   [3] (170, 0)
-[ORDER] Centroid: (85.0, 55.0)
-[ORDER] Reordered 4 vertices by polar angle from centroid
+[ORDER] Used edge-walking perimeter reconstruction
 [SVG] Box2: Generated outline from 4 vertices
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 154.5x70.9x150.0 (area=44758.0): (-77.9,-117.6,0.0), (76.6,-46.7,0.0), (-77.9,-117.6,150.0), (76.6,-46.7,150.0)...
@@ -711,8 +704,7 @@ Found 3 solids
   [1] (155, 0)
   [2] (0, 150)
   [3] (155, 150)
-[ORDER] Centroid: (77.5, 75.0)
-[ORDER] Reordered 4 vertices by polar angle from centroid
+[ORDER] Used edge-walking perimeter reconstruction
 [SVG] Box1: Generated outline from 4 vertices
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\3boxes.svg
  
@@ -806,8 +798,7 @@ Found 4 solids
   [1] (155, 0)
   [2] (0, 150)
   [3] (155, 150)
-[ORDER] Centroid: (77.5, 75.0)
-[ORDER] Reordered 4 vertices by polar angle from centroid
+[ORDER] Used edge-walking perimeter reconstruction
 [SVG] Box1: Generated outline from 4 vertices
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 170.0x110.2x0.0 (area=18736.6): (-85.0,28.2,3.0), (85.0,28.2,3.0), (-85.0,-82.0,3.0), (85.0,-82.0,3.0)...
@@ -857,8 +848,7 @@ Found 4 solids
   [1] (170, 110)
   [2] (0, 0)
   [3] (170, 0)
-[ORDER] Centroid: (85.0, 55.0)
-[ORDER] Reordered 4 vertices by polar angle from centroid
+[ORDER] Used edge-walking perimeter reconstruction
 [SVG] Box2: Generated outline from 4 vertices
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 67.5x67.5x32.3 (area=8916.4): (-80.7,-14.5,84.1), (-13.2,-14.5,51.8), (-80.7,-82.0,84.1), (-13.2,-82.0,51.8)...
@@ -908,8 +898,7 @@ Found 4 solids
   [1] (67, 67)
   [2] (0, 0)
   [3] (67, 0)
-[ORDER] Centroid: (33.5, 33.5)
-[ORDER] Reordered 4 vertices by polar angle from centroid
+[ORDER] Used edge-walking perimeter reconstruction
 [SVG] Box4: Generated outline from 4 vertices
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 51.9x38.7x50.3 (area=6570.2): (-80.7,64.2,54.3), (-28.7,40.9,45.7), (-80.7,48.8,96.0), (-28.7,25.5,87.4)...
@@ -959,8 +948,7 @@ Found 4 solids
   [1] (52, 0)
   [2] (0, 50)
   [3] (52, 42)
-[ORDER] Centroid: (26.0, 25.2)
-[ORDER] Reordered 4 vertices by polar angle from centroid
+[ORDER] Used edge-walking perimeter reconstruction
 [SVG] Box5: Generated outline from 4 vertices
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\4boxes.svg
  
@@ -1046,8 +1034,7 @@ Found 1 solids
   [1] (0, 5)
   [2] (50, 41)
   [3] (12, 46)
-[ORDER] Centroid: (25.2, 23.0)
-[ORDER] Reordered 4 vertices by polar angle from centroid
+[ORDER] Used edge-walking perimeter reconstruction
 [SVG] CBoxR: Generated outline from 4 vertices
 [ORDER] Centroid: (19.0, 36.5)
 [ORDER] Reordered 4 vertices by polar angle from centroid
@@ -1135,8 +1122,7 @@ Found 1 solids
   [1] (0, 0)
   [2] (40, 50)
   [3] (0, 50)
-[ORDER] Centroid: (20.0, 25.0)
-[ORDER] Reordered 4 vertices by polar angle from centroid
+[ORDER] Used edge-walking perimeter reconstruction
 [SVG] CBox: Generated outline from 4 vertices
 [ORDER] Centroid: (10.0, 40.0)
 [ORDER] Reordered 4 vertices by polar angle from centroid
@@ -1257,10 +1243,7 @@ Found 1 solids
   [9] (141, 150)
   [10] (141, 145)
   [11] (155, 145)
-[ORDER] Centroid: (88.8, 121.7)
-[ORDER] Reordered 12 vertices by polar angle from centroid
-[SVG] KBox: Generated outline from 12 vertices
-Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox.svg
+Error: Object reference not set to an instance of an object.
  
 REM File: KCBoxFlat_output.txt 
 Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBoxFlat.stp
@@ -1508,6 +1491,7 @@ Found 1 solids
   [19] (40, 22)
 [ORDER] Centroid: (22.4, 33.8)
 [ORDER] Reordered 32 vertices by polar angle from centroid
+[ORDER] Used edge-walking perimeter reconstruction
 [SVG] KCBoxFlat: Generated outline from 32 vertices
 [ORDER] Centroid: (10.0, 42.0)
 [ORDER] Reordered 4 vertices by polar angle from centroid
@@ -2147,6 +2131,7 @@ Found 1 solids
   [19] (26, 61)
 [ORDER] Centroid: (26.8, 34.8)
 [ORDER] Reordered 33 vertices by polar angle from centroid
+[ORDER] Used edge-walking perimeter reconstruction
 [SVG] KCBox: Generated outline from 33 vertices
 [ORDER] Centroid: (20.0, 47.2)
 [ORDER] Reordered 4 vertices by polar angle from centroid

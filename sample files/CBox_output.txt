@@ -79,8 +79,7 @@ Found 1 solids
   [1] (0, 0)
   [2] (40, 50)
   [3] (0, 50)
-[ORDER] Centroid: (20.0, 25.0)
-[ORDER] Reordered 4 vertices by polar angle from centroid
+[ORDER] Used edge-walking perimeter reconstruction
 [SVG] CBox: Generated outline from 4 vertices
 [ORDER] Centroid: (10.0, 40.0)
 [ORDER] Reordered 4 vertices by polar angle from centroid

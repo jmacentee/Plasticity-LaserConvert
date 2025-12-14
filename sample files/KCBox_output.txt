@@ -251,6 +251,7 @@ Found 1 solids
   [19] (26, 61)
 [ORDER] Centroid: (26.8, 34.8)
 [ORDER] Reordered 33 vertices by polar angle from centroid
+[ORDER] Used edge-walking perimeter reconstruction
 [SVG] KCBox: Generated outline from 33 vertices
 [ORDER] Centroid: (20.0, 47.2)
 [ORDER] Reordered 4 vertices by polar angle from centroid

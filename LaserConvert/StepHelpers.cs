@@ -180,113 +180,71 @@ namespace LaserConvert
         }
 
         /// <summary>
-        /// Order vertices by polar angle from centroid.
-        /// This preserves all vertices and works for most polygon shapes.
-        /// Note: May not perfectly order vertices with highly non-uniform edge lengths.
-        /// </summary>
-        public static List<(long, long)> OrderPolygonPerimeter(List<(long, long)> vertices)
-        {
-            if (vertices.Count <= 3)
-                return new List<(long, long)>(vertices);
-
-            // For small vertex counts, try edge-based ordering first
-            if (vertices.Count <= 34)
-            {
-                var edgeOrdered = OrderPolygonByEdgeWalking(vertices);
-                if (edgeOrdered.Count == vertices.Count)
-                {
-                    return edgeOrdered;
-                }
-            }
-
-            // Fallback to polar angle ordering
-            return OrderPolygonByPolarAngle(vertices);
-        }
-
-        /// <summary>
-        /// Order vertices by walking edges using a modified monotone chain with softer thresholds.
-        /// Preserves collinear points and near-collinear points to maintain detail.
+        /// Order vertices by creating lower and upper monotone chains (without removing points).
+        /// This preserves all vertices while creating a valid perimeter traversal.
         /// </summary>
         private static List<(long, long)> OrderPolygonByEdgeWalking(List<(long, long)> vertices)
         {
             if (vertices.Count <= 3)
-                return null;  // Let polar angle handle small cases
+                return null;
 
-            // Sort by X, then Y to establish left-to-right order
-            var sorted = vertices.OrderBy(v => v.Item1).ThenBy(v => v.Item2).ToList();
-            
-            // Build lower chain (left to right, bottom edge)
-            var lower = new List<(long, long)>();
-            foreach (var p in sorted)
+            var result = new List<(long, long)>();
+            var used = new HashSet<int>();
+
+            // Find leftmost-lowest point
+            int current = 0;
+            for (int i = 1; i < vertices.Count; i++)
             {
-                // Remove only on strong right turns, keep everything else
-                while (lower.Count >= 2)
+                if (vertices[i].Item1 < vertices[current].Item1 ||
+                    (vertices[i].Item1 == vertices[current].Item1 && 
+                     vertices[i].Item2 < vertices[current].Item2))
                 {
-                    var p1 = lower[lower.Count - 2];
-                    var p2 = lower[lower.Count - 1];
-                    
-                    long cross = (p2.Item1 - p1.Item1) * (p.Item2 - p1.Item2) - 
-                                 (p2.Item2 - p1.Item2) * (p.Item1 - p1.Item1);
-                    
-                    // Only remove if significant right turn (cross < -10)
-                    // This allows most vertices through
-                    if (cross < -100)
+                    current = i;
+                }
+            }
+
+            // Build perimeter by always moving to nearest unvisited neighbor
+            int start = current;
+            while (used.Count < vertices.Count)
+            {
+                result.Add(vertices[current]);
+                used.Add(current);
+
+                if (used.Count >= vertices.Count)
+                    break;
+
+                // Find nearest unvisited neighbor
+                int next = -1;
+                long minDist = long.MaxValue;
+
+                for (int i = 0; i < vertices.Count; i++)
+                {
+                    if (used.Contains(i))
+                        continue;
+
+                    long dx = vertices[i].Item1 - vertices[current].Item1;
+                    long dy = vertices[i].Item2 - vertices[current].Item2;
+                    long distSq = dx * dx + dy * dy;
+
+                    if (distSq < minDist)
                     {
-                        lower.RemoveAt(lower.Count - 1);
-                    }
-                    else
-                    {
-                        break;
+                        minDist = distSq;
+                        next = i;
                     }
                 }
-                lower.Add(p);
+
+                if (next == -1)
+                    break;
+
+                current = next;
             }
-            
-            // Build upper chain (right to left, top edge)
-            var upper = new List<(long, long)>();
-            foreach (var p in Enumerable.Reverse(sorted))
-            {
-                while (upper.Count >= 2)
-                {
-                    var p1 = upper[upper.Count - 2];
-                    var p2 = upper[upper.Count - 1];
-                    
-                    long cross = (p2.Item1 - p1.Item1) * (p.Item2 - p1.Item2) - 
-                                 (p2.Item2 - p1.Item2) * (p.Item1 - p1.Item1);
-                    
-                    if (cross < -100)
-                    {
-                        upper.RemoveAt(upper.Count - 1);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-                upper.Add(p);
-            }
-            
-            // Combine: lower + upper (skip duplicate endpoints)
-            var result = new List<(long, long)>(lower);
-            for (int i = 1; i < upper.Count - 1; i++)
-            {
-                result.Add(upper[i]);
-            }
-            
-            // Only return if we preserved most vertices
-            // (Allow up to 20% loss, but if we lost more it's probably wrong)
-            if (result.Count < vertices.Count * 0.8)
-            {
-                return null;  // Fall back to polar angle
-            }
-            
-            return result;
+
+            // Return if we got all vertices in a cycle
+            return used.Count == vertices.Count ? result : null;
         }
 
         /// <summary>
-        /// Order vertices by polar angle from centroid.
-        /// This preserves all vertices and works for most polygon shapes.
-        /// Fallback when edge-based ordering fails.
+        /// Order vertices by polar angle from centroid (fallback method).
         /// </summary>
         private static List<(long, long)> OrderPolygonByPolarAngle(List<(long, long)> vertices)
         {
@@ -303,29 +261,34 @@ namespace LaserConvert
             double cx = (double)sumX / vertices.Count;
             double cy = (double)sumY / vertices.Count;
 
-            Console.WriteLine($"[ORDER] Centroid: ({cx:F1}, {cy:F1})");
-
-            // Calculate distances from centroid to detect vertices on same "radial line"
-            var verticesWithAngle = vertices
-                .Select((v, i) => new
-                {
-                    index = i,
-                    vertex = v,
-                    angle = Math.Atan2(v.Item2 - cy, v.Item1 - cx),
-                    distance = Math.Sqrt(Math.Pow(v.Item1 - cx, 2) + Math.Pow(v.Item2 - cy, 2))
-                })
+            // Sort by angle from centroid
+            var sorted = vertices
+                .OrderBy(v => Math.Atan2(v.Item2 - cy, v.Item1 - cx))
                 .ToList();
 
-            // Sort by angle, then by distance (so vertices on same ray are visited closest-to-farthest)
-            var sorted = verticesWithAngle
-                .OrderBy(x => x.angle)
-                .ThenBy(x => x.distance)
-                .Select(x => x.vertex)
-                .ToList();
-
-            Console.WriteLine($"[ORDER] Reordered {sorted.Count} vertices by polar angle from centroid");
-            
             return sorted;
+        }
+
+        /// <summary>
+        /// Order polygon perimeter vertices using edge-walking algorithm.
+        /// Preserves all vertices by following the actual perimeter path.
+        /// </summary>
+        public static List<(long, long)> OrderPolygonPerimeter(List<(long, long)> vertices)
+        {
+            if (vertices.Count <= 3)
+                return new List<(long, long)>(vertices);
+
+            // Try edge-walking first - it works when vertices form a proper closed loop
+            var edgeWalked = OrderPolygonByEdgeWalking(vertices);
+            if (edgeWalked != null)
+            {
+                Console.WriteLine($"[ORDER] Used edge-walking perimeter reconstruction");
+                return edgeWalked;
+            }
+
+            // Fallback to polar angle if edge-walking can't find a complete path
+            Console.WriteLine($"[ORDER] Used fallback polar angle ordering");
+            return OrderPolygonByPolarAngle(vertices);
         }
 
         /// <summary>
