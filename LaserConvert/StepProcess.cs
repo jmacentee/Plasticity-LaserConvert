@@ -123,11 +123,11 @@ namespace LaserConvert
                 h.Select(p => ((long)Math.Round(p.X - minX), (long)Math.Round(p.Y - minY))).ToList()
             ).ToList();
 
-            // Remove consecutive duplicates
+            // Remove consecutive duplicates (but preserve order!)
             normalizedOuter = RemoveConsecutiveDuplicates(normalizedOuter);
 
-            // Order perimeter vertices
-            var orderedOuter = OrderPerimeter(normalizedOuter);
+            // DO NOT REORDER - vertices are already in correct edge order from STEP file
+            var orderedOuter = normalizedOuter;
 
             // Output to SVG
             if (orderedOuter.Count >= 3)
@@ -136,14 +136,13 @@ namespace LaserConvert
                 svg.Path(outerPath, 0.2, "none", "#000");
                 Console.WriteLine($"[SVG] {name}: Generated outline from {orderedOuter.Count} vertices");
 
-                // Process holes
+                // Process holes - also preserve their original order
                 foreach (var hole2D in normalizedHoles)
                 {
                     var dedupedHole = RemoveConsecutiveDuplicates(hole2D);
                     if (dedupedHole.Count >= 3)
                     {
-                        var orderedHole = OrderPerimeter(dedupedHole);
-                        var holePath = SvgPathBuilder.BuildPath(orderedHole);
+                        var holePath = SvgPathBuilder.BuildPath(dedupedHole);
                         svg.Path(holePath, 0.2, "none", "#f00");
                     }
                 }
@@ -232,7 +231,7 @@ namespace LaserConvert
         }
 
         /// <summary>
-        /// Remove consecutive duplicate points.
+        /// Remove consecutive duplicate points while preserving order.
         /// </summary>
         private static List<(long X, long Y)> RemoveConsecutiveDuplicates(List<(long X, long Y)> points)
         {
@@ -247,79 +246,52 @@ namespace LaserConvert
                 }
             }
             
+            // Also check if last point equals first (closing loop) - remove if so
             if (result.Count > 2 && result.Last() == result[0])
             {
                 result.RemoveAt(result.Count - 1);
             }
             
+            // Remove collinear points (points that lie on a straight line between neighbors)
+            result = RemoveCollinearPoints(result);
+            
             return result;
         }
 
         /// <summary>
-        /// Order perimeter vertices to form a proper closed polygon using nearest neighbor.
+        /// Remove points that are collinear with their neighbors (they don't contribute to the shape).
+        /// This handles cases where the STEP file has extra edge subdivisions.
         /// </summary>
-        private static List<(long X, long Y)> OrderPerimeter(List<(long X, long Y)> vertices)
+        private static List<(long X, long Y)> RemoveCollinearPoints(List<(long X, long Y)> points)
         {
-            if (vertices.Count <= 3)
+            if (points.Count <= 3) return points.ToList();
+            
+            var result = new List<(long X, long Y)>();
+            int n = points.Count;
+            
+            for (int i = 0; i < n; i++)
             {
-                return vertices.ToList();
+                var prev = points[(i - 1 + n) % n];
+                var curr = points[i];
+                var next = points[(i + 1) % n];
+                
+                // Check if curr is collinear with prev and next
+                // Cross product of (curr-prev) and (next-curr) should be 0 for collinear points
+                long dx1 = curr.X - prev.X;
+                long dy1 = curr.Y - prev.Y;
+                long dx2 = next.X - curr.X;
+                long dy2 = next.Y - curr.Y;
+                
+                long cross = dx1 * dy2 - dy1 * dx2;
+                
+                // Keep the point if it's NOT collinear (cross product != 0)
+                if (cross != 0)
+                {
+                    result.Add(curr);
+                }
             }
             
-            var uniqueVerts = vertices.Distinct().ToList();
-            if (uniqueVerts.Count <= 3)
-            {
-                return uniqueVerts;
-            }
-
-            var result = new List<(long X, long Y)>();
-            var used = new HashSet<int>();
-
-            // Start from bottom-left vertex
-            int current = 0;
-            for (int i = 1; i < uniqueVerts.Count; i++)
-            {
-                if (uniqueVerts[i].Y < uniqueVerts[current].Y ||
-                    (uniqueVerts[i].Y == uniqueVerts[current].Y && 
-                     uniqueVerts[i].X < uniqueVerts[current].X))
-                {
-                    current = i;
-                }
-            }
-
-            while (used.Count < uniqueVerts.Count)
-            {
-                result.Add(uniqueVerts[current]);
-                used.Add(current);
-
-                if (used.Count >= uniqueVerts.Count)
-                    break;
-
-                int next = -1;
-                long minDist = long.MaxValue;
-
-                for (int i = 0; i < uniqueVerts.Count; i++)
-                {
-                    if (used.Contains(i))
-                        continue;
-
-                    long dx = uniqueVerts[i].X - uniqueVerts[current].X;
-                    long dy = uniqueVerts[i].Y - uniqueVerts[current].Y;
-                    long distSq = dx * dx + dy * dy;
-
-                    if (distSq < minDist)
-                    {
-                        minDist = distSq;
-                        next = i;
-                    }
-                }
-
-                if (next == -1)
-                    break;
-
-                current = next;
-            }
-
-            return result;
+            return result.Count >= 3 ? result : points.ToList();
         }
     }
 }

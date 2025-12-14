@@ -443,7 +443,6 @@ namespace LaserConvert
             List<(double X, double Y, double Z)> vertices,
             HashSet<string> processedPoints)
         {
-            // StepFaceBound should have reference to an edge loop
             var edgeLoop = GetEdgeLoopFromBound(bound);
             
             if (edgeLoop?.EdgeList != null)
@@ -549,17 +548,15 @@ namespace LaserConvert
             
             Console.WriteLine($"[EXTRACT] ExtractFaceWithHoles: face has {face.Bounds.Count} bounds");
             
-            // Extract all loops first
+            // Extract all loops IN EDGE ORDER
             var allLoops = new List<(int Index, List<(double, double, double)> Vertices, double BoundingBoxArea)>();
             
             for (int i = 0; i < face.Bounds.Count; i++)
             {
                 var bound = face.Bounds[i];
-                var verts = new List<(double, double, double)>();
-                var processedPoints = new HashSet<string>();
-                ExtractVerticesFromFaceBound(bound, stepFile, verts, processedPoints);
+                // Use new method that preserves edge order
+                var verts = ExtractVerticesInEdgeOrder(bound, stepFile);
                 
-                // Calculate bounding box area - use 3D volume since faces can be in any orientation
                 if (verts.Count > 0)
                 {
                     var minX = verts.Min(v => v.Item1);
@@ -572,7 +569,6 @@ namespace LaserConvert
                     var height = maxY - minY;
                     var depth = maxZ - minZ;
                     
-                    // Use 3D bounding box volume for better comparison across all orientations
                     var area = width * height + height * depth + depth * width;
                     
                     Console.WriteLine($"[EXTRACT] Bound {i} has {verts.Count} vertices, bbox {width:F1}x{height:F1}x{depth:F1} (area={area:F1}): {string.Join(", ", verts.Take(4).Select(v => $"({v.Item1:F1},{v.Item2:F1},{v.Item3:F1})"))}...");
@@ -601,7 +597,54 @@ namespace LaserConvert
         }
 
         /// <summary>
+        /// Extract vertices from a face bound IN EDGE ORDER.
+        /// This preserves the traversal order from the STEP file, which is essential
+        /// for correctly tracing the perimeter of complex shapes.
+        /// </summary>
+        public static List<(double X, double Y, double Z)> ExtractVerticesInEdgeOrder(
+            StepFaceBound bound,
+            StepFile stepFile)
+        {
+            var vertices = new List<(double, double, double)>();
+            
+            var edgeLoop = GetEdgeLoopFromBound(bound);
+            if (edgeLoop?.EdgeList == null)
+                return vertices;
+            
+            // Walk through edges in order, taking only the START vertex of each edge.
+            // The end vertex of edge N should be the start vertex of edge N+1 (forming a chain).
+            // This gives us exactly one vertex per edge in the correct order.
+            foreach (var orientedEdge in edgeLoop.EdgeList)
+            {
+                if (orientedEdge?.EdgeElement == null)
+                    continue;
+                
+                var edgeCurve = orientedEdge.EdgeElement;
+                
+                // Use EdgeStart for forward-oriented edges, EdgeEnd for reversed edges
+                StepVertexPoint vertex;
+                if (orientedEdge.Orientation)
+                {
+                    vertex = edgeCurve.EdgeStart as StepVertexPoint;
+                }
+                else
+                {
+                    vertex = edgeCurve.EdgeEnd as StepVertexPoint;
+                }
+                
+                if (vertex?.Location != null)
+                {
+                    var pt = vertex.Location;
+                    vertices.Add((pt.X, pt.Y, pt.Z));
+                }
+            }
+            
+            return vertices;
+        }
+
+        /// <summary>
         /// Extract vertices specifically from a single face bound (for extracting inner loops).
+        /// Public method that creates its own HashSet.
         /// </summary>
         public static List<(double X, double Y, double Z)> ExtractVerticesFromBound(
             StepFaceBound bound,

@@ -2,6 +2,6 @@
 <defs/>
   <g id="CBoxR">
     <path d="M 0,0 L 40,0 L 40,50 L 0,50 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 25,35 L 35,35 L 35,45 L 25,45 Z" stroke="#f00" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 15,35 L 5,35 L 5,45 L 15,45 Z" stroke="#f00" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
