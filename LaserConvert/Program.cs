@@ -6,7 +6,7 @@
         {
             if (args.Length < 2)
             {
-                Console.WriteLine("Usage: LaserConvert <input.igs|stp> <output.svg> [debugMode=true|false]");
+                Console.WriteLine("Usage: LaserConvert <input.stp> <output.svg> [debugMode=true|false]");
                 return 1;
             }
 
@@ -25,12 +25,7 @@
                 }
             }
 
-            if(inputPath.EndsWith(".igs", StringComparison.OrdinalIgnoreCase) ||
-               inputPath.EndsWith(".iges", StringComparison.OrdinalIgnoreCase))
-            {
-                return IgesProcess.Main(inputPath, outputPath, debugMode);
-            }
-
+            
             if (inputPath.EndsWith(".stp", StringComparison.OrdinalIgnoreCase) ||
                inputPath.EndsWith(".step", StringComparison.OrdinalIgnoreCase))
             {

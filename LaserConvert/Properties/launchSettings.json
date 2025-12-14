@@ -2,7 +2,7 @@
   "profiles": {
     "LaserConvert": {
       "commandName": "Project",
-      "commandLineArgs": "\"C:\\Users\\jdm\\OneDrive\\Documents\\art\\glowforge\\big box\\big box v3.igs\" \"C:\\Users\\jdm\\OneDrive\\Documents\\art\\glowforge\\big box\\big box debugging.svg\""
+      "commandLineArgs": "\"C:\\Users\\jdm\\OneDrive\\Documents\\art\\glowforge\\big box\\big box v3.stp\" \"C:\\Users\\jdm\\OneDrive\\Documents\\art\\glowforge\\big box\\big box debugging.svg\""
     }
   }
 }
