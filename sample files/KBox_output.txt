@@ -99,5 +99,20 @@ Found 1 solids
   [5] (79, 145)
   [6] (79, 140)
   [7] (110, 140)
-[SVG] KBox: Generated outline from 7 vertices
+[DEBUG] KBox: After dedup (12 verts):
+  [0] (0, 0)
+  [1] (155, 0)
+  [2] (0, 150)
+  [3] (48, 150)
+  [4] (48, 145)
+  [5] (79, 145)
+  [6] (79, 140)
+  [7] (110, 140)
+  [8] (110, 150)
+  [9] (141, 150)
+  [10] (141, 145)
+  [11] (155, 145)
+[ORDER] Centroid: (88.8, 121.7)
+[ORDER] Reordered 12 vertices by polar angle from centroid
+[SVG] KBox: Generated outline from 12 vertices
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox.svg

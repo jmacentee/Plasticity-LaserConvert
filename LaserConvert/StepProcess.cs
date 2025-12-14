@@ -128,16 +128,8 @@ namespace LaserConvert
                         
                         if (deduplicated.Count >= 3)
                         {
-                            // Reorder vertices into proper perimeter sequence
+                            // Reorder vertices using polar angle from centroid
                             var ordered = StepHelpers.OrderPolygonPerimeter(deduplicated);
-                            
-                            // DEBUG: Log ordered result
-                            Console.WriteLine($"[DEBUG] {name}: After monotone chain ({ordered.Count} verts):");
-                            for (int i = 0; i < Math.Min(ordered.Count, 20); i++)
-                            {
-                                var v = ordered[i];
-                                Console.WriteLine($"  [{i}] ({v.Item1}, {v.Item2})");
-                            }
                             
                             // STEP 8: Build SVG path
                             var outerPath = SvgPathBuilder.BuildPath(ordered);

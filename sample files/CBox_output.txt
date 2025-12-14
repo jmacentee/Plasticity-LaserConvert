@@ -74,5 +74,14 @@ Found 1 solids
   [1] (0, 0)
   [2] (40, 50)
   [3] (0, 50)
+[DEBUG] CBox: After dedup (4 verts):
+  [0] (40, 0)
+  [1] (0, 0)
+  [2] (40, 50)
+  [3] (0, 50)
+[ORDER] Centroid: (20.0, 25.0)
+[ORDER] Reordered 4 vertices by polar angle from centroid
 [SVG] CBox: Generated outline from 4 vertices
+[ORDER] Centroid: (10.0, 40.0)
+[ORDER] Reordered 4 vertices by polar angle from centroid
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBox.svg

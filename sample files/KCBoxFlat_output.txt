@@ -220,5 +220,32 @@ Found 1 solids
   [5] (0, 52)
   [6] (0, 32)
   [7] (3, 32)
-[SVG] KCBoxFlat: Generated outline from 14 vertices
+[DEBUG] KCBoxFlat: After dedup (32 verts):
+  [0] (17, 52)
+  [1] (11, 52)
+  [2] (11, 58)
+  [3] (6, 58)
+  [4] (6, 52)
+  [5] (0, 52)
+  [6] (0, 32)
+  [7] (3, 32)
+  [8] (3, 22)
+  [9] (0, 22)
+  [10] (0, 2)
+  [11] (13, 2)
+  [12] (13, 0)
+  [13] (27, 0)
+  [14] (27, 2)
+  [15] (40, 2)
+  [16] (40, 12)
+  [17] (38, 12)
+  [18] (38, 22)
+  [19] (40, 22)
+[ORDER] Centroid: (22.4, 33.8)
+[ORDER] Reordered 32 vertices by polar angle from centroid
+[SVG] KCBoxFlat: Generated outline from 32 vertices
+[ORDER] Centroid: (10.0, 42.0)
+[ORDER] Reordered 4 vertices by polar angle from centroid
+[ORDER] Centroid: (27.5, 22.0)
+[ORDER] Reordered 4 vertices by polar angle from centroid
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBoxFlat.svg

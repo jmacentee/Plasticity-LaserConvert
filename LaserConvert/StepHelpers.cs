@@ -180,70 +180,48 @@ namespace LaserConvert
         }
 
         /// <summary>
-        /// Reorder 2D polygon vertices into proper sequential perimeter order using
-        /// a left-to-right monotone chain approach that preserves ALL boundary vertices.
-        /// Works for convex and concave polygons.
+        /// Order vertices by polar angle from centroid.
+        /// This preserves all vertices and works for most polygon shapes.
+        /// Note: May not perfectly order vertices with highly non-uniform edge lengths.
         /// </summary>
         public static List<(long, long)> OrderPolygonPerimeter(List<(long, long)> vertices)
         {
-            if (vertices.Count <= 3) return vertices;
+            if (vertices.Count <= 3)
+                return new List<(long, long)>(vertices);
 
-            // Sort by X (left to right), then by Y (bottom to top)
-            var sorted = vertices.OrderBy(v => v.Item1).ThenBy(v => v.Item2).ToList();
-
-            // Build lower chain (left to right)
-            var lower = new List<(long, long)>();
-            foreach (var point in sorted)
+            // Calculate centroid
+            long sumX = 0, sumY = 0;
+            foreach (var v in vertices)
             {
-                // Remove points that create a right turn (keep only left/straight turns)
-                while (lower.Count >= 2)
-                {
-                    var p1 = lower[lower.Count - 2];
-                    var p2 = lower[lower.Count - 1];
-                    // Cross product: if positive, p1->p2->point makes left turn
-                    long cross = (p2.Item1 - p1.Item1) * (point.Item2 - p1.Item2) - 
-                                 (p2.Item2 - p1.Item2) * (point.Item1 - p1.Item1);
-                    if (cross < 0)
-                    {
-                        lower.RemoveAt(lower.Count - 1);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-                lower.Add(point);
+                sumX += v.Item1;
+                sumY += v.Item2;
             }
+            double cx = (double)sumX / vertices.Count;
+            double cy = (double)sumY / vertices.Count;
 
-            // Build upper chain (right to left)
-            var upper = new List<(long, long)>();
-            foreach (var point in sorted.AsEnumerable().Reverse())
-            {
-                // Same left-turn test
-                while (upper.Count >= 2)
+            Console.WriteLine($"[ORDER] Centroid: ({cx:F1}, {cy:F1})");
+
+            // Calculate distances from centroid to detect vertices on same "radial line"
+            var verticesWithAngle = vertices
+                .Select((v, i) => new
                 {
-                    var p1 = upper[upper.Count - 2];
-                    var p2 = upper[upper.Count - 1];
-                    long cross = (p2.Item1 - p1.Item1) * (point.Item2 - p1.Item2) - 
-                                 (p2.Item2 - p1.Item2) * (point.Item1 - p1.Item1);
-                    if (cross < 0)
-                    {
-                        upper.RemoveAt(upper.Count - 1);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-                upper.Add(point);
-            }
+                    index = i,
+                    vertex = v,
+                    angle = Math.Atan2(v.Item2 - cy, v.Item1 - cx),
+                    distance = Math.Sqrt(Math.Pow(v.Item1 - cx, 2) + Math.Pow(v.Item2 - cy, 2))
+                })
+                .ToList();
 
-            // Concatenate: remove duplicate endpoints
-            lower.RemoveAt(lower.Count - 1);
-            upper.RemoveAt(upper.Count - 1);
-            lower.AddRange(upper);
+            // Sort by angle, then by distance (so vertices on same ray are visited closest-to-farthest)
+            var sorted = verticesWithAngle
+                .OrderBy(x => x.angle)
+                .ThenBy(x => x.distance)
+                .Select(x => x.vertex)
+                .ToList();
 
-            return lower;
+            Console.WriteLine($"[ORDER] Reordered {sorted.Count} vertices by polar angle from centroid");
+            
+            return sorted;
         }
 
         /// <summary>
