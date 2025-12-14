@@ -337,61 +337,7 @@ namespace LaserConvert
             return (uniqueVertices, face1Idx, face2Idx, dimX, dimY, dimZ);
         }
 
-        /// <summary>
-        /// Extract vertices from a list of faces (legacy interface for dimension calculation).
-        /// </summary>
-        public static List<(double X, double Y, double Z)> ExtractVerticesFromFaces(
-            List<StepAdvancedFace> faces,
-            StepFile stepFile)
-        {
-            var (vertices, _, _, _, _, _) = ExtractVerticesAndFaceIndices(faces, stepFile);
-            return vertices;
-        }
-
-        /// <summary>
-        /// Get the adjusted dimensions for a solid (returns the three dimensions with thin dimension adjusted).
-        /// </summary>
-        public static (double DimX, double DimY, double DimZ) GetAdjustedDimensions(
-            List<(double X, double Y, double Z)> vertices)
-        {
-            // Re-compute using the same logic as ExtractVerticesAndFaceIndices
-            // This is a simplified version that just returns dimensions without full face analysis
-            var minX = vertices.Min(v => v.X);
-            var maxX = vertices.Max(v => v.X);
-            var minY = vertices.Min(v => v.Y);
-            var maxY = vertices.Max(v => v.Y);
-            var minZ = vertices.Min(v => v.Z);
-            var maxZ = vertices.Max(v => v.Z);
-            
-            return (maxX - minX, maxY - minY, maxZ - minZ);
-        }
-
-        /// <summary>
-        /// Compute the distance between two sets of vertices and return the separation vector.
-        /// </summary>
-        private static double ComputeFacePairSeparation(
-            List<(double X, double Y, double Z)> face1,
-            List<(double X, double Y, double Z)> face2)
-        {
-            if (face1.Count == 0 || face2.Count == 0)
-                return double.MaxValue;
-            
-            // Compute centroid of each face
-            var c1x = face1.Average(v => v.X);
-            var c1y = face1.Average(v => v.Y);
-            var c1z = face1.Average(v => v.Z);
-            
-            var c2x = face2.Average(v => v.X);
-            var c2y = face2.Average(v => v.Y);
-            var c2z = face2.Average(v => v.Z);
-            
-            // Distance between centroids
-            var dx = c2x - c1x;
-            var dy = c2y - c1y;
-            var dz = c2z - c1z;
-            
-            return Math.Sqrt(dx * dx + dy * dy + dz * dz);
-        }
+       
 
         /// <summary>
         /// Compute the distance between two sets of vertices and return the separation vector.
@@ -521,28 +467,7 @@ namespace LaserConvert
             }
         }
 
-        /// <summary>
-        /// Extract vertices from a single face's OUTER LOOP ONLY.
-        /// This is the correct way to handle B-rep solids with holes:
-        /// the first bound is the outer loop, subsequent bounds are inner loops (holes).
-        /// </summary>
-        public static List<(double X, double Y, double Z)> ExtractOuterLoopVerticesFromFace(
-            StepAdvancedFace face,
-            StepFile stepFile)
-        {
-            var vertices = new List<(double, double, double)>();
-            
-            if (face?.Bounds == null || face.Bounds.Count == 0)
-                return vertices;
-            
-            // Only extract from the FIRST bound - the outer loop
-            // Subsequent bounds are inner loops (holes) and should not be used for boundary tracing
-            var outerBound = face.Bounds[0];
-            var processedPoints = new HashSet<string>();
-            
-            ExtractVerticesFromFaceBound(outerBound, stepFile, vertices, processedPoints);
-            return vertices;
-        }
+       
         
         /// <summary>
         /// Extract vertices from all bounds of a face (outer + inner loops).
@@ -672,84 +597,7 @@ namespace LaserConvert
             return vertices;
         }
 
-        /// <summary>
-        /// Extract UNIQUE corner vertices from all bounds (not traversing edge order).
-        /// This gives us the actual geometric corners of the face, even for degenerate flat faces.
-        /// </summary>
-        public static (List<(double X, double Y, double Z)> OuterVertices, List<List<(double X, double Y, double Z)>> HoleVertices) ExtractFaceCornerVertices(
-            StepAdvancedFace face,
-            StepFile stepFile)
-        {
-            var allBoundVertices = new List<(int BoundIndex, List<(double, double, double)> Vertices)>();
-            
-            if (face?.Bounds == null || face.Bounds.Count == 0)
-                return (new List<(double, double, double)>(), new List<List<(double, double, double)>>());
-            
-            // Extract unique vertices from each bound (without following edge order)
-            for (int boundIdx = 0; boundIdx < face.Bounds.Count; boundIdx++)
-            {
-                var bound = face.Bounds[boundIdx];
-                var uniqueCornerVertices = new Dictionary<string, (double, double, double)>();
-                
-                // Traverse edge loop and collect END POINTS (corners), not intermediate edge points
-                var edgeLoop = GetEdgeLoopFromBound(bound);
-                if (edgeLoop?.EdgeList != null)
-                {
-                    foreach (var orientedEdge in edgeLoop.EdgeList)
-                    {
-                        if (orientedEdge?.EdgeElement?.EdgeStart is StepVertexPoint startVertex && startVertex.Location != null)
-                        {
-                            var pt = startVertex.Location;
-                            var key = $"{pt.X:F4},{pt.Y:F4},{pt.Z:F4}";
-                            if (!uniqueCornerVertices.ContainsKey(key))
-                            {
-                                uniqueCornerVertices[key] = (pt.X, pt.Y, pt.Z);
-                            }
-                        }
-                    }
-                }
-                
-                allBoundVertices.Add((boundIdx, uniqueCornerVertices.Values.ToList()));
-            }
-            
-            // Classify bounds by size
-            var boundsBySize = allBoundVertices
-                .Select(b => (
-                    Index: b.BoundIndex,
-                    Vertices: b.Vertices,
-                    Area: b.Vertices.Count > 0 ? ComputeConvexHullArea(b.Vertices) : 0.0
-                ))
-                .OrderByDescending(b => b.Area)
-                .ToList();
-            
-            if (boundsBySize.Count == 0)
-                return (new List<(double, double, double)>(), new List<List<(double, double, double)>>());
-            
-            // Largest is outer, rest are holes
-            var outer = boundsBySize[0].Vertices;
-            var holes = boundsBySize.Skip(1).Select(b => b.Vertices).ToList();
-            
-            return (outer, holes);
-        }
         
-        private static double ComputeConvexHullArea(List<(double X, double Y, double Z)> verts)
-        {
-            if (verts.Count < 3) return 0;
-            
-            // Project onto best-fit plane and compute area
-            // For now, use simple bounding box diagonal as proxy
-            var minX = verts.Min(v => v.X);
-            var maxX = verts.Max(v => v.X);
-            var minY = verts.Min(v => v.Y);
-            var maxY = verts.Max(v => v.Y);
-            var minZ = verts.Min(v => v.Z);
-            var maxZ = verts.Max(v => v.Z);
-            
-            var dx = maxX - minX;
-            var dy = maxY - minY;
-            var dz = maxZ - minZ;
-            
-            return dx * dy + dy * dz + dz * dx;
-        }
+        
     }
 }
