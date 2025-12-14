@@ -86,20 +86,64 @@ namespace LaserConvert
                     {
                         var (outerPerimeter, holePerimeters) = StepTopologyResolver.ExtractFaceWithHoles(bestFace, stepFile);
                         
+                        // DEBUG: Log the 3D order
+                        Console.WriteLine($"[DEBUG] {name}: Raw 3D perimeter ({outerPerimeter.Count} verts):");
+                        for (int i = 0; i < Math.Min(outerPerimeter.Count, 8); i++)
+                        {
+                            var v = outerPerimeter[i];
+                            Console.WriteLine($"  [{i}] ({v.X:F1}, {v.Y:F1}, {v.Z:F1})");
+                        }
+                        
                         // STEP 6: Project to 2D
                         var projected = StepHelpers.ProjectTo2D(outerPerimeter);
+                        
+                        // DEBUG: Log projected 2D order
+                        Console.WriteLine($"[DEBUG] {name}: Projected 2D ({projected.Count} verts):");
+                        for (int i = 0; i < Math.Min(projected.Count, 8); i++)
+                        {
+                            var v = projected[i];
+                            Console.WriteLine($"  [{i}] ({v.X:F1}, {v.Y:F1})");
+                        }
+                        
                         var normalized = StepHelpers.NormalizeAndRound(projected);
                         
-                        // STEP 7: Remove only consecutive duplicates (preserves all boundary vertices)
+                        // DEBUG: Log normalized 2D order
+                        Console.WriteLine($"[DEBUG] {name}: Normalized 2D ({normalized.Count} verts):");
+                        for (int i = 0; i < Math.Min(normalized.Count, 8); i++)
+                        {
+                            var v = normalized[i];
+                            Console.WriteLine($"  [{i}] ({v.Item1}, {v.Item2})");
+                        }
+                        
+                        // STEP 7: Remove consecutive duplicates
                         var deduplicated = StepHelpers.RemoveConsecutiveDuplicates(normalized);
+                        
+                        // DEBUG: Log dedup order
+                        Console.WriteLine($"[DEBUG] {name}: After dedup ({deduplicated.Count} verts):");
+                        for (int i = 0; i < Math.Min(deduplicated.Count, 20); i++)
+                        {
+                            var v = deduplicated[i];
+                            Console.WriteLine($"  [{i}] ({v.Item1}, {v.Item2})");
+                        }
                         
                         if (deduplicated.Count >= 3)
                         {
-                            // STEP 8: Build SVG path
-                            var outerPath = SvgPathBuilder.BuildPath(deduplicated);
-                            svg.Path(outerPath, 0.2, "none", "#000");
-                            Console.WriteLine($"[SVG] {name}: Generated outline from {deduplicated.Count} vertices");
+                            // Reorder vertices into proper perimeter sequence
+                            var ordered = StepHelpers.OrderPolygonPerimeter(deduplicated);
                             
+                            // DEBUG: Log ordered result
+                            Console.WriteLine($"[DEBUG] {name}: After monotone chain ({ordered.Count} verts):");
+                            for (int i = 0; i < Math.Min(ordered.Count, 20); i++)
+                            {
+                                var v = ordered[i];
+                                Console.WriteLine($"  [{i}] ({v.Item1}, {v.Item2})");
+                            }
+                            
+                            // STEP 8: Build SVG path
+                            var outerPath = SvgPathBuilder.BuildPath(ordered);
+                            svg.Path(outerPath, 0.2, "none", "#000");
+                            Console.WriteLine($"[SVG] {name}: Generated outline from {ordered.Count} vertices");
+
                             // Handle holes
                             var outerMinX = projected.Min(p => p.X);
                             var outerMinY = projected.Min(p => p.Y);
@@ -114,7 +158,8 @@ namespace LaserConvert
                                     
                                     if (dedupHole.Count >= 3)
                                     {
-                                        var holePath = SvgPathBuilder.BuildPath(dedupHole);
+                                        var orderedHole = StepHelpers.OrderPolygonPerimeter(dedupHole);
+                                        var holePath = SvgPathBuilder.BuildPath(orderedHole);
                                         svg.Path(holePath, 0.2, "none", "#f00");
                                     }
                                 }

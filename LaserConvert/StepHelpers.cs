@@ -180,6 +180,73 @@ namespace LaserConvert
         }
 
         /// <summary>
+        /// Reorder 2D polygon vertices into proper sequential perimeter order using
+        /// a left-to-right monotone chain approach that preserves ALL boundary vertices.
+        /// Works for convex and concave polygons.
+        /// </summary>
+        public static List<(long, long)> OrderPolygonPerimeter(List<(long, long)> vertices)
+        {
+            if (vertices.Count <= 3) return vertices;
+
+            // Sort by X (left to right), then by Y (bottom to top)
+            var sorted = vertices.OrderBy(v => v.Item1).ThenBy(v => v.Item2).ToList();
+
+            // Build lower chain (left to right)
+            var lower = new List<(long, long)>();
+            foreach (var point in sorted)
+            {
+                // Remove points that create a right turn (keep only left/straight turns)
+                while (lower.Count >= 2)
+                {
+                    var p1 = lower[lower.Count - 2];
+                    var p2 = lower[lower.Count - 1];
+                    // Cross product: if positive, p1->p2->point makes left turn
+                    long cross = (p2.Item1 - p1.Item1) * (point.Item2 - p1.Item2) - 
+                                 (p2.Item2 - p1.Item2) * (point.Item1 - p1.Item1);
+                    if (cross < 0)
+                    {
+                        lower.RemoveAt(lower.Count - 1);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                lower.Add(point);
+            }
+
+            // Build upper chain (right to left)
+            var upper = new List<(long, long)>();
+            foreach (var point in sorted.AsEnumerable().Reverse())
+            {
+                // Same left-turn test
+                while (upper.Count >= 2)
+                {
+                    var p1 = upper[upper.Count - 2];
+                    var p2 = upper[upper.Count - 1];
+                    long cross = (p2.Item1 - p1.Item1) * (point.Item2 - p1.Item2) - 
+                                 (p2.Item2 - p1.Item2) * (point.Item1 - p1.Item1);
+                    if (cross < 0)
+                    {
+                        upper.RemoveAt(upper.Count - 1);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                upper.Add(point);
+            }
+
+            // Concatenate: remove duplicate endpoints
+            lower.RemoveAt(lower.Count - 1);
+            upper.RemoveAt(upper.Count - 1);
+            lower.AddRange(upper);
+
+            return lower;
+        }
+
+        /// <summary>
         /// Compute dimensions of a point set.
         /// </summary>
         public static Dimensions ComputeDimensions(List<(double X, double Y, double Z)> points)

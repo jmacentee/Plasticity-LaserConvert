@@ -193,5 +193,32 @@ Found 1 solids
 [EXTRACT] Identified bound 1 as hole loop 1 (area=104.5)
 [EXTRACT] Identified bound 0 as hole loop 2 (area=52.5)
 [EXTRACT] Returning 32 outer verts and 2 hole loops
-[SVG] KCBoxFlat: Generated outline from 32 vertices
+[DEBUG] KCBoxFlat: Raw 3D perimeter (32 verts):
+  [0] (17.2, -6.2, 3.0)
+  [1] (11.4, -6.2, 3.0)
+  [2] (11.3, -0.2, 3.0)
+  [3] (5.7, -0.2, 3.0)
+  [4] (5.7, -6.2, 3.0)
+  [5] (-0.0, -6.2, 3.0)
+  [6] (-0.0, -26.2, 3.0)
+  [7] (3.0, -26.3, 3.0)
+[DEBUG] KCBoxFlat: Projected 2D (32 verts):
+  [0] (17.2, -6.2)
+  [1] (11.4, -6.2)
+  [2] (11.3, -0.2)
+  [3] (5.7, -0.2)
+  [4] (5.7, -6.2)
+  [5] (-0.0, -6.2)
+  [6] (-0.0, -26.2)
+  [7] (3.0, -26.3)
+[DEBUG] KCBoxFlat: Normalized 2D (32 verts):
+  [0] (17, 52)
+  [1] (11, 52)
+  [2] (11, 58)
+  [3] (6, 58)
+  [4] (6, 52)
+  [5] (0, 52)
+  [6] (0, 32)
+  [7] (3, 32)
+[SVG] KCBoxFlat: Generated outline from 14 vertices
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBoxFlat.svg
