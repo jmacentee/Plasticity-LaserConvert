@@ -128,8 +128,23 @@ namespace LaserConvert
                         
                         if (deduplicated.Count >= 3)
                         {
-                            // Reorder vertices using polar angle from centroid
+                            // Reorder vertices using improved edge-walking algorithm
                             var ordered = StepHelpers.OrderPolygonPerimeter(deduplicated);
+                            
+                            // DEBUG: Log ordering method
+                            if (ordered != null && ordered.Count == deduplicated.Count)
+                            {
+                                Console.WriteLine($"[ORDER] Used edge-walking perimeter reconstruction");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"[ORDER] Used fallback polar angle ordering");
+                                if (ordered == null)
+                                {
+                                    // If edge walking failed, use polar angle as fallback
+                                    ordered = deduplicated.OrderBy(p => Math.Atan2(p.Item2 - deduplicated.Average(v => v.Item2), p.Item1 - deduplicated.Average(v => v.Item1))).ToList();
+                                }
+                            }
                             
                             // STEP 8: Build SVG path
                             var outerPath = SvgPathBuilder.BuildPath(ordered);
@@ -151,6 +166,11 @@ namespace LaserConvert
                                     if (dedupHole.Count >= 3)
                                     {
                                         var orderedHole = StepHelpers.OrderPolygonPerimeter(dedupHole);
+                                        if (orderedHole == null)
+                                        {
+                                            // Fallback for holes
+                                            orderedHole = dedupHole.OrderBy(p => Math.Atan2(p.Item2 - dedupHole.Average(v => v.Item2), p.Item1 - dedupHole.Average(v => v.Item1))).ToList();
+                                        }
                                         var holePath = SvgPathBuilder.BuildPath(orderedHole);
                                         svg.Path(holePath, 0.2, "none", "#f00");
                                     }

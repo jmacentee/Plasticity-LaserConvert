@@ -189,6 +189,110 @@ namespace LaserConvert
             if (vertices.Count <= 3)
                 return new List<(long, long)>(vertices);
 
+            // For small vertex counts, try edge-based ordering first
+            if (vertices.Count <= 34)
+            {
+                var edgeOrdered = OrderPolygonByEdgeWalking(vertices);
+                if (edgeOrdered.Count == vertices.Count)
+                {
+                    return edgeOrdered;
+                }
+            }
+
+            // Fallback to polar angle ordering
+            return OrderPolygonByPolarAngle(vertices);
+        }
+
+        /// <summary>
+        /// Order vertices by walking edges using a modified monotone chain with softer thresholds.
+        /// Preserves collinear points and near-collinear points to maintain detail.
+        /// </summary>
+        private static List<(long, long)> OrderPolygonByEdgeWalking(List<(long, long)> vertices)
+        {
+            if (vertices.Count <= 3)
+                return null;  // Let polar angle handle small cases
+
+            // Sort by X, then Y to establish left-to-right order
+            var sorted = vertices.OrderBy(v => v.Item1).ThenBy(v => v.Item2).ToList();
+            
+            // Build lower chain (left to right, bottom edge)
+            var lower = new List<(long, long)>();
+            foreach (var p in sorted)
+            {
+                // Remove only on strong right turns, keep everything else
+                while (lower.Count >= 2)
+                {
+                    var p1 = lower[lower.Count - 2];
+                    var p2 = lower[lower.Count - 1];
+                    
+                    long cross = (p2.Item1 - p1.Item1) * (p.Item2 - p1.Item2) - 
+                                 (p2.Item2 - p1.Item2) * (p.Item1 - p1.Item1);
+                    
+                    // Only remove if significant right turn (cross < -10)
+                    // This allows most vertices through
+                    if (cross < -100)
+                    {
+                        lower.RemoveAt(lower.Count - 1);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                lower.Add(p);
+            }
+            
+            // Build upper chain (right to left, top edge)
+            var upper = new List<(long, long)>();
+            foreach (var p in Enumerable.Reverse(sorted))
+            {
+                while (upper.Count >= 2)
+                {
+                    var p1 = upper[upper.Count - 2];
+                    var p2 = upper[upper.Count - 1];
+                    
+                    long cross = (p2.Item1 - p1.Item1) * (p.Item2 - p1.Item2) - 
+                                 (p2.Item2 - p1.Item2) * (p.Item1 - p1.Item1);
+                    
+                    if (cross < -100)
+                    {
+                        upper.RemoveAt(upper.Count - 1);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                upper.Add(p);
+            }
+            
+            // Combine: lower + upper (skip duplicate endpoints)
+            var result = new List<(long, long)>(lower);
+            for (int i = 1; i < upper.Count - 1; i++)
+            {
+                result.Add(upper[i]);
+            }
+            
+            // Only return if we preserved most vertices
+            // (Allow up to 20% loss, but if we lost more it's probably wrong)
+            if (result.Count < vertices.Count * 0.8)
+            {
+                return null;  // Fall back to polar angle
+            }
+            
+            return result;
+        }
+
+        /// <summary>
+        /// Order vertices by polar angle from centroid.
+        /// This preserves all vertices and works for most polygon shapes.
+        /// Fallback when edge-based ordering fails.
+        /// </summary>
+        private static List<(long, long)> OrderPolygonByPolarAngle(List<(long, long)> vertices)
+        {
+            if (vertices.Count <= 3)
+                return new List<(long, long)>(vertices);
+
             // Calculate centroid
             long sumX = 0, sumY = 0;
             foreach (var v in vertices)
