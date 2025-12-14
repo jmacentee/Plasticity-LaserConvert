@@ -2,7 +2,7 @@ REM the correct way to run these tests is to execute this batch file from the co
 REM the correct way to read the test results is to read the contents of all_results.txt after the test run is complete.
 
 
-REM all 3 STP files have been validated as correct with the geometry described below. never assume there is a problem in an STP file and that is why test is failing.
+REM in our test cases below, all STP files have been validated as correct with the geometry described below. never assume there is a problem in an STP file and that is why test is failing.
 REM when successful, the groups in the SVG files will have the ids which match the solids in the STP file (Box1, Box2, etc)
 REM the box ordering in the SVG file is not important
 REM the solids are allowed to be placed and rotated anywhere in 3d space in the step file.  Our job is to find the faces which are perpendicular to the 3mm wide face and then make a 2d projection of that face into the svg file.  the outer edge of the solids may not be regular and there may be cutouts in the solids which should be included in the svg output as indepdent red paths.
@@ -10,16 +10,13 @@ REM the solids are allowed to be placed and rotated anywhere in 3d space in the 
 REM Every time you try something and it doesn't work, you should leave a comment on what you tried, why you tried it and what the result was to prevent future duplicate effort.
 REM Do not write any custom code when code from a 3rd party library can be used instead.
 
-REM We have two different implementations -- StepProcess and HelixProcess.  HelixProcess shows some progress on KCBox and KCBoxFlat, but they are far from perfect.  HelixProcess is a failure for all other cases, but it can be fixed with more work.  StepProcess is a complete failure for KCBox and KCBoxFlat, but a success for all other cases.  When I asked you to examine step by step for our 8-step plan where KCBox failed, you swaped from StepProcess to HelixProcess.
-
 REM 1.	discover the shortest line segment between to verticies on different faces
 REM 2.	discover the 3d rotation of the solid based on the angle between those two vertex
 REM 3.	apply a transform to the entire 3d solid to rotate it in memory so that the short segment is now along the z axis
 REM 4.	pick the topmost face along the z axis
-REM 5.  apply a transform to the entire 3d solid to rotate it so that 1 edge is aligned with the x axis. This rotation should include all the holes in the solid at the same time, so they can be properly made into SVG paths in the next step.
+REM 5.  apply a transform to the entire 3d solid to rotate it so that the 3mm edge is aligned with the z axis and 1 edge is aligned with the x axis. This rotation should include all the holes in the solid at the same time, so they can be properly made into SVG paths in the next step.
 REM 6. Project to 2D (X, Y only after rotation/normalization)
 REM 7. RECONSTRUCT PERIMETER ORDER IN 2D using computational geometry
-REM      (Gift Wrapping algorithm - now works correctly because we're in 2D!)
 REM 8. Output to SVG
 
 REM Normalize the projection so the rectangles appear axis-aligned in the SVG.  
@@ -30,8 +27,6 @@ REM not "projecting" a solid onto a plane, you are rotating, perhaps multiple ti
 
 REM there should be no "fallback bounding box cases".  Either read the geometry correctly or skip the solid entirely.
 
-REM StepProcess.cs is our own custom code, which we worked on for 5 days and never got to have a successful test of KCBox or KCBoxFlat.  We abondoned StepProcess in favor of HelixProcess to use the HelixToolkit to solve the problems we never could.
-
 REM Swapped X-Y dimensions in the SVG are not a problem, as long as the entire solid and it's cutuouts are rotated together.
 REM In these tests, there should not be any diagonal lines. (This is not a general rule, only true for these examples).  
 REM The holes in the solids in a STP file are clearly part of the standard. When I load KCBox.stp into https://3dviewer.net/ I see the solid with two holes in it, the same as I saw in Plasticity.  If any tests fail, try to look for the root problem and the general solution instead of any hacks.
@@ -40,10 +35,7 @@ REM we shouldn't have any special cases, we should just handle everything genera
 
 REM Preserve all boundary vertices for complex shapes instead of deduplicating them, which was collapsing the geometry to a simplified convex hull approximation.
 
-REM CURRENT STATE -- All but the last test successfully pass.  The last test KCBox.stp fails because we are not correctly identifying the outer edge of the face with cutouts and tabs.  Instead we are finding a simplified convex hull which loses all the cutout and tab detail.  We need to preserve all boundary vertexes to get this correct.
 REM in all of our many iterations, KCBox.stp has never passed
-REM It may be best to review the entire git history since the KCBox.stp test was introduced to avoid repeating any previous failed approaches.
-REM Document failed approaches in KCBox_failures.txt for future reference.
 
 REM TEST CASES START HERE
 
