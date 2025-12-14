@@ -45,20 +45,4 @@ namespace LaserConvert
         public static Vec3 operator -(Vec3 a, Vec3 b) => new Vec3(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
         public static Vec3 operator *(double s, Vec3 a) => new Vec3(s * a.X, s * a.Y, s * a.Z);
     }
-
-    /// <summary>
-    /// Equality comparer for Vec3 with tolerance.
-    /// </summary>
-    internal class Vec3Comparer : IEqualityComparer<GeometryTransform.Vec3>
-    {
-        public bool Equals(GeometryTransform.Vec3 a, GeometryTransform.Vec3 b)
-        {
-            return Math.Abs(a.X - b.X) < 0.01 && Math.Abs(a.Y - b.Y) < 0.01 && Math.Abs(a.Z - b.Z) < 0.01;
-        }
-
-        public int GetHashCode(GeometryTransform.Vec3 v)
-        {
-            return (Math.Round(v.X, 2), Math.Round(v.Y, 2), Math.Round(v.Z, 2)).GetHashCode();
-        }
-    }
 }
