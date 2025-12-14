@@ -249,12 +249,9 @@ Found 1 solids
   [17] (29, 53)
   [18] (24, 55)
   [19] (26, 61)
-[ORDER] Centroid: (26.8, 34.8)
-[ORDER] Reordered 33 vertices by polar angle from centroid
+[ORDER] Used edge-walking perimeter reconstruction
 [ORDER] Used edge-walking perimeter reconstruction
 [SVG] KCBox: Generated outline from 33 vertices
-[ORDER] Centroid: (20.0, 47.2)
-[ORDER] Reordered 4 vertices by polar angle from centroid
-[ORDER] Centroid: (29.8, 22.5)
-[ORDER] Reordered 4 vertices by polar angle from centroid
+[ORDER] Used edge-walking perimeter reconstruction
+[ORDER] Used edge-walking perimeter reconstruction
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KCBox.svg

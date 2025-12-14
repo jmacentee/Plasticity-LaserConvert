@@ -88,6 +88,7 @@ Found 4 solids
   [2] (0, 150)
   [3] (155, 150)
 [ORDER] Used edge-walking perimeter reconstruction
+[ORDER] Used edge-walking perimeter reconstruction
 [SVG] Box1: Generated outline from 4 vertices
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 170.0x110.2x0.0 (area=18736.6): (-85.0,28.2,3.0), (85.0,28.2,3.0), (-85.0,-82.0,3.0), (85.0,-82.0,3.0)...
@@ -137,6 +138,7 @@ Found 4 solids
   [1] (170, 110)
   [2] (0, 0)
   [3] (170, 0)
+[ORDER] Used edge-walking perimeter reconstruction
 [ORDER] Used edge-walking perimeter reconstruction
 [SVG] Box2: Generated outline from 4 vertices
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
@@ -188,6 +190,7 @@ Found 4 solids
   [2] (0, 0)
   [3] (67, 0)
 [ORDER] Used edge-walking perimeter reconstruction
+[ORDER] Used edge-walking perimeter reconstruction
 [SVG] Box4: Generated outline from 4 vertices
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 51.9x38.7x50.3 (area=6570.2): (-80.7,64.2,54.3), (-28.7,40.9,45.7), (-80.7,48.8,96.0), (-28.7,25.5,87.4)...
@@ -237,6 +240,7 @@ Found 4 solids
   [1] (52, 0)
   [2] (0, 50)
   [3] (52, 42)
+[ORDER] Used edge-walking perimeter reconstruction
 [ORDER] Used edge-walking perimeter reconstruction
 [SVG] Box5: Generated outline from 4 vertices
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\4boxes.svg

@@ -80,7 +80,7 @@ Found 1 solids
   [2] (40, 50)
   [3] (0, 50)
 [ORDER] Used edge-walking perimeter reconstruction
+[ORDER] Used edge-walking perimeter reconstruction
 [SVG] CBox: Generated outline from 4 vertices
-[ORDER] Centroid: (10.0, 40.0)
-[ORDER] Reordered 4 vertices by polar angle from centroid
+[ORDER] Used edge-walking perimeter reconstruction
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBox.svg
