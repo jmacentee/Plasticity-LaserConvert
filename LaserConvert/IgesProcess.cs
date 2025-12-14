@@ -27,8 +27,19 @@ namespace LaserConvert
 {
     internal static class IgesProcess
     {
-        public static int Main(string inputPath,string outputPath)
+        private static bool _debugMode = false;
+        
+        private static void DebugLog(string message)
         {
+            if (_debugMode)
+            {
+                Console.WriteLine(message);
+            }
+        }
+        
+        public static int Main(string inputPath, string outputPath, bool debugMode = false)
+        {
+            _debugMode = debugMode;
             
             IgesFile iges;
             try
@@ -58,13 +69,13 @@ namespace LaserConvert
 
             if (solids.Count == 0)
             {
-                Console.WriteLine("No solids with ~3mm thickness found.");
+                DebugLog("No solids with ~3mm thickness found.");
             }
 
             // Fallback: some Plasticity exports may use shells/faces without a root 186.
             if (solids.Count == 0)
             {
-                Console.WriteLine("No 186 solids found; attempting face-based fallback.");
+                DebugLog("No 186 solids found; attempting face-based fallback.");
                 // Build pseudo-solids by grouping faces into shells (if 514 exists),
                 // otherwise gather faces by proximity and parallelism.
                 var shells = iges.Entities.OfType<IgesShell>().ToList();
@@ -85,7 +96,7 @@ namespace LaserConvert
 
                 if (solids.Count == 0)
                 {
-                    Console.WriteLine("No solids or shells/faces suitable for projection found.");
+                    DebugLog("No solids or shells/faces suitable for projection found.");
                     return 0;
                 }
             }
@@ -100,7 +111,7 @@ namespace LaserConvert
                 if (profileFace is null || profilePlane is null)
                 {
                     var sepMsg = minSep.HasValue ? $" (min separation: {minSep.Value:0.###} mm)" : "";
-                    Console.WriteLine($"Skipping solid (no 3 mm face pair found): {solidName}{sepMsg}");
+                    DebugLog($"Skipping solid (no 3 mm face pair found): {solidName}{sepMsg}");
                     continue;
                 }
 
@@ -278,7 +289,7 @@ namespace LaserConvert
         {
             var allFaces = GetSolidFaces(solid).ToList();
             string solidName = GetEntityName(solid);
-            Console.WriteLine($"[DEBUG] {solidName}: {allFaces.Count} faces");
+            DebugLog($"[DEBUG] {solidName}: {allFaces.Count} faces");
 
             if (allFaces.Count < 2)
                 return false;
@@ -292,11 +303,11 @@ namespace LaserConvert
                 {
                     // Extract edges from loops (Plasticity exports have edges in loops, not Face.Edges)
                     var loops = igesFace.Loops ?? new List<IgesLoop>();
-                    Console.WriteLine($"[DEBUG]   Face has {loops.Count} loops");
+                    DebugLog($"[DEBUG]   Face has {loops.Count} loops");
                     foreach (var loop in loops)
                     {
                         var curves = loop.Curves ?? new List<IgesEntity>();
-                        Console.WriteLine($"[DEBUG]     Loop has {curves.Count} curves");
+                        DebugLog($"[DEBUG]     Loop has {curves.Count} curves");
                         foreach (var curve in curves)
                         {
                             if (curve is IgesLine line)
@@ -324,15 +335,15 @@ namespace LaserConvert
 
             bool hasThinDimension = minEdge >= minThickness && minEdge <= maxThickness;
 
-            Console.WriteLine($"[DEBUG] {solidName}: edges [{minEdge:F1}, ..., {maxEdge:F1}] total={edgeLengths.Count}");
+            DebugLog($"[DEBUG] {solidName}: edges [{minEdge:F1}, ..., {maxEdge:F1}] total={edgeLengths.Count}");
 
             if (hasThinDimension)
             {
-                Console.WriteLine($"[FILTER] Solid '{solidName}': Found thin dimension {minEdge:F1}mm (other edges: {maxEdge:F1}mm)");
+                DebugLog($"[FILTER] Solid '{solidName}': Found thin dimension {minEdge:F1}mm (other edges: {maxEdge:F1}mm)");
             }
             else
             {
-                Console.WriteLine($"[FILTER] Solid '{solidName}': Skipped (min edge {minEdge:F1}mm is outside {minThickness}-{maxThickness}mm range)");
+                DebugLog($"[FILTER] Solid '{solidName}': Skipped (min edge {minEdge:F1}mm is outside {minThickness}-{maxThickness}mm range)");
             }
 
             return hasThinDimension;
@@ -761,14 +772,14 @@ namespace LaserConvert
             var allFaces = iges.Entities.OfType<IgesFace>().ToList();
             var shells = iges.Entities.OfType<IgesShell>().ToList();
 
-            Console.WriteLine($"[RECOVER] Total faces: {allFaces.Count}");
+            DebugLog($"[RECOVER] Total faces: {allFaces.Count}");
 
             // Link loops to faces
             LinkLoopsToFaces(iges);
 
             foreach (var shell in shells)
             {
-                Console.WriteLine($"[RECOVER] Processing shell");
+                DebugLog($"[RECOVER] Processing shell");
 
                 // If the shell has no faces, try to assign from unassigned faces
                 if ((shell.Faces == null || shell.Faces.Count == 0))
@@ -782,7 +793,7 @@ namespace LaserConvert
 
                     // Assign all unassigned faces to this shell
                     shell.Faces.AddRange(unassignedFaces);
-                    Console.WriteLine($"[RECOVER] Assigned {shell.Faces.Count} faces");
+                    DebugLog($"[RECOVER] Assigned {shell.Faces.Count} faces");
                 }
             }
         }

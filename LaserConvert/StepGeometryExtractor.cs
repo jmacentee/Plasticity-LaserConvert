@@ -11,6 +11,16 @@ namespace LaserConvert
     /// </summary>
     internal static class StepTopologyResolver
     {
+        private static bool _debugMode = false;
+        
+        private static void DebugLog(string message)
+        {
+            if (_debugMode)
+            {
+                Console.WriteLine(message);
+            }
+        }
+
         /// <summary>
         /// Find all B-rep solid entities in the file by searching all items for solid types.
         /// </summary>
@@ -52,7 +62,7 @@ namespace LaserConvert
             var faces_list = stepFile.Items.OfType<StepAdvancedFace>().ToList();
             if (faces_list.Count > 0)
             {
-                Console.WriteLine($"[SOLID] No MANIFOLD_SOLID_BREP found. Creating pseudo-solids from {faces_list.Count} faces.");
+                DebugLog($"[SOLID] No MANIFOLD_SOLID_BREP found. Creating pseudo-solids from {faces_list.Count} faces.");
                 
                 // Assume 6 faces per solid
                 int facesPerSolid = 6;
@@ -115,11 +125,14 @@ namespace LaserConvert
         /// </summary>
         public static (List<(double X, double Y, double Z)> DimensionVertices, int ThinFace1Idx, int ThinFace2Idx, double DimX, double DimY, double DimZ) ExtractVerticesAndFaceIndices(
             List<StepAdvancedFace> faces,
-            StepFile stepFile)
+            StepFile stepFile,
+            bool debugMode = false)
         {
+            _debugMode = debugMode;
+            
             var allVertices = new List<(double, double, double)>();
             
-            Console.WriteLine($"[TOPO] Processing {faces.Count} faces");
+            DebugLog($"[TOPO] Processing {faces.Count} faces");
             
             // For each face, extract its vertices
             var faceData = new List<(StepAdvancedFace face, List<(double X, double Y, double Z)> vertices)>();
@@ -192,7 +205,7 @@ namespace LaserConvert
             
             if (isComplexShape)
             {
-                Console.WriteLine($"[TOPO] Complex shape detected ({faces.Count} faces), extracting ALL vertices from all face bounds");
+                DebugLog($"[TOPO] Complex shape detected ({faces.Count} faces), extracting ALL vertices from all face bounds");
                 // For complex shapes, extract ALL bound vertices (not just outer loops)
                 // because tabs/cutouts are represented by intermediate faces with multiple bounds
                 foreach (var (face, faceVerts) in faceData)
@@ -215,7 +228,7 @@ namespace LaserConvert
             {
                 if (face1Idx >= 0 && face2Idx >= 0 && minSeparation < 200.0)
                 {
-                    Console.WriteLine($"[TOPO] Found pair of faces with separation: {minSeparation:F1}mm");
+                    DebugLog($"[TOPO] Found pair of faces with separation: {minSeparation:F1}mm");
                     
                     // For simple shapes, use ALL vertices from the two closest faces (includes holes)
                     allVertices.AddRange(faceData[face1Idx].vertices);
@@ -224,7 +237,7 @@ namespace LaserConvert
                 else
                 {
                     // Fallback: use all vertices
-                    Console.WriteLine($"[TOPO] No close face pair found, using all vertices");
+                    DebugLog($"[TOPO] No close face pair found, using all vertices");
                     foreach (var (face, faceVerts) in faceData)
                     {
                         allVertices.AddRange(faceVerts);
@@ -238,7 +251,7 @@ namespace LaserConvert
                 .Select(g => g.First())
                 .ToList();
             
-            Console.WriteLine($"[TOPO] Extracted {uniqueVertices.Count} unique vertices");
+            DebugLog($"[TOPO] Extracted {uniqueVertices.Count} unique vertices");
             
             // Debug: print vertex ranges for dimension calculation
             var minX = 0.0;
@@ -262,16 +275,16 @@ namespace LaserConvert
                 dimX = maxX - minX;
                 dimY = maxY - minY;
                 dimZ = maxZ - minZ;
-                Console.WriteLine($"[TOPO] Vertex ranges: X[{minX:F1},{maxX:F1}] Y[{minY:F1},{maxY:F1}] Z[{minZ:F1},{maxZ:F1}]");
-                Console.WriteLine($"[TOPO] Computed dimensions: {dimX:F1} x {dimY:F1} x {dimZ:F1}");
+                DebugLog($"[TOPO] Vertex ranges: X[{minX:F1},{maxX:F1}] Y[{minY:F1},{maxY:F1}] Z[{minZ:F1},{maxZ:F1}]");
+                DebugLog($"[TOPO] Computed dimensions: {dimX:F1} x {dimY:F1} x {dimZ:F1}");
             }
             
             // Sanity check: if we found a small separation but computed a large Z dimension,
             // the faces might not be what we think they are
             if (minSeparation < 10.0 && dimZ > 50.0)
             {
-                Console.WriteLine($"[TOPO] WARNING: Small face separation ({minSeparation:F1}mm) but large Z dimension ({dimZ:F1}mm) - faces may not be parallel!");
-                Console.WriteLine($"[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.");
+                DebugLog($"[TOPO] WARNING: Small face separation ({minSeparation:F1}mm) but large Z dimension ({dimZ:F1}mm) - faces may not be parallel!");
+                DebugLog($"[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.");
                 
                 // Fallback: re-compute dimensions using ALL faces
                 allVertices.Clear();
@@ -301,7 +314,7 @@ namespace LaserConvert
                     dimX = maxX - minX;
                     dimY = maxY - minY;
                     dimZ = maxZ - minZ;
-                    Console.WriteLine($"[TOPO] Recomputed with all faces: {dimX:F1} x {dimY:F1} x {dimZ:F1}");
+                    DebugLog($"[TOPO] Recomputed with all faces: {dimX:F1} x {dimY:F1} x {dimZ:F1}");
                 }
             }
             
@@ -317,8 +330,8 @@ namespace LaserConvert
                 dimX = dims[0];
                 dimY = dims[1];
                 dimZ = dims[2];
-                Console.WriteLine($"[TOPO] Thin dimension detected from face separation: {minSeparation:F1}mm");
-                Console.WriteLine($"[TOPO] Adjusted dimensions: {dimX:F1} x {dimY:F1} x {dimZ:F1}");
+                DebugLog($"[TOPO] Thin dimension detected from face separation: {minSeparation:F1}mm");
+                DebugLog($"[TOPO] Adjusted dimensions: {dimX:F1} x {dimY:F1} x {dimZ:F1}");
             }
             
             return (uniqueVertices, face1Idx, face2Idx, dimX, dimY, dimZ);
@@ -538,15 +551,18 @@ namespace LaserConvert
         /// </summary>
         public static (List<(double X, double Y, double Z)> OuterVertices, List<List<(double X, double Y, double Z)>> HoleVertices) ExtractFaceWithHoles(
             StepAdvancedFace face,
-            StepFile stepFile)
+            StepFile stepFile,
+            bool debugMode = false)
         {
+            _debugMode = debugMode;
+            
             var outerVerts = new List<(double, double, double)>();
             var holeVerts = new List<List<(double, double, double)>>();
             
             if (face?.Bounds == null || face.Bounds.Count == 0)
                 return (outerVerts, holeVerts);
             
-            Console.WriteLine($"[EXTRACT] ExtractFaceWithHoles: face has {face.Bounds.Count} bounds");
+            DebugLog($"[EXTRACT] ExtractFaceWithHoles: face has {face.Bounds.Count} bounds");
             
             // Extract all loops IN EDGE ORDER
             var allLoops = new List<(int Index, List<(double, double, double)> Vertices, double BoundingBoxArea)>();
@@ -571,7 +587,7 @@ namespace LaserConvert
                     
                     var area = width * height + height * depth + depth * width;
                     
-                    Console.WriteLine($"[EXTRACT] Bound {i} has {verts.Count} vertices, bbox {width:F1}x{height:F1}x{depth:F1} (area={area:F1}): {string.Join(", ", verts.Take(4).Select(v => $"({v.Item1:F1},{v.Item2:F1},{v.Item3:F1})"))}...");
+                    DebugLog($"[EXTRACT] Bound {i} has {verts.Count} vertices, bbox {width:F1}x{height:F1}x{depth:F1} (area={area:F1}): {string.Join(", ", verts.Take(4).Select(v => $"({v.Item1:F1},{v.Item2:F1},{v.Item3:F1})"))}...");
                     
                     allLoops.Add((i, verts, area));
                 }
@@ -583,16 +599,16 @@ namespace LaserConvert
                 allLoops = allLoops.OrderByDescending(l => l.BoundingBoxArea).ToList();
                 
                 outerVerts = allLoops[0].Vertices;
-                Console.WriteLine($"[EXTRACT] Identified bound {allLoops[0].Index} as outer loop (largest area={allLoops[0].BoundingBoxArea:F1})");
+                DebugLog($"[EXTRACT] Identified bound {allLoops[0].Index} as outer loop (largest area={allLoops[0].BoundingBoxArea:F1})");
                 
                 for (int i = 1; i < allLoops.Count; i++)
                 {
                     holeVerts.Add(allLoops[i].Vertices);
-                    Console.WriteLine($"[EXTRACT] Identified bound {allLoops[i].Index} as hole loop {i} (area={allLoops[i].BoundingBoxArea:F1})");
+                    DebugLog($"[EXTRACT] Identified bound {allLoops[i].Index} as hole loop {i} (area={allLoops[i].BoundingBoxArea:F1})");
                 }
             }
             
-            Console.WriteLine($"[EXTRACT] Returning {outerVerts.Count} outer verts and {holeVerts.Count} hole loops");
+            DebugLog($"[EXTRACT] Returning {outerVerts.Count} outer verts and {holeVerts.Count} hole loops");
             return (outerVerts, holeVerts);
         }
 
