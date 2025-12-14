@@ -9,16 +9,6 @@ namespace LaserConvert
 {
     /// <summary>
     /// StepProcess handles STEP file parsing and SVG generation for thin solids.
-    /// 
-    /// Algorithm (8-step plan):
-    /// 1. Discover shortest line segment between vertices on different faces
-    /// 2. Discover 3D rotation based on angle between those vertices
-    /// 3. Apply transform to rotate so thin segment is along Z axis
-    /// 4. Pick topmost face along Z axis
-    /// 5. Apply transform to rotate so 1 edge aligns with X axis
-    /// 6. Project to 2D (X, Y only after rotation/normalization)
-    /// 7. Reconstruct perimeter order in 2D using computational geometry
-    /// 8. Output to SVG
     /// </summary>
     internal static class StepProcess
     {
@@ -66,120 +56,7 @@ namespace LaserConvert
                 var svg = new SvgBuilder();
                 foreach (var (name, faces) in thinSolids)
                 {
-                    svg.BeginGroup(name);
-
-                    // Find the face with most boundary vertices - this is the main surface
-                    StepAdvancedFace bestFace = null;
-                    int maxBoundaryVerts = 0;
-                    
-                    foreach (var face in faces)
-                    {
-                        var (outerVerts, _) = StepTopologyResolver.ExtractFaceWithHoles(face, stepFile);
-                        if (outerVerts.Count > maxBoundaryVerts)
-                        {
-                            maxBoundaryVerts = outerVerts.Count;
-                            bestFace = face;
-                        }
-                    }
-                    
-                    if (bestFace != null && maxBoundaryVerts >= 3)
-                    {
-                        var (outerPerimeter, holePerimeters) = StepTopologyResolver.ExtractFaceWithHoles(bestFace, stepFile);
-                        
-                        // DEBUG: Log the 3D order
-                        Console.WriteLine($"[DEBUG] {name}: Raw 3D perimeter ({outerPerimeter.Count} verts):");
-                        for (int i = 0; i < Math.Min(outerPerimeter.Count, 8); i++)
-                        {
-                            var v = outerPerimeter[i];
-                            Console.WriteLine($"  [{i}] ({v.X:F1}, {v.Y:F1}, {v.Z:F1})");
-                        }
-                        
-                        // STEP 6: Project to 2D
-                        var projected = StepHelpers.ProjectTo2D(outerPerimeter);
-                        
-                        // DEBUG: Log projected 2D order
-                        Console.WriteLine($"[DEBUG] {name}: Projected 2D ({projected.Count} verts):");
-                        for (int i = 0; i < Math.Min(projected.Count, 8); i++)
-                        {
-                            var v = projected[i];
-                            Console.WriteLine($"  [{i}] ({v.X:F1}, {v.Y:F1})");
-                        }
-                        
-                        var normalized = StepHelpers.NormalizeAndRound(projected);
-                        
-                        // DEBUG: Log normalized 2D order
-                        Console.WriteLine($"[DEBUG] {name}: Normalized 2D ({normalized.Count} verts):");
-                        for (int i = 0; i < Math.Min(normalized.Count, 8); i++)
-                        {
-                            var v = normalized[i];
-                            Console.WriteLine($"  [{i}] ({v.Item1}, {v.Item2})");
-                        }
-                        
-                        // STEP 7: Remove consecutive duplicates
-                        var deduplicated = StepHelpers.RemoveConsecutiveDuplicates(normalized);
-                        
-                        // DEBUG: Log dedup order
-                        Console.WriteLine($"[DEBUG] {name}: After dedup ({deduplicated.Count} verts):");
-                        for (int i = 0; i < Math.Min(deduplicated.Count, 20); i++)
-                        {
-                            var v = deduplicated[i];
-                            Console.WriteLine($"  [{i}] ({v.Item1}, {v.Item2})");
-                        }
-                        
-                        if (deduplicated.Count >= 3)
-                        {
-                            // Reorder vertices using improved edge-walking algorithm
-                            var ordered = StepHelpers.OrderPolygonPerimeter(deduplicated);
-                            
-                            // DEBUG: Log ordering method
-                            if (ordered != null && ordered.Count == deduplicated.Count)
-                            {
-                                Console.WriteLine($"[ORDER] Used edge-walking perimeter reconstruction");
-                            }
-                            else
-                            {
-                                Console.WriteLine($"[ORDER] Used fallback polar angle ordering");
-                                if (ordered == null)
-                                {
-                                    // If edge walking failed, use polar angle as fallback
-                                    ordered = deduplicated.OrderBy(p => Math.Atan2(p.Item2 - deduplicated.Average(v => v.Item2), p.Item1 - deduplicated.Average(v => v.Item1))).ToList();
-                                }
-                            }
-                            
-                            // STEP 8: Build SVG path
-                            var outerPath = SvgPathBuilder.BuildPath(ordered);
-                            svg.Path(outerPath, 0.2, "none", "#000");
-                            Console.WriteLine($"[SVG] {name}: Generated outline from {ordered.Count} vertices");
-
-                            // Handle holes
-                            var outerMinX = projected.Min(p => p.X);
-                            var outerMinY = projected.Min(p => p.Y);
-                            
-                            foreach (var holePeri in holePerimeters)
-                            {
-                                if (holePeri.Count >= 3)
-                                {
-                                    var projHole = StepHelpers.ProjectTo2D(holePeri);
-                                    var normHole = StepHelpers.NormalizeAndRoundRelative(projHole, outerMinX, outerMinY);
-                                    var dedupHole = StepHelpers.RemoveConsecutiveDuplicates(normHole);
-                                    
-                                    if (dedupHole.Count >= 3)
-                                    {
-                                        var orderedHole = StepHelpers.OrderPolygonPerimeter(dedupHole);
-                                        if (orderedHole == null)
-                                        {
-                                            // Fallback for holes
-                                            orderedHole = dedupHole.OrderBy(p => Math.Atan2(p.Item2 - dedupHole.Average(v => v.Item2), p.Item1 - dedupHole.Average(v => v.Item1))).ToList();
-                                        }
-                                        var holePath = SvgPathBuilder.BuildPath(orderedHole);
-                                        svg.Path(holePath, 0.2, "none", "#f00");
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    
-                    svg.EndGroup();
+                    ProcessSolid(name, faces, stepFile, svg);
                 }
 
                 File.WriteAllText(outputPath, svg.Build());
@@ -189,8 +66,260 @@ namespace LaserConvert
             catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine(ex.StackTrace);
                 return 2;
             }
+        }
+
+        /// <summary>
+        /// Process a single solid by finding its main face and projecting to 2D.
+        /// </summary>
+        private static void ProcessSolid(string name, List<StepAdvancedFace> faces, StepFile stepFile, SvgBuilder svg)
+        {
+            svg.BeginGroup(name);
+
+            // Find the face with most boundary vertices (this is the main surface face)
+            StepAdvancedFace bestFace = null;
+            int maxBoundaryVerts = 0;
+            List<(double X, double Y, double Z)> bestOuterVerts = null;
+            List<List<(double X, double Y, double Z)>> bestHoleVerts = null;
+            
+            foreach (var face in faces)
+            {
+                var (outerVerts, holeVerts) = StepTopologyResolver.ExtractFaceWithHoles(face, stepFile);
+                if (outerVerts.Count > maxBoundaryVerts)
+                {
+                    maxBoundaryVerts = outerVerts.Count;
+                    bestFace = face;
+                    bestOuterVerts = outerVerts;
+                    bestHoleVerts = holeVerts;
+                }
+            }
+            
+            if (bestFace == null || bestOuterVerts == null || bestOuterVerts.Count < 3)
+            {
+                Console.WriteLine($"[{name}] No valid face found");
+                svg.EndGroup();
+                return;
+            }
+
+            // Build a coordinate frame from the outer boundary
+            // This same frame will be used for holes to preserve relative positions
+            var frame = BuildCoordinateFrame(bestOuterVerts);
+            
+            // Project outer boundary using the frame
+            var outer2D = ProjectWithFrame(bestOuterVerts, frame);
+            
+            // Project holes using the SAME frame
+            var holes2D = bestHoleVerts?.Select(h => ProjectWithFrame(h, frame)).ToList() 
+                ?? new List<List<(double X, double Y)>>();
+			
+            // Normalize to origin and round
+            var minX = outer2D.Min(p => p.X);
+            var minY = outer2D.Min(p => p.Y);
+            
+            var normalizedOuter = outer2D.Select(p => ((long)Math.Round(p.X - minX), (long)Math.Round(p.Y - minY))).ToList();
+            var normalizedHoles = holes2D.Select(h => 
+                h.Select(p => ((long)Math.Round(p.X - minX), (long)Math.Round(p.Y - minY))).ToList()
+            ).ToList();
+
+            // Remove consecutive duplicates
+            normalizedOuter = RemoveConsecutiveDuplicates(normalizedOuter);
+
+            // Order perimeter vertices
+            var orderedOuter = OrderPerimeter(normalizedOuter);
+
+            // Output to SVG
+            if (orderedOuter.Count >= 3)
+            {
+                var outerPath = SvgPathBuilder.BuildPath(orderedOuter);
+                svg.Path(outerPath, 0.2, "none", "#000");
+                Console.WriteLine($"[SVG] {name}: Generated outline from {orderedOuter.Count} vertices");
+
+                // Process holes
+                foreach (var hole2D in normalizedHoles)
+                {
+                    var dedupedHole = RemoveConsecutiveDuplicates(hole2D);
+                    if (dedupedHole.Count >= 3)
+                    {
+                        var orderedHole = OrderPerimeter(dedupedHole);
+                        var holePath = SvgPathBuilder.BuildPath(orderedHole);
+                        svg.Path(holePath, 0.2, "none", "#f00");
+                    }
+                }
+            }
+
+            svg.EndGroup();
+        }
+
+        /// <summary>
+        /// Build a coordinate frame (origin, X axis, Y axis) from a set of 3D points.
+        /// </summary>
+        private static (double OX, double OY, double OZ, double UX, double UY, double UZ, double VX, double VY, double VZ) BuildCoordinateFrame(
+            List<(double X, double Y, double Z)> points)
+        {
+            if (points.Count < 3)
+            {
+                return (0, 0, 0, 1, 0, 0, 0, 1, 0);
+            }
+            
+            var p0 = points[0];
+            var p1 = points[1 % points.Count];
+            var p2 = points[2 % points.Count];
+            
+            // Vector from p0 to p1 (first edge - this will become the X axis)
+            var v1x = p1.X - p0.X;
+            var v1y = p1.Y - p0.Y;
+            var v1z = p1.Z - p0.Z;
+            var v1len = Math.Sqrt(v1x * v1x + v1y * v1y + v1z * v1z);
+            if (v1len < 1e-10) v1len = 1;
+            
+            // Vector from p0 to p2 
+            var v2x = p2.X - p0.X;
+            var v2y = p2.Y - p0.Y;
+            var v2z = p2.Z - p0.Z;
+            
+            // Normal = v1 x v2
+            var nx = v1y * v2z - v1z * v2y;
+            var ny = v1z * v2x - v1x * v2z;
+            var nz = v1x * v2y - v1y * v2x;
+            var nlen = Math.Sqrt(nx * nx + ny * ny + nz * nz);
+            if (nlen < 1e-10)
+            {
+                // Degenerate case - use default frame
+                return (p0.X, p0.Y, p0.Z, 1, 0, 0, 0, 1, 0);
+            }
+            nx /= nlen; ny /= nlen; nz /= nlen;
+            
+            // X axis = normalized v1
+            var ux = v1x / v1len;
+            var uy = v1y / v1len;
+            var uz = v1z / v1len;
+            
+            // Y axis = normal x X (so it's perpendicular to both)
+            var vx = ny * uz - nz * uy;
+            var vy = nz * ux - nx * uz;
+            var vz = nx * uy - ny * ux;
+            var vlen = Math.Sqrt(vx * vx + vy * vy + vz * vz);
+            if (vlen < 1e-10) vlen = 1;
+            vx /= vlen; vy /= vlen; vz /= vlen;
+            
+            return (p0.X, p0.Y, p0.Z, ux, uy, uz, vx, vy, vz);
+        }
+
+        /// <summary>
+        /// Project 3D points using a coordinate frame.
+        /// </summary>
+        private static List<(double X, double Y)> ProjectWithFrame(
+            List<(double X, double Y, double Z)> points,
+            (double OX, double OY, double OZ, double UX, double UY, double UZ, double VX, double VY, double VZ) frame)
+        {
+            var result = new List<(double, double)>();
+            foreach (var p in points)
+            {
+                // Vector from origin to this point
+                var dx = p.X - frame.OX;
+                var dy = p.Y - frame.OY;
+                var dz = p.Z - frame.OZ;
+                
+                // Dot product with U and V axes
+                var u = dx * frame.UX + dy * frame.UY + dz * frame.UZ;
+                var v = dx * frame.VX + dy * frame.VY + dz * frame.VZ;
+                
+                result.Add((u, v));
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Remove consecutive duplicate points.
+        /// </summary>
+        private static List<(long X, long Y)> RemoveConsecutiveDuplicates(List<(long X, long Y)> points)
+        {
+            if (points.Count <= 1) return points.ToList();
+            
+            var result = new List<(long X, long Y)> { points[0] };
+            for (int i = 1; i < points.Count; i++)
+            {
+                if (points[i] != points[i - 1])
+                {
+                    result.Add(points[i]);
+                }
+            }
+            
+            if (result.Count > 2 && result.Last() == result[0])
+            {
+                result.RemoveAt(result.Count - 1);
+            }
+            
+            return result;
+        }
+
+        /// <summary>
+        /// Order perimeter vertices to form a proper closed polygon using nearest neighbor.
+        /// </summary>
+        private static List<(long X, long Y)> OrderPerimeter(List<(long X, long Y)> vertices)
+        {
+            if (vertices.Count <= 3)
+            {
+                return vertices.ToList();
+            }
+            
+            var uniqueVerts = vertices.Distinct().ToList();
+            if (uniqueVerts.Count <= 3)
+            {
+                return uniqueVerts;
+            }
+
+            var result = new List<(long X, long Y)>();
+            var used = new HashSet<int>();
+
+            // Start from bottom-left vertex
+            int current = 0;
+            for (int i = 1; i < uniqueVerts.Count; i++)
+            {
+                if (uniqueVerts[i].Y < uniqueVerts[current].Y ||
+                    (uniqueVerts[i].Y == uniqueVerts[current].Y && 
+                     uniqueVerts[i].X < uniqueVerts[current].X))
+                {
+                    current = i;
+                }
+            }
+
+            while (used.Count < uniqueVerts.Count)
+            {
+                result.Add(uniqueVerts[current]);
+                used.Add(current);
+
+                if (used.Count >= uniqueVerts.Count)
+                    break;
+
+                int next = -1;
+                long minDist = long.MaxValue;
+
+                for (int i = 0; i < uniqueVerts.Count; i++)
+                {
+                    if (used.Contains(i))
+                        continue;
+
+                    long dx = uniqueVerts[i].X - uniqueVerts[current].X;
+                    long dy = uniqueVerts[i].Y - uniqueVerts[current].Y;
+                    long distSq = dx * dx + dy * dy;
+
+                    if (distSq < minDist)
+                    {
+                        minDist = distSq;
+                        next = i;
+                    }
+                }
+
+                if (next == -1)
+                    break;
+
+                current = next;
+            }
+
+            return result;
         }
     }
 }
