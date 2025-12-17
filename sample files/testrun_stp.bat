@@ -36,8 +36,6 @@ REM we shouldn't have any special cases, we should just handle everything genera
 
 REM Preserve all boundary vertices for complex shapes instead of deduplicating them, which was collapsing the geometry to a simplified convex hull approximation.
 
-REM in all of our many iterations, KCBox.stp has never passed
-
 REM TEST CASES START HERE
 
 REM This file contains a single object named Box1 which is 170x150x3mm and should result in a single square in the SVG of 170x150mm.

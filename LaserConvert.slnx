@@ -16,6 +16,12 @@
     <File Path="sample files/all_results.txt" />
     <File Path="sample files/testrun_stp.bat" />
   </Folder>
+  <Folder Name="/Solution Items/bigbox/">
+    <File Path="sample files/bigbox/bb_results.txt" />
+    <File Path="sample files/bigbox/big box v2.stp" />
+    <File Path="sample files/bigbox/big box v2.svg" />
+    <File Path="sample files/bigbox/testrun_bb.bat" />
+  </Folder>
   <Project Path="external/step/src/IxMilia.Step/IxMilia.Step.csproj" />
   <Project Path="LaserConvert/LaserConvert.csproj" />
 </Solution>
