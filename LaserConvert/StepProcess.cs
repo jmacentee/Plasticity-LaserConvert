@@ -90,18 +90,26 @@ namespace LaserConvert
         {
             svg.BeginGroup(name);
 
-            // Find the face with most boundary vertices (this is the main surface face)
+            // Find the face with the LARGEST projected 2D area (this is the main surface face)
+            // This correctly handles wall-type shapes where we want the large flat face, not thin edges
             StepAdvancedFace bestFace = null;
-            int maxBoundaryVerts = 0;
+            double maxProjectedArea = 0;
             List<(double X, double Y, double Z)> bestOuterVerts = null;
             List<List<(double X, double Y, double Z)>> bestHoleVerts = null;
             
             foreach (var face in faces)
             {
                 var (outerVerts, holeVerts) = StepTopologyResolver.ExtractFaceWithHoles(face, stepFile, _debugMode);
-                if (outerVerts.Count > maxBoundaryVerts)
+                if (outerVerts.Count < 3)
+                    continue;
+                
+                // Compute the 2D bounding box area of this face
+                // This represents the "flat" area when projected to its natural plane
+                var projectedArea = ComputeProjectedArea(outerVerts);
+                
+                if (projectedArea > maxProjectedArea)
                 {
-                    maxBoundaryVerts = outerVerts.Count;
+                    maxProjectedArea = projectedArea;
                     bestFace = face;
                     bestOuterVerts = outerVerts;
                     bestHoleVerts = holeVerts;
@@ -304,6 +312,34 @@ namespace LaserConvert
             }
             
             return result.Count >= 3 ? result : points.ToList();
+        }
+
+        /// <summary>
+        /// Compute the projected 2D area of a set of 3D vertices.
+        /// Projects the vertices onto the best-fit plane and computes the polygon area.
+        /// </summary>
+        private static double ComputeProjectedArea(List<(double X, double Y, double Z)> vertices)
+        {
+            if (vertices.Count < 3)
+                return 0;
+            
+            // Build coordinate frame for this face
+            var frame = BuildCoordinateFrame(vertices);
+            
+            // Project to 2D
+            var projected = ProjectWithFrame(vertices, frame);
+            
+            // Compute polygon area using shoelace formula
+            double area = 0;
+            int n = projected.Count;
+            for (int i = 0; i < n; i++)
+            {
+                int j = (i + 1) % n;
+                area += projected[i].X * projected[j].Y;
+                area -= projected[j].X * projected[i].Y;
+            }
+            
+            return Math.Abs(area) / 2.0;
         }
     }
 }

@@ -4,10 +4,10 @@ REM File: big box v2.svg
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000mm" height="1000mm" viewBox="0 0 1000 1000">
 <defs/>
   <g id="RigthLowerWall">
-    <path d="M 0,0 L 167,0 L 167,3 L 0,3 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 78,0 L 78,167 L 0,167 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="TopDivider">
-    <path d="M 0,0 L 3,0 L 3,170 L 0,170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 60,0 L 60,170 L 0,170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="MiddleShelf">
     <path d="M 0,0 L 170,0 L 170,170 L 0,170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
@@ -31,10 +31,13 @@ REM File: big box v2.svg
     <path d="M 0,75 L 3,75 L 3,147 L 0,147 L 0,150 L 170,150 L 170,0 L 0,0 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="RightWall">
-    <path d="M 0,0 L 164,0 L 164,3 L 0,3 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 72,0 L 72,164 L 0,164 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 66,107 L 69,107 L 69,57 L 66,57 Z" stroke="#f00" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 66,57 L 66,29 L 63,29 L 63,57 Z" stroke="#f00" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 66,135 L 66,107 L 63,107 L 63,135 Z" stroke="#f00" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="BackWall">
-    <path d="M 0,0 L 170,0 L 170,3 L 0,3 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 150,0 L 150,170 L 0,170 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
