@@ -138,9 +138,16 @@ namespace LaserConvert
             var minX = outer2D.Min(p => p.X);
             var minY = outer2D.Min(p => p.Y);
             
-            var normalizedOuter = outer2D.Select(p => ((long)Math.Round(p.X - minX), (long)Math.Round(p.Y - minY))).ToList();
+            // Use MidpointRounding.AwayFromZero to ensure consistent rounding (e.g., 2.5 -> 3, not 2)
+            var normalizedOuter = outer2D.Select(p => (
+                (long)Math.Round(p.X - minX, MidpointRounding.AwayFromZero), 
+                (long)Math.Round(p.Y - minY, MidpointRounding.AwayFromZero)
+            )).ToList();
             var normalizedHoles = holes2D.Select(h => 
-                h.Select(p => ((long)Math.Round(p.X - minX), (long)Math.Round(p.Y - minY))).ToList()
+                h.Select(p => (
+                    (long)Math.Round(p.X - minX, MidpointRounding.AwayFromZero), 
+                    (long)Math.Round(p.Y - minY, MidpointRounding.AwayFromZero)
+                )).ToList()
             ).ToList();
 
             // Remove consecutive duplicates (but preserve order!)

@@ -27,8 +27,9 @@ REM we shouldn't have any special cases, we should just handle everything genera
 
 REM TEST CASES START HERE
 
-REM This file contains a 12 objects.  BoxOutline is too big and should not be included in the output.  Each other object is 3mm thick and should be.  No object in the output svg should have a 3mm dimension.
-REM BackWall, RightWall, TopDivider, and RightLowerWall are not correct in the output
+REM This file contains many objects
+REM Inside the object "Lid" in the svg, the cutout is 2x46mm
+REM in the original STEP file, the cutout is 3x46mm
 "C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\bigbox\big box v2.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\bigbox\big box v2.svg"  debugMode=true > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\bigbox\big box v2_output.txt"
 
 
