@@ -31,7 +31,7 @@ namespace LaserConvert
             _content.AppendLine("  </g>");
         }
         
-        public void Path(string d, double strokeWidth, string fill, string stroke = "#000")
+        public void Path(string d, double strokeWidth, string fill, string stroke = "#9600c8")
         {
             _content.AppendLine($"    <path d=\"{d}\" stroke=\"{stroke}\" stroke-width=\"{strokeWidth.ToString("0.###", CultureInfo.InvariantCulture)}\" fill=\"{fill}\" vector-effect=\"non-scaling-stroke\"/>");
         }

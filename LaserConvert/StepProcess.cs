@@ -160,7 +160,7 @@ namespace LaserConvert
             if (orderedOuter.Count >= 3)
             {
                 var outerPath = SvgPathBuilder.BuildPath(orderedOuter);
-                svg.Path(outerPath, 0.2, "none", "#000");
+                svg.Path(outerPath, 0.2, "none", "#9600c8");
                 DebugLog($"[SVG] {name}: Generated outline from {orderedOuter.Count} vertices");
 
                 // Process holes - also preserve their original order
@@ -170,7 +170,7 @@ namespace LaserConvert
                     if (dedupedHole.Count >= 3)
                     {
                         var holePath = SvgPathBuilder.BuildPath(dedupedHole);
-                        svg.Path(holePath, 0.2, "none", "#f00");
+                        svg.Path(holePath, 0.2, "none", "#960000");
                     }
                 }
             }
