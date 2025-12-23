@@ -29,6 +29,19 @@
     <File Path="sample files/bigboxRW/rw_results.txt" />
     <File Path="sample files/bigboxRW/testrun_bbrw.bat" />
   </Folder>
+  <Folder Name="/Solution Items/images/">
+    <File Path="images/boxopen.png" />
+    <File Path="images/boxopen_highlight.png" />
+    <File Path="images/boxopen_highlight_thumb.png" />
+    <File Path="images/boxopen_nodrawer.png" />
+    <File Path="images/boxopen_nodrawer_thumb.png" />
+    <File Path="images/boxopen_thumb.png" />
+    <File Path="images/boxoverview.png" />
+    <File Path="images/boxoverview_thumb.png" />
+    <File Path="images/stepexport.png" />
+    <File Path="images/svg.png" />
+    <File Path="images/svg_thumb.png" />
+  </Folder>
   <Project Path="external/step/src/IxMilia.Step/IxMilia.Step.csproj" />
   <Project Path="LaserConvert/LaserConvert.csproj" />
 </Solution>
