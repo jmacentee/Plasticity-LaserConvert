@@ -35,4 +35,5 @@ Run the tool with `LaserConvert.exe <input.stp> <output.svg>`
   <a href="images/svg.png" target="_blank">
     <img src="images/svg_thumb.png" alt="svg" width="564">
   </a>
+  <br>(Layout and some decoration lines added in Inkscape)
 </p>
