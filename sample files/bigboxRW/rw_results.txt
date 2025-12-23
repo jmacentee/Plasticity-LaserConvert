@@ -1,0 +1,1737 @@
+Concatenated results
+ 
+REM File: big box v2.svg 
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="482mm" height="266mm" viewBox="0 0 482 266">
+<defs/>
+  <g id="DHBottom">
+    <path d="M 98,3 L 140,3 L 140,83 L 94,83 L 94,80 L 47,80 L 47,83 L 0,83 L 0,3 L 48,3 L 48,0 L 98,0 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g id="MiddleShelf">
+    <path d="M 113,3 L 167,3 L 167,60 L 170,60 L 170,110 L 167,110 L 167,167 L 113,167 L 113,170 L 63,170 L 63,167 L 3,167 L 3,110 L 0,110 L 0,60 L 3,60 L 3,3 L 63,3 L 63,0 L 113,0 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 58,83 L 58,86 L 112,86 L 112,83 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g id="DHLeft">
+    <path d="M 3,0 L 62,0 L 62,47 L 65,47 L 65,93 L 62,93 L 62,140 L 3,140 L 3,93 L 0,93 L 0,46 L 3,46 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g id="DrawerBottom">
+    <path d="M 0,0 L 162,0 L 162,166 L 0,166 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g id="DrawerBack">
+    <path d="M 0,0 L 162,0 L 162,71 L 0,71 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g id="DrawerLeft">
+    <path d="M 0,0 L 71,0 L 71,166 L 0,166 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g id="DrawerRight">
+    <path d="M 0,0 L 71,0 L 71,166 L 0,166 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g id="DrawerFront">
+    <path d="M 0,0 L 72,0 L 72,170 L 0,170 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g id="TopDivider">
+    <path d="M 41,3 L 60,3 L 60,167 L 41,167 L 41,170 L 22,170 L 22,167 L 3,167 L 3,112 L 0,112 L 0,58 L 3,58 L 3,3 L 22,3 L 22,0 L 41,0 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g id="Lid">
+    <path d="M 0,0 L 163,0 L 163,28 L 166,28 L 166,56 L 163,56 L 163,106 L 166,106 L 166,134 L 163,134 L 163,162 L 0,162 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 87,58 L 84,58 L 84,104 L 87,104 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g id="LibTabB">
+    <path d="M 225,116 L 232,116 L 192,156 L 194,158 L 158,194 L 156,192 L 116,232 L 76,192 L 74,194 L 38,158 L 40,156 L 0,116 L 40,76 L 38,74 L 74,38 L 76,40 L 116,0 L 116,7 L 7,116 L 116,225 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g id="LidTabA">
+    <path d="M 225,116 L 232,116 L 192,156 L 194,158 L 158,194 L 156,192 L 116,232 L 76,192 L 74,194 L 38,158 L 40,156 L 0,116 L 40,76 L 38,74 L 74,38 L 76,40 L 116,0 L 116,7 L 7,116 L 116,225 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g id="RightLidtab">
+    <path d="M 107,3 L 164,3 L 159,8 L 5,8 L 0,3 L 57,3 L 57,0 L 107,0 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g id="Bottom">
+    <path d="M 113,3 L 170,3 L 170,167 L 113,167 L 113,170 L 63,170 L 63,167 L 3,167 L 3,110 L 0,110 L 0,60 L 3,60 L 3,3 L 63,3 L 63,0 L 113,0 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g id="LeftWall">
+    <path d="M 90,167 L 120,167 L 120,170 L 150,170 L 150,0 L 75,0 L 75,3 L 3,3 L 3,0 L 0,0 L 0,57 L 3,57 L 3,107 L 0,107 L 0,170 L 30,170 L 30,167 L 60,167 L 60,170 L 90,170 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 78,57 L 78,107 L 75,107 L 75,57 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 137,60 L 140,60 L 140,110 L 137,110 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 144,60 L 147,60 L 147,110 L 144,110 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g id="FrontA">
+    <path d="M 0,0 L 60,0 L 60,3 L 110,3 L 110,0 L 170,0 L 170,75 L 0,75 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 110,65 L 110,62 L 60,62 L 60,65 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 110,72 L 110,69 L 60,69 L 60,72 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 84,22 L 84,41 L 87,41 L 87,22 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g id="RigthLowerWall">
+    <path d="M 0,0 L 30,0 L 30,3 L 60,3 L 60,0 L 78,0 L 78,63 L 75,63 L 75,113 L 78,113 L 78,167 L 3,167 L 3,170 L 0,170 L 0,113 L 3,113 L 3,63 L 0,63 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g id="RightWall">
+    <path d="M 0,0 L 72,0 L 72,164 L 0,164 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 4,104 L 4,54 L 1,54 L 1,104 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 66,107 L 69,107 L 69,57 L 66,57 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 66,57 L 66,29 L 63,29 L 63,57 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 66,135 L 66,107 L 63,107 L 63,135 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g id="BackWall">
+    <path d="M 0,0 L 167,0 L 167,30 L 170,30 L 170,60 L 167,60 L 167,90 L 170,90 L 170,120 L 167,120 L 167,150 L 110,150 L 110,147 L 60,147 L 60,150 L 3,150 L 3,120 L 0,120 L 0,90 L 3,90 L 3,72 L 0,72 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 110,75 L 110,72 L 60,72 L 60,75 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 110,13 L 110,10 L 60,10 L 60,13 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 110,6 L 110,3 L 60,3 L 60,6 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 87,53 L 87,34 L 84,34 L 84,53 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+</svg>
+ 
+REM File: big box v2_output.txt 
+Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\bigbox\big box v2.stp
+File loaded. Total items: 10574
+Found 19 solids
+[TOPO] Processing 14 faces
+[TOPO] Found pair of faces with separation: 3.0mm
+[TOPO] Extracted 24 unique vertices
+[TOPO] Vertex ranges: X[2.5,85.0] Y[-70.0,70.0] Z[79.0,82.0]
+[TOPO] Computed dimensions: 82.5 x 140.0 x 3.0
+[TOPO] Thin dimension detected from face separation: 3.0mm
+[TOPO] Adjusted dimensions: 3.0 x 82.5 x 140.0
+[FILTER] DHBottom: dimensions [3.0, 82.5, 140.0] - PASS
+[TOPO] Processing 30 faces
+[TOPO] Complex shape detected (30 faces), extracting ALL vertices from all face bounds
+[TOPO] Extracted 56 unique vertices
+[TOPO] Vertex ranges: X[-85.0,85.0] Y[-85.0,85.0] Z[75.0,78.0]
+[TOPO] Computed dimensions: 170.0 x 170.0 x 3.0
+[TOPO] Thin dimension detected from face separation: 2.5mm
+[TOPO] Adjusted dimensions: 2.5 x 170.0 x 170.0
+[FILTER] MiddleShelf: dimensions [2.5, 170.0, 170.0] - PASS
+[TOPO] Processing 14 faces
+[TOPO] Found pair of faces with separation: 3.0mm
+[TOPO] Extracted 24 unique vertices
+[TOPO] Vertex ranges: X[2.5,5.5] Y[-70.0,70.0] Z[79.0,143.5]
+[TOPO] Computed dimensions: 3.0 x 140.0 x 64.5
+[TOPO] WARNING: Small face separation (3.0mm) but large Z dimension (64.5mm) - faces may not be parallel!
+[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.
+[TOPO] Recomputed with all faces: 3.0 x 140.0 x 64.5
+[TOPO] Thin dimension detected from face separation: 3.0mm
+[TOPO] Adjusted dimensions: 3.0 x 64.5 x 140.0
+[FILTER] DHLeft: dimensions [3.0, 64.5, 140.0] - PASS
+[TOPO] Processing 6 faces
+[TOPO] Found pair of faces with separation: 3.0mm
+[TOPO] Extracted 8 unique vertices
+[TOPO] Vertex ranges: X[-81.0,81.0] Y[-85.0,81.3] Z[3.0,6.0]
+[TOPO] Computed dimensions: 162.0 x 166.3 x 3.0
+[TOPO] Thin dimension detected from face separation: 3.0mm
+[TOPO] Adjusted dimensions: 3.0 x 162.0 x 166.3
+[FILTER] DrawerBottom: dimensions [3.0, 162.0, 166.3] - PASS
+[TOPO] Processing 6 faces
+[TOPO] Found pair of faces with separation: 3.0mm
+[TOPO] Extracted 8 unique vertices
+[TOPO] Vertex ranges: X[-81.0,80.8] Y[78.3,81.3] Z[3.0,74.0]
+[TOPO] Computed dimensions: 161.8 x 3.0 x 71.0
+[TOPO] WARNING: Small face separation (3.0mm) but large Z dimension (71.0mm) - faces may not be parallel!
+[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.
+[TOPO] Recomputed with all faces: 161.8 x 3.0 x 71.0
+[TOPO] Thin dimension detected from face separation: 3.0mm
+[TOPO] Adjusted dimensions: 3.0 x 71.0 x 161.8
+[FILTER] DrawerBack: dimensions [3.0, 71.0, 161.8] - PASS
+[TOPO] Processing 6 faces
+[TOPO] Found pair of faces with separation: 3.0mm
+[TOPO] Extracted 8 unique vertices
+[TOPO] Vertex ranges: X[-81.0,-78.0] Y[-85.0,81.3] Z[3.0,74.0]
+[TOPO] Computed dimensions: 3.0 x 166.3 x 71.0
+[TOPO] WARNING: Small face separation (3.0mm) but large Z dimension (71.0mm) - faces may not be parallel!
+[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.
+[TOPO] Recomputed with all faces: 3.0 x 166.3 x 71.0
+[TOPO] Thin dimension detected from face separation: 3.0mm
+[TOPO] Adjusted dimensions: 3.0 x 71.0 x 166.3
+[FILTER] DrawerLeft: dimensions [3.0, 71.0, 166.3] - PASS
+[TOPO] Processing 6 faces
+[TOPO] Found pair of faces with separation: 3.0mm
+[TOPO] Extracted 8 unique vertices
+[TOPO] Vertex ranges: X[78.0,81.0] Y[-85.0,81.3] Z[3.0,74.0]
+[TOPO] Computed dimensions: 3.0 x 166.3 x 71.0
+[TOPO] WARNING: Small face separation (3.0mm) but large Z dimension (71.0mm) - faces may not be parallel!
+[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.
+[TOPO] Recomputed with all faces: 3.0 x 166.3 x 71.0
+[TOPO] Thin dimension detected from face separation: 3.0mm
+[TOPO] Adjusted dimensions: 3.0 x 71.0 x 166.3
+[FILTER] DrawerRight: dimensions [3.0, 71.0, 166.3] - PASS
+[TOPO] Processing 6 faces
+[TOPO] Found pair of faces with separation: 3.0mm
+[TOPO] Extracted 8 unique vertices
+[TOPO] Vertex ranges: X[-85.0,85.0] Y[-85.0,-82.0] Z[3.0,75.0]
+[TOPO] Computed dimensions: 170.0 x 3.0 x 72.0
+[TOPO] WARNING: Small face separation (3.0mm) but large Z dimension (72.0mm) - faces may not be parallel!
+[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.
+[TOPO] Recomputed with all faces: 170.0 x 3.0 x 72.0
+[TOPO] Thin dimension detected from face separation: 3.0mm
+[TOPO] Adjusted dimensions: 3.0 x 72.0 x 170.0
+[FILTER] DrawerFront: dimensions [3.0, 72.0, 170.0] - PASS
+[TOPO] Processing 18 faces
+[TOPO] Found pair of faces with separation: 3.0mm
+[TOPO] Extracted 32 unique vertices
+[TOPO] Vertex ranges: X[-1.5,1.5] Y[-85.0,85.0] Z[75.0,135.0]
+[TOPO] Computed dimensions: 3.0 x 170.0 x 60.0
+[TOPO] WARNING: Small face separation (3.0mm) but large Z dimension (60.0mm) - faces may not be parallel!
+[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.
+[TOPO] Recomputed with all faces: 3.0 x 170.0 x 60.0
+[TOPO] Thin dimension detected from face separation: 3.0mm
+[TOPO] Adjusted dimensions: 3.0 x 60.0 x 170.0
+[FILTER] TopDivider: dimensions [3.0, 60.0, 170.0] - PASS
+[TOPO] Processing 18 faces
+[TOPO] Found pair of faces with separation: 3.0mm
+[TOPO] Extracted 32 unique vertices
+[TOPO] Vertex ranges: X[-81.0,85.0] Y[-81.0,81.0] Z[140.5,143.5]
+[TOPO] Computed dimensions: 166.0 x 162.0 x 3.0
+[TOPO] Thin dimension detected from face separation: 3.0mm
+[TOPO] Adjusted dimensions: 3.0 x 162.0 x 166.0
+[FILTER] Lid: dimensions [3.0, 162.0, 166.0] - PASS
+[TOPO] Processing 24 faces
+[TOPO] Complex shape detected (24 faces), extracting ALL vertices from all face bounds
+[TOPO] Extracted 44 unique vertices
+[TOPO] Vertex ranges: X[-85.0,82.0] Y[-85.0,85.0] Z[137.0,140.0]
+[TOPO] Computed dimensions: 167.0 x 170.0 x 3.0
+[TOPO] Thin dimension detected from face separation: 3.0mm
+[TOPO] Adjusted dimensions: 3.0 x 167.0 x 170.0
+[FILTER] LibTabB: dimensions [3.0, 167.0, 170.0] - PASS
+[TOPO] Processing 24 faces
+[TOPO] Complex shape detected (24 faces), extracting ALL vertices from all face bounds
+[TOPO] Extracted 44 unique vertices
+[TOPO] Vertex ranges: X[-85.0,82.0] Y[-85.0,85.0] Z[144.0,147.0]
+[TOPO] Computed dimensions: 167.0 x 170.0 x 3.0
+[TOPO] Thin dimension detected from face separation: 3.0mm
+[TOPO] Adjusted dimensions: 3.0 x 167.0 x 170.0
+[FILTER] LidTabA: dimensions [3.0, 167.0, 170.0] - PASS
+[TOPO] Processing 10 faces
+[TOPO] Found pair of faces with separation: 3.0mm
+[TOPO] Extracted 16 unique vertices
+[TOPO] Vertex ranges: X[77.0,85.0] Y[-82.0,82.0] Z[144.0,147.0]
+[TOPO] Computed dimensions: 8.0 x 164.0 x 3.0
+[TOPO] Thin dimension detected from face separation: 3.0mm
+[TOPO] Adjusted dimensions: 3.0 x 8.0 x 164.0
+[FILTER] RightLidtab: dimensions [3.0, 8.0, 164.0] - PASS
+[TOPO] Processing 18 faces
+[TOPO] Found pair of faces with separation: 3.0mm
+[TOPO] Extracted 32 unique vertices
+[TOPO] Vertex ranges: X[-85.0,85.0] Y[-85.0,85.0] Z[0.0,3.0]
+[TOPO] Computed dimensions: 170.0 x 170.0 x 3.0
+[TOPO] Thin dimension detected from face separation: 3.0mm
+[TOPO] Adjusted dimensions: 3.0 x 170.0 x 170.0
+[FILTER] Bottom: dimensions [3.0, 170.0, 170.0] - PASS
+[TOPO] Processing 34 faces
+[TOPO] Complex shape detected (34 faces), extracting ALL vertices from all face bounds
+[TOPO] Extracted 64 unique vertices
+[TOPO] Vertex ranges: X[-85.0,-82.0] Y[-85.0,85.0] Z[0.0,150.0]
+[TOPO] Computed dimensions: 3.0 x 170.0 x 150.0
+[TOPO] WARNING: Small face separation (3.0mm) but large Z dimension (150.0mm) - faces may not be parallel!
+[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.
+[TOPO] Recomputed with all faces: 3.0 x 170.0 x 150.0
+[TOPO] Thin dimension detected from face separation: 3.0mm
+[TOPO] Adjusted dimensions: 3.0 x 150.0 x 170.0
+[FILTER] LeftWall: dimensions [3.0, 150.0, 170.0] - PASS
+[TOPO] Processing 30 faces
+[TOPO] Complex shape detected (30 faces), extracting ALL vertices from all face bounds
+[TOPO] Extracted 56 unique vertices
+[TOPO] Vertex ranges: X[-85.0,85.0] Y[-85.0,-82.0] Z[75.0,150.0]
+[TOPO] Computed dimensions: 170.0 x 3.0 x 75.0
+[TOPO] WARNING: Small face separation (2.5mm) but large Z dimension (75.0mm) - faces may not be parallel!
+[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.
+[TOPO] Recomputed with all faces: 170.0 x 3.0 x 75.0
+[TOPO] Thin dimension detected from face separation: 2.5mm
+[TOPO] Adjusted dimensions: 2.5 x 75.0 x 170.0
+[FILTER] FrontA: dimensions [2.5, 75.0, 170.0] - PASS
+[TOPO] Processing 20 faces
+[TOPO] Found pair of faces with separation: 3.0mm
+[TOPO] Extracted 36 unique vertices
+[TOPO] Vertex ranges: X[82.0,85.0] Y[-85.0,85.0] Z[0.0,78.0]
+[TOPO] Computed dimensions: 3.0 x 170.0 x 78.0
+[TOPO] WARNING: Small face separation (3.0mm) but large Z dimension (78.0mm) - faces may not be parallel!
+[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.
+[TOPO] Recomputed with all faces: 3.0 x 170.0 x 78.0
+[TOPO] Thin dimension detected from face separation: 3.0mm
+[TOPO] Adjusted dimensions: 3.0 x 78.0 x 170.0
+[FILTER] RigthLowerWall: dimensions [3.0, 78.0, 170.0] - PASS
+[TOPO] Processing 22 faces
+[TOPO] Complex shape detected (22 faces), extracting ALL vertices from all face bounds
+[TOPO] Extracted 40 unique vertices
+[TOPO] Vertex ranges: X[82.0,85.0] Y[-82.0,82.0] Z[78.0,150.0]
+[TOPO] Computed dimensions: 3.0 x 164.0 x 72.0
+[TOPO] WARNING: Small face separation (3.0mm) but large Z dimension (72.0mm) - faces may not be parallel!
+[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.
+[TOPO] Recomputed with all faces: 3.0 x 164.0 x 72.0
+[TOPO] Thin dimension detected from face separation: 3.0mm
+[TOPO] Adjusted dimensions: 3.0 x 72.0 x 164.0
+[FILTER] RightWall: dimensions [3.0, 72.0, 164.0] - PASS
+[TOPO] Processing 40 faces
+[TOPO] Complex shape detected (40 faces), extracting ALL vertices from all face bounds
+[TOPO] Extracted 76 unique vertices
+[TOPO] Vertex ranges: X[-85.0,85.0] Y[82.0,85.0] Z[0.0,150.0]
+[TOPO] Computed dimensions: 170.0 x 3.0 x 150.0
+[TOPO] WARNING: Small face separation (3.0mm) but large Z dimension (150.0mm) - faces may not be parallel!
+[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.
+[TOPO] Recomputed with all faces: 170.0 x 3.0 x 150.0
+[TOPO] Thin dimension detected from face separation: 3.0mm
+[TOPO] Adjusted dimensions: 3.0 x 150.0 x 170.0
+[FILTER] BackWall: dimensions [3.0, 150.0, 170.0] - PASS
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x50.0x3.0 (area=150.0): (85.0,-28.0,79.0), (85.0,22.0,79.0), (85.0,22.0,82.0), (85.0,-28.0,82.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 12 vertices, bbox 82.5x140.0x0.0 (area=11550.0): (82.0,-70.0,82.0), (82.0,-28.0,82.0), (85.0,-28.0,82.0), (85.0,22.0,82.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=11550.0)
+[EXTRACT] Returning 12 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x47.4x3.0 (area=142.1): (2.5,70.0,79.0), (2.5,22.6,79.0), (2.5,22.6,82.0), (2.5,70.0,82.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=142.1)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 79.5x0.0x3.0 (area=238.5): (82.0,-70.0,79.0), (82.0,-70.0,82.0), (2.5,-70.0,82.0), (2.5,-70.0,79.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=238.5)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x46.0x3.0 (area=137.9): (2.5,-24.0,82.0), (2.5,-24.0,79.0), (2.5,-70.0,79.0), (2.5,-70.0,82.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=137.9)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 79.5x0.0x3.0 (area=238.5): (82.0,70.0,82.0), (82.0,70.0,79.0), (2.5,70.0,79.0), (2.5,70.0,82.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=238.5)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 12 vertices, bbox 82.5x140.0x0.0 (area=11550.0): (82.0,-28.0,79.0), (82.0,-70.0,79.0), (2.5,-70.0,79.0), (2.5,-24.0,79.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=11550.0)
+[EXTRACT] Returning 12 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (5.5,22.6,82.0), (2.5,22.6,82.0), (2.5,22.6,79.0), (5.5,22.6,79.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (2.5,-24.0,82.0), (5.5,-24.0,82.0), (5.5,-24.0,79.0), (2.5,-24.0,79.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x46.7x3.0 (area=140.0): (5.5,-24.0,82.0), (5.5,22.6,82.0), (5.5,22.6,79.0), (5.5,-24.0,79.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=140.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x48.0x3.0 (area=144.0): (82.0,70.0,79.0), (82.0,70.0,82.0), (82.0,22.0,82.0), (82.0,22.0,79.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=144.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (85.0,22.0,79.0), (82.0,22.0,79.0), (82.0,22.0,82.0), (85.0,22.0,82.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x42.0x3.0 (area=126.0): (82.0,-70.0,82.0), (82.0,-70.0,79.0), (82.0,-28.0,79.0), (82.0,-28.0,82.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=126.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (85.0,-28.0,79.0), (85.0,-28.0,82.0), (82.0,-28.0,82.0), (82.0,-28.0,79.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] DHBottom: Generated outline from 12 vertices
+[EXTRACT] ExtractFaceWithHoles: face has 2 bounds
+[EXTRACT] Bound 0 has 24 vertices, bbox 170.0x170.0x0.0 (area=28895.1): (82.0,-28.0,75.0), (82.0,-82.0,75.0), (77.0,-82.0,75.0), (77.0,-82.0,75.0)...
+[EXTRACT] Bound 1 has 4 vertices, bbox 3.0x54.7x0.0 (area=164.0): (1.5,27.3,75.0), (-1.5,27.3,75.0), (-1.5,-27.3,75.0), (1.5,-27.3,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=28895.1)
+[EXTRACT] Identified bound 1 as hole loop 1 (area=164.0)
+[EXTRACT] Returning 24 outer verts and 1 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x54.0x3.0 (area=162.0): (82.0,-28.0,78.0), (82.0,-82.0,78.0), (82.0,-82.0,75.0), (82.0,-28.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=162.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 2 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x54.7x0.0 (area=164.0): (-1.5,-27.3,78.0), (-1.5,27.3,78.0), (1.5,27.3,78.0), (1.5,-27.3,78.0)...
+[EXTRACT] Bound 1 has 24 vertices, bbox 170.0x170.0x0.0 (area=28895.1): (77.0,-82.0,78.0), (82.0,-82.0,78.0), (82.0,-28.0,78.0), (85.0,-28.0,78.0)...
+[EXTRACT] Identified bound 1 as outer loop (largest area=28895.1)
+[EXTRACT] Identified bound 0 as hole loop 1 (area=164.0)
+[EXTRACT] Returning 24 outer verts and 1 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x54.0x3.0 (area=162.0): (-82.0,-28.0,75.0), (-82.0,-82.0,75.0), (-82.0,-82.0,78.0), (-82.0,-28.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=162.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 57.0x0.0x3.0 (area=171.0): (-25.0,82.0,78.0), (-25.0,82.0,75.0), (-82.0,82.0,75.0), (-82.0,82.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=171.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x60.0x3.0 (area=180.0): (-82.0,22.0,78.0), (-82.0,82.0,78.0), (-82.0,82.0,75.0), (-82.0,22.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=180.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 57.0x0.0x3.0 (area=171.0): (25.0,82.0,75.0), (25.0,82.0,78.0), (82.0,82.0,78.0), (82.0,82.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=171.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x60.0x3.0 (area=180.0): (82.0,82.0,78.0), (82.0,22.0,78.0), (82.0,22.0,75.0), (82.0,82.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=180.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x50.0x3.0 (area=150.0): (85.0,22.0,78.0), (85.0,-28.0,78.0), (85.0,-28.0,75.0), (85.0,22.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (85.0,22.0,75.0), (82.0,22.0,75.0), (82.0,22.0,78.0), (85.0,22.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (85.0,-28.0,78.0), (82.0,-28.0,78.0), (82.0,-28.0,75.0), (85.0,-28.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 50.0x0.0x3.0 (area=150.0): (-25.0,85.0,78.0), (25.0,85.0,78.0), (25.0,85.0,75.0), (-25.0,85.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (-25.0,85.0,75.0), (-25.0,82.0,75.0), (-25.0,82.0,78.0), (-25.0,85.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (25.0,85.0,78.0), (25.0,82.0,78.0), (25.0,82.0,75.0), (25.0,85.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x50.0x3.0 (area=150.0): (-85.0,-28.0,78.0), (-85.0,22.0,78.0), (-85.0,22.0,75.0), (-85.0,-28.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (-85.0,-28.0,75.0), (-82.0,-28.0,75.0), (-82.0,-28.0,78.0), (-85.0,-28.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (-85.0,22.0,78.0), (-82.0,22.0,78.0), (-82.0,22.0,75.0), (-85.0,22.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x0.0x3.0 (area=0.0): (-77.0,-82.0,75.0), (-77.0,-82.0,78.0), (-77.0,-82.0,78.0), (-77.0,-82.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=0.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 5.0x0.0x3.0 (area=15.0): (-77.0,-82.0,75.0), (-77.0,-82.0,78.0), (-82.0,-82.0,78.0), (-82.0,-82.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=15.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 52.0x0.0x3.0 (area=156.0): (-25.0,-82.0,78.0), (-77.0,-82.0,78.0), (-77.0,-82.0,75.0), (-25.0,-82.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=156.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 52.0x0.0x3.0 (area=156.0): (77.0,-82.0,75.0), (77.0,-82.0,78.0), (25.0,-82.0,78.0), (25.0,-82.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=156.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 50.0x0.0x3.0 (area=150.0): (25.0,-85.0,78.0), (-25.0,-85.0,78.0), (-25.0,-85.0,75.0), (25.0,-85.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (25.0,-82.0,78.0), (25.0,-85.0,78.0), (25.0,-85.0,75.0), (25.0,-82.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (-25.0,-82.0,78.0), (-25.0,-82.0,75.0), (-25.0,-85.0,75.0), (-25.0,-85.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x0.0x3.0 (area=0.0): (77.0,-82.0,78.0), (77.0,-82.0,75.0), (77.0,-82.0,75.0), (77.0,-82.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=0.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 5.0x0.0x3.0 (area=15.0): (77.0,-82.0,78.0), (77.0,-82.0,75.0), (82.0,-82.0,75.0), (82.0,-82.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=15.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (1.5,27.3,78.0), (-1.5,27.3,78.0), (-1.5,27.3,75.0), (1.5,27.3,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (-1.5,-27.3,78.0), (1.5,-27.3,78.0), (1.5,-27.3,75.0), (-1.5,-27.3,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x54.7x3.0 (area=164.0): (-1.5,27.3,78.0), (-1.5,-27.3,78.0), (-1.5,-27.3,75.0), (-1.5,27.3,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=164.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x54.7x3.0 (area=164.0): (1.5,-27.3,78.0), (1.5,27.3,78.0), (1.5,27.3,75.0), (1.5,-27.3,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=164.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] MiddleShelf: Generated outline from 20 vertices
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (2.5,23.3,143.5), (5.5,23.3,143.5), (5.5,23.3,140.5), (2.5,23.3,140.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (5.5,-23.3,143.5), (2.5,-23.3,143.5), (2.5,-23.3,140.5), (5.5,-23.3,140.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x46.7x0.0 (area=140.0): (2.5,23.3,143.5), (2.5,-23.3,143.5), (5.5,-23.3,143.5), (5.5,23.3,143.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=140.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x46.7x0.0 (area=140.0): (2.5,70.0,140.5), (2.5,23.3,140.5), (5.5,23.3,140.5), (5.5,70.0,140.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=140.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (2.5,22.6,82.0), (5.5,22.6,82.0), (5.5,22.6,79.0), (2.5,22.6,79.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (5.5,-24.0,82.0), (2.5,-24.0,82.0), (2.5,-24.0,79.0), (5.5,-24.0,79.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x46.7x0.0 (area=140.0): (5.5,22.6,79.0), (5.5,-24.0,79.0), (2.5,-24.0,79.0), (2.5,22.6,79.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=140.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x47.4x0.0 (area=142.1): (5.5,70.0,82.0), (5.5,22.6,82.0), (2.5,22.6,82.0), (2.5,70.0,82.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=142.1)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x46.7x0.0 (area=140.0): (5.5,-23.3,140.5), (2.5,-23.3,140.5), (2.5,-70.0,140.5), (5.5,-70.0,140.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=140.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 12 vertices, bbox 0.0x140.0x64.5 (area=9030.6): (2.5,-70.0,82.0), (2.5,-70.0,140.5), (2.5,-23.3,140.5), (2.5,-23.3,143.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9030.6)
+[EXTRACT] Returning 12 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x46.0x0.0 (area=137.9): (2.5,-24.0,82.0), (5.5,-24.0,82.0), (5.5,-70.0,82.0), (2.5,-70.0,82.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=137.9)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 12 vertices, bbox 0.0x140.0x64.5 (area=9030.6): (5.5,-70.0,140.5), (5.5,-70.0,82.0), (5.5,-24.0,82.0), (5.5,-24.0,79.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9030.6)
+[EXTRACT] Returning 12 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x58.5 (area=175.5): (2.5,70.0,140.5), (5.5,70.0,140.5), (5.5,70.0,82.0), (2.5,70.0,82.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=175.5)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x58.5 (area=175.5): (5.5,-70.0,140.5), (2.5,-70.0,140.5), (2.5,-70.0,82.0), (5.5,-70.0,82.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=175.5)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] DHLeft: Generated outline from 12 vertices
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 162.0x166.3x0.0 (area=26937.0): (-81.0,-85.0,6.0), (81.0,-85.0,6.0), (81.0,81.3,6.0), (-81.0,81.3,6.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=26937.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 162.0x0.0x3.0 (area=486.0): (81.0,-85.0,3.0), (81.0,-85.0,6.0), (-81.0,-85.0,6.0), (-81.0,-85.0,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=486.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x166.3x3.0 (area=498.8): (-81.0,-85.0,3.0), (-81.0,-85.0,6.0), (-81.0,81.3,6.0), (-81.0,81.3,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=498.8)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 162.0x0.0x3.0 (area=486.0): (-81.0,81.3,3.0), (-81.0,81.3,6.0), (81.0,81.3,6.0), (81.0,81.3,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=486.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 162.0x166.3x0.0 (area=26937.0): (81.0,81.3,3.0), (81.0,-85.0,3.0), (-81.0,-85.0,3.0), (-81.0,81.3,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=26937.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x166.3x3.0 (area=498.8): (81.0,-85.0,3.0), (81.0,81.3,3.0), (81.0,81.3,6.0), (81.0,-85.0,6.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=498.8)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] DrawerBottom: Generated outline from 4 vertices
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 161.8x0.0x71.0 (area=11487.8): (-81.0,78.3,3.0), (80.8,78.3,3.0), (80.8,78.3,74.0), (-81.0,78.3,74.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=11487.8)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 161.8x3.0x0.0 (area=485.4): (80.8,81.3,3.0), (80.8,78.3,3.0), (-81.0,78.3,3.0), (-81.0,81.3,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=485.4)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x71.0 (area=213.0): (-81.0,81.3,3.0), (-81.0,78.3,3.0), (-81.0,78.3,74.0), (-81.0,81.3,74.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=213.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 161.8x3.0x0.0 (area=485.4): (-81.0,81.3,74.0), (-81.0,78.3,74.0), (80.8,78.3,74.0), (80.8,81.3,74.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=485.4)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 161.8x0.0x71.0 (area=11487.8): (80.8,81.3,74.0), (80.8,81.3,3.0), (-81.0,81.3,3.0), (-81.0,81.3,74.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=11487.8)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x71.0 (area=213.0): (80.8,81.3,3.0), (80.8,81.3,74.0), (80.8,78.3,74.0), (80.8,78.3,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=213.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] DrawerBack: Generated outline from 4 vertices
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x166.3x0.0 (area=498.8): (-78.0,-85.0,74.0), (-78.0,81.3,74.0), (-81.0,81.3,74.0), (-81.0,-85.0,74.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=498.8)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x166.3x71.0 (area=11805.7): (-78.0,-85.0,74.0), (-78.0,-85.0,3.0), (-78.0,81.3,3.0), (-78.0,81.3,74.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=11805.7)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x71.0 (area=213.0): (-78.0,81.3,74.0), (-78.0,81.3,3.0), (-81.0,81.3,3.0), (-81.0,81.3,74.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=213.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x166.3x71.0 (area=11805.7): (-81.0,81.3,74.0), (-81.0,81.3,3.0), (-81.0,-85.0,3.0), (-81.0,-85.0,74.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=11805.7)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x166.3x0.0 (area=498.8): (-78.0,-85.0,3.0), (-81.0,-85.0,3.0), (-81.0,81.3,3.0), (-78.0,81.3,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=498.8)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x71.0 (area=213.0): (-81.0,-85.0,3.0), (-78.0,-85.0,3.0), (-78.0,-85.0,74.0), (-81.0,-85.0,74.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=213.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] DrawerLeft: Generated outline from 4 vertices
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x166.3x0.0 (area=498.8): (78.0,81.3,74.0), (78.0,-85.0,74.0), (81.0,-85.0,74.0), (81.0,81.3,74.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=498.8)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x166.3x71.0 (area=11805.7): (78.0,-85.0,3.0), (78.0,-85.0,74.0), (78.0,81.3,74.0), (78.0,81.3,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=11805.7)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x71.0 (area=213.0): (78.0,81.3,3.0), (78.0,81.3,74.0), (81.0,81.3,74.0), (81.0,81.3,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=213.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x166.3x71.0 (area=11805.7): (81.0,81.3,3.0), (81.0,81.3,74.0), (81.0,-85.0,74.0), (81.0,-85.0,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=11805.7)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x166.3x0.0 (area=498.8): (81.0,-85.0,3.0), (78.0,-85.0,3.0), (78.0,81.3,3.0), (81.0,81.3,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=498.8)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x71.0 (area=213.0): (78.0,-85.0,3.0), (81.0,-85.0,3.0), (81.0,-85.0,74.0), (78.0,-85.0,74.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=213.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] DrawerRight: Generated outline from 4 vertices
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 170.0x3.0x0.0 (area=510.0): (85.0,-82.0,75.0), (-85.0,-82.0,75.0), (-85.0,-85.0,75.0), (85.0,-85.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=510.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 170.0x0.0x72.0 (area=12240.0): (-85.0,-82.0,3.0), (-85.0,-82.0,75.0), (85.0,-82.0,75.0), (85.0,-82.0,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=12240.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x72.0 (area=216.0): (85.0,-82.0,3.0), (85.0,-82.0,75.0), (85.0,-85.0,75.0), (85.0,-85.0,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=216.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 170.0x0.0x72.0 (area=12240.0): (85.0,-85.0,3.0), (85.0,-85.0,75.0), (-85.0,-85.0,75.0), (-85.0,-85.0,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=12240.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 170.0x3.0x0.0 (area=510.0): (-85.0,-85.0,3.0), (-85.0,-82.0,3.0), (85.0,-82.0,3.0), (85.0,-85.0,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=510.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x72.0 (area=216.0): (-85.0,-82.0,3.0), (-85.0,-85.0,3.0), (-85.0,-85.0,75.0), (-85.0,-82.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=216.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] DrawerFront: Generated outline from 4 vertices
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (-1.5,27.3,78.0), (1.5,27.3,78.0), (1.5,27.3,75.0), (-1.5,27.3,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (1.5,-27.3,78.0), (-1.5,-27.3,78.0), (-1.5,-27.3,75.0), (1.5,-27.3,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x54.7x0.0 (area=164.0): (1.5,27.3,75.0), (1.5,-27.3,75.0), (-1.5,-27.3,75.0), (-1.5,27.3,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=164.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x54.7x0.0 (area=164.0): (1.5,82.0,78.0), (1.5,27.3,78.0), (-1.5,27.3,78.0), (-1.5,82.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=164.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x3.0x0.0 (area=9.0): (-1.5,-82.0,97.0), (1.5,-82.0,97.0), (1.5,-85.0,97.0), (-1.5,-85.0,97.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x3.0x0.0 (area=9.0): (1.5,-82.0,116.0), (-1.5,-82.0,116.0), (-1.5,-85.0,116.0), (1.5,-85.0,116.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x19.0 (area=57.0): (-1.5,-82.0,135.0), (-1.5,-82.0,116.0), (1.5,-82.0,116.0), (1.5,-82.0,135.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=57.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x19.0 (area=57.0): (1.5,-85.0,116.0), (-1.5,-85.0,116.0), (-1.5,-85.0,97.0), (1.5,-85.0,97.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=57.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x3.0x0.0 (area=9.0): (1.5,82.0,97.0), (-1.5,82.0,97.0), (-1.5,85.0,97.0), (1.5,85.0,97.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x3.0x0.0 (area=9.0): (-1.5,82.0,116.0), (1.5,82.0,116.0), (1.5,85.0,116.0), (-1.5,85.0,116.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x19.0 (area=57.0): (-1.5,85.0,97.0), (-1.5,85.0,116.0), (1.5,85.0,116.0), (1.5,85.0,97.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=57.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x19.0 (area=57.0): (-1.5,82.0,78.0), (-1.5,82.0,97.0), (1.5,82.0,97.0), (1.5,82.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=57.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x164.0x0.0 (area=492.0): (-1.5,-82.0,135.0), (1.5,-82.0,135.0), (1.5,82.0,135.0), (-1.5,82.0,135.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=492.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 16 vertices, bbox 0.0x170.0x60.0 (area=10200.0): (-1.5,-82.0,116.0), (-1.5,-82.0,135.0), (-1.5,82.0,135.0), (-1.5,82.0,116.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=10200.0)
+[EXTRACT] Returning 16 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x54.7x0.0 (area=164.0): (-1.5,-27.3,78.0), (1.5,-27.3,78.0), (1.5,-82.0,78.0), (-1.5,-82.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=164.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 16 vertices, bbox 0.0x170.0x60.0 (area=10200.0): (1.5,-82.0,97.0), (1.5,-82.0,78.0), (1.5,-27.3,78.0), (1.5,-27.3,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=10200.0)
+[EXTRACT] Returning 16 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x19.0 (area=57.0): (1.5,82.0,116.0), (-1.5,82.0,116.0), (-1.5,82.0,135.0), (1.5,82.0,135.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=57.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x19.0 (area=57.0): (1.5,-82.0,97.0), (-1.5,-82.0,97.0), (-1.5,-82.0,78.0), (1.5,-82.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=57.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] TopDivider: Generated outline from 16 vertices
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (82.0,53.0,140.5), (82.0,53.0,143.5), (85.0,53.0,143.5), (85.0,53.0,140.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (82.0,-53.0,143.5), (82.0,-53.0,140.5), (85.0,-53.0,140.5), (85.0,-53.0,143.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (82.0,-25.0,140.5), (82.0,-25.0,143.5), (85.0,-25.0,143.5), (85.0,-25.0,140.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (82.0,25.0,143.5), (82.0,25.0,140.5), (85.0,25.0,140.5), (85.0,25.0,143.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x28.0x3.0 (area=84.0): (85.0,53.0,143.5), (85.0,25.0,143.5), (85.0,25.0,140.5), (85.0,53.0,140.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=84.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x50.0x3.0 (area=150.0): (82.0,25.0,140.5), (82.0,25.0,143.5), (82.0,-25.0,143.5), (82.0,-25.0,140.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x28.0x3.0 (area=84.0): (85.0,-25.0,140.5), (85.0,-25.0,143.5), (85.0,-53.0,143.5), (85.0,-53.0,140.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=84.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x28.0x3.0 (area=84.0): (82.0,81.0,143.5), (82.0,53.0,143.5), (82.0,53.0,140.5), (82.0,81.0,140.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=84.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 2 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x46.7x0.0 (area=140.0): (5.5,-23.3,143.5), (2.5,-23.3,143.5), (2.5,23.3,143.5), (5.5,23.3,143.5)...
+[EXTRACT] Bound 1 has 12 vertices, bbox 166.0x162.0x0.0 (area=26892.0): (-81.0,-81.0,143.5), (82.0,-81.0,143.5), (82.0,-53.0,143.5), (85.0,-53.0,143.5)...
+[EXTRACT] Identified bound 1 as outer loop (largest area=26892.0)
+[EXTRACT] Identified bound 0 as hole loop 1 (area=140.0)
+[EXTRACT] Returning 12 outer verts and 1 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 163.0x0.0x3.0 (area=489.0): (82.0,-81.0,140.5), (82.0,-81.0,143.5), (-81.0,-81.0,143.5), (-81.0,-81.0,140.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=489.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x162.0x3.0 (area=486.0): (-81.0,-81.0,140.5), (-81.0,-81.0,143.5), (-81.0,81.0,143.5), (-81.0,81.0,140.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=486.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 163.0x0.0x3.0 (area=489.0): (-81.0,81.0,140.5), (-81.0,81.0,143.5), (82.0,81.0,143.5), (82.0,81.0,140.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=489.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 2 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x46.7x0.0 (area=140.0): (2.5,23.3,140.5), (2.5,-23.3,140.5), (5.5,-23.3,140.5), (5.5,23.3,140.5)...
+[EXTRACT] Bound 1 has 12 vertices, bbox 166.0x162.0x0.0 (area=26892.0): (82.0,-53.0,140.5), (82.0,-81.0,140.5), (-81.0,-81.0,140.5), (-81.0,81.0,140.5)...
+[EXTRACT] Identified bound 1 as outer loop (largest area=26892.0)
+[EXTRACT] Identified bound 0 as hole loop 1 (area=140.0)
+[EXTRACT] Returning 12 outer verts and 1 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x28.0x3.0 (area=84.0): (82.0,-53.0,140.5), (82.0,-53.0,143.5), (82.0,-81.0,143.5), (82.0,-81.0,140.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=84.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (5.5,23.3,143.5), (2.5,23.3,143.5), (2.5,23.3,140.5), (5.5,23.3,140.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (2.5,-23.3,143.5), (5.5,-23.3,143.5), (5.5,-23.3,140.5), (2.5,-23.3,140.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x46.7x3.0 (area=140.0): (2.5,-23.3,140.5), (2.5,23.3,140.5), (2.5,23.3,143.5), (2.5,-23.3,143.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=140.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x46.7x3.0 (area=140.0): (5.5,23.3,140.5), (5.5,-23.3,140.5), (5.5,-23.3,143.5), (5.5,23.3,143.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=140.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] Lid: Generated outline from 12 vertices
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 22 vertices, bbox 167.0x170.0x0.0 (area=28383.9): (77.0,77.0,140.0), (82.0,82.0,140.0), (25.0,82.0,140.0), (25.0,85.0,140.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=28383.9)
+[EXTRACT] Returning 22 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 154.0x0.0x3.0 (area=462.0): (77.0,77.0,137.0), (77.0,77.0,140.0), (-77.0,77.0,140.0), (-77.0,77.0,137.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=462.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 22 vertices, bbox 167.0x170.0x0.0 (area=28383.9): (82.0,82.0,137.0), (77.0,77.0,137.0), (77.0,77.0,137.0), (-77.0,77.0,137.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=28383.9)
+[EXTRACT] Returning 22 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 57.0x0.0x3.0 (area=171.0): (82.0,82.0,140.0), (82.0,82.0,137.0), (25.0,82.0,137.0), (25.0,82.0,140.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=171.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 57.0x0.0x3.0 (area=171.0): (-25.0,82.0,137.0), (-82.0,82.0,137.0), (-82.0,82.0,140.0), (-25.0,82.0,140.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=171.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 50.0x0.0x3.0 (area=150.0): (-25.0,85.0,140.0), (25.0,85.0,140.0), (25.0,85.0,137.0), (-25.0,85.0,137.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (-25.0,82.0,140.0), (-25.0,85.0,140.0), (-25.0,85.0,137.0), (-25.0,82.0,137.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (25.0,82.0,140.0), (25.0,82.0,137.0), (25.0,85.0,137.0), (25.0,85.0,140.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x57.0x3.0 (area=171.0): (-82.0,82.0,140.0), (-82.0,82.0,137.0), (-82.0,25.0,137.0), (-82.0,25.0,140.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=171.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x154.0x3.0 (area=462.0): (-77.0,-77.0,137.0), (-77.0,77.0,137.0), (-77.0,77.0,140.0), (-77.0,-77.0,140.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=462.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x57.0x3.0 (area=171.0): (-82.0,-25.0,137.0), (-82.0,-82.0,137.0), (-82.0,-82.0,140.0), (-82.0,-25.0,140.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=171.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x50.0x3.0 (area=150.0): (-85.0,-25.0,140.0), (-85.0,25.0,140.0), (-85.0,25.0,137.0), (-85.0,-25.0,137.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (-82.0,-25.0,140.0), (-85.0,-25.0,140.0), (-85.0,-25.0,137.0), (-82.0,-25.0,137.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (-82.0,25.0,140.0), (-82.0,25.0,137.0), (-85.0,25.0,137.0), (-85.0,25.0,140.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 57.0x0.0x3.0 (area=171.0): (-82.0,-82.0,140.0), (-82.0,-82.0,137.0), (-25.0,-82.0,137.0), (-25.0,-82.0,140.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=171.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 154.0x0.0x3.0 (area=462.0): (77.0,-77.0,140.0), (77.0,-77.0,137.0), (-77.0,-77.0,137.0), (-77.0,-77.0,140.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=462.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 57.0x0.0x3.0 (area=171.0): (82.0,-82.0,137.0), (82.0,-82.0,140.0), (25.0,-82.0,140.0), (25.0,-82.0,137.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=171.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 50.0x0.0x3.0 (area=150.0): (25.0,-85.0,140.0), (-25.0,-85.0,140.0), (-25.0,-85.0,137.0), (25.0,-85.0,137.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (25.0,-82.0,140.0), (25.0,-85.0,140.0), (25.0,-85.0,137.0), (25.0,-82.0,137.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (-25.0,-82.0,140.0), (-25.0,-82.0,137.0), (-25.0,-85.0,137.0), (-25.0,-85.0,140.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 5.0x5.0x3.0 (area=54.9): (82.0,-82.0,140.0), (82.0,-82.0,137.0), (77.0,-77.0,137.0), (77.0,-77.0,140.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=54.9)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x0.0x3.0 (area=0.0): (77.0,-77.0,137.0), (77.0,-77.0,140.0), (77.0,-77.0,140.0), (77.0,-77.0,137.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=0.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x0.0x3.0 (area=0.0): (77.0,77.0,140.0), (77.0,77.0,137.0), (77.0,77.0,137.0), (77.0,77.0,140.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=0.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 5.0x5.0x3.0 (area=54.9): (82.0,82.0,137.0), (82.0,82.0,140.0), (77.0,77.0,140.0), (77.0,77.0,137.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=54.9)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] LibTabB: Generated outline from 20 vertices
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 22 vertices, bbox 167.0x170.0x0.0 (area=28383.9): (77.0,77.0,147.0), (82.0,82.0,147.0), (25.0,82.0,147.0), (25.0,85.0,147.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=28383.9)
+[EXTRACT] Returning 22 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 154.0x0.0x3.0 (area=462.0): (77.0,77.0,144.0), (77.0,77.0,147.0), (-77.0,77.0,147.0), (-77.0,77.0,144.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=462.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 22 vertices, bbox 167.0x170.0x0.0 (area=28383.9): (82.0,82.0,144.0), (77.0,77.0,144.0), (77.0,77.0,144.0), (-77.0,77.0,144.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=28383.9)
+[EXTRACT] Returning 22 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 57.0x0.0x3.0 (area=171.0): (-82.0,82.0,147.0), (-25.0,82.0,147.0), (-25.0,82.0,144.0), (-82.0,82.0,144.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=171.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 57.0x0.0x3.0 (area=171.0): (82.0,82.0,147.0), (82.0,82.0,144.0), (25.0,82.0,144.0), (25.0,82.0,147.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=171.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x57.0x3.0 (area=171.0): (-82.0,82.0,144.0), (-82.0,25.0,144.0), (-82.0,25.0,147.0), (-82.0,82.0,147.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=171.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 50.0x0.0x3.0 (area=150.0): (-25.0,85.0,147.0), (25.0,85.0,147.0), (25.0,85.0,144.0), (-25.0,85.0,144.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (-25.0,82.0,147.0), (-25.0,85.0,147.0), (-25.0,85.0,144.0), (-25.0,82.0,144.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (25.0,82.0,147.0), (25.0,82.0,144.0), (25.0,85.0,144.0), (25.0,85.0,147.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x154.0x3.0 (area=462.0): (-77.0,-77.0,144.0), (-77.0,77.0,144.0), (-77.0,77.0,147.0), (-77.0,-77.0,147.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=462.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x57.0x3.0 (area=171.0): (-82.0,-82.0,147.0), (-82.0,-25.0,147.0), (-82.0,-25.0,144.0), (-82.0,-82.0,144.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=171.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 57.0x0.0x3.0 (area=171.0): (-82.0,-82.0,144.0), (-25.0,-82.0,144.0), (-25.0,-82.0,147.0), (-82.0,-82.0,147.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=171.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x50.0x3.0 (area=150.0): (-85.0,-25.0,147.0), (-85.0,25.0,147.0), (-85.0,25.0,144.0), (-85.0,-25.0,144.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (-82.0,-25.0,147.0), (-85.0,-25.0,147.0), (-85.0,-25.0,144.0), (-82.0,-25.0,144.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (-82.0,25.0,147.0), (-82.0,25.0,144.0), (-85.0,25.0,144.0), (-85.0,25.0,147.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 154.0x0.0x3.0 (area=462.0): (77.0,-77.0,147.0), (77.0,-77.0,144.0), (-77.0,-77.0,144.0), (-77.0,-77.0,147.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=462.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 57.0x0.0x3.0 (area=171.0): (82.0,-82.0,144.0), (82.0,-82.0,147.0), (25.0,-82.0,147.0), (25.0,-82.0,144.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=171.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 50.0x0.0x3.0 (area=150.0): (25.0,-85.0,147.0), (-25.0,-85.0,147.0), (-25.0,-85.0,144.0), (25.0,-85.0,144.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (25.0,-82.0,147.0), (25.0,-85.0,147.0), (25.0,-85.0,144.0), (25.0,-82.0,144.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (-25.0,-82.0,147.0), (-25.0,-82.0,144.0), (-25.0,-85.0,144.0), (-25.0,-85.0,147.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 5.0x5.0x3.0 (area=54.9): (82.0,-82.0,147.0), (82.0,-82.0,144.0), (77.0,-77.0,144.0), (77.0,-77.0,147.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=54.9)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x0.0x3.0 (area=0.0): (77.0,-77.0,144.0), (77.0,-77.0,147.0), (77.0,-77.0,147.0), (77.0,-77.0,144.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=0.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x0.0x3.0 (area=0.0): (77.0,77.0,147.0), (77.0,77.0,144.0), (77.0,77.0,144.0), (77.0,77.0,147.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=0.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 5.0x5.0x3.0 (area=54.9): (82.0,82.0,144.0), (82.0,82.0,147.0), (77.0,77.0,147.0), (77.0,77.0,144.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=54.9)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] LidTabA: Generated outline from 20 vertices
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x57.0x3.0 (area=171.0): (82.0,-25.0,144.0), (82.0,-25.0,147.0), (82.0,-82.0,147.0), (82.0,-82.0,144.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=171.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 8 vertices, bbox 8.0x164.0x0.0 (area=1312.0): (82.0,25.0,147.0), (82.0,82.0,147.0), (77.0,77.0,147.0), (77.0,-77.0,147.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=1312.0)
+[EXTRACT] Returning 8 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x154.0x3.0 (area=462.0): (77.0,-77.0,147.0), (77.0,77.0,147.0), (77.0,77.0,144.0), (77.0,-77.0,144.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=462.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x57.0x3.0 (area=171.0): (82.0,25.0,147.0), (82.0,25.0,144.0), (82.0,82.0,144.0), (82.0,82.0,147.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=171.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 8 vertices, bbox 8.0x164.0x0.0 (area=1312.0): (77.0,-77.0,144.0), (77.0,77.0,144.0), (82.0,82.0,144.0), (82.0,25.0,144.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=1312.0)
+[EXTRACT] Returning 8 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x50.0x3.0 (area=150.0): (85.0,25.0,147.0), (85.0,-25.0,147.0), (85.0,-25.0,144.0), (85.0,25.0,144.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (82.0,25.0,147.0), (85.0,25.0,147.0), (85.0,25.0,144.0), (82.0,25.0,144.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (82.0,-25.0,147.0), (82.0,-25.0,144.0), (85.0,-25.0,144.0), (85.0,-25.0,147.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 5.0x5.0x3.0 (area=55.0): (82.0,82.0,144.0), (77.0,77.0,144.0), (77.0,77.0,147.0), (82.0,82.0,147.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=55.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 5.0x5.0x3.0 (area=55.0): (77.0,-77.0,144.0), (82.0,-82.0,144.0), (82.0,-82.0,147.0), (77.0,-77.0,147.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=55.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] RightLidtab: Generated outline from 8 vertices
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x57.0x3.0 (area=171.0): (-82.0,-85.0,3.0), (-82.0,-28.0,3.0), (-82.0,-28.0,0.0), (-82.0,-85.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=171.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 57.0x0.0x3.0 (area=171.0): (-25.0,82.0,3.0), (-25.0,82.0,0.0), (-82.0,82.0,0.0), (-82.0,82.0,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=171.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x57.0x3.0 (area=171.0): (82.0,-85.0,0.0), (82.0,-28.0,0.0), (82.0,-28.0,3.0), (82.0,-85.0,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=171.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 16 vertices, bbox 170.0x170.0x0.0 (area=28895.1): (-82.0,-85.0,3.0), (82.0,-85.0,3.0), (82.0,-28.0,3.0), (85.0,-28.0,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=28895.1)
+[EXTRACT] Returning 16 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 164.0x0.0x3.0 (area=492.0): (82.0,-85.0,3.0), (-82.0,-85.0,3.0), (-82.0,-85.0,0.0), (82.0,-85.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=492.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x60.0x3.0 (area=180.0): (-82.0,22.0,0.0), (-82.0,22.0,3.0), (-82.0,82.0,3.0), (-82.0,82.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=180.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 57.0x0.0x3.0 (area=171.0): (25.0,82.0,0.0), (25.0,82.0,3.0), (82.0,82.0,3.0), (82.0,82.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=171.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 16 vertices, bbox 170.0x170.0x0.0 (area=28895.1): (82.0,-28.0,0.0), (82.0,-85.0,0.0), (-82.0,-85.0,0.0), (-82.0,-28.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=28895.1)
+[EXTRACT] Returning 16 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x60.0x3.0 (area=180.0): (82.0,22.0,3.0), (82.0,22.0,0.0), (82.0,82.0,0.0), (82.0,82.0,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=180.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x50.0x3.0 (area=150.0): (85.0,22.0,3.0), (85.0,-28.0,3.0), (85.0,-28.0,0.0), (85.0,22.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (85.0,22.0,0.0), (82.0,22.0,0.0), (82.0,22.0,3.0), (85.0,22.0,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (85.0,-28.0,3.0), (82.0,-28.0,3.0), (82.0,-28.0,0.0), (85.0,-28.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 50.0x0.0x3.0 (area=150.0): (-25.0,85.0,3.0), (25.0,85.0,3.0), (25.0,85.0,0.0), (-25.0,85.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (25.0,85.0,3.0), (25.0,82.0,3.0), (25.0,82.0,0.0), (25.0,85.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (-25.0,85.0,0.0), (-25.0,82.0,0.0), (-25.0,82.0,3.0), (-25.0,85.0,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x50.0x3.0 (area=150.0): (-85.0,-28.0,3.0), (-85.0,22.0,3.0), (-85.0,22.0,0.0), (-85.0,-28.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (-85.0,-28.0,0.0), (-82.0,-28.0,0.0), (-82.0,-28.0,3.0), (-85.0,-28.0,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (-85.0,22.0,3.0), (-82.0,22.0,3.0), (-82.0,22.0,0.0), (-85.0,22.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] Bottom: Generated outline from 16 vertices
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x30.0 (area=90.0): (-82.0,85.0,90.0), (-82.0,85.0,60.0), (-85.0,85.0,60.0), (-85.0,85.0,90.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=90.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x30.0 (area=90.0): (-82.0,85.0,150.0), (-82.0,85.0,120.0), (-85.0,85.0,120.0), (-85.0,85.0,150.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=90.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 4 bounds
+[EXTRACT] Bound 0 has 20 vertices, bbox 0.0x170.0x150.0 (area=25500.0): (-85.0,82.0,90.0), (-85.0,85.0,90.0), (-85.0,85.0,60.0), (-85.0,82.0,60.0)...
+[EXTRACT] Bound 1 has 4 vertices, bbox 0.0x50.0x3.0 (area=150.0): (-85.0,-25.0,147.0), (-85.0,-25.0,144.0), (-85.0,25.0,144.0), (-85.0,25.0,147.0)...
+[EXTRACT] Bound 2 has 4 vertices, bbox 0.0x50.0x3.0 (area=150.0): (-85.0,-25.0,137.0), (-85.0,25.0,137.0), (-85.0,25.0,140.0), (-85.0,-25.0,140.0)...
+[EXTRACT] Bound 3 has 4 vertices, bbox 0.0x50.0x3.0 (area=150.0): (-85.0,22.0,75.0), (-85.0,22.0,78.0), (-85.0,-28.0,78.0), (-85.0,-28.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=25500.0)
+[EXTRACT] Identified bound 1 as hole loop 1 (area=150.0)
+[EXTRACT] Identified bound 2 as hole loop 2 (area=150.0)
+[EXTRACT] Identified bound 3 as hole loop 3 (area=150.0)
+[EXTRACT] Returning 20 outer verts and 3 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x57.0x0.0 (area=171.0): (-85.0,-85.0,0.0), (-85.0,-28.0,0.0), (-82.0,-28.0,0.0), (-82.0,-85.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=171.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x50.0x0.0 (area=150.0): (-82.0,22.0,75.0), (-85.0,22.0,75.0), (-85.0,-28.0,75.0), (-82.0,-28.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x75.0 (area=225.0): (-85.0,-85.0,75.0), (-82.0,-85.0,75.0), (-82.0,-85.0,150.0), (-85.0,-85.0,150.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=225.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x170.0x0.0 (area=510.0): (-82.0,-85.0,150.0), (-82.0,85.0,150.0), (-85.0,85.0,150.0), (-85.0,-85.0,150.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=510.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 4 bounds
+[EXTRACT] Bound 0 has 20 vertices, bbox 0.0x170.0x150.0 (area=25500.0): (-82.0,82.0,90.0), (-82.0,82.0,120.0), (-82.0,85.0,120.0), (-82.0,85.0,150.0)...
+[EXTRACT] Bound 1 has 4 vertices, bbox 0.0x50.0x3.0 (area=150.0): (-82.0,-28.0,78.0), (-82.0,22.0,78.0), (-82.0,22.0,75.0), (-82.0,-28.0,75.0)...
+[EXTRACT] Bound 2 has 4 vertices, bbox 0.0x50.0x3.0 (area=150.0): (-82.0,-25.0,137.0), (-82.0,-25.0,140.0), (-82.0,25.0,140.0), (-82.0,25.0,137.0)...
+[EXTRACT] Bound 3 has 4 vertices, bbox 0.0x50.0x3.0 (area=150.0): (-82.0,-25.0,144.0), (-82.0,-25.0,147.0), (-82.0,25.0,147.0), (-82.0,25.0,144.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=25500.0)
+[EXTRACT] Identified bound 1 as hole loop 1 (area=150.0)
+[EXTRACT] Identified bound 2 as hole loop 2 (area=150.0)
+[EXTRACT] Identified bound 3 as hole loop 3 (area=150.0)
+[EXTRACT] Returning 20 outer verts and 3 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (-82.0,-85.0,3.0), (-85.0,-85.0,3.0), (-85.0,-85.0,0.0), (-82.0,-85.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x63.0x0.0 (area=189.0): (-82.0,22.0,0.0), (-85.0,22.0,0.0), (-85.0,85.0,0.0), (-82.0,85.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=189.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x30.0 (area=90.0): (-85.0,85.0,30.0), (-82.0,85.0,30.0), (-82.0,85.0,0.0), (-85.0,85.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=90.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x3.0x0.0 (area=9.0): (-82.0,-82.0,75.0), (-82.0,-85.0,75.0), (-85.0,-85.0,75.0), (-85.0,-82.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x72.0 (area=216.0): (-82.0,-82.0,3.0), (-82.0,-82.0,75.0), (-85.0,-82.0,75.0), (-85.0,-82.0,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=216.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x3.0x0.0 (area=9.0): (-82.0,-85.0,3.0), (-82.0,-82.0,3.0), (-85.0,-82.0,3.0), (-85.0,-85.0,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x50.0x0.0 (area=150.0): (-82.0,-25.0,147.0), (-85.0,-25.0,147.0), (-85.0,25.0,147.0), (-82.0,25.0,147.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x50.0x0.0 (area=150.0): (-82.0,25.0,144.0), (-85.0,25.0,144.0), (-85.0,-25.0,144.0), (-82.0,-25.0,144.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (-82.0,-25.0,144.0), (-85.0,-25.0,144.0), (-85.0,-25.0,147.0), (-82.0,-25.0,147.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (-85.0,25.0,147.0), (-85.0,25.0,144.0), (-82.0,25.0,144.0), (-82.0,25.0,147.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x50.0x0.0 (area=150.0): (-85.0,-25.0,140.0), (-85.0,25.0,140.0), (-82.0,25.0,140.0), (-82.0,-25.0,140.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x50.0x0.0 (area=150.0): (-82.0,25.0,137.0), (-85.0,25.0,137.0), (-85.0,-25.0,137.0), (-82.0,-25.0,137.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (-82.0,-25.0,137.0), (-85.0,-25.0,137.0), (-85.0,-25.0,140.0), (-82.0,-25.0,140.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (-82.0,25.0,140.0), (-85.0,25.0,140.0), (-85.0,25.0,137.0), (-82.0,25.0,137.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x50.0x0.0 (area=150.0): (-85.0,-28.0,78.0), (-85.0,22.0,78.0), (-82.0,22.0,78.0), (-82.0,-28.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (-82.0,-28.0,75.0), (-85.0,-28.0,75.0), (-85.0,-28.0,78.0), (-82.0,-28.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (-82.0,22.0,78.0), (-85.0,22.0,78.0), (-85.0,22.0,75.0), (-82.0,22.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x50.0x0.0 (area=150.0): (-82.0,-28.0,3.0), (-85.0,-28.0,3.0), (-85.0,22.0,3.0), (-82.0,22.0,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (-85.0,-28.0,0.0), (-85.0,-28.0,3.0), (-82.0,-28.0,3.0), (-82.0,-28.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (-82.0,22.0,3.0), (-85.0,22.0,3.0), (-85.0,22.0,0.0), (-82.0,22.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x30.0 (area=90.0): (-82.0,82.0,60.0), (-82.0,82.0,30.0), (-85.0,82.0,30.0), (-85.0,82.0,60.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=90.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x3.0x0.0 (area=9.0): (-85.0,82.0,60.0), (-85.0,85.0,60.0), (-82.0,85.0,60.0), (-82.0,82.0,60.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x3.0x0.0 (area=9.0): (-85.0,85.0,30.0), (-85.0,82.0,30.0), (-82.0,82.0,30.0), (-82.0,85.0,30.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x30.0 (area=90.0): (-82.0,82.0,120.0), (-82.0,82.0,90.0), (-85.0,82.0,90.0), (-85.0,82.0,120.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=90.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x3.0x0.0 (area=9.0): (-85.0,82.0,120.0), (-85.0,85.0,120.0), (-82.0,85.0,120.0), (-82.0,82.0,120.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x3.0x0.0 (area=9.0): (-85.0,85.0,90.0), (-85.0,82.0,90.0), (-82.0,82.0,90.0), (-82.0,85.0,90.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] LeftWall: Generated outline from 20 vertices
+[EXTRACT] ExtractFaceWithHoles: face has 4 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x19.0 (area=57.0): (-1.5,-85.0,97.0), (-1.5,-85.0,116.0), (1.5,-85.0,116.0), (1.5,-85.0,97.0)...
+[EXTRACT] Bound 1 has 4 vertices, bbox 50.0x0.0x3.0 (area=150.0): (25.0,-85.0,140.0), (25.0,-85.0,137.0), (-25.0,-85.0,137.0), (-25.0,-85.0,140.0)...
+[EXTRACT] Bound 2 has 4 vertices, bbox 50.0x0.0x3.0 (area=150.0): (25.0,-85.0,147.0), (25.0,-85.0,144.0), (-25.0,-85.0,144.0), (-25.0,-85.0,147.0)...
+[EXTRACT] Bound 3 has 8 vertices, bbox 170.0x0.0x75.0 (area=12750.0): (-85.0,-85.0,75.0), (-25.0,-85.0,75.0), (-25.0,-85.0,78.0), (25.0,-85.0,78.0)...
+[EXTRACT] Identified bound 3 as outer loop (largest area=12750.0)
+[EXTRACT] Identified bound 1 as hole loop 1 (area=150.0)
+[EXTRACT] Identified bound 2 as hole loop 2 (area=150.0)
+[EXTRACT] Identified bound 0 as hole loop 3 (area=57.0)
+[EXTRACT] Returning 8 outer verts and 3 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 8 vertices, bbox 60.0x3.0x0.0 (area=180.0): (77.0,-82.0,75.0), (82.0,-82.0,75.0), (82.0,-82.0,75.0), (85.0,-82.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=180.0)
+[EXTRACT] Returning 8 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 8 vertices, bbox 60.0x3.0x0.0 (area=180.0): (-77.0,-82.0,75.0), (-25.0,-82.0,75.0), (-25.0,-85.0,75.0), (-85.0,-85.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=180.0)
+[EXTRACT] Returning 8 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 170.0x3.0x0.0 (area=510.0): (85.0,-82.0,150.0), (-85.0,-82.0,150.0), (-85.0,-85.0,150.0), (85.0,-85.0,150.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=510.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 4 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x19.0 (area=57.0): (-1.5,-82.0,116.0), (-1.5,-82.0,97.0), (1.5,-82.0,97.0), (1.5,-82.0,116.0)...
+[EXTRACT] Bound 1 has 16 vertices, bbox 170.0x0.0x75.0 (area=12750.0): (25.0,-82.0,75.0), (25.0,-82.0,78.0), (-25.0,-82.0,78.0), (-25.0,-82.0,75.0)...
+[EXTRACT] Bound 2 has 4 vertices, bbox 50.0x0.0x3.0 (area=150.0): (25.0,-82.0,137.0), (25.0,-82.0,140.0), (-25.0,-82.0,140.0), (-25.0,-82.0,137.0)...
+[EXTRACT] Bound 3 has 4 vertices, bbox 50.0x0.0x3.0 (area=150.0): (25.0,-82.0,144.0), (25.0,-82.0,147.0), (-25.0,-82.0,147.0), (-25.0,-82.0,144.0)...
+[EXTRACT] Identified bound 1 as outer loop (largest area=12750.0)
+[EXTRACT] Identified bound 2 as hole loop 1 (area=150.0)
+[EXTRACT] Identified bound 3 as hole loop 2 (area=150.0)
+[EXTRACT] Identified bound 0 as hole loop 3 (area=57.0)
+[EXTRACT] Returning 16 outer verts and 3 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x75.0 (area=225.0): (85.0,-82.0,75.0), (85.0,-82.0,150.0), (85.0,-85.0,150.0), (85.0,-85.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=225.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x75.0 (area=225.0): (-85.0,-82.0,75.0), (-85.0,-85.0,75.0), (-85.0,-85.0,150.0), (-85.0,-82.0,150.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=225.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 50.0x3.0x0.0 (area=150.0): (25.0,-85.0,147.0), (-25.0,-85.0,147.0), (-25.0,-82.0,147.0), (25.0,-82.0,147.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 50.0x3.0x0.0 (area=150.0): (-25.0,-82.0,144.0), (-25.0,-85.0,144.0), (25.0,-85.0,144.0), (25.0,-82.0,144.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (25.0,-82.0,144.0), (25.0,-85.0,144.0), (25.0,-85.0,147.0), (25.0,-82.0,147.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (-25.0,-82.0,147.0), (-25.0,-85.0,147.0), (-25.0,-85.0,144.0), (-25.0,-82.0,144.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 50.0x3.0x0.0 (area=150.0): (25.0,-85.0,140.0), (-25.0,-85.0,140.0), (-25.0,-82.0,140.0), (25.0,-82.0,140.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 50.0x3.0x0.0 (area=150.0): (-25.0,-82.0,137.0), (-25.0,-85.0,137.0), (25.0,-85.0,137.0), (25.0,-82.0,137.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (25.0,-82.0,137.0), (25.0,-85.0,137.0), (25.0,-85.0,140.0), (25.0,-82.0,140.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (-25.0,-82.0,140.0), (-25.0,-85.0,140.0), (-25.0,-85.0,137.0), (-25.0,-82.0,137.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 5.0x0.0x3.0 (area=15.0): (77.0,-82.0,75.0), (77.0,-82.0,78.0), (82.0,-82.0,78.0), (82.0,-82.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=15.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 5.0x0.0x0.0 (area=0.0): (77.0,-82.0,78.0), (82.0,-82.0,78.0), (82.0,-82.0,78.0), (77.0,-82.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=0.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x0.0x3.0 (area=0.0): (82.0,-82.0,78.0), (82.0,-82.0,75.0), (82.0,-82.0,75.0), (82.0,-82.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=0.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x0.0x3.0 (area=0.0): (77.0,-82.0,75.0), (77.0,-82.0,78.0), (77.0,-82.0,78.0), (77.0,-82.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=0.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 5.0x0.0x3.0 (area=15.0): (-77.0,-82.0,78.0), (-77.0,-82.0,75.0), (-82.0,-82.0,75.0), (-82.0,-82.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=15.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x0.0x3.0 (area=0.0): (-82.0,-82.0,75.0), (-82.0,-82.0,78.0), (-82.0,-82.0,78.0), (-82.0,-82.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=0.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 5.0x0.0x0.0 (area=0.0): (-82.0,-82.0,78.0), (-77.0,-82.0,78.0), (-77.0,-82.0,78.0), (-82.0,-82.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=0.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x0.0x3.0 (area=0.0): (-77.0,-82.0,78.0), (-77.0,-82.0,75.0), (-77.0,-82.0,75.0), (-77.0,-82.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=0.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 50.0x3.0x0.0 (area=150.0): (-25.0,-82.0,78.0), (25.0,-82.0,78.0), (25.0,-85.0,78.0), (-25.0,-85.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (25.0,-85.0,78.0), (25.0,-82.0,78.0), (25.0,-82.0,75.0), (25.0,-85.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (-25.0,-82.0,75.0), (-25.0,-82.0,78.0), (-25.0,-85.0,78.0), (-25.0,-85.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x3.0x0.0 (area=9.0): (1.5,-82.0,97.0), (-1.5,-82.0,97.0), (-1.5,-85.0,97.0), (1.5,-85.0,97.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x3.0x0.0 (area=9.0): (-1.5,-82.0,116.0), (1.5,-82.0,116.0), (1.5,-85.0,116.0), (-1.5,-85.0,116.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x19.0 (area=57.0): (-1.5,-82.0,97.0), (-1.5,-82.0,116.0), (-1.5,-85.0,116.0), (-1.5,-85.0,97.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=57.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x19.0 (area=57.0): (1.5,-82.0,116.0), (1.5,-82.0,97.0), (1.5,-85.0,97.0), (1.5,-85.0,116.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=57.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] FrontA: Generated outline from 8 vertices
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x18.0 (area=54.0): (85.0,85.0,78.0), (85.0,85.0,60.0), (82.0,85.0,60.0), (82.0,85.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=54.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 18 vertices, bbox 0.0x170.0x78.0 (area=13260.0): (85.0,85.0,0.0), (85.0,85.0,30.0), (85.0,82.0,30.0), (85.0,82.0,60.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=13260.0)
+[EXTRACT] Returning 18 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x63.0x0.0 (area=189.0): (85.0,85.0,0.0), (85.0,22.0,0.0), (82.0,22.0,0.0), (82.0,85.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=189.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 18 vertices, bbox 0.0x170.0x78.0 (area=13260.0): (82.0,82.0,60.0), (82.0,82.0,30.0), (82.0,85.0,30.0), (82.0,85.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=13260.0)
+[EXTRACT] Returning 18 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x54.0x0.0 (area=162.0): (82.0,-82.0,78.0), (85.0,-82.0,78.0), (85.0,-28.0,78.0), (82.0,-28.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=162.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x63.0x0.0 (area=189.0): (82.0,22.0,78.0), (85.0,22.0,78.0), (85.0,85.0,78.0), (82.0,85.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=189.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x30.0 (area=90.0): (82.0,85.0,30.0), (85.0,85.0,30.0), (85.0,85.0,0.0), (82.0,85.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=90.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x57.0x0.0 (area=171.0): (82.0,-28.0,0.0), (85.0,-28.0,0.0), (85.0,-85.0,0.0), (82.0,-85.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=171.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (85.0,-85.0,3.0), (82.0,-85.0,3.0), (82.0,-85.0,0.0), (85.0,-85.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x50.0x0.0 (area=150.0): (82.0,-28.0,75.0), (85.0,-28.0,75.0), (85.0,22.0,75.0), (82.0,22.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (82.0,22.0,75.0), (85.0,22.0,75.0), (85.0,22.0,78.0), (82.0,22.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (85.0,-28.0,78.0), (85.0,-28.0,75.0), (82.0,-28.0,75.0), (82.0,-28.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x50.0x0.0 (area=150.0): (82.0,22.0,3.0), (85.0,22.0,3.0), (85.0,-28.0,3.0), (82.0,-28.0,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (85.0,22.0,0.0), (85.0,22.0,3.0), (82.0,22.0,3.0), (82.0,22.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (82.0,-28.0,3.0), (85.0,-28.0,3.0), (85.0,-28.0,0.0), (82.0,-28.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x75.0 (area=225.0): (82.0,-82.0,78.0), (82.0,-82.0,3.0), (85.0,-82.0,3.0), (85.0,-82.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=225.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x3.0x0.0 (area=9.0): (82.0,-82.0,3.0), (82.0,-85.0,3.0), (85.0,-85.0,3.0), (85.0,-82.0,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x3.0x0.0 (area=9.0): (85.0,85.0,30.0), (82.0,85.0,30.0), (82.0,82.0,30.0), (85.0,82.0,30.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x3.0x0.0 (area=9.0): (85.0,82.0,60.0), (82.0,82.0,60.0), (82.0,85.0,60.0), (85.0,85.0,60.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x30.0 (area=90.0): (85.0,82.0,60.0), (85.0,82.0,30.0), (82.0,82.0,30.0), (82.0,82.0,60.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=90.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] RigthLowerWall: Generated outline from 18 vertices
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x164.0x0.0 (area=492.0): (82.0,82.0,150.0), (82.0,-82.0,150.0), (85.0,-82.0,150.0), (85.0,82.0,150.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=492.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 5 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x50.0x3.0 (area=150.0): (82.0,22.0,82.0), (82.0,-28.0,82.0), (82.0,-28.0,79.0), (82.0,22.0,79.0)...
+[EXTRACT] Bound 1 has 4 vertices, bbox 0.0x28.0x3.0 (area=84.0): (82.0,-25.0,143.5), (82.0,-53.0,143.5), (82.0,-53.0,140.5), (82.0,-25.0,140.5)...
+[EXTRACT] Bound 2 has 4 vertices, bbox 0.0x28.0x3.0 (area=84.0): (82.0,53.0,143.5), (82.0,25.0,143.5), (82.0,25.0,140.5), (82.0,53.0,140.5)...
+[EXTRACT] Bound 3 has 4 vertices, bbox 0.0x50.0x3.0 (area=150.0): (82.0,25.0,144.0), (82.0,25.0,147.0), (82.0,-25.0,147.0), (82.0,-25.0,144.0)...
+[EXTRACT] Bound 4 has 4 vertices, bbox 0.0x164.0x72.0 (area=11808.0): (82.0,-82.0,78.0), (82.0,-82.0,150.0), (82.0,82.0,150.0), (82.0,82.0,78.0)...
+[EXTRACT] Identified bound 4 as outer loop (largest area=11808.0)
+[EXTRACT] Identified bound 0 as hole loop 1 (area=150.0)
+[EXTRACT] Identified bound 3 as hole loop 2 (area=150.0)
+[EXTRACT] Identified bound 1 as hole loop 3 (area=84.0)
+[EXTRACT] Identified bound 2 as hole loop 4 (area=84.0)
+[EXTRACT] Returning 4 outer verts and 4 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x72.0 (area=216.0): (82.0,82.0,78.0), (82.0,82.0,150.0), (85.0,82.0,150.0), (85.0,82.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=216.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 5 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x50.0x3.0 (area=150.0): (85.0,22.0,82.0), (85.0,22.0,79.0), (85.0,-28.0,79.0), (85.0,-28.0,82.0)...
+[EXTRACT] Bound 1 has 4 vertices, bbox 0.0x28.0x3.0 (area=84.0): (85.0,-53.0,143.5), (85.0,-25.0,143.5), (85.0,-25.0,140.5), (85.0,-53.0,140.5)...
+[EXTRACT] Bound 2 has 4 vertices, bbox 0.0x28.0x3.0 (area=84.0): (85.0,25.0,143.5), (85.0,53.0,143.5), (85.0,53.0,140.5), (85.0,25.0,140.5)...
+[EXTRACT] Bound 3 has 4 vertices, bbox 0.0x50.0x3.0 (area=150.0): (85.0,25.0,147.0), (85.0,25.0,144.0), (85.0,-25.0,144.0), (85.0,-25.0,147.0)...
+[EXTRACT] Bound 4 has 4 vertices, bbox 0.0x164.0x72.0 (area=11808.0): (85.0,82.0,78.0), (85.0,82.0,150.0), (85.0,-82.0,150.0), (85.0,-82.0,78.0)...
+[EXTRACT] Identified bound 4 as outer loop (largest area=11808.0)
+[EXTRACT] Identified bound 0 as hole loop 1 (area=150.0)
+[EXTRACT] Identified bound 3 as hole loop 2 (area=150.0)
+[EXTRACT] Identified bound 1 as hole loop 3 (area=84.0)
+[EXTRACT] Identified bound 2 as hole loop 4 (area=84.0)
+[EXTRACT] Returning 4 outer verts and 4 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x164.0x0.0 (area=492.0): (85.0,-82.0,78.0), (82.0,-82.0,78.0), (82.0,82.0,78.0), (85.0,82.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=492.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x72.0 (area=216.0): (82.0,-82.0,78.0), (85.0,-82.0,78.0), (85.0,-82.0,150.0), (82.0,-82.0,150.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=216.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x50.0x0.0 (area=150.0): (85.0,25.0,147.0), (85.0,-25.0,147.0), (82.0,-25.0,147.0), (82.0,25.0,147.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x50.0x0.0 (area=150.0): (82.0,-25.0,144.0), (85.0,-25.0,144.0), (85.0,25.0,144.0), (82.0,25.0,144.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (82.0,25.0,144.0), (85.0,25.0,144.0), (85.0,25.0,147.0), (82.0,25.0,147.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (82.0,-25.0,147.0), (85.0,-25.0,147.0), (85.0,-25.0,144.0), (82.0,-25.0,144.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x28.0x0.0 (area=84.0): (82.0,25.0,143.5), (82.0,53.0,143.5), (85.0,53.0,143.5), (85.0,25.0,143.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=84.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x28.0x0.0 (area=84.0): (82.0,53.0,140.5), (82.0,25.0,140.5), (85.0,25.0,140.5), (85.0,53.0,140.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=84.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (82.0,25.0,140.5), (82.0,25.0,143.5), (85.0,25.0,143.5), (85.0,25.0,140.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (82.0,53.0,143.5), (82.0,53.0,140.5), (85.0,53.0,140.5), (85.0,53.0,143.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x28.0x0.0 (area=84.0): (82.0,-53.0,143.5), (82.0,-25.0,143.5), (85.0,-25.0,143.5), (85.0,-53.0,143.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=84.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (82.0,-53.0,140.5), (82.0,-53.0,143.5), (85.0,-53.0,143.5), (85.0,-53.0,140.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (82.0,-25.0,143.5), (82.0,-25.0,140.5), (85.0,-25.0,140.5), (85.0,-25.0,143.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x28.0x0.0 (area=84.0): (82.0,-25.0,140.5), (82.0,-53.0,140.5), (85.0,-53.0,140.5), (85.0,-25.0,140.5)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=84.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x50.0x0.0 (area=150.0): (82.0,-28.0,82.0), (82.0,22.0,82.0), (85.0,22.0,82.0), (85.0,-28.0,82.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x50.0x0.0 (area=150.0): (82.0,22.0,79.0), (82.0,-28.0,79.0), (85.0,-28.0,79.0), (85.0,22.0,79.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (82.0,22.0,79.0), (85.0,22.0,79.0), (85.0,22.0,82.0), (82.0,22.0,82.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (85.0,-28.0,82.0), (85.0,-28.0,79.0), (82.0,-28.0,79.0), (82.0,-28.0,82.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] RightWall: Generated outline from 4 vertices
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x30.0 (area=90.0): (85.0,85.0,60.0), (85.0,82.0,60.0), (85.0,82.0,30.0), (85.0,85.0,30.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=90.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 5 bounds
+[EXTRACT] Bound 0 has 22 vertices, bbox 170.0x0.0x150.0 (area=25500.0): (85.0,82.0,150.0), (-82.0,82.0,150.0), (-82.0,82.0,120.0), (-85.0,82.0,120.0)...
+[EXTRACT] Bound 1 has 4 vertices, bbox 3.0x0.0x19.0 (area=57.0): (-1.5,82.0,97.0), (-1.5,82.0,116.0), (1.5,82.0,116.0), (1.5,82.0,97.0)...
+[EXTRACT] Bound 2 has 4 vertices, bbox 50.0x0.0x3.0 (area=150.0): (-25.0,82.0,75.0), (-25.0,82.0,78.0), (25.0,82.0,78.0), (25.0,82.0,75.0)...
+[EXTRACT] Bound 3 has 4 vertices, bbox 50.0x0.0x3.0 (area=150.0): (-25.0,82.0,137.0), (-25.0,82.0,140.0), (25.0,82.0,140.0), (25.0,82.0,137.0)...
+[EXTRACT] Bound 4 has 4 vertices, bbox 50.0x0.0x3.0 (area=150.0): (-25.0,82.0,144.0), (-25.0,82.0,147.0), (25.0,82.0,147.0), (25.0,82.0,144.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=25500.0)
+[EXTRACT] Identified bound 2 as hole loop 1 (area=150.0)
+[EXTRACT] Identified bound 3 as hole loop 2 (area=150.0)
+[EXTRACT] Identified bound 4 as hole loop 3 (area=150.0)
+[EXTRACT] Identified bound 1 as hole loop 4 (area=57.0)
+[EXTRACT] Returning 22 outer verts and 4 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x3.0x0.0 (area=9.0): (82.0,82.0,30.0), (82.0,85.0,30.0), (85.0,85.0,30.0), (85.0,82.0,30.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x72.0 (area=216.0): (85.0,82.0,78.0), (85.0,85.0,78.0), (85.0,85.0,150.0), (85.0,82.0,150.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=216.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x3.0x0.0 (area=9.0): (-85.0,85.0,120.0), (-85.0,82.0,120.0), (-82.0,82.0,120.0), (-82.0,85.0,120.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x3.0x0.0 (area=9.0): (-85.0,82.0,90.0), (-85.0,85.0,90.0), (-82.0,85.0,90.0), (-82.0,82.0,90.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x3.0x0.0 (area=9.0): (-85.0,82.0,30.0), (-85.0,85.0,30.0), (-82.0,85.0,30.0), (-82.0,82.0,30.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x3.0x0.0 (area=9.0): (-85.0,85.0,60.0), (-85.0,82.0,60.0), (-82.0,82.0,60.0), (-82.0,85.0,60.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x30.0 (area=90.0): (-82.0,82.0,60.0), (-82.0,82.0,90.0), (-82.0,85.0,90.0), (-82.0,85.0,60.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=90.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x30.0 (area=90.0): (-85.0,82.0,30.0), (-85.0,82.0,60.0), (-85.0,85.0,60.0), (-85.0,85.0,30.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=90.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x30.0 (area=90.0): (-82.0,82.0,0.0), (-82.0,82.0,30.0), (-82.0,85.0,30.0), (-82.0,85.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=90.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x30.0 (area=90.0): (-85.0,85.0,90.0), (-85.0,82.0,90.0), (-85.0,82.0,120.0), (-85.0,85.0,120.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=90.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 5 bounds
+[EXTRACT] Bound 0 has 22 vertices, bbox 170.0x0.0x150.0 (area=25500.0): (82.0,85.0,60.0), (85.0,85.0,60.0), (85.0,85.0,30.0), (82.0,85.0,30.0)...
+[EXTRACT] Bound 1 has 4 vertices, bbox 50.0x0.0x3.0 (area=150.0): (-25.0,85.0,144.0), (25.0,85.0,144.0), (25.0,85.0,147.0), (-25.0,85.0,147.0)...
+[EXTRACT] Bound 2 has 4 vertices, bbox 50.0x0.0x3.0 (area=150.0): (-25.0,85.0,140.0), (-25.0,85.0,137.0), (25.0,85.0,137.0), (25.0,85.0,140.0)...
+[EXTRACT] Bound 3 has 4 vertices, bbox 50.0x0.0x3.0 (area=150.0): (-25.0,85.0,78.0), (-25.0,85.0,75.0), (25.0,85.0,75.0), (25.0,85.0,78.0)...
+[EXTRACT] Bound 4 has 4 vertices, bbox 3.0x0.0x19.0 (area=57.0): (1.5,85.0,116.0), (-1.5,85.0,116.0), (-1.5,85.0,97.0), (1.5,85.0,97.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=25500.0)
+[EXTRACT] Identified bound 1 as hole loop 1 (area=150.0)
+[EXTRACT] Identified bound 2 as hole loop 2 (area=150.0)
+[EXTRACT] Identified bound 3 as hole loop 3 (area=150.0)
+[EXTRACT] Identified bound 4 as hole loop 4 (area=57.0)
+[EXTRACT] Returning 22 outer verts and 4 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 57.0x3.0x0.0 (area=171.0): (-82.0,85.0,0.0), (-25.0,85.0,0.0), (-25.0,82.0,0.0), (-82.0,82.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=171.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 167.0x3.0x0.0 (area=501.0): (-82.0,82.0,150.0), (85.0,82.0,150.0), (85.0,85.0,150.0), (-82.0,85.0,150.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=501.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x30.0 (area=90.0): (-82.0,85.0,120.0), (-82.0,82.0,120.0), (-82.0,82.0,150.0), (-82.0,85.0,150.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=90.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 57.0x3.0x0.0 (area=171.0): (25.0,82.0,0.0), (25.0,85.0,0.0), (82.0,85.0,0.0), (82.0,82.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=171.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x30.0 (area=90.0): (82.0,85.0,30.0), (82.0,82.0,30.0), (82.0,82.0,0.0), (82.0,85.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=90.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 50.0x3.0x0.0 (area=150.0): (-25.0,85.0,147.0), (25.0,85.0,147.0), (25.0,82.0,147.0), (-25.0,82.0,147.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 50.0x3.0x0.0 (area=150.0): (25.0,82.0,144.0), (25.0,85.0,144.0), (-25.0,85.0,144.0), (-25.0,82.0,144.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (-25.0,82.0,144.0), (-25.0,85.0,144.0), (-25.0,85.0,147.0), (-25.0,82.0,147.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (25.0,82.0,147.0), (25.0,85.0,147.0), (25.0,85.0,144.0), (25.0,82.0,144.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 50.0x3.0x0.0 (area=150.0): (-25.0,82.0,140.0), (-25.0,85.0,140.0), (25.0,85.0,140.0), (25.0,82.0,140.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 50.0x3.0x0.0 (area=150.0): (25.0,85.0,137.0), (-25.0,85.0,137.0), (-25.0,82.0,137.0), (25.0,82.0,137.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (-25.0,82.0,137.0), (-25.0,85.0,137.0), (-25.0,85.0,140.0), (-25.0,82.0,140.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (25.0,82.0,140.0), (25.0,85.0,140.0), (25.0,85.0,137.0), (25.0,82.0,137.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 50.0x3.0x0.0 (area=150.0): (-25.0,85.0,78.0), (25.0,85.0,78.0), (25.0,82.0,78.0), (-25.0,82.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 50.0x3.0x0.0 (area=150.0): (25.0,82.0,75.0), (25.0,85.0,75.0), (-25.0,85.0,75.0), (-25.0,82.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (-25.0,82.0,75.0), (-25.0,85.0,75.0), (-25.0,85.0,78.0), (-25.0,82.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (25.0,82.0,78.0), (25.0,85.0,78.0), (25.0,85.0,75.0), (25.0,82.0,75.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 50.0x3.0x0.0 (area=150.0): (-25.0,82.0,3.0), (-25.0,85.0,3.0), (25.0,85.0,3.0), (25.0,82.0,3.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (25.0,82.0,3.0), (25.0,85.0,3.0), (25.0,85.0,0.0), (25.0,82.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x3.0 (area=9.0): (-25.0,85.0,0.0), (-25.0,85.0,3.0), (-25.0,82.0,3.0), (-25.0,82.0,0.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x3.0x0.0 (area=9.0): (-1.5,82.0,97.0), (1.5,82.0,97.0), (1.5,85.0,97.0), (-1.5,85.0,97.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x3.0x0.0 (area=9.0): (1.5,82.0,116.0), (-1.5,82.0,116.0), (-1.5,85.0,116.0), (1.5,85.0,116.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x19.0 (area=57.0): (-1.5,82.0,116.0), (-1.5,82.0,97.0), (-1.5,85.0,97.0), (-1.5,85.0,116.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=57.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x19.0 (area=57.0): (1.5,82.0,97.0), (1.5,82.0,116.0), (1.5,85.0,116.0), (1.5,85.0,97.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=57.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x3.0x18.0 (area=54.0): (82.0,82.0,78.0), (82.0,82.0,60.0), (82.0,85.0,60.0), (82.0,85.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=54.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x3.0x0.0 (area=9.0): (85.0,82.0,78.0), (82.0,82.0,78.0), (82.0,85.0,78.0), (85.0,85.0,78.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
+[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x3.0x0.0 (area=9.0): (82.0,82.0,60.0), (85.0,82.0,60.0), (85.0,85.0,60.0), (82.0,85.0,60.0)...
+[EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
+[EXTRACT] Returning 4 outer verts and 0 hole loops
+[SVG] BackWall: Generated outline from 22 vertices
+Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\bigbox\big box v2.svg

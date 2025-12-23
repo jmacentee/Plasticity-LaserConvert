@@ -1,9 +1,10 @@
-﻿using System;
+﻿using IxMilia.Step;
+using IxMilia.Step.Items;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using IxMilia.Step;
-using IxMilia.Step.Items;
+using System.Xml.Linq;
 
 namespace LaserConvert
 {
@@ -47,13 +48,13 @@ namespace LaserConvert
                     }
                     else
                     {
-                        DebugLog($"[FILTER] {name}: dimensions {dimensions} - FAIL");
+                        DebugLog($"Warning! [FILTER] {name}: dimensions {dimensions} - FAIL",true);
                     }
                 }
 
                 if (thinSolids.Count == 0)
                 {
-                    DebugLog("No thin solids found.");
+                    DebugLog($"Warning! No thin solids found.",true);
                     return 0;
                 }
 
@@ -75,9 +76,9 @@ namespace LaserConvert
             }
         }
 
-        private static void DebugLog(string message)
+        private static void DebugLog(string message, bool Always = false)
         {
-            if (_debugMode)
+            if (_debugMode || Always)
             {
                 Console.WriteLine(message);
             }
