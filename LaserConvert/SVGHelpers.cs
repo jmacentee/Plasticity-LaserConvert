@@ -41,7 +41,7 @@ namespace LaserConvert
             // Use a large viewBox (1000x1000) but specify dimensions in mm
             // The viewBox coordinates are unitless and represent the coordinate system
             // The width/height with mm units tell Inkscape the physical size
-            _sb.AppendLine($"<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"1000mm\" height=\"1000mm\" viewBox=\"0 0 1000 1000\">");
+            _sb.AppendLine($"<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"482mm\" height=\"266mm\" viewBox=\"0 0 482 266\">");
             _sb.AppendLine("<defs/>");
             _sb.Append(_content);
             _sb.AppendLine("</svg>");

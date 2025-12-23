@@ -5,7 +5,7 @@ REM the correct way to read the test results is to read the contents of all_resu
 REM in our test cases below, all STP files have been validated as correct with the geometry described below. never assume there is a problem in an STP file and that is why test is failing.
 REM when successful, the groups in the SVG files will have the ids which match the solids in the STP file (Box1, Box2, etc)
 REM the box ordering in the SVG file is not important
-REM the solids are allowed to be placed and rotated anywhere in 3d space in the step file.  Our job is to find the faces which are perpendicular to the 3mm wide face and then make a 2d projection of that face into the svg file.  the outer edge of the solids may not be regular and there may be cutouts in the solids which should be included in the svg output as indepdent red paths.
+REM the solids are allowed to be placed and rotated anywhere in 3d space in the step file.  Our job is to find the faces which are perpendicular to the 3mm wide face and then make a 2d projection of that face into the svg file.  the outer edge of the solids may not be regular and there may be cutouts in the solids which should be included in the svg output as indepdent red (#960000) paths.
 
 REM Every time you try something and it doesn't work, you should leave a comment on what you tried, why you tried it and what the result was to prevent future duplicate effort.
 REM Do not write any custom code when code from a 3rd party library can be used instead.
@@ -56,16 +56,16 @@ REM This file contains the previous Box1 and Box2 and Box4 fourth box named Box5
 REM This file contains a single solid named KBox.  The Overall dimension is 150x170x3mm.  There are tabs cut out of the topmost face which should appear as cutouts in the SVG output. Two tabs are 5mm deep, one tab is 10mm deep.
 REM one 5mm cutout is on the edge and is 14.656 wide
 REM the other two cutouts are both 34mm wide.
-REM since these cutouts are on the outside edge of the face, they should not be red.  The black outline of the face is more complex than a rectangle.
+REM since these cutouts are on the outside edge of the face, they should not be red (#960000).  The dark purple (#9600c8) outline of the face is more complex than a rectangle.
 REM the correct svg path for KBox is d="m 0,0 h 170 v 145 h -15 v 5 H 121 V 140 H 87 v 5 H 53 v 5 H 0 Z"
 REM this path should have no diagonal lines.
 REM it is not necessary to copy the format of the correct path with "h" and "v".  Only to have the same points in the same order.
 REM there may be some slight rounding errors in the correct path. it is acceptable if our output is the same within +/- 1 unit.
 "C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\KBox_output.txt"
 
-REM This file contains a single solid named CBox. The Overall dimension is 40x50x3mm. It should be represented in the SVG as a single black square 40x50mm.
+REM This file contains a single solid named CBox. The Overall dimension is 40x50x3mm. It should be represented in the SVG as a single dark purple (#9600c8) square 40x50mm.
 REM There is a hole in CBox.  It is positioned 5mm over and 5mm down from one corner. It is 10x10mm wide.
-REM The hole should be represented in the SVG as a new path in the same group as CBox which is red.
+REM The hole should be represented in the SVG as a new path in the same group as CBox which is red (#960000).
 "C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBox.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBox.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\CBox_output.txt"
 
 

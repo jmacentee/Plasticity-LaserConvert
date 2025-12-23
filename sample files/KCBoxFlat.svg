@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000mm" height="1000mm" viewBox="0 0 1000 1000">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="482mm" height="266mm" viewBox="0 0 482 266">
 <defs/>
   <g id="KCBoxFlat">
-    <path d="M 23,52 L 29,52 L 29,58 L 34,58 L 34,52 L 40,52 L 40,32 L 37,32 L 37,22 L 40,22 L 40,2 L 27,2 L 27,0 L 13,0 L 13,2 L 0,2 L 0,12 L 2,12 L 2,22 L 0,22 L 0,32 L 2,32 L 2,42 L 0,42 L 0,52 L 6,52 L 6,53 L 11,53 L 11,52 L 17,52 L 17,55 L 23,55 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 25,47 L 25,37 L 35,37 L 35,47 Z" stroke="#f00" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 10,27 L 10,17 L 15,17 L 15,27 Z" stroke="#f00" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 23,52 L 29,52 L 29,58 L 34,58 L 34,52 L 40,52 L 40,32 L 37,32 L 37,22 L 40,22 L 40,2 L 27,2 L 27,0 L 13,0 L 13,2 L 0,2 L 0,12 L 2,12 L 2,22 L 0,22 L 0,32 L 2,32 L 2,42 L 0,42 L 0,52 L 6,52 L 6,53 L 11,53 L 11,52 L 17,52 L 17,55 L 23,55 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 25,47 L 25,37 L 35,37 L 35,47 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 10,27 L 10,17 L 15,17 L 15,27 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>

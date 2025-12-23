@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000mm" height="1000mm" viewBox="0 0 1000 1000">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="482mm" height="266mm" viewBox="0 0 482 266">
 <defs/>
   <g id="KCBox">
-    <path d="M 46,0 L 56,0 L 56,13 L 58,13 L 58,27 L 56,27 L 56,40 L 36,40 L 36,37 L 26,37 L 26,40 L 6,40 L 6,34 L 0,34 L 0,29 L 6,29 L 6,23 L 3,23 L 3,17 L 6,17 L 6,11 L 5,11 L 5,6 L 6,6 L 6,0 L 16,0 L 16,2 L 26,2 L 26,0 L 36,0 L 36,2 L 46,2 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 21,35 L 21,25 L 11,25 L 11,35 Z" stroke="#f00" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 31,10 L 31,15 L 41,15 L 41,10 Z" stroke="#f00" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 46,0 L 56,0 L 56,13 L 58,13 L 58,27 L 56,27 L 56,40 L 36,40 L 36,37 L 26,37 L 26,40 L 6,40 L 6,34 L 0,34 L 0,29 L 6,29 L 6,23 L 3,23 L 3,17 L 6,17 L 6,11 L 5,11 L 5,6 L 6,6 L 6,0 L 16,0 L 16,2 L 26,2 L 26,0 L 36,0 L 36,2 L 46,2 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 21,35 L 21,25 L 11,25 L 11,35 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 31,10 L 31,15 L 41,15 L 41,10 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>

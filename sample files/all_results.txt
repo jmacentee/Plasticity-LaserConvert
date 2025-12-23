@@ -1,89 +1,89 @@
 Concatenated results
  
 REM File: 1box.svg 
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000mm" height="1000mm" viewBox="0 0 1000 1000">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="482mm" height="266mm" viewBox="0 0 482 266">
 <defs/>
   <g id="Box1">
-    <path d="M 0,0 L 170,0 L 170,150 L 0,150 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 170,0 L 170,150 L 0,150 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
 REM File: 2boxes.svg 
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000mm" height="1000mm" viewBox="0 0 1000 1000">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="482mm" height="266mm" viewBox="0 0 482 266">
 <defs/>
   <g id="Box2">
-    <path d="M 0,0 L 170,0 L 170,110 L 0,110 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 170,0 L 170,110 L 0,110 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box1">
-    <path d="M 0,0 L 170,0 L 170,150 L 0,150 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 170,0 L 170,150 L 0,150 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
 REM File: 3boxes.svg 
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000mm" height="1000mm" viewBox="0 0 1000 1000">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="482mm" height="266mm" viewBox="0 0 482 266">
 <defs/>
   <g id="Box2">
-    <path d="M 0,0 L 170,0 L 170,110 L 0,110 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 170,0 L 170,110 L 0,110 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box1">
-    <path d="M 0,0 L 170,0 L 170,150 L 0,150 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 170,0 L 170,150 L 0,150 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
 REM File: 3boxesB.svg 
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000mm" height="1000mm" viewBox="0 0 1000 1000">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="482mm" height="266mm" viewBox="0 0 482 266">
 <defs/>
   <g id="Box2">
-    <path d="M 0,0 L 170,0 L 170,110 L 0,110 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 170,0 L 170,110 L 0,110 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box4">
-    <path d="M 0,0 L 75,0 L 75,67 L 0,67 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 75,0 L 75,67 L 0,67 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box1">
-    <path d="M 0,0 L 170,0 L 170,150 L 0,150 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 170,0 L 170,150 L 0,150 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
 REM File: 4boxes.svg 
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000mm" height="1000mm" viewBox="0 0 1000 1000">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="482mm" height="266mm" viewBox="0 0 482 266">
 <defs/>
   <g id="Box1">
-    <path d="M 0,0 L 170,0 L 170,150 L 0,150 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 170,0 L 170,150 L 0,150 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box2">
-    <path d="M 0,0 L 170,0 L 170,110 L 0,110 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 170,0 L 170,110 L 0,110 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box4">
-    <path d="M 0,0 L 75,0 L 75,67 L 0,67 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 75,0 L 75,67 L 0,67 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box5">
-    <path d="M 0,0 L 44,0 L 44,58 L 0,58 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 44,0 L 44,58 L 0,58 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
 REM File: CBox.svg 
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000mm" height="1000mm" viewBox="0 0 1000 1000">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="482mm" height="266mm" viewBox="0 0 482 266">
 <defs/>
   <g id="CBox">
-    <path d="M 0,0 L 40,0 L 40,50 L 0,50 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 15,35 L 5,35 L 5,45 L 15,45 Z" stroke="#f00" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 40,0 L 40,50 L 0,50 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 15,35 L 5,35 L 5,45 L 15,45 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
 REM File: CBoxR.svg 
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000mm" height="1000mm" viewBox="0 0 1000 1000">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="482mm" height="266mm" viewBox="0 0 482 266">
 <defs/>
   <g id="CBoxR">
-    <path d="M 0,0 L 40,0 L 40,50 L 0,50 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 15,35 L 5,35 L 5,45 L 15,45 Z" stroke="#f00" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 40,0 L 40,50 L 0,50 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 15,35 L 5,35 L 5,45 L 15,45 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
 REM File: KBox.svg 
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000mm" height="1000mm" viewBox="0 0 1000 1000">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="482mm" height="266mm" viewBox="0 0 482 266">
 <defs/>
   <g id="KBox">
-    <path d="M 0,0 L 170,0 L 170,150 L 117,150 L 117,145 L 83,145 L 83,140 L 49,140 L 49,150 L 15,150 L 15,145 L 0,145 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0,0 L 170,0 L 170,150 L 117,150 L 117,145 L 83,145 L 83,140 L 49,140 L 49,150 L 15,150 L 15,145 L 0,145 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -132,22 +132,22 @@ REM File: KBox_corrected.svg
 </svg>
  
 REM File: KCBox.svg 
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000mm" height="1000mm" viewBox="0 0 1000 1000">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="482mm" height="266mm" viewBox="0 0 482 266">
 <defs/>
   <g id="KCBox">
-    <path d="M 46,0 L 56,0 L 56,13 L 58,13 L 58,27 L 56,27 L 56,40 L 36,40 L 36,37 L 26,37 L 26,40 L 6,40 L 6,34 L 0,34 L 0,29 L 6,29 L 6,23 L 3,23 L 3,17 L 6,17 L 6,11 L 5,11 L 5,6 L 6,6 L 6,0 L 16,0 L 16,2 L 26,2 L 26,0 L 36,0 L 36,2 L 46,2 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 21,35 L 21,25 L 11,25 L 11,35 Z" stroke="#f00" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 31,10 L 31,15 L 41,15 L 41,10 Z" stroke="#f00" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 46,0 L 56,0 L 56,13 L 58,13 L 58,27 L 56,27 L 56,40 L 36,40 L 36,37 L 26,37 L 26,40 L 6,40 L 6,34 L 0,34 L 0,29 L 6,29 L 6,23 L 3,23 L 3,17 L 6,17 L 6,11 L 5,11 L 5,6 L 6,6 L 6,0 L 16,0 L 16,2 L 26,2 L 26,0 L 36,0 L 36,2 L 46,2 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 21,35 L 21,25 L 11,25 L 11,35 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 31,10 L 31,15 L 41,15 L 41,10 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
 REM File: KCBoxFlat.svg 
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000mm" height="1000mm" viewBox="0 0 1000 1000">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="482mm" height="266mm" viewBox="0 0 482 266">
 <defs/>
   <g id="KCBoxFlat">
-    <path d="M 23,52 L 29,52 L 29,58 L 34,58 L 34,52 L 40,52 L 40,32 L 37,32 L 37,22 L 40,22 L 40,2 L 27,2 L 27,0 L 13,0 L 13,2 L 0,2 L 0,12 L 2,12 L 2,22 L 0,22 L 0,32 L 2,32 L 2,42 L 0,42 L 0,52 L 6,52 L 6,53 L 11,53 L 11,52 L 17,52 L 17,55 L 23,55 Z" stroke="#000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 25,47 L 25,37 L 35,37 L 35,47 Z" stroke="#f00" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 10,27 L 10,17 L 15,17 L 15,27 Z" stroke="#f00" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 23,52 L 29,52 L 29,58 L 34,58 L 34,52 L 40,52 L 40,32 L 37,32 L 37,22 L 40,22 L 40,2 L 27,2 L 27,0 L 13,0 L 13,2 L 0,2 L 0,12 L 2,12 L 2,22 L 0,22 L 0,32 L 2,32 L 2,42 L 0,42 L 0,52 L 6,52 L 6,53 L 11,53 L 11,52 L 17,52 L 17,55 L 23,55 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 25,47 L 25,37 L 35,37 L 35,47 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 10,27 L 10,17 L 15,17 L 15,27 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
