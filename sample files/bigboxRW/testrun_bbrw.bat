@@ -45,8 +45,8 @@ REM find out why the thin dimension of this object is being calculated wrong.
 setlocal enabledelayedexpansion
 
 rem Hard-coded directory path
-set INPUTDIR=C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\bigbox
-set OUTPUT=%INPUTDIR%\bb_results.txt
+set INPUTDIR=C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\bigboxRW
+set OUTPUT=%INPUTDIR%\rw_results.txt
 
 rem Clear any existing output file
 > "%OUTPUT%" echo Concatenated results
