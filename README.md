@@ -18,6 +18,21 @@ Run the tool with `LaserConvert.exe <input.stp> <output.svg>`
 ### Click for larger images
 <p align="center">
   <a href="images/boxoverview.png" target="_blank">
-    <img src="images/boxoverview_thumb.png" alt="Workflow diagram" width="320">
+    <img src="images/boxoverview_thumb.png" alt="boxoverview" width="342">
+  </a>
+</p>
+<p align="center">
+  <a href="images/boxopen.png" target="_blank">
+    <img src="images/boxopen_thumb.png" alt="boxopen" width="412">
+  </a>
+</p>
+<p align="center">
+  <a href="images/stepexport.png" target="_blank">
+    <img src="images/stepexport.png" alt="stepexport" width="301">
+  </a>
+</p>
+<p align="center">
+  <a href="images/svg.png" target="_blank">
+    <img src="images/svg_thumb.png" alt="svg" width="564">
   </a>
 </p>
