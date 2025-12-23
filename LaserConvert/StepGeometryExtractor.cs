@@ -318,20 +318,25 @@ namespace LaserConvert
                 }
             }
             
-            // CRITICAL FIX: If we found a face pair with separation in reasonable range (2.5-10.0mm),
-            // consider that as the detected thin dimension regardless of vertex bounding box
-            // This handles rotated geometry where the thin faces aren't axis-aligned
-            if (minSeparation >= 2.0 && minSeparation <= 10.0)  // Increased to 10mm for rotated geometry tolerance
+            // Check if the bounding box already has a valid thin dimension (2.5-3.5mm range)
+            var boundingDims = new[] { dimX, dimY, dimZ }.OrderBy(d => d).ToList();
+            var smallestBoundingDim = boundingDims[0];
+            bool boundingBoxHasThinDim = smallestBoundingDim >= 2.5 && smallestBoundingDim <= 3.5;
+            
+            // For ROTATED solids: the bounding box won't show the true thin dimension,
+            // but face separation will. Use face separation as the thin dimension ONLY when:
+            // 1. Face separation is in valid thin range (2.5-10mm)
+            // 2. Bounding box does NOT already have a valid thin dimension
+            // This ensures we don't override accurate bounding box measurements for axis-aligned solids.
+            if (minSeparation >= 2.5 && minSeparation <= 10.0 && !boundingBoxHasThinDim)
             {
-                // The detected separation IS the thin dimension
-                // Replace the smallest bounding dimension with it
-                var dims = new[] { dimX, dimY, dimZ }.OrderBy(d => d).ToList();
-                dims[0] = minSeparation;  // The thin dimension
-                dimX = dims[0];
-                dimY = dims[1];
-                dimZ = dims[2];
-                DebugLog($"[TOPO] Thin dimension detected from face separation: {minSeparation:F1}mm");
-                DebugLog($"[TOPO] Adjusted dimensions: {dimX:F1} x {dimY:F1} x {dimZ:F1}");
+                DebugLog($"[TOPO] Rotated solid detected: bounding box smallest dim ({smallestBoundingDim:F1}mm) not thin, but face separation ({minSeparation:F1}mm) is valid");
+                // Replace the smallest bounding dimension with face separation
+                boundingDims[0] = minSeparation;
+                dimX = boundingDims[0];
+                dimY = boundingDims[1];
+                dimZ = boundingDims[2];
+                DebugLog($"[TOPO] Adjusted dimensions for rotated solid: {dimX:F1} x {dimY:F1} x {dimZ:F1}");
             }
             
             return (uniqueVertices, face1Idx, face2Idx, dimX, dimY, dimZ);
