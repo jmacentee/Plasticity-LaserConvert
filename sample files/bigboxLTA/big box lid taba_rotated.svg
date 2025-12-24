@@ -33,17 +33,21 @@
   <defs
      id="defs1" />
   <g
-     id="LidTabA"
-     style="fill:#8080b3;stroke:none;fill-opacity:0.56342185"
-     transform="rotate(-45,116,116)">
-    <path
-       d="M 0,116 H 7 L 116,7 225,116 116,225 v 7 l 41,-41 2,2 34,-34 -2,-2 41,-41 -40,-40 2,-2 -36,-36 -2,2 -40,-40 -41,41 -2,-2 -34,34 2,2 z"
-       stroke="#9600c8"
-       stroke-width="0.2"
-       fill="none"
-       vector-effect="non-scaling-stroke"
-       id="path1"
-       style="fill:#8080b3;stroke:none;fill-opacity:0.56342185" />
+     id="g3"
+     inkscape:label="bigboxLTA">
+    <g
+       id="LidTabA"
+       style="fill:#8080b3;stroke:none;fill-opacity:0.56342185"
+       transform="rotate(-45,116,116)">
+      <path
+         d="M 0,116 H 7 L 116,7 225,116 116,225 v 7 l 41,-41 2,2 34,-34 -2,-2 41,-41 -40,-40 2,-2 -36,-36 -2,2 -40,-40 -41,41 -2,-2 -34,34 2,2 z"
+         stroke="#9600c8"
+         stroke-width="0.2"
+         fill="none"
+         vector-effect="non-scaling-stroke"
+         id="path1"
+         style="fill:#8080b3;stroke:none;fill-opacity:0.56342185" />
+    </g>
   </g>
   <rect
      style="vector-effect:non-scaling-stroke;fill:#ff0000;fill-opacity:0.563422;stroke:none;stroke-width:0.200001;-inkscape-stroke:none"
@@ -51,19 +55,22 @@
      width="50.911999"
      height="2.8280001"
      x="90.544159"
-     y="31.146999" />
+     y="31.146999"
+     inkscape:label="Tab1" />
   <rect
      style="vector-effect:non-scaling-stroke;fill:#ff0000;fill-opacity:0.563422;stroke:none;stroke-width:0.2;-inkscape-stroke:none"
      id="rect2"
      width="2.8284271"
      height="48.08326"
      x="198.02438"
-     y="91.958374" />
+     y="91.958374"
+     inkscape:label="Tab2" />
   <rect
      style="vector-effect:non-scaling-stroke;fill:#ff0000;fill-opacity:0.563422;stroke:none;stroke-width:0.2;-inkscape-stroke:none"
      id="rect3"
      width="2.8280001"
      height="48.083"
      x="31.147186"
-     y="91.958" />
+     y="91.958"
+     inkscape:label="Tab3" />
 </svg>
