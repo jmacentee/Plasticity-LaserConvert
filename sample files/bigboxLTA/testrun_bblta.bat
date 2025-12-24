@@ -20,7 +20,6 @@ REM there should be no "fallback bounding box cases".  Either read the geometry 
 
 REM Swapped X-Y dimensions in the SVG are not a problem, as long as the entire solid and it's cutuouts are rotated together.
 REM shapes being mirror images are not important, since the purpose of this is to laser cut the shape it will be the same on the back and front no matter what.
-REM In these tests, there should not be any diagonal lines. (This is not a general rule, only true for these examples).  
 REM The holes in the solids in a STP file are clearly part of the standard. When I load KCBox.stp into https://3dviewer.net/ I see the solid with two holes in it, the same as I saw in Plasticity.  If any tests fail, try to look for the root problem and the general solution instead of any hacks.
 
 REM we shouldn't have any special cases, we should just handle everything generally.  why do we have any "thresholds" at all?  We need to understand the real geometory generaly (what is an outside edge, what is the edge of a hole) and deal with it the same way from our most simple example to our most complex

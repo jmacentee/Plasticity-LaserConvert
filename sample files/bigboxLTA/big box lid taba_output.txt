@@ -103,5 +103,6 @@ Found 1 solids
 [EXTRACT] Bound 0 has 4 vertices, bbox 5.0x5.0x3.0 (area=54.9): (82.0,82.0,144.0), (82.0,82.0,147.0), (77.0,77.0,147.0), (77.0,77.0,144.0)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=54.9)
 [EXTRACT] Returning 4 outer verts and 0 hole loops
+[ALIGN] LidTabA: Rotating by -45.0 degrees for axis alignment
 [SVG] LidTabA: Generated outline from 20 vertices
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\sample files\bigboxLTA\big box lid taba.svg

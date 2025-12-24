@@ -135,6 +135,16 @@ namespace LaserConvert
             var holes2D = bestHoleVerts?.Select(h => ProjectWithFrame(h, frame)).ToList() 
                 ?? new List<List<(double X, double Y)>>();
 			
+            // Check if the shape needs axis-alignment rotation
+            // This handles cases where the shape's natural edges are at 45-degree angles
+            double alignmentAngle = ComputeAxisAlignmentAngle(outer2D);
+            if (Math.Abs(alignmentAngle) > 0.01) // More than ~0.5 degrees
+            {
+                DebugLog($"[ALIGN] {name}: Rotating by {alignmentAngle * 180 / Math.PI:F1} degrees for axis alignment");
+                outer2D = RotatePoints2D(outer2D, alignmentAngle);
+                holes2D = holes2D.Select(h => RotatePoints2D(h, alignmentAngle)).ToList();
+            }
+            
             // Normalize to origin and round
             var minX = outer2D.Min(p => p.X);
             var minY = outer2D.Min(p => p.Y);
@@ -177,6 +187,113 @@ namespace LaserConvert
             }
 
             svg.EndGroup();
+        }
+
+        /// <summary>
+        /// Compute the angle needed to align the shape's dominant edges with the X or Y axis.
+        /// Returns the rotation angle in radians.
+        /// </summary>
+        private static double ComputeAxisAlignmentAngle(List<(double X, double Y)> points)
+        {
+            if (points.Count < 3)
+                return 0;
+            
+            // Find the longest edges and their angles
+            var edgeAngles = new List<(double Length, double Angle)>();
+            int n = points.Count;
+            
+            for (int i = 0; i < n; i++)
+            {
+                var p1 = points[i];
+                var p2 = points[(i + 1) % n];
+                
+                double dx = p2.X - p1.X;
+                double dy = p2.Y - p1.Y;
+                double length = Math.Sqrt(dx * dx + dy * dy);
+                
+                if (length < 1.0) // Skip very short edges
+                    continue;
+                
+                // Compute angle of this edge (0 to 180 degrees, normalized)
+                double angle = Math.Atan2(dy, dx);
+                
+                // Normalize angle to 0-90 range (we don't care about direction)
+                while (angle < 0) angle += Math.PI;
+                while (angle >= Math.PI) angle -= Math.PI;
+                if (angle > Math.PI / 2) angle = Math.PI - angle;
+                
+                edgeAngles.Add((length, angle));
+            }
+            
+            if (edgeAngles.Count == 0)
+                return 0;
+            
+            // Check if most edges are already axis-aligned (within a few degrees)
+            const double axisThreshold = 5.0 * Math.PI / 180.0; // 5 degrees
+            int axisAlignedCount = edgeAngles.Count(e => 
+                Math.Abs(e.Angle) < axisThreshold || 
+                Math.Abs(e.Angle - Math.PI / 2) < axisThreshold);
+            
+            // If more than 60% of edges are already axis-aligned, don't rotate
+            if (axisAlignedCount > edgeAngles.Count * 0.6)
+                return 0;
+            
+            // Find the dominant angle (weighted by edge length)
+            // Check if there's a consistent diagonal angle (like 45 degrees)
+            const double diagonalAngle = Math.PI / 4; // 45 degrees
+            const double diagonalThreshold = 10.0 * Math.PI / 180.0; // 10 degrees tolerance
+            
+            double diagonalWeight = 0;
+            double totalWeight = 0;
+            double weightedDiagonalAngle = 0;
+            
+            foreach (var (length, angle) in edgeAngles)
+            {
+                totalWeight += length;
+                
+                // Check if this edge is near 45 degrees
+                if (Math.Abs(angle - diagonalAngle) < diagonalThreshold)
+                {
+                    diagonalWeight += length;
+                    weightedDiagonalAngle += angle * length;
+                }
+            }
+            
+            // If significant portion of edges are at ~45 degrees, rotate to align
+            if (diagonalWeight > totalWeight * 0.3 && diagonalWeight > 0)
+            {
+                double avgDiagonalAngle = weightedDiagonalAngle / diagonalWeight;
+                // Rotate to make this angle become 0 (horizontal) or 90 (vertical)
+                // We want to rotate by the angle itself to make it horizontal
+                return -avgDiagonalAngle;
+            }
+            
+            return 0;
+        }
+
+        /// <summary>
+        /// Rotate 2D points around the centroid by the given angle.
+        /// </summary>
+        private static List<(double X, double Y)> RotatePoints2D(List<(double X, double Y)> points, double angle)
+        {
+            if (Math.Abs(angle) < 0.0001 || points.Count == 0)
+                return points;
+            
+            // Compute centroid
+            double cx = points.Average(p => p.X);
+            double cy = points.Average(p => p.Y);
+            
+            double cos = Math.Cos(angle);
+            double sin = Math.Sin(angle);
+            
+            return points.Select(p =>
+            {
+                double dx = p.X - cx;
+                double dy = p.Y - cy;
+                double rx = dx * cos - dy * sin + cx;
+                double ry = dx * sin + dy * cos + cy;
+                return (rx, ry);
+            }).ToList();
         }
 
         /// <summary>

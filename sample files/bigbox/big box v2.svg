@@ -33,10 +33,10 @@
     <path d="M 87,58 L 84,58 L 84,104 L 87,104 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="LibTabB">
-    <path d="M 225,116 L 232,116 L 192,156 L 194,158 L 158,194 L 156,192 L 116,232 L 76,192 L 74,194 L 38,158 L 40,156 L 0,116 L 40,76 L 38,74 L 74,38 L 76,40 L 116,0 L 116,7 L 7,116 L 116,225 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 162,5 L 167,0 L 167,57 L 170,57 L 170,107 L 167,107 L 167,164 L 110,164 L 110,167 L 60,167 L 60,164 L 3,164 L 3,107 L 0,107 L 0,57 L 3,57 L 3,0 L 8,5 L 8,159 L 162,159 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="LidTabA">
-    <path d="M 225,116 L 232,116 L 192,156 L 194,158 L 158,194 L 156,192 L 116,232 L 76,192 L 74,194 L 38,158 L 40,156 L 0,116 L 40,76 L 38,74 L 74,38 L 76,40 L 116,0 L 116,7 L 7,116 L 116,225 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 162,5 L 167,0 L 167,57 L 170,57 L 170,107 L 167,107 L 167,164 L 110,164 L 110,167 L 60,167 L 60,164 L 3,164 L 3,107 L 0,107 L 0,57 L 3,57 L 3,0 L 8,5 L 8,159 L 162,159 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="RightLidtab">
     <path d="M 107,3 L 164,3 L 159,8 L 5,8 L 0,3 L 57,3 L 57,0 L 107,0 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
