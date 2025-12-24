@@ -37,3 +37,12 @@ Run the tool with `LaserConvert.exe <input.stp> <output.svg>`
   </a>
   <br>(Layout and some decoration lines added in Inkscape)
 </p>
+<p align="center">
+  <a href="images/big_box_photo_closed.jpg" target="_blank">
+    <img src="images/big_box_photo_closed_thumb.jpg" alt="big_box_photo_closed" width="408">
+  </a>
+</p>
+<p align="center">
+  <a href="images/big_box_photo_open.jpg" target="_blank">
+    <img src="images/big_box_photo_open_thumb.jpg" alt="big_box_photo_open" width="564">
+  </a>

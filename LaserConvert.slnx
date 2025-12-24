@@ -3,6 +3,10 @@
     <File Path="README.md" />
   </Folder>
   <Folder Name="/Solution Items/images/">
+    <File Path="images/big_box_photo_closed.jpg" />
+    <File Path="images/big_box_photo_closed_thumb.jpg" />
+    <File Path="images/big_box_photo_open.JPG" />
+    <File Path="images/big_box_photo_open_thumb.JPG" />
     <File Path="images/boxopen.png" />
     <File Path="images/boxopen_highlight.png" />
     <File Path="images/boxopen_highlight_thumb.png" />
