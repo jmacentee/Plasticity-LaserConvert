@@ -78,6 +78,17 @@
     <File Path="tests/main/testrun_stp.bat" />
     <File Path="tests/main/test_1box.svg" />
   </Folder>
+  <Folder Name="/Solution Items/tests/var_thickness/">
+    <File Path="tests/var_thickness/testrun_vt.bat" />
+    <File Path="tests/var_thickness/var_thickness_test.stp" />
+    <File Path="tests/var_thickness/vt3.svg" />
+    <File Path="tests/var_thickness/vt3_output.txt" />
+    <File Path="tests/var_thickness/vt6.svg" />
+    <File Path="tests/var_thickness/vt6_output.txt" />
+    <File Path="tests/var_thickness/vt9.svg" />
+    <File Path="tests/var_thickness/vt9_output.txt" />
+    <File Path="tests/var_thickness/vt_results.txt" />
+  </Folder>
   <Project Path="external/step/src/IxMilia.Step/IxMilia.Step.csproj" />
   <Project Path="LaserConvert/LaserConvert.csproj" />
 </Solution>
