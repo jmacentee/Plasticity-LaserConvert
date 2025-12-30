@@ -31,9 +31,6 @@ Found 19 solids
 [TOPO] Extracted 24 unique vertices
 [TOPO] Vertex ranges: X[2.5,5.5] Y[-70.0,70.0] Z[79.0,143.5]
 [TOPO] Computed dimensions: 3.0 x 140.0 x 64.5
-[TOPO] WARNING: Small face separation (3.0mm) but large Z dimension (64.5mm) - faces may not be parallel!
-[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.
-[TOPO] Recomputed with all faces: 3.0 x 140.0 x 64.5
 [FILTER] DHLeft: dimensions [3.0, 140.0, 64.5] - PASS (target thickness: 3mm)
 [TOPO] Processing 6 faces
 [TOPO] Face pairs near target thickness (3mm):
@@ -52,9 +49,6 @@ Found 19 solids
 [TOPO] Extracted 8 unique vertices
 [TOPO] Vertex ranges: X[-81.0,80.8] Y[78.3,81.3] Z[3.0,74.0]
 [TOPO] Computed dimensions: 161.8 x 3.0 x 71.0
-[TOPO] WARNING: Small face separation (3.0mm) but large Z dimension (71.0mm) - faces may not be parallel!
-[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.
-[TOPO] Recomputed with all faces: 161.8 x 3.0 x 71.0
 [FILTER] DrawerBack: dimensions [161.8, 3.0, 71.0] - PASS (target thickness: 3mm)
 [TOPO] Processing 6 faces
 [TOPO] Face pairs near target thickness (3mm):
@@ -64,9 +58,6 @@ Found 19 solids
 [TOPO] Extracted 8 unique vertices
 [TOPO] Vertex ranges: X[-81.0,-78.0] Y[-85.0,81.3] Z[3.0,74.0]
 [TOPO] Computed dimensions: 3.0 x 166.3 x 71.0
-[TOPO] WARNING: Small face separation (3.0mm) but large Z dimension (71.0mm) - faces may not be parallel!
-[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.
-[TOPO] Recomputed with all faces: 3.0 x 166.3 x 71.0
 [FILTER] DrawerLeft: dimensions [3.0, 166.3, 71.0] - PASS (target thickness: 3mm)
 [TOPO] Processing 6 faces
 [TOPO] Face pairs near target thickness (3mm):
@@ -76,9 +67,6 @@ Found 19 solids
 [TOPO] Extracted 8 unique vertices
 [TOPO] Vertex ranges: X[78.0,81.0] Y[-85.0,81.3] Z[3.0,74.0]
 [TOPO] Computed dimensions: 3.0 x 166.3 x 71.0
-[TOPO] WARNING: Small face separation (3.0mm) but large Z dimension (71.0mm) - faces may not be parallel!
-[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.
-[TOPO] Recomputed with all faces: 3.0 x 166.3 x 71.0
 [FILTER] DrawerRight: dimensions [3.0, 166.3, 71.0] - PASS (target thickness: 3mm)
 [TOPO] Processing 6 faces
 [TOPO] Face pairs near target thickness (3mm):
@@ -88,9 +76,6 @@ Found 19 solids
 [TOPO] Extracted 8 unique vertices
 [TOPO] Vertex ranges: X[-85.0,85.0] Y[-85.0,-82.0] Z[3.0,75.0]
 [TOPO] Computed dimensions: 170.0 x 3.0 x 72.0
-[TOPO] WARNING: Small face separation (3.0mm) but large Z dimension (72.0mm) - faces may not be parallel!
-[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.
-[TOPO] Recomputed with all faces: 170.0 x 3.0 x 72.0
 [FILTER] DrawerFront: dimensions [170.0, 3.0, 72.0] - PASS (target thickness: 3mm)
 [TOPO] Processing 18 faces
 [TOPO] Face pairs near target thickness (3mm):
@@ -100,9 +85,6 @@ Found 19 solids
 [TOPO] Extracted 32 unique vertices
 [TOPO] Vertex ranges: X[-1.5,1.5] Y[-85.0,85.0] Z[75.0,135.0]
 [TOPO] Computed dimensions: 3.0 x 170.0 x 60.0
-[TOPO] WARNING: Small face separation (3.0mm) but large Z dimension (60.0mm) - faces may not be parallel!
-[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.
-[TOPO] Recomputed with all faces: 3.0 x 170.0 x 60.0
 [FILTER] TopDivider: dimensions [3.0, 170.0, 60.0] - PASS (target thickness: 3mm)
 [TOPO] Processing 18 faces
 [TOPO] Face pairs near target thickness (3mm):
@@ -162,9 +144,6 @@ Found 19 solids
 [TOPO] Extracted 64 unique vertices
 [TOPO] Vertex ranges: X[-85.0,-82.0] Y[-85.0,85.0] Z[0.0,150.0]
 [TOPO] Computed dimensions: 3.0 x 170.0 x 150.0
-[TOPO] WARNING: Small face separation (3.0mm) but large Z dimension (150.0mm) - faces may not be parallel!
-[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.
-[TOPO] Recomputed with all faces: 3.0 x 170.0 x 150.0
 [FILTER] LeftWall: dimensions [3.0, 170.0, 150.0] - PASS (target thickness: 3mm)
 [TOPO] Processing 30 faces
 [TOPO] Face pairs near target thickness (3mm):
@@ -178,9 +157,6 @@ Found 19 solids
 [TOPO] Extracted 56 unique vertices
 [TOPO] Vertex ranges: X[-85.0,85.0] Y[-85.0,-82.0] Z[75.0,150.0]
 [TOPO] Computed dimensions: 170.0 x 3.0 x 75.0
-[TOPO] WARNING: Small face separation (3.0mm) but large Z dimension (75.0mm) - faces may not be parallel!
-[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.
-[TOPO] Recomputed with all faces: 170.0 x 3.0 x 75.0
 [FILTER] FrontA: dimensions [170.0, 3.0, 75.0] - PASS (target thickness: 3mm)
 [TOPO] Processing 20 faces
 [TOPO] Face pairs near target thickness (3mm):
@@ -190,9 +166,6 @@ Found 19 solids
 [TOPO] Extracted 36 unique vertices
 [TOPO] Vertex ranges: X[82.0,85.0] Y[-85.0,85.0] Z[0.0,78.0]
 [TOPO] Computed dimensions: 3.0 x 170.0 x 78.0
-[TOPO] WARNING: Small face separation (3.0mm) but large Z dimension (78.0mm) - faces may not be parallel!
-[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.
-[TOPO] Recomputed with all faces: 3.0 x 170.0 x 78.0
 [FILTER] RigthLowerWall: dimensions [3.0, 170.0, 78.0] - PASS (target thickness: 3mm)
 [TOPO] Processing 22 faces
 [TOPO] Face pairs near target thickness (3mm):
@@ -206,9 +179,6 @@ Found 19 solids
 [TOPO] Extracted 40 unique vertices
 [TOPO] Vertex ranges: X[82.0,85.0] Y[-82.0,82.0] Z[78.0,150.0]
 [TOPO] Computed dimensions: 3.0 x 164.0 x 72.0
-[TOPO] WARNING: Small face separation (3.0mm) but large Z dimension (72.0mm) - faces may not be parallel!
-[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.
-[TOPO] Recomputed with all faces: 3.0 x 164.0 x 72.0
 [FILTER] RightWall: dimensions [3.0, 164.0, 72.0] - PASS (target thickness: 3mm)
 [TOPO] Processing 40 faces
 [TOPO] Face pairs near target thickness (3mm):
@@ -222,9 +192,6 @@ Found 19 solids
 [TOPO] Extracted 76 unique vertices
 [TOPO] Vertex ranges: X[-85.0,85.0] Y[82.0,85.0] Z[0.0,150.0]
 [TOPO] Computed dimensions: 170.0 x 3.0 x 150.0
-[TOPO] WARNING: Small face separation (3.0mm) but large Z dimension (150.0mm) - faces may not be parallel!
-[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.
-[TOPO] Recomputed with all faces: 170.0 x 3.0 x 150.0
 [FILTER] BackWall: dimensions [170.0, 3.0, 150.0] - PASS (target thickness: 3mm)
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 0.0x50.0x3.0 (area=150.0): (85.0,-28.0,79.0), (85.0,22.0,79.0), (85.0,22.0,82.0), (85.0,-28.0,82.0)...

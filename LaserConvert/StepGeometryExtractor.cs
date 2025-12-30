@@ -292,71 +292,24 @@ namespace LaserConvert
             
             DebugLog(options, $"[TOPO] Extracted {uniqueVertices.Count} unique vertices");
             
-            // Debug: print vertex ranges for dimension calculation
-            var minX = 0.0;
-            var maxX = 0.0;
-            var minY = 0.0;
-            var maxY = 0.0;
-            var minZ = 0.0;
-            var maxZ = 0.0;
+            // Compute bounding box dimensions
             var dimX = 0.0;
             var dimY = 0.0;
             var dimZ = 0.0;
             
             if (uniqueVertices.Count > 0)
             {
-                minX = uniqueVertices.Min(v => v.Item1);
-                maxX = uniqueVertices.Max(v => v.Item1);
-                minY = uniqueVertices.Min(v => v.Item2);
-                maxY = uniqueVertices.Max(v => v.Item2);
-                minZ = uniqueVertices.Min(v => v.Item3);
-                maxZ = uniqueVertices.Max(v => v.Item3);
+                var minX = uniqueVertices.Min(v => v.Item1);
+                var maxX = uniqueVertices.Max(v => v.Item1);
+                var minY = uniqueVertices.Min(v => v.Item2);
+                var maxY = uniqueVertices.Max(v => v.Item2);
+                var minZ = uniqueVertices.Min(v => v.Item3);
+                var maxZ = uniqueVertices.Max(v => v.Item3);
                 dimX = maxX - minX;
                 dimY = maxY - minY;
                 dimZ = maxZ - minZ;
                 DebugLog(options, $"[TOPO] Vertex ranges: X[{minX:F1},{maxX:F1}] Y[{minY:F1},{maxY:F1}] Z[{minZ:F1},{maxZ:F1}]");
                 DebugLog(options, $"[TOPO] Computed dimensions: {dimX:F1} x {dimY:F1} x {dimZ:F1}");
-            }
-            
-            // Sanity check: if we found a small separation but computed a large Z dimension,
-            // the faces might not be what we think they are
-            // Use configurable max thickness for the "small separation" check
-            double largeDimThreshold = options.MaxThickness * 5; // Consider "large" if 5x max thickness
-            if (minSeparation < options.MaxThickness && dimZ > largeDimThreshold)
-            {
-                DebugLog(options, $"[TOPO] WARNING: Small face separation ({minSeparation:F1}mm) but large Z dimension ({dimZ:F1}mm) - faces may not be parallel!");
-                DebugLog(options, $"[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.");
-                
-                // Fallback: re-compute dimensions using ALL faces
-                allVertices.Clear();
-                foreach (var (face, faceVerts) in faceData)
-                {
-                    allVertices.AddRange(faceVerts);
-                }
-                
-                uniqueVertices = allVertices
-                    .GroupBy(v => (Math.Round(v.Item1, 2), Math.Round(v.Item2, 2), Math.Round(v.Item3, 2)))
-                    .Select(g => g.First())
-                    .ToList();
-                
-                // DON'T reset face indices - keep them for SVG projection!
-                // face1Idx = -1;
-                // face2Idx = -1;
-                
-                // Recompute dimensions
-                if (uniqueVertices.Count > 0)
-                {
-                    minX = uniqueVertices.Min(v => v.Item1);
-                    maxX = uniqueVertices.Max(v => v.Item1);
-                    minY = uniqueVertices.Min(v => v.Item2);
-                    maxY = uniqueVertices.Max(v => v.Item2);
-                    minZ = uniqueVertices.Min(v => v.Item3);
-                    maxZ = uniqueVertices.Max(v => v.Item3);
-                    dimX = maxX - minX;
-                    dimY = maxY - minY;
-                    dimZ = maxZ - minZ;
-                    DebugLog(options, $"[TOPO] Recomputed with all faces: {dimX:F1} x {dimY:F1} x {dimZ:F1}");
-                }
             }
             
             // Check if the bounding box already has a valid thin dimension (within tolerance of target)

@@ -29,9 +29,6 @@ Found 1 solids
 [TOPO] Extracted 40 unique vertices
 [TOPO] Vertex ranges: X[82.0,85.0] Y[-82.0,82.0] Z[78.0,150.0]
 [TOPO] Computed dimensions: 3.0 x 164.0 x 72.0
-[TOPO] WARNING: Small face separation (3.0mm) but large Z dimension (72.0mm) - faces may not be parallel!
-[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.
-[TOPO] Recomputed with all faces: 3.0 x 164.0 x 72.0
 [FILTER] RightWall: dimensions [3.0, 164.0, 72.0] - PASS (target thickness: 3mm)
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 4 vertices, bbox 3.0x164.0x0.0 (area=492.0): (82.0,82.0,150.0), (82.0,-82.0,150.0), (85.0,-82.0,150.0), (85.0,82.0,150.0)...

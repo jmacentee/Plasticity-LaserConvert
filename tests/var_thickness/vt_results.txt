@@ -50,9 +50,6 @@ Warning! [FILTER] Six: dimensions [80.2, 82.1, 30.2] - FAIL (target thickness: 3
 [TOPO] Extracted 8 unique vertices
 [TOPO] Vertex ranges: X[-1.1,27.6] Y[1.5,25.0] Z[-12.0,14.2]
 [TOPO] Computed dimensions: 28.7 x 23.5 x 26.1
-[TOPO] WARNING: Small face separation (3.0mm) but large Z dimension (26.1mm) - faces may not be parallel!
-[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.
-[TOPO] Recomputed with all faces: 28.7 x 23.5 x 26.1
 [TOPO] Rotated solid detected: bounding box smallest dim (23.5mm) not thin, but face separation (3.0mm) is valid
 [TOPO] Adjusted dimensions for rotated solid: 3.0 x 26.1 x 28.7
 [FILTER] Three: dimensions [3.0, 26.1, 28.7] - PASS (target thickness: 3mm)
@@ -204,9 +201,6 @@ Warning! [FILTER] Three: dimensions [28.7, 23.5, 26.1] - FAIL (target thickness:
 [TOPO] Extracted 8 unique vertices
 [TOPO] Vertex ranges: X[-164.4,-69.4] Y[150.9,202.3] Z[-42.3,46.4]
 [TOPO] Computed dimensions: 95.0 x 51.4 x 88.6
-[TOPO] WARNING: Small face separation (9.0mm) but large Z dimension (88.6mm) - faces may not be parallel!
-[TOPO] This suggests the face pair is not the actual thin pair. Using all vertices instead.
-[TOPO] Recomputed with all faces: 95.0 x 51.4 x 88.6
 [TOPO] Rotated solid detected: bounding box smallest dim (51.4mm) not thin, but face separation (9.0mm) is valid
 [TOPO] Adjusted dimensions for rotated solid: 9.0 x 88.6 x 95.0
 [FILTER] Nine: dimensions [9.0, 88.6, 95.0] - PASS (target thickness: 9mm)
