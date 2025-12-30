@@ -274,7 +274,9 @@ namespace LaserConvert
             }
             else
             {
-                if (face1Idx >= 0 && face2Idx >= 0 && minSeparation < options.MaxFaceSeparation)
+                // For simple shapes, use the detected face pair if valid
+                // Face pair is valid if we found one with separation in the target thickness range
+                if (face1Idx >= 0 && face2Idx >= 0 && minSeparation <= options.MaxThickness)
                 {
                     DebugLog(options, $"[TOPO] Found pair of faces with separation: {minSeparation:F1}mm");
                     

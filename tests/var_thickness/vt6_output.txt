@@ -21,11 +21,11 @@ Found 3 solids
 [TOPO]   Faces 0-2: sep=12.6mm, alignment=0.87
 [TOPO]   Faces 0-5: sep=12.6mm, alignment=0.75
 [TOPO]   Faces 2-4: sep=12.6mm, alignment=0.75
-[TOPO] Found pair of faces with separation: 12.6mm
-[TOPO] Extracted 6 unique vertices
-[TOPO] Vertex ranges: X[-1.1,27.6] Y[1.5,25.0] Z[-12.0,12.0]
-[TOPO] Computed dimensions: 28.7 x 23.5 x 24.0
-Warning! [FILTER] Three: dimensions [28.7, 23.5, 24.0] - FAIL (target thickness: 6mm)
+[TOPO] No close face pair found, using all vertices
+[TOPO] Extracted 8 unique vertices
+[TOPO] Vertex ranges: X[-1.1,27.6] Y[1.5,25.0] Z[-12.0,14.2]
+[TOPO] Computed dimensions: 28.7 x 23.5 x 26.1
+Warning! [FILTER] Three: dimensions [28.7, 23.5, 26.1] - FAIL (target thickness: 6mm)
 [TOPO] Processing 6 faces
 [TOPO] No face pairs found near target thickness (6mm +/- 1mm)
 [TOPO] Smallest face pair separations found:
@@ -34,7 +34,7 @@ Warning! [FILTER] Three: dimensions [28.7, 23.5, 24.0] - FAIL (target thickness:
 [TOPO]   Faces 2-4: sep=47.7mm, alignment=1.00
 [TOPO]   Faces 0-5: sep=47.7mm, alignment=1.00
 [TOPO]   Faces 4-5: sep=47.7mm, alignment=1.00
-[TOPO] Found pair of faces with separation: 9.0mm
+[TOPO] No close face pair found, using all vertices
 [TOPO] Extracted 8 unique vertices
 [TOPO] Vertex ranges: X[-164.4,-69.4] Y[150.9,202.3] Z[-42.3,46.4]
 [TOPO] Computed dimensions: 95.0 x 51.4 x 88.6

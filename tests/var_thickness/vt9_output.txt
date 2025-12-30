@@ -23,11 +23,11 @@ Warning! [FILTER] Six: dimensions [80.2, 82.1, 30.2] - FAIL (target thickness: 9
 [TOPO]   Faces 0-2: sep=12.6mm, alignment=0.87
 [TOPO]   Faces 0-5: sep=12.6mm, alignment=0.75
 [TOPO]   Faces 2-4: sep=12.6mm, alignment=0.75
-[TOPO] Found pair of faces with separation: 12.6mm
-[TOPO] Extracted 6 unique vertices
-[TOPO] Vertex ranges: X[-1.1,27.6] Y[1.5,25.0] Z[-12.0,12.0]
-[TOPO] Computed dimensions: 28.7 x 23.5 x 24.0
-Warning! [FILTER] Three: dimensions [28.7, 23.5, 24.0] - FAIL (target thickness: 9mm)
+[TOPO] No close face pair found, using all vertices
+[TOPO] Extracted 8 unique vertices
+[TOPO] Vertex ranges: X[-1.1,27.6] Y[1.5,25.0] Z[-12.0,14.2]
+[TOPO] Computed dimensions: 28.7 x 23.5 x 26.1
+Warning! [FILTER] Three: dimensions [28.7, 23.5, 26.1] - FAIL (target thickness: 9mm)
 [TOPO] Processing 6 faces
 [TOPO] Face pairs near target thickness (9mm):
 [TOPO]   Faces 0-4: sep=9.0mm, alignment=0.89

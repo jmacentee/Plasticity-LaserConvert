@@ -20,12 +20,6 @@
         public double ThicknessTolerance { get; init; } = 0.5;
         
         /// <summary>
-        /// Maximum face separation limit in mm for face pair detection.
-        /// Default: 200.0mm
-        /// </summary>
-        public double MaxFaceSeparation { get; init; } = 200.0;
-        
-        /// <summary>
         /// Enable debug mode for verbose output.
         /// Default: false
         /// </summary>
@@ -75,7 +69,6 @@
             Console.WriteLine("  debugMode=true|false       Enable verbose debug output (default: false)");
             Console.WriteLine("  thickness=<mm>             Target material thickness in mm (default: 3.0)");
             Console.WriteLine("  tolerance=<mm>             Thickness matching tolerance in mm (default: 0.5)");
-            Console.WriteLine("  maxFaceSeparation=<mm>     Maximum face separation limit in mm (default: 200.0)");
             Console.WriteLine();
             Console.WriteLine("Examples:");
             Console.WriteLine("  LaserConvert input.stp output.svg");
@@ -88,7 +81,6 @@
             bool debugMode = false;
             double thickness = 3.0;
             double tolerance = 0.5;
-            double maxFaceSeparation = 200.0;
             
             // Parse arguments starting from index 2 (skip input and output paths)
             for (int i = 2; i < args.Length; i++)
@@ -125,23 +117,12 @@
                         tolerance = tol;
                     }
                 }
-                // Handle maxFaceSeparation=<value>
-                else if (arg.StartsWith("maxFaceSeparation=", StringComparison.OrdinalIgnoreCase))
-                {
-                    var value = arg.Substring("maxFaceSeparation=".Length);
-                    if (double.TryParse(value, System.Globalization.NumberStyles.Float,
-                        System.Globalization.CultureInfo.InvariantCulture, out var mfs))
-                    {
-                        maxFaceSeparation = mfs;
-                    }
-                }
             }
             
             return new ProcessingOptions
             {
                 Thickness = thickness,
                 ThicknessTolerance = tolerance,
-                MaxFaceSeparation = maxFaceSeparation,
                 DebugMode = debugMode
             };
         }

@@ -16,7 +16,6 @@ LaserConvert is a .NET tool that reads STP CAD files, detects thin extrusion sol
 |--------|-------------|---------|
 | `thickness=<mm>` | Target material thickness in millimeters. Only solids matching this thickness (within tolerance) will be processed. | 3.0 |
 | `tolerance=<mm>` | Thickness matching tolerance in millimeters. Solids with thickness within `thickness ± tolerance` will be included. | 0.5 |
-| `maxFaceSeparation=<mm>` | Maximum face separation limit for face pair detection. | 200.0 |
 | `debugMode=true\|false` | Enable verbose debug output for troubleshooting. | false |
 
 ### Examples
@@ -81,4 +80,4 @@ LaserConvert.exe model.stp 9mm_parts.svg thickness=9
   <a href="images/big_box_photo_open.jpg" target="_blank">
     <img src="images/big_box_photo_open_thumb.jpg" alt="big_box_photo_open" width="564">
   </a>
-</p>
+</p></p>
