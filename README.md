@@ -1,18 +1,53 @@
 # Plasticity-LaserConvert
-LaserConvert is a .NET tool that reads STP CAD files, detects the thin (≈ 3 mm) extrusion axis, rotates each solid into its footprint plane, and outputs clean 2D SVG outlines for laser cutting.
+LaserConvert is a .NET tool that reads STP CAD files, detects thin extrusion solids (configurable thickness), rotates each solid into its footprint plane, and outputs clean 2D SVG outlines for laser cutting.
 
 ---
 
 ### Installation and Use
-Clone this repository
-Install .NET 10 SDK (if not already installed)
-Build the project using `dotnet build` (or use Visual Studio)
-In Plasticity, build your model out of solids all approximately 3 mm thick, then export as STEP.
-Run the tool with `LaserConvert.exe <input.stp> <output.svg>`
+1. Clone this repository
+2. Install .NET 10 SDK (if not already installed)
+3. Build the project using `dotnet build` (or use Visual Studio)
+4. In Plasticity, build your model out of thin solids, then export as STEP.
+5. Run the tool with `LaserConvert.exe <input.stp> <output.svg> [options]`
+
+### Command-Line Options
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `thickness=<mm>` | Target material thickness in millimeters. Only solids matching this thickness (within tolerance) will be processed. | 3.0 |
+| `tolerance=<mm>` | Thickness matching tolerance in millimeters. Solids with thickness within `thickness ± tolerance` will be included. | 0.5 |
+| `maxFaceSeparation=<mm>` | Maximum face separation limit for face pair detection. | 200.0 |
+| `debugMode=true\|false` | Enable verbose debug output for troubleshooting. | false |
+
+### Examples
+
+```bash
+# Process 3mm thick solids (default)
+LaserConvert.exe input.stp output.svg
+
+# Process 6mm thick solids with debug output
+LaserConvert.exe input.stp output.svg thickness=6 debugMode=true
+
+# Process 3mm thick solids with tighter tolerance (±0.25mm)
+LaserConvert.exe input.stp output.svg thickness=3 tolerance=0.25
+
+# Process 9mm thick solids
+LaserConvert.exe input.stp output.svg thickness=9
+```
+
+### Processing Multiple Thicknesses
+
+If your STEP file contains solids of different thicknesses, run the tool multiple times with different `thickness` parameters to generate separate SVG files for each material:
+
+```bash
+LaserConvert.exe model.stp 3mm_parts.svg thickness=3
+LaserConvert.exe model.stp 6mm_parts.svg thickness=6
+LaserConvert.exe model.stp 9mm_parts.svg thickness=9
+```
 
 ### TO-DO
-- [ ] Add command-line options for customizing output (e.g., material thickness)
-- [ ] convert from a CLI to a .NET library and then add a Blazor wrapper so it can be used by anyone in a static website
+- [x] Add command-line options for customizing output (e.g., material thickness)
+- [ ] Convert from a CLI to a .NET library and then add a Blazor wrapper so it can be used by anyone in a static website
 
 
 ### Click for larger images
@@ -46,3 +81,4 @@ Run the tool with `LaserConvert.exe <input.stp> <output.svg>`
   <a href="images/big_box_photo_open.jpg" target="_blank">
     <img src="images/big_box_photo_open_thumb.jpg" alt="big_box_photo_open" width="564">
   </a>
+</p>

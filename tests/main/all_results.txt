@@ -224,7 +224,7 @@ Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\3boxesB.
  
 REM File: 3boxes_output.txt 
 Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\3boxes.stp
-Warning! [FILTER] Box3: dimensions [170.0, 167.0, 150.0] - FAIL
+Warning! [FILTER] Box3: dimensions [170.0, 167.0, 150.0] - FAIL (target thickness: 3mm)
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\3boxes.svg
  
 REM File: 4boxes_output.txt 

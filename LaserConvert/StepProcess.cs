@@ -13,55 +13,49 @@ namespace LaserConvert
     /// </summary>
     internal static class StepProcess
     {
-        private static bool _debugMode = false;
-        
-        public static int Main(string inputPath, string outputPath, bool debugMode = false)
+        public static int Main(string inputPath, string outputPath, ProcessingOptions options)
         {
-            _debugMode = debugMode;
-            
             try
             {
                 Console.WriteLine($"Loading STEP file: {inputPath}");
                 var stepFile = StepFile.Load(inputPath);
-                DebugLog($"File loaded. Total items: {stepFile.Items.Count}");
+                DebugLog(options, $"File loaded. Total items: {stepFile.Items.Count}");
+                DebugLog(options, $"Processing with thickness={options.Thickness}mm, tolerance={options.ThicknessTolerance}mm (range: {options.MinThickness}-{options.MaxThickness}mm)");
 
-                var solids = StepTopologyResolver.GetAllSolids(stepFile);
-                DebugLog($"Found {solids.Count} solids");
+                var solids = StepTopologyResolver.GetAllSolids(stepFile, options);
+                DebugLog(options, $"Found {solids.Count} solids");
                 if (solids.Count == 0)
                 {
-                    DebugLog("No solids found in STEP file.");
+                    DebugLog(options, "No solids found in STEP file.");
                     return 0;
                 }
-
-                const double minThickness = 2.5;
-                const double maxThickness = 10.0;
 
                 var thinSolids = new List<(string Name, List<StepAdvancedFace> Faces)>();
                 foreach (var (name, faces) in solids)
                 {
-                    var (vertices, _, _, dimX, dimY, dimZ) = StepTopologyResolver.ExtractVerticesAndFaceIndices(faces, stepFile, debugMode);
+                    var (vertices, _, _, dimX, dimY, dimZ) = StepTopologyResolver.ExtractVerticesAndFaceIndices(faces, stepFile, options);
                     var dimensions = new Dimensions(dimX, dimY, dimZ);
-                    if (dimensions.HasThinDimension(minThickness, maxThickness))
+                    if (dimensions.HasThinDimension(options.MinThickness, options.MaxThickness))
                     {
                         thinSolids.Add((name, faces));
-                        DebugLog($"[FILTER] {name}: dimensions {dimensions} - PASS");
+                        DebugLog(options, $"[FILTER] {name}: dimensions {dimensions} - PASS (target thickness: {options.Thickness}mm)");
                     }
                     else
                     {
-                        DebugLog($"Warning! [FILTER] {name}: dimensions {dimensions} - FAIL",true);
+                        DebugLog(options, $"Warning! [FILTER] {name}: dimensions {dimensions} - FAIL (target thickness: {options.Thickness}mm)", true);
                     }
                 }
 
                 if (thinSolids.Count == 0)
                 {
-                    DebugLog($"Warning! No thin solids found.",true);
+                    DebugLog(options, $"Warning! No thin solids found matching thickness {options.Thickness}mm (+/- {options.ThicknessTolerance}mm).", true);
                     return 0;
                 }
 
                 var svg = new SvgBuilder();
                 foreach (var (name, faces) in thinSolids)
                 {
-                    ProcessSolid(name, faces, stepFile, svg);
+                    ProcessSolid(name, faces, stepFile, svg, options);
                 }
 
                 File.WriteAllText(outputPath, svg.Build());
@@ -76,9 +70,9 @@ namespace LaserConvert
             }
         }
 
-        private static void DebugLog(string message, bool Always = false)
+        private static void DebugLog(ProcessingOptions options, string message, bool always = false)
         {
-            if (_debugMode || Always)
+            if (options.DebugMode || always)
             {
                 Console.WriteLine(message);
             }
@@ -87,7 +81,7 @@ namespace LaserConvert
         /// <summary>
         /// Process a single solid by finding its main face and projecting to 2D.
         /// </summary>
-        private static void ProcessSolid(string name, List<StepAdvancedFace> faces, StepFile stepFile, SvgBuilder svg)
+        private static void ProcessSolid(string name, List<StepAdvancedFace> faces, StepFile stepFile, SvgBuilder svg, ProcessingOptions options)
         {
             svg.BeginGroup(name);
 
@@ -100,7 +94,7 @@ namespace LaserConvert
             
             foreach (var face in faces)
             {
-                var (outerVerts, holeVerts) = StepTopologyResolver.ExtractFaceWithHoles(face, stepFile, _debugMode);
+                var (outerVerts, holeVerts) = StepTopologyResolver.ExtractFaceWithHoles(face, stepFile, options);
                 if (outerVerts.Count < 3)
                     continue;
                 
@@ -119,7 +113,7 @@ namespace LaserConvert
             
             if (bestFace == null || bestOuterVerts == null || bestOuterVerts.Count < 3)
             {
-                DebugLog($"[{name}] No valid face found");
+                DebugLog(options, $"[{name}] No valid face found");
                 svg.EndGroup();
                 return;
             }
@@ -140,7 +134,7 @@ namespace LaserConvert
             double alignmentAngle = ComputeAxisAlignmentAngle(outer2D);
             if (Math.Abs(alignmentAngle) > 0.01) // More than ~0.5 degrees
             {
-                DebugLog($"[ALIGN] {name}: Rotating by {alignmentAngle * 180 / Math.PI:F1} degrees for axis alignment");
+                DebugLog(options, $"[ALIGN] {name}: Rotating by {alignmentAngle * 180 / Math.PI:F1} degrees for axis alignment");
                 outer2D = RotatePoints2D(outer2D, alignmentAngle);
                 holes2D = holes2D.Select(h => RotatePoints2D(h, alignmentAngle)).ToList();
             }
@@ -172,7 +166,7 @@ namespace LaserConvert
             {
                 var outerPath = SvgPathBuilder.BuildPath(orderedOuter);
                 svg.Path(outerPath, 0.2, "none", "#9600c8");
-                DebugLog($"[SVG] {name}: Generated outline from {orderedOuter.Count} vertices");
+                DebugLog(options, $"[SVG] {name}: Generated outline from {orderedOuter.Count} vertices");
 
                 // Process holes - also preserve their original order
                 foreach (var hole2D in normalizedHoles)

@@ -1,0 +1,5 @@
+call "bigbox\testrun_bb.bat"
+call "bigboxLTA\testrun_bblta.bat"
+call "bigboxRW\testrun_bbrw.bat"
+call "main\testrun_stp.bat"
+call "var_thickness\testrun_vt.bat"

@@ -89,13 +89,19 @@ REM File: big box lid taba_rotated.svg
 REM File: big box lid taba_output.txt 
 Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\bigboxLTA\big box lid taba.stp
 File loaded. Total items: 748
+Processing with thickness=3mm, tolerance=0.5mm (range: 2.5-3.5mm)
 Found 1 solids
 [TOPO] Processing 24 faces
+[TOPO] Face pairs near target thickness (3mm):
+[TOPO]   Faces 0-2: sep=3.0mm, alignment=1.00
+[TOPO]   Faces 20-21: sep=3.5mm, alignment=0.71
+[TOPO]   Faces 22-23: sep=3.5mm, alignment=0.71
+[TOPO] Found face pair matching target thickness: separation=3.0mm (target=3mm)
 [TOPO] Complex shape detected (24 faces), extracting ALL vertices from all face bounds
 [TOPO] Extracted 44 unique vertices
 [TOPO] Vertex ranges: X[-85.0,82.0] Y[-85.0,85.0] Z[144.0,147.0]
 [TOPO] Computed dimensions: 167.0 x 170.0 x 3.0
-[FILTER] LidTabA: dimensions [167.0, 170.0, 3.0] - PASS
+[FILTER] LidTabA: dimensions [167.0, 170.0, 3.0] - PASS (target thickness: 3mm)
 [EXTRACT] ExtractFaceWithHoles: face has 1 bounds
 [EXTRACT] Bound 0 has 22 vertices, bbox 167.0x170.0x0.0 (area=28383.9): (77.0,77.0,147.0), (82.0,82.0,147.0), (24.5,82.0,147.0), (24.5,85.0,147.0)...
 [EXTRACT] Identified bound 0 as outer loop (largest area=28383.9)
