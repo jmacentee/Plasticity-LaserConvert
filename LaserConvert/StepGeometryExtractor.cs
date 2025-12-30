@@ -173,14 +173,14 @@ namespace LaserConvert
             
             // Use configurable thickness range for thin candidate detection
             // Prefer pairs with separation close to expected thickness and good alignment
-            double thinMinSep = options.MinThickness - 0.5; // Allow a bit more tolerance for face detection
-            double thinMaxSep = options.MaxThickness + 2.5; // Upper bound for "thin" face pairs
+            double thinMinSep = options.MinThickness; 
+            double thinMaxSep = options.MaxThickness; 
             
             // Debug: log all candidates when looking for target thickness
             if (options.DebugMode)
             {
                 var nearTargetCandidates = candidates
-                    .Where(c => c.sep >= options.MinThickness - 1.0 && c.sep <= options.MaxThickness + 1.0)
+                    .Where(c => c.sep >= options.MinThickness && c.sep <= options.MaxThickness)
                     .OrderBy(c => c.sep)
                     .ToList();
                 if (nearTargetCandidates.Count > 0)
@@ -222,18 +222,7 @@ namespace LaserConvert
             }
             else
             {
-                // Fallback: look for any thin face pairs in extended range
-                var thinCandidates = candidates.Where(c => c.sep >= thinMinSep && c.sep <= thinMaxSep && c.alignment > 0.85).OrderBy(c => c.sep).ToList();
-                
-                if (thinCandidates.Count > 0)
-                {
-                    // Pick the CLOSEST well-aligned pair (most likely to be the thin face)
-                    var best = thinCandidates.First();
-                    minSeparation = best.sep;
-                    face1Idx = best.i;
-                    face2Idx = best.j;
-                }
-                else if (candidates.Count > 0)
+                if (candidates.Count > 0)
                 {
                     // Fallback: pick the closest pair with good alignment
                     var alignedCandidates = candidates.Where(c => c.alignment > 0.80).OrderBy(c => c.sep).ToList();

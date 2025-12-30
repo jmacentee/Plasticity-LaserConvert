@@ -94,8 +94,6 @@ Found 1 solids
 [TOPO] Processing 24 faces
 [TOPO] Face pairs near target thickness (3mm):
 [TOPO]   Faces 0-2: sep=3.0mm, alignment=1.00
-[TOPO]   Faces 20-21: sep=3.5mm, alignment=0.71
-[TOPO]   Faces 22-23: sep=3.5mm, alignment=0.71
 [TOPO] Found face pair matching target thickness: separation=3.0mm (target=3mm)
 [TOPO] Complex shape detected (24 faces), extracting ALL vertices from all face bounds
 [TOPO] Extracted 44 unique vertices
