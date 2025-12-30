@@ -1,0 +1,2 @@
+Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\CBox.stp
+Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\CBox.svg
