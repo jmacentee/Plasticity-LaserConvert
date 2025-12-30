@@ -4,7 +4,7 @@ using System.Linq;
 using IxMilia.Step;
 using IxMilia.Step.Items;
 
-namespace LaserConvert
+namespace LaserConvertProcess
 {
     /// <summary>
     /// Extracts solids from STEP files and traverses B-rep topology to get geometry.

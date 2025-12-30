@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LaserConvert
+namespace LaserConvertProcess
 {
     /// <summary>
     /// 3D geometry transformation utilities.

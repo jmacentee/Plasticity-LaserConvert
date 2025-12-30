@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LaserConvert
+namespace LaserConvertProcess
 {
     /// <summary>
     /// Dimension tracking for solids with thin dimension detection.

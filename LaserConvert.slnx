@@ -92,4 +92,5 @@
   </Folder>
   <Project Path="external/step/src/IxMilia.Step/IxMilia.Step.csproj" />
   <Project Path="LaserConvert/LaserConvert.csproj" />
+  <Project Path="LaserConvertProcess/LaserConvertProcess.csproj" Id="789901e3-196d-437d-9790-89fff4ae1fbe" />
 </Solution>

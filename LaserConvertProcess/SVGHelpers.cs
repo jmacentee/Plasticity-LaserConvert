@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 
-namespace LaserConvert
+namespace LaserConvertProcess
 {
     /// <summary>
     /// SVG builder for creating SVG documents with groups and paths.

@@ -6,18 +6,19 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace LaserConvert
+namespace LaserConvertProcess
 {
     /// <summary>
     /// StepProcess handles STEP file parsing and SVG generation for thin solids.
     /// </summary>
-    internal static class StepProcess
+    public static class StepProcess
     {
-        public static int Main(string inputPath, string outputPath, ProcessingOptions options)
+        public static StepReturn Main(string inputPath, ProcessingOptions options)
         {
+            StepReturn results = new StepReturn();
             try
             {
-                Console.WriteLine($"Loading STEP file: {inputPath}");
+                DebugLog(options, $"Loading STEP file: {inputPath}", true);
                 var stepFile = StepFile.Load(inputPath);
                 DebugLog(options, $"File loaded. Total items: {stepFile.Items.Count}");
                 DebugLog(options, $"Processing with thickness={options.Thickness}mm, tolerance={options.ThicknessTolerance}mm (range: {options.MinThickness}-{options.MaxThickness}mm)");
@@ -27,7 +28,7 @@ namespace LaserConvert
                 if (solids.Count == 0)
                 {
                     DebugLog(options, "No solids found in STEP file.");
-                    return 0;
+                    return results;
                 }
 
                 var thinSolids = new List<(string Name, List<StepAdvancedFace> Faces)>();
@@ -49,7 +50,7 @@ namespace LaserConvert
                 if (thinSolids.Count == 0)
                 {
                     DebugLog(options, $"Warning! No thin solids found matching thickness {options.Thickness}mm (+/- {options.ThicknessTolerance}mm).", true);
-                    return 0;
+                    return results;
                 }
 
                 var svg = new SvgBuilder();
@@ -58,15 +59,16 @@ namespace LaserConvert
                     ProcessSolid(name, faces, stepFile, svg, options);
                 }
 
-                File.WriteAllText(outputPath, svg.Build());
-                Console.WriteLine($"Wrote SVG: {outputPath}");
-                return 0;
+                results.ReturnCode = 1;
+                results.SVGContents = svg.Build();
+                return results;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
-                Console.WriteLine(ex.StackTrace);
-                return 2;
+                DebugLog(options, $"Error: {ex.Message}", true);
+                DebugLog(options, ex.StackTrace.ToString(), true);
+                results.ReturnCode = 2;
+                return results;
             }
         }
 
