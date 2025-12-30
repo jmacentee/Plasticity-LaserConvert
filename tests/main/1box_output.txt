@@ -1,2 +1,2 @@
-Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\1box.stp
-Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\1box.svg
+Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\1box.stp
+Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\1box.svg

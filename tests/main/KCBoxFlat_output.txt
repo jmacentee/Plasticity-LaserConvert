@@ -1,2 +1,2 @@
-Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\KCBoxFlat.stp
-Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\KCBoxFlat.svg
+Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\KCBoxFlat.stp
+Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\KCBoxFlat.svg

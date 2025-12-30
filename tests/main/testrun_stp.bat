@@ -39,19 +39,19 @@ REM Preserve all boundary vertices for complex shapes instead of deduplicating t
 REM TEST CASES START HERE
 
 REM This file contains a single object named Box1 which is 170x150x3mm and should result in a single square in the SVG of 170x150mm.
-"C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\1box.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\1box.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\1box_output.txt"
+"C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\1box.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\1box.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\1box_output.txt"
 
 REM This file contains both the previous Box1 and a second box named Box2 which is 110.215x170x3mm and should result in both the 1st square a second square in the SVG of 110x170mm.
-"C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\2boxes.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\2boxes.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\2boxes_output.txt"
+"C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\2boxes.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\2boxes.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\2boxes_output.txt"
 
 REM This file contains the previous two boxes as well as a third box named Box3 which is 167x170x150mm which should be filtered out as too large. The output should be identical to the previous test.
-"C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\3boxes.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\3boxes.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\3boxes_output.txt"
+"C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\3boxes.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\3boxes.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\3boxes_output.txt"
 
 REM This file contains the previous Box1 and Box2 as well as a third box named Box4 which is 67.488x74.819x3mm. The output should be the same as 2boxes.svg with the addition of Box4 which is 67x75mm.
-"C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\3boxesB.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\3boxesB.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\3boxesB_output.txt"
+"C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\3boxesB.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\3boxesB.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\3boxesB_output.txt"
 
 REM This file contains the previous Box1 and Box2 and Box4 fourth box named Box5 which is 44.445x57.582x3mm. The output should be the same as 3boxesB.svg with the addition of Box5 which is 44x58mm.
-"C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\4boxes.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\4boxes.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\4boxes_output.txt"
+"C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\4boxes.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\4boxes.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\4boxes_output.txt"
 
 REM This file contains a single solid named KBox.  The Overall dimension is 150x170x3mm.  There are tabs cut out of the topmost face which should appear as cutouts in the SVG output. Two tabs are 5mm deep, one tab is 10mm deep.
 REM one 5mm cutout is on the edge and is 14.656 wide
@@ -61,22 +61,22 @@ REM the correct svg path for KBox is d="m 0,0 h 170 v 145 h -15 v 5 H 121 V 140 
 REM this path should have no diagonal lines.
 REM it is not necessary to copy the format of the correct path with "h" and "v".  Only to have the same points in the same order.
 REM there may be some slight rounding errors in the correct path. it is acceptable if our output is the same within +/- 1 unit.
-"C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\KBox.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\KBox.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\KBox_output.txt"
+"C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\KBox.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\KBox.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\KBox_output.txt"
 
 REM This file contains a single solid named CBox. The Overall dimension is 40x50x3mm. It should be represented in the SVG as a single dark purple (#9600c8) square 40x50mm.
 REM There is a hole in CBox.  It is positioned 5mm over and 5mm down from one corner. It is 10x10mm wide.
 REM The hole should be represented in the SVG as a new path in the same group as CBox which is red (#960000).
-"C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\CBox.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\CBox.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\CBox_output.txt"
+"C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\CBox.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\CBox.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\CBox_output.txt"
 
 
 REM This file is the same as CBox.stp but repositioned rotated in 3d space.  The output SVG should be identical to the previous test.
-"C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\CBoxR.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\CBoxR.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\CBoxR_output.txt"
+"C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\CBoxR.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\CBoxR.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\CBoxR_output.txt"
 
 
 REM This file contains a solid which is rotated in 3d space, has cutouts and tabs along the outer edge, and has two holes cut into it.
 REM The approximate correct output for this file can be found in KCBox_corrected.svg.  This KCBox_corrected.svg sample file may have rounding errors which do not need to be duplicated exactly.
 REM the overall width is 40mm.  the overall height is 58mm including the tab at the bottom and the tall tab at the top.  the left side is only 50mm without those tabs.  the top hole is 10x10 and is 5mm from the top and left sides (not counting the tabs).
-"C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\KCBox.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\KCBox.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\KCBox_output.txt"
+"C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\KCBox.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\KCBox.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\KCBox_output.txt"
 
 
 REM KCBoxFlat is the result of importing KCBox_corrected.svg into Plasticity, extruding it exactly 3mm tall and then exporting as a step file. 
@@ -86,7 +86,7 @@ REM the left side is 56.087mm total.
 REM the big hole near the top left is 10.189mm x 10.165mm
 REM the small hole near the bottom right is 10.132mm x 5.175 mm
 REM KCBoxFlat is approximatly the same solid as KCBox except it is not rotated in 3d space.  It sits flat on the x-y plane. It's upper left corner is at 0,0.
-"C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\KCBoxFlat.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\KCBoxFlat.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\KCBoxFlat_output.txt"
+"C:\Users\jdm\source\repos\Plasticity-LaserConvert\LaserConvert\bin\Debug\net10.0\LaserConvert.exe" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\KCBoxFlat.stp" "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\KCBoxFlat.svg" > "C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\KCBoxFlat_output.txt"
 
 
 
@@ -95,7 +95,7 @@ REM KCBoxFlat is approximatly the same solid as KCBox except it is not rotated i
 setlocal enabledelayedexpansion
 
 rem Hard-coded directory path
-set INPUTDIR=C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests
+set INPUTDIR=C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main
 set OUTPUT=%INPUTDIR%\all_results.txt
 
 rem Clear any existing output file
