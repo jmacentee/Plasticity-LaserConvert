@@ -8,8 +8,57 @@
     LaserConvert is a .NET tool that reads STEP (.stp or .step) CAD files, detects thin extrusion solids (configurable thickness), 
     rotates each solid into its footprint plane, and outputs 2D SVG outlines for laser cutting.
 </p>
-<p>Input below the thickness of the material you designed for (in mm) and a tolerance of how close each solid in your STEP file needs to be to that thickness. Then drop your STEP file in the target area. Solids outside of the target thinkness will be ignored.</p>
+<p>Input below the thickness of the material you designed for (in mm) and a tolerance of how close each solid in your STEP file needs to be to that thickness. Then drop your STEP file in the target area. Solids outside of the target thickness will be ignored.</p>
 <p>This application runs inside of your browser only. Your file is not uploaded anywhere.</p>
 <p>For more information or to get a command-line version of this application, please visit <a href="https://github.com/jmacentee/Plasticity-LaserConvert" target="_blank">our GitHub repository</a>.</p>
 
-<!--The Blazor LaserConvertClient project has been added.  Without changing the functionality of the LaserConvert command-line tool, we need to enable the Blazor application using the completed LaserConvertProcess library.-->
+<div class="options-container">
+    <div class="option-group">
+        <label for="thickness">Thickness (mm):</label>
+        <input type="number" id="thickness" @bind="thickness" step="0.1" min="0.1" />
+    </div>
+    <div class="option-group">
+        <label for="tolerance">Tolerance (mm):</label>
+        <input type="number" id="tolerance" @bind="tolerance" step="0.1" min="0.1" />
+    </div>
+    <div class="option-group">
+        <label for="debugMode">
+            <input type="checkbox" id="debugMode" @bind="debugMode" />
+            Verbose Output
+        </label>
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="drop-zone-container">
+        <label class="drop-zone @(isDragging ? "dragging" : "")"
+               @ondragenter="HandleDragEnter"
+               @ondragenter:preventDefault
+               @ondragleave="HandleDragLeave"
+               @ondragleave:preventDefault
+               @ondragover="HandleDragOver"
+               @ondragover:preventDefault
+               @ondrop="HandleDrop"
+               @ondrop:preventDefault>
+            <InputFile OnChange="HandleFileSelected" multiple accept=".stp,.step" class="file-input" />
+            <div class="drop-zone-content">
+                <span class="drop-icon">📁</span>
+                <span class="drop-text">Drop STEP files here</span>
+                <span class="drop-subtext">or click to browse</span>
+                <span class="drop-formats">.stp, .step</span>
+            </div>
+        </label>
+        @if (isProcessing)
+        {
+            <div class="processing-indicator">
+                <span>Processing...</span>
+            </div>
+        }
+    </div>
+
+    <div class="output-container">
+        <h3>Output</h3>
+        <textarea class="output-area" readonly>@outputText</textarea>
+    </div>
+</div>
+
