@@ -4,6 +4,13 @@ using System.Text;
 
 namespace LaserConvertProcess
 {
+    /// <summary>
+    /// Delegate for receiving messages from the processing library.
+    /// </summary>
+    /// <param name="message">The message text.</param>
+    /// <param name="isDebugOnly">True if this is a debug-only message (only shown when DebugMode is enabled).</param>
+    public delegate void MessageCallback(string message, bool isDebugOnly);
+
     public record ProcessingOptions
     {
         /// <summary>
@@ -24,6 +31,12 @@ namespace LaserConvertProcess
         /// Default: false
         /// </summary>
         public bool DebugMode { get; init; } = false;
+
+        /// <summary>
+        /// Optional callback for receiving messages from the processing library.
+        /// If null, messages will be collected in the StepReturn.Messages list.
+        /// </summary>
+        public MessageCallback? OnMessage { get; init; } = null;
 
         /// <summary>
         /// Computed minimum thickness based on Thickness and ThicknessTolerance.

@@ -13,21 +13,27 @@ namespace LaserConvertProcess
     /// </summary>
     public static class StepProcess
     {
-        public static StepReturn Main(string inputPath, ProcessingOptions options)
+        /// <summary>
+        /// Process STEP file contents and generate SVG output.
+        /// </summary>
+        /// <param name="fileContents">The contents of the STEP file as a string.</param>
+        /// <param name="options">Processing options including thickness, tolerance, and message callback.</param>
+        /// <returns>StepReturn containing the SVG output, return code, and messages.</returns>
+        public static StepReturn Process(string fileContents, ProcessingOptions options)
         {
             StepReturn results = new StepReturn();
             try
             {
-                DebugLog(options, $"Loading STEP file: {inputPath}", true);
-                var stepFile = StepFile.Load(inputPath);
-                DebugLog(options, $"File loaded. Total items: {stepFile.Items.Count}");
-                DebugLog(options, $"Processing with thickness={options.Thickness}mm, tolerance={options.ThicknessTolerance}mm (range: {options.MinThickness}-{options.MaxThickness}mm)");
+                DebugLog(results, options, "Parsing STEP file contents...", true);
+                var stepFile = StepFile.Parse(fileContents);
+                DebugLog(results, options, $"File loaded. Total items: {stepFile.Items.Count}");
+                DebugLog(results, options, $"Processing with thickness={options.Thickness}mm, tolerance={options.ThicknessTolerance}mm (range: {options.MinThickness}-{options.MaxThickness}mm)");
 
                 var solids = StepTopologyResolver.GetAllSolids(stepFile, options);
-                DebugLog(options, $"Found {solids.Count} solids");
+                DebugLog(results, options, $"Found {solids.Count} solids");
                 if (solids.Count == 0)
                 {
-                    DebugLog(options, "No solids found in STEP file.");
+                    DebugLog(results, options, "No solids found in STEP file.");
                     return results;
                 }
 
@@ -39,24 +45,24 @@ namespace LaserConvertProcess
                     if (dimensions.HasThinDimension(options.MinThickness, options.MaxThickness))
                     {
                         thinSolids.Add((name, faces));
-                        DebugLog(options, $"[FILTER] {name}: dimensions {dimensions} - PASS (target thickness: {options.Thickness}mm)");
+                        DebugLog(results, options, $"[FILTER] {name}: dimensions {dimensions} - PASS (target thickness: {options.Thickness}mm)");
                     }
                     else
                     {
-                        DebugLog(options, $"Warning! [FILTER] {name}: dimensions {dimensions} - FAIL (target thickness: {options.Thickness}mm)", true);
+                        DebugLog(results, options, $"Warning! [FILTER] {name}: dimensions {dimensions} - FAIL (target thickness: {options.Thickness}mm)", true);
                     }
                 }
 
                 if (thinSolids.Count == 0)
                 {
-                    DebugLog(options, $"Warning! No thin solids found matching thickness {options.Thickness}mm (+/- {options.ThicknessTolerance}mm).", true);
+                    DebugLog(results, options, $"Warning! No thin solids found matching thickness {options.Thickness}mm (+/- {options.ThicknessTolerance}mm).", true);
                     return results;
                 }
 
                 var svg = new SvgBuilder();
                 foreach (var (name, faces) in thinSolids)
                 {
-                    ProcessSolid(name, faces, stepFile, svg, options);
+                    ProcessSolid(results, name, faces, stepFile, svg, options);
                 }
 
                 results.ReturnCode = 1;
@@ -65,25 +71,31 @@ namespace LaserConvertProcess
             }
             catch (Exception ex)
             {
-                DebugLog(options, $"Error: {ex.Message}", true);
-                DebugLog(options, ex.StackTrace.ToString(), true);
+                DebugLog(results, options, $"Error: {ex.Message}", true);
+                DebugLog(results, options, ex.StackTrace?.ToString() ?? "", true);
                 results.ReturnCode = 2;
                 return results;
             }
         }
 
-        private static void DebugLog(ProcessingOptions options, string message, bool always = false)
+        private static void DebugLog(StepReturn results, ProcessingOptions options, string message, bool always = false)
         {
-            if (options.DebugMode || always)
+            bool isDebugOnly = !always;
+            
+            // Always add to messages collection
+            results.Messages.Add(new ProcessMessage(message, isDebugOnly));
+            
+            // Call the callback if provided and message should be shown
+            if (options.OnMessage != null && (options.DebugMode || always))
             {
-                Console.WriteLine(message);
+                options.OnMessage(message, isDebugOnly);
             }
         }
 
         /// <summary>
         /// Process a single solid by finding its main face and projecting to 2D.
         /// </summary>
-        private static void ProcessSolid(string name, List<StepAdvancedFace> faces, StepFile stepFile, SvgBuilder svg, ProcessingOptions options)
+        private static void ProcessSolid(StepReturn results, string name, List<StepAdvancedFace> faces, StepFile stepFile, SvgBuilder svg, ProcessingOptions options)
         {
             svg.BeginGroup(name);
 
@@ -115,7 +127,7 @@ namespace LaserConvertProcess
             
             if (bestFace == null || bestOuterVerts == null || bestOuterVerts.Count < 3)
             {
-                DebugLog(options, $"[{name}] No valid face found");
+                DebugLog(results, options, $"[{name}] No valid face found");
                 svg.EndGroup();
                 return;
             }
@@ -136,7 +148,7 @@ namespace LaserConvertProcess
             double alignmentAngle = ComputeAxisAlignmentAngle(outer2D);
             if (Math.Abs(alignmentAngle) > 0.01) // More than ~0.5 degrees
             {
-                DebugLog(options, $"[ALIGN] {name}: Rotating by {alignmentAngle * 180 / Math.PI:F1} degrees for axis alignment");
+                DebugLog(results, options, $"[ALIGN] {name}: Rotating by {alignmentAngle * 180 / Math.PI:F1} degrees for axis alignment");
                 outer2D = RotatePoints2D(outer2D, alignmentAngle);
                 holes2D = holes2D.Select(h => RotatePoints2D(h, alignmentAngle)).ToList();
             }
@@ -168,7 +180,7 @@ namespace LaserConvertProcess
             {
                 var outerPath = SvgPathBuilder.BuildPath(orderedOuter);
                 svg.Path(outerPath, 0.2, "none", "#9600c8");
-                DebugLog(options, $"[SVG] {name}: Generated outline from {orderedOuter.Count} vertices");
+                DebugLog(results, options, $"[SVG] {name}: Generated outline from {orderedOuter.Count} vertices");
 
                 // Process holes - also preserve their original order
                 foreach (var hole2D in normalizedHoles)

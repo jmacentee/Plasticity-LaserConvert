@@ -1,4 +1,5 @@
 Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\var_thickness\var_thickness_test.stp
+Parsing STEP file contents...
 File loaded. Total items: 454
 Processing with thickness=9mm, tolerance=0.5mm (range: 8.5-9.5mm)
 Found 3 solids

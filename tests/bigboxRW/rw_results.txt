@@ -14,6 +14,7 @@ REM File: rw.svg
  
 REM File: rw_output.txt 
 Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\bigboxRW\rw.stp
+Parsing STEP file contents...
 File loaded. Total items: 706
 Processing with thickness=3mm, tolerance=0.5mm (range: 2.5-3.5mm)
 Found 1 solids

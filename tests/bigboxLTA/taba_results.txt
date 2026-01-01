@@ -88,6 +88,7 @@ REM File: big box lid taba_rotated.svg
  
 REM File: big box lid taba_output.txt 
 Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\bigboxLTA\big box lid taba.stp
+Parsing STEP file contents...
 File loaded. Total items: 748
 Processing with thickness=3mm, tolerance=0.5mm (range: 2.5-3.5mm)
 Found 1 solids

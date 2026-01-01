@@ -28,9 +28,25 @@ namespace LaserConvert
             if (inputPath.EndsWith(".stp", StringComparison.OrdinalIgnoreCase) ||
                inputPath.EndsWith(".step", StringComparison.OrdinalIgnoreCase))
             {
-                StepReturn results = StepProcess.Main(inputPath, options);
-                File.WriteAllText(outputPath, results.SVGContents);
-                Console.WriteLine($"Wrote SVG: {outputPath}");
+                // Read the input file contents
+                if (!File.Exists(inputPath))
+                {
+                    Console.WriteLine($"Error: Input file not found: {inputPath}");
+                    return 1;
+                }
+                
+                Console.WriteLine($"Loading STEP file: {inputPath}");
+                string fileContents = File.ReadAllText(inputPath);
+                
+                // Process the file contents
+                StepReturn results = StepProcess.Process(fileContents, options);
+                
+                if (results.ReturnCode == 1)
+                {
+                    File.WriteAllText(outputPath, results.SVGContents);
+                    Console.WriteLine($"Wrote SVG: {outputPath}");
+                }
+                
                 return results.ReturnCode;
             }
 
@@ -99,7 +115,8 @@ namespace LaserConvert
             {
                 Thickness = thickness,
                 ThicknessTolerance = tolerance,
-                DebugMode = debugMode
+                DebugMode = debugMode,
+                OnMessage = (message, isDebugOnly) => Console.WriteLine(message)
             };
         }
     }

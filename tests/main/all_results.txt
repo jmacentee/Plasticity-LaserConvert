@@ -212,41 +212,51 @@ REM File: test_1box.svg
  
 REM File: 1box_output.txt 
 Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\1box.stp
+Parsing STEP file contents...
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\1box.svg
  
 REM File: 2boxes_output.txt 
 Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\2boxes.stp
+Parsing STEP file contents...
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\2boxes.svg
  
 REM File: 3boxesB_output.txt 
 Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\3boxesB.stp
+Parsing STEP file contents...
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\3boxesB.svg
  
 REM File: 3boxes_output.txt 
 Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\3boxes.stp
+Parsing STEP file contents...
 Warning! [FILTER] Box3: dimensions [170.0, 167.0, 150.0] - FAIL (target thickness: 3mm)
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\3boxes.svg
  
 REM File: 4boxes_output.txt 
 Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\4boxes.stp
+Parsing STEP file contents...
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\4boxes.svg
  
 REM File: CBoxR_output.txt 
 Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\CBoxR.stp
+Parsing STEP file contents...
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\CBoxR.svg
  
 REM File: CBox_output.txt 
 Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\CBox.stp
+Parsing STEP file contents...
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\CBox.svg
  
 REM File: KBox_output.txt 
 Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\KBox.stp
+Parsing STEP file contents...
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\KBox.svg
  
 REM File: KCBoxFlat_output.txt 
 Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\KCBoxFlat.stp
+Parsing STEP file contents...
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\KCBoxFlat.svg
  
 REM File: KCBox_output.txt 
 Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\KCBox.stp
+Parsing STEP file contents...
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\main\KCBox.svg
