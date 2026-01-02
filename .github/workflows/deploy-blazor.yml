@@ -33,26 +33,8 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
-      - name: Restore dependencies
-        run: dotnet restore LaserConvertClient/LaserConvertClient.csproj
-
-      - name: Build
-        run: dotnet build LaserConvertClient/LaserConvertClient.csproj -c Release --no-restore
-
       - name: Publish
-        run: dotnet publish LaserConvertClient/LaserConvertClient.csproj -c Release -o publish --no-build
-
-      # Update base href for GitHub Pages subdirectory
-      - name: Change base href
-        run: sed -i 's|<base href="/" />|<base href="/Plasticity-LaserConvert/" />|g' publish/wwwroot/index.html
-
-      # Add .nojekyll to prevent GitHub Pages from ignoring files starting with underscore
-      - name: Add .nojekyll
-        run: touch publish/wwwroot/.nojekyll
-
-      # Copy index.html to 404.html for SPA routing support
-      - name: Copy index.html to 404.html
-        run: cp publish/wwwroot/index.html publish/wwwroot/404.html
+        run: dotnet publish LaserConvertClient/LaserConvertClient.csproj -c Release -o publish -p:GHPages=true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
