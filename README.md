@@ -44,11 +44,6 @@ LaserConvert.exe model.stp 6mm_parts.svg thickness=6
 LaserConvert.exe model.stp 9mm_parts.svg thickness=9
 ```
 
-### TO-DO
-- [x] Add command-line options for customizing output (e.g., material thickness)
-- [ ] Convert from a CLI to a .NET library and then add a Blazor wrapper so it can be used by anyone in a static website
-
-
 ### Click for larger images
 <p align="center">
   <a href="images/boxoverview.png" target="_blank">

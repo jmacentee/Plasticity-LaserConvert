@@ -6,10 +6,13 @@ using Microsoft.JSInterop;
 
 namespace LaserConvertClient.Pages;
 
-public partial class Home
+public partial class Home : IAsyncDisposable
 {
     [Inject]
     private IJSRuntime JS { get; set; } = default!;
+
+    private ElementReference dropZoneElement;
+    private InputFile? inputFile;
 
     private double thickness = 3.0;
     private double tolerance = 0.5;
@@ -17,6 +20,14 @@ public partial class Home
     private string outputText = "";
     private bool isDragging = false;
     private bool isProcessing = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && inputFile?.Element is not null)
+        {
+            await JS.InvokeVoidAsync("initializeDropZone", dropZoneElement, inputFile.Element);
+        }
+    }
 
     private void HandleDragEnter(DragEventArgs e)
     {
@@ -28,19 +39,10 @@ public partial class Home
         isDragging = false;
     }
 
-    private void HandleDragOver(DragEventArgs e)
-    {
-        // Required to allow drop
-    }
-
-    private void HandleDrop(DragEventArgs e)
-    {
-        isDragging = false;
-        // File handling is done by InputFile component
-    }
-
     private async Task HandleFileSelected(InputFileChangeEventArgs e)
     {
+        isDragging = false;
+        
         // Clear output for new batch
         outputText = "";
         isProcessing = true;
@@ -136,5 +138,10 @@ public partial class Home
         var bytes = System.Text.Encoding.UTF8.GetBytes(content);
         var base64 = Convert.ToBase64String(bytes);
         await JS.InvokeVoidAsync("downloadFile", fileName, base64, "image/svg+xml");
+    }
+
+    public ValueTask DisposeAsync()
+    {
+        return ValueTask.CompletedTask;
     }
 }
