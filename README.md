@@ -1,7 +1,15 @@
 # Plasticity-LaserConvert
 LaserConvert is a .NET tool that reads STP CAD files, detects thin extrusion solids (configurable thickness), rotates each solid into its footprint plane, and outputs clean 2D SVG outlines for laser cutting.
 
+## 🌐 Web App
+
+**Try it online:** [https://jmacentee.github.io/Plasticity-LaserConvert/](https://jmacentee.github.io/Plasticity-LaserConvert/)
+
+The web app runs entirely in your browser using WebAssembly - no files are uploaded to any server!
+
 ---
+
+## Command-Line Tool
 
 ### Installation and Use
 1. Clone this repository
@@ -44,6 +52,10 @@ LaserConvert.exe model.stp 6mm_parts.svg thickness=6
 LaserConvert.exe model.stp 9mm_parts.svg thickness=9
 ```
 
+---
+
+## Screenshots
+
 ### Click for larger images
 <p align="center">
   <a href="images/boxoverview.png" target="_blank">
@@ -75,4 +87,4 @@ LaserConvert.exe model.stp 9mm_parts.svg thickness=9
   <a href="images/big_box_photo_open.jpg" target="_blank">
     <img src="images/big_box_photo_open_thumb.jpg" alt="big_box_photo_open" width="564">
   </a>
-</p></p>
+</p>
