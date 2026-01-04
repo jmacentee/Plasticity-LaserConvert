@@ -14,6 +14,8 @@ REM File: Cam Pipe Clamp Sliced.svg
   </g>
   <g id="C">
     <path d="M 0.000,0.000 a 31.708,31.708 0 0 1 49.356,0.000 a 6.108,6.108 0 0 1 -5.714,9.842 a 6.108,6.108 0 0 1 -3.805,-2.186 a 19.526,19.526 0 0 0 -30.267,-0.063 a 6.109,6.109 0 0 1 -5.664,2.166 a 6.109,6.109 0 0 1 -3.907,-9.760" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0.031,5.029 a 4.835,4.835 0 0 0 9.333,-2.532 a 4.835,4.835 0 0 0 -9.333,2.532" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 39.766,5.111 a 4.835,4.835 0 0 0 9.333,-2.532 a 4.835,4.835 0 0 0 -9.333,2.532" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="B3">
     <path d="M 0.000,0.000 a 31.192,31.192 0 0 1 59.072,-0.000 l -1.237,0.605 a 25.600,25.600 0 0 0 -47.219,2.962 a 5.600,5.600 0 0 1 -5.965,3.719 a 5.600,5.600 0 0 1 -4.651,-7.286" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
@@ -292,6 +294,8 @@ Found 7 solids
 [EXTRACT] Returning 6 outer segments and 2 hole loops
 [FACE] C: Planar face with 6 segments, area=360.4
 [SVG] C: Generated outline from 6 curve segments
+[SVG] C: Generated hole from 1 curve segments
+[SVG] C: Generated hole from 1 curve segments
 [EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
 [EXTRACT] Bound 0 has 4 curve segments, bbox 1.2x0.8x7.3 (area=14.8)
 [EXTRACT] Identified bound 0 as outer loop (largest area=14.8)

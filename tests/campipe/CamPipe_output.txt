@@ -203,6 +203,8 @@ Found 7 solids
 [EXTRACT] Returning 6 outer segments and 2 hole loops
 [FACE] C: Planar face with 6 segments, area=360.4
 [SVG] C: Generated outline from 6 curve segments
+[SVG] C: Generated hole from 1 curve segments
+[SVG] C: Generated hole from 1 curve segments
 [EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
 [EXTRACT] Bound 0 has 4 curve segments, bbox 1.2x0.8x7.3 (area=14.8)
 [EXTRACT] Identified bound 0 as outer loop (largest area=14.8)

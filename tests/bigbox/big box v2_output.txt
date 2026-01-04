@@ -420,6 +420,7 @@ Found 19 solids
 [EXTRACT] Returning 4 outer segments and 0 hole loops
 [FACE] MiddleShelf: Planar face with 4 segments, area=164.0
 [SVG] MiddleShelf: Generated outline from 24 curve segments
+[SVG] MiddleShelf: Generated hole from 4 curve segments
 [EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
 [EXTRACT] Bound 0 has 4 curve segments, bbox 3.0x0.0x3.0 (area=9.0)
 [EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
@@ -832,6 +833,7 @@ Found 19 solids
 [EXTRACT] Returning 4 outer segments and 0 hole loops
 [FACE] Lid: Planar face with 4 segments, area=140.0
 [SVG] Lid: Generated outline from 12 curve segments
+[SVG] Lid: Generated hole from 4 curve segments
 [EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
 [EXTRACT] Bound 0 has 22 curve segments, bbox 167.0x170.0x0.0 (area=28383.9)
 [EXTRACT] Identified bound 0 as outer loop (largest area=28383.9)
@@ -1401,6 +1403,9 @@ Found 19 solids
 [EXTRACT] Returning 4 outer segments and 0 hole loops
 [FACE] LeftWall: Planar face with 4 segments, area=9.0
 [SVG] LeftWall: Generated outline from 20 curve segments
+[SVG] LeftWall: Generated hole from 4 curve segments
+[SVG] LeftWall: Generated hole from 4 curve segments
+[SVG] LeftWall: Generated hole from 4 curve segments
 [EXTRACT] ExtractFaceWithHolesAsSegments: face has 4 bounds
 [EXTRACT] Bound 0 has 4 curve segments, bbox 3.0x0.0x19.0 (area=57.0)
 [EXTRACT] Bound 1 has 4 curve segments, bbox 50.0x0.0x3.0 (area=150.0)
@@ -1564,6 +1569,9 @@ Found 19 solids
 [EXTRACT] Returning 4 outer segments and 0 hole loops
 [FACE] FrontA: Planar face with 4 segments, area=57.0
 [SVG] FrontA: Generated outline from 8 curve segments
+[SVG] FrontA: Generated hole from 4 curve segments
+[SVG] FrontA: Generated hole from 4 curve segments
+[SVG] FrontA: Generated hole from 4 curve segments
 [EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
 [EXTRACT] Bound 0 has 4 curve segments, bbox 3.0x0.0x18.0 (area=54.0)
 [EXTRACT] Identified bound 0 as outer loop (largest area=54.0)
@@ -1792,6 +1800,10 @@ Found 19 solids
 [EXTRACT] Returning 4 outer segments and 0 hole loops
 [FACE] RightWall: Planar face with 4 segments, area=9.0
 [SVG] RightWall: Generated outline from 4 curve segments
+[SVG] RightWall: Generated hole from 4 curve segments
+[SVG] RightWall: Generated hole from 4 curve segments
+[SVG] RightWall: Generated hole from 4 curve segments
+[SVG] RightWall: Generated hole from 4 curve segments
 [EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
 [EXTRACT] Bound 0 has 4 curve segments, bbox 0.0x3.0x30.0 (area=90.0)
 [EXTRACT] Identified bound 0 as outer loop (largest area=90.0)
@@ -2009,4 +2021,8 @@ Found 19 solids
 [EXTRACT] Returning 4 outer segments and 0 hole loops
 [FACE] BackWall: Planar face with 4 segments, area=9.0
 [SVG] BackWall: Generated outline from 22 curve segments
+[SVG] BackWall: Generated hole from 4 curve segments
+[SVG] BackWall: Generated hole from 4 curve segments
+[SVG] BackWall: Generated hole from 4 curve segments
+[SVG] BackWall: Generated hole from 4 curve segments
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\bigbox\big box v2.svg

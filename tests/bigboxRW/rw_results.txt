@@ -158,4 +158,8 @@ Found 1 solids
 [EXTRACT] Returning 4 outer segments and 0 hole loops
 [FACE] RightWall: Planar face with 4 segments, area=9.0
 [SVG] RightWall: Generated outline from 4 curve segments
+[SVG] RightWall: Generated hole from 4 curve segments
+[SVG] RightWall: Generated hole from 4 curve segments
+[SVG] RightWall: Generated hole from 4 curve segments
+[SVG] RightWall: Generated hole from 4 curve segments
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\bigboxRW\rw.svg

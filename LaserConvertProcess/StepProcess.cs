@@ -186,12 +186,17 @@ namespace LaserConvertProcess
                 DebugLog(results, options, $"[SVG] {name}: Generated outline from {outer2DSegments.Count} curve segments");
 
                 // Process holes - use red color for cutouts
+                // Note: A hole can be a single segment (full circle)
                 foreach (var holeSegments in holes2DSegments)
                 {
-                    if (holeSegments.Count >= 2)
+                    if (holeSegments.Count >= 1)
                     {
                         var holePath = SvgPathBuilder.BuildPathFromSegmentsAsCurves(holeSegments);
-                        svg.Path(holePath, 0.2, "none", "#960000");  // Red for cutouts/holes
+                        if (!string.IsNullOrEmpty(holePath))
+                        {
+                            svg.Path(holePath, 0.2, "none", "#960000");  // Red for cutouts/holes
+                            DebugLog(results, options, $"[SVG] {name}: Generated hole from {holeSegments.Count} curve segments");
+                        }
                     }
                 }
             }

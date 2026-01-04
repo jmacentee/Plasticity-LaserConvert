@@ -105,6 +105,13 @@ namespace LaserConvertProcess
             var dyS = start2D.Y - center2D.Y;
             var radius2D = Math.Sqrt(dxS * dxS + dyS * dyS);
 
+            // Check if this is a full circle (start == end in 3D)
+            var dist3D = Math.Sqrt(
+                (Start.X - End.X) * (Start.X - End.X) + 
+                (Start.Y - End.Y) * (Start.Y - End.Y) + 
+                (Start.Z - End.Z) * (Start.Z - End.Z));
+            bool isFullCircle = dist3D < 0.001;
+
             // Compute 2D angles
             var startAngle2D = Math.Atan2(dyS, dxS);
             var dxE = end2D.X - center2D.X;
@@ -128,7 +135,12 @@ namespace LaserConvertProcess
 
             // Compute the angular sweep from start to end
             double angularSweep;
-            if (goClockwiseIn2D)
+            if (isFullCircle)
+            {
+                // Full circle: sweep is exactly 2?
+                angularSweep = goClockwiseIn2D ? -2 * Math.PI : 2 * Math.PI;
+            }
+            else if (goClockwiseIn2D)
             {
                 // Clockwise: go from startAngle to endAngle in decreasing direction
                 angularSweep = startAngle2D - endAngle2D;
@@ -354,6 +366,33 @@ namespace LaserConvertProcess
                 return $"l {dxLine:F3},{dyLine:F3}";
             }
             
+            // Check if this is a full circle (start == end)
+            var dx = End.X - Start.X;
+            var dy = End.Y - Start.Y;
+            bool isFullCircle = Math.Abs(dx) < 0.001 && Math.Abs(dy) < 0.001 && Math.Abs(Math.Abs(AngularSweep) - 2 * Math.PI) < 0.1;
+            
+            if (isFullCircle)
+            {
+                // SVG cannot draw a full circle with a single arc command (dx=dy=0 means no arc)
+                // Split into two semicircles
+                // The midpoint is on the opposite side of the circle from the start
+                double midX = 2 * Center.X - Start.X;  // Point diametrically opposite to start
+                double midY = 2 * Center.Y - Start.Y;
+                
+                // Determine sweep direction
+                int sweep = AngularSweep > 0 ? 1 : 0;
+                
+                // First semicircle: from start to midpoint
+                double dx1 = midX - Start.X;
+                double dy1 = midY - Start.Y;
+                
+                // Second semicircle: from midpoint back to start (which is also end)
+                double dx2 = Start.X - midX;
+                double dy2 = Start.Y - midY;
+                
+                return $"a {RadiusX:F3},{RadiusY:F3} 0 0 {sweep} {dx1:F3},{dy1:F3} a {RadiusX:F3},{RadiusY:F3} 0 0 {sweep} {dx2:F3},{dy2:F3}";
+            }
+            
             // Compute SVG arc flags from the angular sweep
             double absSweep = Math.Abs(AngularSweep);
             
@@ -366,13 +405,9 @@ namespace LaserConvertProcess
             // In SVG: sweep=1 means clockwise visually
             // So: AngularSweep > 0 (math CCW = visual CW) -> sweep=1
             //     AngularSweep < 0 (math CW = visual CCW) -> sweep=0
-            int sweep = AngularSweep > 0 ? 1 : 0;
+            int sweep2 = AngularSweep > 0 ? 1 : 0;
             
-            // SVG arc endpoint (relative)
-            var dx = End.X - Start.X;
-            var dy = End.Y - Start.Y;
-            
-            return $"a {RadiusX:F3},{RadiusY:F3} 0 {largeArc} {sweep} {dx:F3},{dy:F3}";
+            return $"a {RadiusX:F3},{RadiusY:F3} 0 {largeArc} {sweep2} {dx:F3},{dy:F3}";
         }
         
         /// <summary>

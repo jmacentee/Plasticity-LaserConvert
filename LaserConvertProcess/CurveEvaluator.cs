@@ -44,8 +44,45 @@ namespace LaserConvertProcess
                 return ExtractCircleArcSegment(circle, startPt, endPt, orientation);
             }
 
-            // For B-splines and other curves, return a line segment for now
-            // (B-splines would need conversion to cubic beziers, which is complex)
+            // Check if it's a B-spline that represents a full circle
+            // (common way CAD exports circular holes)
+            if (curve is StepBSplineCurveWithKnots bspline)
+            {
+                // Check if start and end are the same point (full closed curve)
+                var dist = Math.Sqrt(
+                    (startPt.Item1 - endPt.Item1) * (startPt.Item1 - endPt.Item1) +
+                    (startPt.Item2 - endPt.Item2) * (startPt.Item2 - endPt.Item2) +
+                    (startPt.Item3 - endPt.Item3) * (startPt.Item3 - endPt.Item3));
+                
+                if (dist < 0.001 && bspline.ControlPointsList != null && bspline.ControlPointsList.Count >= 3)
+                {
+                    // This is a closed B-spline (likely a circle)
+                    // Sample the curve and fit a circle to it
+                    var sampledPoints = SampleBSplineCurve(bspline, 32);
+                    if (sampledPoints.Count >= 3)
+                    {
+                        // Estimate center and radius from sampled points
+                        var center = EstimateCircleCenter(sampledPoints);
+                        var radius = EstimateRadius(sampledPoints, center);
+                        
+                        // Create an arc segment representing the full circle
+                        return new ArcSegment
+                        {
+                            Start = startPt,
+                            End = endPt,
+                            Center = center,
+                            Radius = radius,
+                            Normal = EstimateNormal(sampledPoints, center),
+                            RefDirection = (1, 0, 0), // Default ref direction
+                            StartAngle = 0,
+                            EndAngle = 2 * Math.PI,
+                            Clockwise = !orientation  // Direction based on edge orientation
+                        };
+                    }
+                }
+            }
+
+            // For other B-splines and curves, return a line segment for now
             return new LineSegment
             {
                 Start = startPt,
@@ -373,6 +410,69 @@ namespace LaserConvertProcess
         public static bool IsCurvedGeometry(StepCurve curve)
         {
             return curve is StepBSplineCurveWithKnots || curve is StepCircle || curve is StepEllipse;
+        }
+
+        /// <summary>
+        /// Estimate the center of a circle from sampled points using average.
+        /// </summary>
+        private static (double X, double Y, double Z) EstimateCircleCenter(List<(double X, double Y, double Z)> points)
+        {
+            if (points.Count == 0)
+                return (0, 0, 0);
+            
+            double cx = points.Average(p => p.X);
+            double cy = points.Average(p => p.Y);
+            double cz = points.Average(p => p.Z);
+            return (cx, cy, cz);
+        }
+
+        /// <summary>
+        /// Estimate radius from points and center.
+        /// </summary>
+        private static double EstimateRadius(List<(double X, double Y, double Z)> points, (double X, double Y, double Z) center)
+        {
+            if (points.Count == 0)
+                return 0;
+            
+            double totalRadius = 0;
+            foreach (var p in points)
+            {
+                double dx = p.X - center.X;
+                double dy = p.Y - center.Y;
+                double dz = p.Z - center.Z;
+                totalRadius += Math.Sqrt(dx * dx + dy * dy + dz * dz);
+            }
+            return totalRadius / points.Count;
+        }
+
+        /// <summary>
+        /// Estimate normal vector of a circle from sampled points.
+        /// </summary>
+        private static (double X, double Y, double Z) EstimateNormal(List<(double X, double Y, double Z)> points, (double X, double Y, double Z) center)
+        {
+            if (points.Count < 3)
+                return (0, 0, 1);
+            
+            // Use first three points to compute normal via cross product
+            var p0 = points[0];
+            var p1 = points[points.Count / 3];
+            var p2 = points[2 * points.Count / 3];
+            
+            // Vectors from center to points
+            var v1 = (p1.X - p0.X, p1.Y - p0.Y, p1.Z - p0.Z);
+            var v2 = (p2.X - p0.X, p2.Y - p0.Y, p2.Z - p0.Z);
+            
+            // Cross product
+            var nx = v1.Item2 * v2.Item3 - v1.Item3 * v2.Item2;
+            var ny = v1.Item3 * v2.Item1 - v1.Item1 * v2.Item3;
+            var nz = v1.Item1 * v2.Item2 - v1.Item2 * v2.Item1;
+            
+            // Normalize
+            var len = Math.Sqrt(nx * nx + ny * ny + nz * nz);
+            if (len < 1e-10)
+                return (0, 0, 1);
+            
+            return (nx / len, ny / len, nz / len);
         }
     }
 }
