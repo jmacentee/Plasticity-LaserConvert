@@ -20,7 +20,9 @@
     <File Path="images/svg.png" />
     <File Path="images/svg_thumb.png" />
   </Folder>
-  <Folder Name="/Solution Items/tests/" />
+  <Folder Name="/Solution Items/tests/">
+    <File Path="tests/alltests.bat" />
+  </Folder>
   <Folder Name="/Solution Items/tests/bigbox/">
     <File Path="tests/bigbox/bb_results.txt" />
     <File Path="tests/bigbox/big box v2.stp" />
