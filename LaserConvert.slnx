@@ -45,6 +45,7 @@
   <Folder Name="/Solution Items/tests/campipe/">
     <File Path="tests/campipe/Cam Pipe Clamp Sliced.stp" />
     <File Path="tests/campipe/Cam Pipe Clamp Sliced.svg" />
+    <File Path="tests/campipe/Cam Pipe Clamp Sliced_B1_A1_sample.svg" />
     <File Path="tests/campipe/testrun_campipe.bat" />
   </Folder>
   <Folder Name="/Solution Items/tests/main/">
