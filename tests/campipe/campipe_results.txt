@@ -15,8 +15,14 @@ REM File: Cam Pipe Clamp Sliced.svg
   <g id="C">
     <path d="M 0.000,0.000 a 31.708,31.708 0 0 1 49.356,0.000 a 6.108,6.108 0 0 1 -5.714,9.842 a 6.108,6.108 0 0 1 -3.805,-2.186 a 19.526,19.526 0 0 0 -30.267,-0.063 a 6.109,6.109 0 0 1 -5.664,2.166 a 6.109,6.109 0 0 1 -3.907,-9.760" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
+  <g id="B3">
+    <path d="M 0.000,0.000 a 31.192,31.192 0 0 1 59.072,-0.000 l -1.237,0.605 a 25.600,25.600 0 0 0 -47.219,2.962 a 5.600,5.600 0 0 1 -5.965,3.719 a 5.600,5.600 0 0 1 -4.651,-7.286" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
   <g id="B2">
     <path d="M 10.513,6.285 l 8.191,-6.285 a 31.192,31.192 0 0 1 -18.177,46.793 l -0.527,-1.272 a 25.600,25.600 0 0 0 10.513,-39.236" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g id="B1">
+    <path d="M 0.000,0.000 a 31.192,31.192 0 0 1 59.072,0.000 a 5.600,5.600 0 0 1 -4.651,7.286 a 5.600,5.600 0 0 1 -5.965,-3.719 a 25.600,25.600 0 0 0 -47.219,-2.962 l -1.237,-0.605" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>
  
@@ -84,96 +90,95 @@ REM File: CamPipe_output.txt
 Loading STEP file: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\campipe\Cam Pipe Clamp Sliced.stp
 Parsing STEP file contents...
 File loaded. Total items: 2445
-Processing with thickness=3mm, tolerance=2mm (range: 1-5mm)
+Processing with thickness=7mm, tolerance=2mm (range: 5-9mm)
 Found 7 solids
 [TOPO] Processing 14 faces
-[TOPO] Face pairs near target thickness (3mm):
-[TOPO]   Faces 4-5: sep=3.1mm, alignment=1.00
-[TOPO]   Faces 2-10: sep=4.4mm, alignment=0.94
-[TOPO] Found face pair matching target thickness: separation=3.1mm (target=3mm)
-[TOPO] Found pair of faces with separation: 3.1mm
+[TOPO] Face pairs near target thickness (7mm):
+[TOPO]   Faces 6-13: sep=5.6mm, alignment=0.95
+[TOPO]   Faces 0-5: sep=5.7mm, alignment=0.98
+[TOPO]   Faces 9-10: sep=6.9mm, alignment=0.83
+[TOPO]   Faces 8-10: sep=6.9mm, alignment=0.83
+[TOPO]   Faces 7-11: sep=7.0mm, alignment=0.76
+[TOPO] Found face pair matching target thickness: separation=7.0mm (target=7mm)
+[TOPO] Found pair of faces with separation: 7.0mm
 [TOPO] Extracted 6 unique vertices
-[TOPO] Vertex ranges: X[-8.4,-2.2] Y[36.3,36.8] Z[-11.8,-4.3]
-[TOPO] Computed dimensions: 6.2 x 0.5 x 7.5
-[TOPO] Rotated solid detected: bounding box smallest dim (0.5mm) not thin, but face separation (3.1mm) is valid
-[TOPO] Adjusted dimensions for rotated solid: 3.1 x 6.2 x 7.5
-[FILTER] A2: dimensions [3.1, 6.2, 7.5] - PASS (target thickness: 3mm)
+[TOPO] Vertex ranges: X[-29.1,-18.5] Y[7.7,16.8] Z[-11.8,-4.3]
+[TOPO] Computed dimensions: 10.6 x 9.2 x 7.5
+[FILTER] A2: dimensions [10.6, 9.2, 7.5] - PASS (target thickness: 7mm)
 [TOPO] Processing 8 faces
-[TOPO] Face pairs near target thickness (3mm):
-[TOPO]   Faces 0-1: sep=1.4mm, alignment=0.97
-[TOPO] Found face pair matching target thickness: separation=1.4mm (target=3mm)
-[TOPO] Found pair of faces with separation: 1.4mm
+[TOPO] Face pairs near target thickness (7mm):
+[TOPO]   Faces 2-7: sep=6.0mm, alignment=0.75
+[TOPO]   Faces 3-4: sep=8.4mm, alignment=1.00
+[TOPO] Found face pair matching target thickness: separation=6.0mm (target=7mm)
+[TOPO] Found pair of faces with separation: 6.0mm
 [TOPO] Extracted 8 unique vertices
-[TOPO] Vertex ranges: X[-0.0,12.8] Y[-25.6,22.2] Z[-4.2,4.2]
-[TOPO] Computed dimensions: 12.8 x 47.8 x 8.4
-[TOPO] Rotated solid detected: bounding box smallest dim (8.4mm) not thin, but face separation (1.4mm) is valid
-[TOPO] Adjusted dimensions for rotated solid: 1.4 x 12.8 x 47.8
-[FILTER] A3: dimensions [1.4, 12.8, 47.8] - PASS (target thickness: 3mm)
+[TOPO] Vertex ranges: X[-28.3,-0.0] Y[-25.6,-5.2] Z[-4.2,4.2]
+[TOPO] Computed dimensions: 28.3 x 20.4 x 8.4
+[FILTER] A3: dimensions [28.3, 20.4, 8.4] - PASS (target thickness: 7mm)
 [TOPO] Processing 14 faces
-[TOPO] Face pairs near target thickness (3mm):
-[TOPO]   Faces 7-8: sep=3.1mm, alignment=1.00
-[TOPO]   Faces 5-11: sep=4.4mm, alignment=0.94
-[TOPO] Found face pair matching target thickness: separation=3.1mm (target=3mm)
-[TOPO] Found pair of faces with separation: 3.1mm
+[TOPO] Face pairs near target thickness (7mm):
+[TOPO]   Faces 2-13: sep=5.6mm, alignment=0.95
+[TOPO]   Faces 3-8: sep=5.7mm, alignment=0.98
+[TOPO]   Faces 9-11: sep=6.9mm, alignment=0.83
+[TOPO]   Faces 10-11: sep=6.9mm, alignment=0.83
+[TOPO]   Faces 4-12: sep=7.0mm, alignment=0.76
+[TOPO] Found face pair matching target thickness: separation=7.0mm (target=7mm)
+[TOPO] Found pair of faces with separation: 7.0mm
 [TOPO] Extracted 6 unique vertices
-[TOPO] Vertex ranges: X[-8.4,-2.2] Y[36.3,36.8] Z[4.3,11.8]
-[TOPO] Computed dimensions: 6.2 x 0.5 x 7.4
-[TOPO] Rotated solid detected: bounding box smallest dim (0.5mm) not thin, but face separation (3.1mm) is valid
-[TOPO] Adjusted dimensions for rotated solid: 3.1 x 6.2 x 7.4
-[FILTER] A1: dimensions [3.1, 6.2, 7.4] - PASS (target thickness: 3mm)
+[TOPO] Vertex ranges: X[-29.1,-18.5] Y[7.7,16.8] Z[4.3,11.8]
+[TOPO] Computed dimensions: 10.6 x 9.2 x 7.4
+[FILTER] A1: dimensions [10.6, 9.2, 7.4] - PASS (target thickness: 7mm)
 [TOPO] Processing 20 faces
-[TOPO] Face pairs near target thickness (3mm):
-[TOPO]   Faces 3-13: sep=1.4mm, alignment=0.84
-[TOPO]   Faces 3-19: sep=1.4mm, alignment=0.84
-[TOPO]   Faces 11-12: sep=2.0mm, alignment=0.80
-[TOPO]   Faces 6-7: sep=2.3mm, alignment=0.82
-[TOPO]   Faces 14-15: sep=2.3mm, alignment=0.82
-[TOPO] Found face pair matching target thickness: separation=3.0mm (target=3mm)
-[TOPO] Found pair of faces with separation: 3.0mm
-[TOPO] Extracted 8 unique vertices
-[TOPO] Vertex ranges: X[-24.2,-19.5] Y[6.9,10.9] Z[-3.8,3.8]
-[TOPO] Computed dimensions: 4.8 x 4.1 x 7.5
-[FILTER] C: dimensions [4.8, 4.1, 7.5] - PASS (target thickness: 3mm)
+[TOPO] Face pairs near target thickness (7mm):
+[TOPO]   Faces 7-16: sep=5.0mm, alignment=0.86
+[TOPO]   Faces 9-16: sep=5.0mm, alignment=0.86
+[TOPO]   Faces 1-6: sep=5.4mm, alignment=0.66
+[TOPO]   Faces 1-10: sep=5.4mm, alignment=0.66
+[TOPO]   Faces 14-17: sep=5.9mm, alignment=0.82
+[TOPO] Found face pair matching target thickness: separation=7.1mm (target=7mm)
+[TOPO] Found pair of faces with separation: 7.1mm
+[TOPO] Extracted 4 unique vertices
+[TOPO] Vertex ranges: X[-23.9,-23.5] Y[10.6,11.4] Z[-3.8,3.8]
+[TOPO] Computed dimensions: 0.4 x 0.8 x 7.5
+[TOPO] Rotated solid detected: bounding box smallest dim (0.4mm) not thin, but face separation (7.1mm) is valid
+[TOPO] Adjusted dimensions for rotated solid: 7.1 x 0.8 x 7.5
+[FILTER] C: dimensions [7.1, 0.8, 7.5] - PASS (target thickness: 7mm)
 [TOPO] Processing 7 faces
-[TOPO] No face pairs found near target thickness (3mm +/- 1mm)
-[TOPO] Smallest face pair separations found:
+[TOPO] Face pairs near target thickness (7mm):
 [TOPO]   Faces 0-1: sep=5.1mm, alignment=0.96
 [TOPO]   Faces 0-5: sep=5.3mm, alignment=0.69
 [TOPO]   Faces 0-4: sep=5.3mm, alignment=0.69
 [TOPO]   Faces 2-6: sep=5.6mm, alignment=0.98
 [TOPO]   Faces 4-5: sep=7.3mm, alignment=1.00
-[TOPO] No close face pair found, using all vertices
+[TOPO] Found face pair matching target thickness: separation=7.3mm (target=7mm)
+[TOPO] Found pair of faces with separation: 7.3mm
 [TOPO] Extracted 10 unique vertices
 [TOPO] Vertex ranges: X[-27.9,30.7] Y[32.9,46.7] Z[-11.8,-4.5]
 [TOPO] Computed dimensions: 58.6 x 13.8 x 7.3
-Warning! [FILTER] B3: dimensions [58.6, 13.8, 7.3] - FAIL (target thickness: 3mm)
+[FILTER] B3: dimensions [58.6, 13.8, 7.3] - PASS (target thickness: 7mm)
 [TOPO] Processing 6 faces
-[TOPO] Face pairs near target thickness (3mm):
-[TOPO]   Faces 0-3: sep=4.9mm, alignment=0.86
-[TOPO]   Faces 1-4: sep=4.9mm, alignment=0.86
-[TOPO]   Faces 0-4: sep=4.9mm, alignment=0.86
-[TOPO]   Faces 1-3: sep=4.9mm, alignment=0.86
-[TOPO] Found face pair matching target thickness: separation=4.9mm (target=3mm)
-[TOPO] Found pair of faces with separation: 4.9mm
-[TOPO] Extracted 6 unique vertices
+[TOPO] Face pairs near target thickness (7mm):
+[TOPO]   Faces 0-1: sep=5.0mm, alignment=0.76
+[TOPO]   Faces 3-4: sep=8.4mm, alignment=1.00
+[TOPO] Found face pair matching target thickness: separation=8.4mm (target=7mm)
+[TOPO] Found pair of faces with separation: 8.4mm
+[TOPO] Extracted 8 unique vertices
 [TOPO] Vertex ranges: X[-18.6,30.7] Y[45.9,56.0] Z[-4.2,4.1]
 [TOPO] Computed dimensions: 49.3 x 10.1 x 8.4
-[TOPO] Rotated solid detected: bounding box smallest dim (8.4mm) not thin, but face separation (4.9mm) is valid
-[TOPO] Adjusted dimensions for rotated solid: 4.9 x 10.1 x 49.3
-[FILTER] B2: dimensions [4.9, 10.1, 49.3] - PASS (target thickness: 3mm)
+[FILTER] B2: dimensions [49.3, 10.1, 8.4] - PASS (target thickness: 7mm)
 [TOPO] Processing 7 faces
-[TOPO] No face pairs found near target thickness (3mm +/- 1mm)
-[TOPO] Smallest face pair separations found:
+[TOPO] Face pairs near target thickness (7mm):
 [TOPO]   Faces 0-1: sep=5.1mm, alignment=0.96
 [TOPO]   Faces 0-4: sep=5.3mm, alignment=0.69
 [TOPO]   Faces 0-5: sep=5.3mm, alignment=0.69
 [TOPO]   Faces 3-6: sep=5.6mm, alignment=0.98
 [TOPO]   Faces 4-5: sep=7.3mm, alignment=1.00
-[TOPO] No close face pair found, using all vertices
+[TOPO] Found face pair matching target thickness: separation=7.3mm (target=7mm)
+[TOPO] Found pair of faces with separation: 7.3mm
 [TOPO] Extracted 10 unique vertices
 [TOPO] Vertex ranges: X[-27.9,30.7] Y[32.9,46.7] Z[4.4,11.8]
 [TOPO] Computed dimensions: 58.6 x 13.8 x 7.3
-Warning! [FILTER] B1: dimensions [58.6, 13.8, 7.3] - FAIL (target thickness: 3mm)
+[FILTER] B1: dimensions [58.6, 13.8, 7.3] - PASS (target thickness: 7mm)
 [EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
 [EXTRACT] Bound 0 has 4 curve segments, bbox 5.4x0.0x7.5 (area=40.1)
 [EXTRACT] Identified bound 0 as outer loop (largest area=40.1)
@@ -288,6 +293,22 @@ Warning! [FILTER] B1: dimensions [58.6, 13.8, 7.3] - FAIL (target thickness: 3mm
 [FACE] C: Planar face with 6 segments, area=360.4
 [SVG] C: Generated outline from 6 curve segments
 [EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 1.2x0.8x7.3 (area=14.8)
+[EXTRACT] Identified bound 0 as outer loop (largest area=14.8)
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] B3: Planar face with 4 segments, area=10.0
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 5 curve segments, bbox 58.6x13.8x0.0 (area=809.6)
+[EXTRACT] Identified bound 0 as outer loop (largest area=809.6)
+[EXTRACT] Returning 5 outer segments and 0 hole loops
+[FACE] B3: Planar face with 5 segments, area=148.2
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 5 curve segments, bbox 58.6x13.8x0.0 (area=809.6)
+[EXTRACT] Identified bound 0 as outer loop (largest area=809.6)
+[EXTRACT] Returning 5 outer segments and 0 hole loops
+[FACE] B3: Planar face with 5 segments, area=148.2
+[SVG] B3: Generated outline from 5 curve segments
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
 [EXTRACT] Bound 0 has 4 curve segments, bbox 1.2x0.8x8.4 (area=16.8)
 [EXTRACT] Identified bound 0 as outer loop (largest area=16.8)
 [EXTRACT] Returning 4 outer segments and 0 hole loops
@@ -309,4 +330,20 @@ Warning! [FILTER] B1: dimensions [58.6, 13.8, 7.3] - FAIL (target thickness: 3mm
 [FACE] B2: Planar face with 4 segments, area=86.3
 [ALIGN] B2: Rotating by -37.5 degrees for axis alignment
 [SVG] B2: Generated outline from 4 curve segments
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 1.2x0.8x7.3 (area=14.8)
+[EXTRACT] Identified bound 0 as outer loop (largest area=14.8)
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] B1: Planar face with 4 segments, area=10.1
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 5 curve segments, bbox 58.6x13.8x0.0 (area=809.6)
+[EXTRACT] Identified bound 0 as outer loop (largest area=809.6)
+[EXTRACT] Returning 5 outer segments and 0 hole loops
+[FACE] B1: Planar face with 5 segments, area=148.2
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 5 curve segments, bbox 58.6x13.8x0.0 (area=809.6)
+[EXTRACT] Identified bound 0 as outer loop (largest area=809.6)
+[EXTRACT] Returning 5 outer segments and 0 hole loops
+[FACE] B1: Planar face with 5 segments, area=148.2
+[SVG] B1: Generated outline from 5 curve segments
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\campipe\Cam Pipe Clamp Sliced.svg
