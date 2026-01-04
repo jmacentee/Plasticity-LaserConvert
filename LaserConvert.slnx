@@ -42,6 +42,9 @@
     <File Path="tests/bigboxRW/rw_results.txt" />
     <File Path="tests/bigboxRW/testrun_bbrw.bat" />
   </Folder>
+  <Folder Name="/Solution Items/tests/campipe/">
+    <File Path="tests/campipe/Cam Pipe Clamp Sliced.stp" />
+  </Folder>
   <Folder Name="/Solution Items/tests/main/">
     <File Path="tests/main/1box.stp" />
     <File Path="tests/main/1box.svg" />

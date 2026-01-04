@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="482mm" height="266mm" viewBox="0 0 482 266">
+<defs/>
+  <g id="A2">
+    <path d="M 0,0 L 51,0 L 51,7 L 0,7 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g id="A1">
+    <path d="M 0,0 L 7,0 L 7,51 L 0,51 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g id="C">
+    <path d="M 0,0 L 49,0 L 49,8 L 0,8 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g id="B3">
+    <path d="M 0,0 L 7,0 L 7,59 L 0,59 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+  <g id="B1">
+    <path d="M 0,0 L 59,0 L 59,7 L 0,7 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+  </g>
+</svg>
