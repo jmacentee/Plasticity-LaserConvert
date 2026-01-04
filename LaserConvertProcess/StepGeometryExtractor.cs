@@ -538,6 +538,7 @@ namespace LaserConvertProcess
         /// Extract vertices from a face bound IN EDGE ORDER.
         /// This preserves the traversal order from the STEP file, which is essential
         /// for correctly tracing the perimeter of complex shapes.
+        /// For curved edges (B-splines, circles), samples points along the curve.
         /// </summary>
         public static List<(double X, double Y, double Z)> ExtractVerticesInEdgeOrder(
             StepFaceBound bound,
@@ -549,9 +550,7 @@ namespace LaserConvertProcess
             if (edgeLoop?.EdgeList == null)
                 return vertices;
             
-            // Walk through edges in order, taking only the START vertex of each edge.
-            // The end vertex of edge N should be the start vertex of edge N+1 (forming a chain).
-            // This gives us exactly one vertex per edge in the correct order.
+            // Walk through edges in order
             foreach (var orientedEdge in edgeLoop.EdgeList)
             {
                 if (orientedEdge?.EdgeElement == null)
@@ -559,21 +558,53 @@ namespace LaserConvertProcess
                 
                 var edgeCurve = orientedEdge.EdgeElement;
                 
-                // Use EdgeStart for forward-oriented edges, EdgeEnd for reversed edges
-                StepVertexPoint vertex;
-                if (orientedEdge.Orientation)
+                // Get the edge geometry (curve)
+                StepCurve curveGeometry = null;
+                if (edgeCurve is StepEdgeCurve ec)
                 {
-                    vertex = edgeCurve.EdgeStart as StepVertexPoint;
+                    curveGeometry = ec.EdgeGeometry;
+                }
+                
+                // Get start and end vertices
+                var startVertex = edgeCurve.EdgeStart as StepVertexPoint;
+                var endVertex = edgeCurve.EdgeEnd as StepVertexPoint;
+                
+                // Check if this is a curved edge that needs sampling
+                if (CurveEvaluator.IsCurvedGeometry(curveGeometry))
+                {
+                    // Sample points along the curve (32 samples for smooth curves)
+                    var sampledPoints = CurveEvaluator.SampleCurve(
+                        curveGeometry,
+                        startVertex,
+                        endVertex,
+                        orientedEdge.Orientation,
+                        samplesPerCurve: 32);
+                    
+                    // Add all sampled points except the last one (which will be the start of the next edge)
+                    for (int i = 0; i < sampledPoints.Count - 1; i++)
+                    {
+                        vertices.Add(sampledPoints[i]);
+                    }
                 }
                 else
                 {
-                    vertex = edgeCurve.EdgeEnd as StepVertexPoint;
-                }
-                
-                if (vertex?.Location != null)
-                {
-                    var pt = vertex.Location;
-                    vertices.Add((pt.X, pt.Y, pt.Z));
+                    // For straight edges, just use the start vertex
+                    // Use EdgeStart for forward-oriented edges, EdgeEnd for reversed edges
+                    StepVertexPoint vertex;
+                    if (orientedEdge.Orientation)
+                    {
+                        vertex = startVertex;
+                    }
+                    else
+                    {
+                        vertex = endVertex;
+                    }
+                    
+                    if (vertex?.Location != null)
+                    {
+                        var pt = vertex.Location;
+                        vertices.Add((pt.X, pt.Y, pt.Z));
+                    }
                 }
             }
             
@@ -593,7 +624,6 @@ namespace LaserConvertProcess
             ExtractVerticesFromFaceBound(bound, stepFile, vertices, processedPoints);
             return vertices;
         }
-
         
         
     }
