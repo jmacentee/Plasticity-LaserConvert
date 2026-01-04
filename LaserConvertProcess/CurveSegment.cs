@@ -191,9 +191,14 @@ namespace LaserConvertProcess
         public abstract CurveSegment2D Translate(double dx, double dy);
 
         /// <summary>
-        /// Generate SVG path command for this segment (relative to current position).
+        /// Generate SVG path command for this segment (polyline version).
         /// </summary>
         public abstract string ToSvgPathCommand();
+        
+        /// <summary>
+        /// Generate SVG path command using true curves (arc version).
+        /// </summary>
+        public abstract string ToSvgArcCommand();
     }
 
     /// <summary>
@@ -222,6 +227,14 @@ namespace LaserConvertProcess
         public override string ToSvgPathCommand()
         {
             // Use relative line command for consistency
+            var dx = End.X - Start.X;
+            var dy = End.Y - Start.Y;
+            return $"l {dx:F3},{dy:F3}";
+        }
+        
+        public override string ToSvgArcCommand()
+        {
+            // Lines are the same in both versions
             var dx = End.X - Start.X;
             var dy = End.Y - Start.Y;
             return $"l {dx:F3},{dy:F3}";
@@ -298,17 +311,23 @@ namespace LaserConvertProcess
 
         public override string ToSvgPathCommand()
         {
-            // Sample the arc as a series of line segments
-            // This avoids complex SVG arc flag issues with 3D->2D projection
-            // Use adaptive sampling based on arc size
-            int numSegments = Math.Max(8, (int)(Math.Abs(AngularSweep) * RadiusX / 2));
-            numSegments = Math.Min(numSegments, 32); // Cap at 32 segments
+            // Handle near-zero sweep (degenerate arc) - use line instead
+            if (Math.Abs(AngularSweep) < 0.01)
+            {
+                var dxLine = End.X - Start.X;
+                var dyLine = End.Y - Start.Y;
+                return $"l {dxLine:F3},{dyLine:F3}";
+            }
+            
+            // Sample the arc as line segments - this produces correct output
+            // Use high sampling for smooth curves
+            int numSegments = Math.Max(16, (int)(Math.Abs(AngularSweep) * 180 / Math.PI / 3));
+            numSegments = Math.Min(numSegments, 120);
             
             var points = SampleArcPoints(numSegments);
             
             if (points.Count <= 1)
             {
-                // Fallback to straight line
                 var dxLine = End.X - Start.X;
                 var dyLine = End.Y - Start.Y;
                 return $"l {dxLine:F3},{dyLine:F3}";
@@ -323,6 +342,37 @@ namespace LaserConvertProcess
                 sb.Append($"l {dx:F3},{dy:F3}");
             }
             return sb.ToString();
+        }
+        
+        public override string ToSvgArcCommand()
+        {
+            // Handle near-zero sweep (degenerate arc) - use line instead
+            if (Math.Abs(AngularSweep) < 0.01)
+            {
+                var dxLine = End.X - Start.X;
+                var dyLine = End.Y - Start.Y;
+                return $"l {dxLine:F3},{dyLine:F3}";
+            }
+            
+            // Compute SVG arc flags from the angular sweep
+            double absSweep = Math.Abs(AngularSweep);
+            
+            // Large arc flag: 1 if |sweep| > 180 degrees
+            int largeArc = absSweep > Math.PI ? 1 : 0;
+            
+            // SVG sweep flag:
+            // Our AngularSweep: positive = CCW (increasing angle in math coords)
+            // But SVG has Y-down, so visually it's flipped
+            // In SVG: sweep=1 means clockwise visually
+            // So: AngularSweep > 0 (math CCW = visual CW) -> sweep=1
+            //     AngularSweep < 0 (math CW = visual CCW) -> sweep=0
+            int sweep = AngularSweep > 0 ? 1 : 0;
+            
+            // SVG arc endpoint (relative)
+            var dx = End.X - Start.X;
+            var dy = End.Y - Start.Y;
+            
+            return $"a {RadiusX:F3},{RadiusY:F3} 0 {largeArc} {sweep} {dx:F3},{dy:F3}";
         }
         
         /// <summary>

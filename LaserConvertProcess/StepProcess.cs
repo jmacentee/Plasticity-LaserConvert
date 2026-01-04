@@ -98,8 +98,6 @@ namespace LaserConvertProcess
         /// </summary>
         private static void ProcessSolid(StepReturn results, string name, List<StepAdvancedFace> faces, StepFile stepFile, SvgBuilder svg, ProcessingOptions options)
         {
-            svg.BeginGroup(name);
-
             // Find the PLANAR face with the LARGEST projected 2D area (this is the main surface face)
             // We only consider planar faces (StepPlane geometry) to avoid selecting cylindrical surfaces
             StepAdvancedFace bestFace = null;
@@ -138,7 +136,6 @@ namespace LaserConvertProcess
             if (bestFace == null || bestOuterSegments == null || bestOuterSegments.Count < 2)
             {
                 DebugLog(results, options, $"[{name}] No valid planar face found");
-                svg.EndGroup();
                 return;
             }
 
@@ -178,24 +175,42 @@ namespace LaserConvertProcess
                 h.Select(s => s.Translate(-minX, -minY)).ToList()
             ).ToList();
             
-            // Build SVG path from segments
+            // Output polyline version (known working)
+            svg.BeginGroup(name + "_polyline");
             if (outer2DSegments.Count >= 2)
             {
                 var outerPath = SvgPathBuilder.BuildPathFromSegments(outer2DSegments);
                 svg.Path(outerPath, 0.2, "none", "#9600c8");  // Purple for outer walls
-                DebugLog(results, options, $"[SVG] {name}: Generated outline from {outer2DSegments.Count} curve segments");
+                DebugLog(results, options, $"[SVG] {name}_polyline: Generated outline from {outer2DSegments.Count} curve segments");
 
-                // Process holes - use red color for cutouts
                 foreach (var holeSegments in holes2DSegments)
                 {
                     if (holeSegments.Count >= 2)
                     {
                         var holePath = SvgPathBuilder.BuildPathFromSegments(holeSegments);
-                        svg.Path(holePath, 0.2, "none", "#960000");  // Red for cutouts/holes
+                        svg.Path(holePath, 0.2, "none", "#960000");
                     }
                 }
             }
+            svg.EndGroup();
+            
+            // Output curves version (experimental - for comparison)
+            svg.BeginGroup(name + "_curves");
+            if (outer2DSegments.Count >= 2)
+            {
+                var outerPathCurves = SvgPathBuilder.BuildPathFromSegmentsAsCurves(outer2DSegments);
+                svg.Path(outerPathCurves, 0.2, "none", "#00c896");  // Teal for curves version
+                DebugLog(results, options, $"[SVG] {name}_curves: Generated outline with true arcs");
 
+                foreach (var holeSegments in holes2DSegments)
+                {
+                    if (holeSegments.Count >= 2)
+                    {
+                        var holePath = SvgPathBuilder.BuildPathFromSegmentsAsCurves(holeSegments);
+                        svg.Path(holePath, 0.2, "none", "#c89600");  // Orange for hole curves
+                    }
+                }
+            }
             svg.EndGroup();
         }
 

@@ -77,6 +77,30 @@ namespace LaserConvertProcess
         }
 
         /// <summary>
+        /// Build an SVG path from 2D curve segments using true SVG arc commands.
+        /// This is the experimental version for comparison with polyline output.
+        /// </summary>
+        public static string BuildPathFromSegmentsAsCurves(List<CurveSegment2D> segments)
+        {
+            if (segments == null || segments.Count == 0) return string.Empty;
+            
+            var sb = new StringBuilder();
+            
+            // Start at the first segment's start point
+            var first = segments[0];
+            sb.Append(FormatPoint("M", first.Start.X, first.Start.Y));
+            
+            // Add each segment
+            foreach (var segment in segments)
+            {
+                sb.Append(" ");
+                sb.Append(segment.ToSvgArcCommand());
+            }
+            
+            return sb.ToString();
+        }
+
+        /// <summary>
         /// Build an SVG path from 2D curve segments (lines and arcs).
         /// </summary>
         public static string BuildPathFromSegments(List<CurveSegment2D> segments)
