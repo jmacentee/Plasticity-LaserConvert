@@ -535,6 +535,124 @@ namespace LaserConvertProcess
         }
 
         /// <summary>
+        /// Extract curve segments from a face bound IN EDGE ORDER.
+        /// Returns a list of CurveSegment objects (lines, arcs) that preserve the exact geometry.
+        /// </summary>
+        public static List<CurveSegment> ExtractCurveSegmentsInEdgeOrder(
+            StepFaceBound bound,
+            StepFile stepFile)
+        {
+            var segments = new List<CurveSegment>();
+            
+            var edgeLoop = GetEdgeLoopFromBound(bound);
+            if (edgeLoop?.EdgeList == null)
+                return segments;
+            
+            // Walk through edges in order
+            foreach (var orientedEdge in edgeLoop.EdgeList)
+            {
+                if (orientedEdge?.EdgeElement == null)
+                    continue;
+                
+                var edgeCurve = orientedEdge.EdgeElement;
+                
+                // Get the edge geometry (curve)
+                StepCurve curveGeometry = null;
+                if (edgeCurve is StepEdgeCurve ec)
+                {
+                    curveGeometry = ec.EdgeGeometry;
+                }
+                
+                // Get start and end vertices
+                var startVertex = edgeCurve.EdgeStart as StepVertexPoint;
+                var endVertex = edgeCurve.EdgeEnd as StepVertexPoint;
+                
+                // Extract the curve segment
+                var segment = CurveEvaluator.ExtractCurveSegment(
+                    curveGeometry,
+                    startVertex,
+                    endVertex,
+                    orientedEdge.Orientation);
+                
+                segments.Add(segment);
+            }
+            
+            return segments;
+        }
+
+        /// <summary>
+        /// Extract curve segments from all bounds of a face (outer + inner loops).
+        /// Returns curve segments that preserve the exact geometry including arcs.
+        /// </summary>
+        public static (List<CurveSegment> OuterSegments, List<List<CurveSegment>> HoleSegments) ExtractFaceWithHolesAsSegments(
+            StepAdvancedFace face,
+            StepFile stepFile,
+            ProcessingOptions options)
+        {
+            var outerSegments = new List<CurveSegment>();
+            var holeSegments = new List<List<CurveSegment>>();
+            
+            if (face?.Bounds == null || face.Bounds.Count == 0)
+                return (outerSegments, holeSegments);
+            
+            DebugLog(options, $"[EXTRACT] ExtractFaceWithHolesAsSegments: face has {face.Bounds.Count} bounds");
+            
+            // Extract all loops as curve segments
+            var allLoops = new List<(int Index, List<CurveSegment> Segments, double BoundingBoxArea)>();
+            
+            for (int i = 0; i < face.Bounds.Count; i++)
+            {
+                var bound = face.Bounds[i];
+                var segments = ExtractCurveSegmentsInEdgeOrder(bound, stepFile);
+                
+                if (segments.Count > 0)
+                {
+                    // Compute bounding box from segment endpoints
+                    var allPoints = new List<(double X, double Y, double Z)>();
+                    foreach (var seg in segments)
+                    {
+                        allPoints.Add(seg.Start);
+                        allPoints.Add(seg.End);
+                    }
+                    
+                    var minX = allPoints.Min(v => v.X);
+                    var maxX = allPoints.Max(v => v.X);
+                    var minY = allPoints.Min(v => v.Y);
+                    var maxY = allPoints.Max(v => v.Y);
+                    var minZ = allPoints.Min(v => v.Z);
+                    var maxZ = allPoints.Max(v => v.Z);
+                    var width = maxX - minX;
+                    var height = maxY - minY;
+                    var depth = maxZ - minZ;
+                    
+                    var area = width * height + height * depth + depth * width;
+                    
+                    DebugLog(options, $"[EXTRACT] Bound {i} has {segments.Count} curve segments, bbox {width:F1}x{height:F1}x{depth:F1} (area={area:F1})");
+                    
+                    allLoops.Add((i, segments, area));
+                }
+            }
+            
+            // The OUTER loop should have the LARGEST bounding box area
+            if (allLoops.Count > 0)
+            {
+                allLoops = allLoops.OrderByDescending(l => l.BoundingBoxArea).ToList();
+                
+                outerSegments = allLoops[0].Segments;
+                DebugLog(options, $"[EXTRACT] Identified bound {allLoops[0].Index} as outer loop (largest area={allLoops[0].BoundingBoxArea:F1})");
+                
+                for (int i = 1; i < allLoops.Count; i++)
+                {
+                    holeSegments.Add(allLoops[i].Segments);
+                    DebugLog(options, $"[EXTRACT] Identified bound {allLoops[i].Index} as hole loop {i} (area={allLoops[i].BoundingBoxArea:F1})");
+                }
+            }
+            
+            DebugLog(options, $"[EXTRACT] Returning {outerSegments.Count} outer segments and {holeSegments.Count} hole loops");
+            return (outerSegments, holeSegments);
+        }
+
+        /// <summary>
         /// Extract vertices from a face bound IN EDGE ORDER.
         /// This preserves the traversal order from the STEP file, which is essential
         /// for correctly tracing the perimeter of complex shapes.

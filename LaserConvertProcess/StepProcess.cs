@@ -94,102 +94,104 @@ namespace LaserConvertProcess
 
         /// <summary>
         /// Process a single solid by finding its main face and projecting to 2D.
+        /// Uses curve segments to preserve arcs in the SVG output.
         /// </summary>
         private static void ProcessSolid(StepReturn results, string name, List<StepAdvancedFace> faces, StepFile stepFile, SvgBuilder svg, ProcessingOptions options)
         {
             svg.BeginGroup(name);
 
-            // Find the face with the LARGEST projected 2D area (this is the main surface face)
-            // This correctly handles wall-type shapes where we want the large flat face, not thin edges
+            // Find the PLANAR face with the LARGEST projected 2D area (this is the main surface face)
+            // We only consider planar faces (StepPlane geometry) to avoid selecting cylindrical surfaces
             StepAdvancedFace bestFace = null;
             double maxProjectedArea = 0;
-            List<(double X, double Y, double Z)> bestOuterVerts = null;
-            List<List<(double X, double Y, double Z)>> bestHoleVerts = null;
+            List<CurveSegment> bestOuterSegments = null;
+            List<List<CurveSegment>> bestHoleSegments = null;
             
             foreach (var face in faces)
             {
-                var (outerVerts, holeVerts) = StepTopologyResolver.ExtractFaceWithHoles(face, stepFile, options);
-                if (outerVerts.Count < 3)
+                // Only consider planar faces - skip cylindrical, conical, spherical, etc.
+                if (!(face.FaceGeometry is StepPlane))
+                {
+                    continue;
+                }
+                
+                // Extract curve segments (preserves arc geometry)
+                var (outerSegments, holeSegments) = StepTopologyResolver.ExtractFaceWithHolesAsSegments(face, stepFile, options);
+                if (outerSegments.Count < 2)
                     continue;
                 
-                // Compute the 2D bounding box area of this face
-                // This represents the "flat" area when projected to its natural plane
-                var projectedArea = ComputeProjectedArea(outerVerts);
+                // Compute the 2D bounding box area of this face from segment endpoints
+                var outerPoints = outerSegments.Select(s => s.Start).ToList();
+                var projectedArea = ComputeProjectedArea(outerPoints);
+                
+                DebugLog(results, options, $"[FACE] {name}: Planar face with {outerSegments.Count} segments, area={projectedArea:F1}");
                 
                 if (projectedArea > maxProjectedArea)
                 {
                     maxProjectedArea = projectedArea;
                     bestFace = face;
-                    bestOuterVerts = outerVerts;
-                    bestHoleVerts = holeVerts;
+                    bestOuterSegments = outerSegments;
+                    bestHoleSegments = holeSegments;
                 }
             }
             
-            if (bestFace == null || bestOuterVerts == null || bestOuterVerts.Count < 3)
+            if (bestFace == null || bestOuterSegments == null || bestOuterSegments.Count < 2)
             {
-                DebugLog(results, options, $"[{name}] No valid face found");
+                DebugLog(results, options, $"[{name}] No valid planar face found");
                 svg.EndGroup();
                 return;
             }
 
-            // Build a coordinate frame from the outer boundary
-            // This same frame will be used for holes to preserve relative positions
-            var frame = BuildCoordinateFrame(bestOuterVerts);
+            // Build a coordinate frame from the outer boundary points
+            var outerPoints3D = bestOuterSegments.Select(s => s.Start).ToList();
+            var frame = BuildCoordinateFrame(outerPoints3D);
             
-            // Project outer boundary using the frame
-            var outer2D = ProjectWithFrame(bestOuterVerts, frame);
+            // Project outer segments to 2D
+            var outer2DSegments = bestOuterSegments.Select(s => s.ProjectTo2D(frame)).ToList();
             
-            // Project holes using the SAME frame
-            var holes2D = bestHoleVerts?.Select(h => ProjectWithFrame(h, frame)).ToList() 
-                ?? new List<List<(double X, double Y)>>();
-			
+            // Project hole segments to 2D
+            var holes2DSegments = bestHoleSegments?.Select(h => 
+                h.Select(s => s.ProjectTo2D(frame)).ToList()
+            ).ToList() ?? new List<List<CurveSegment2D>>();
+            
             // Check if the shape needs axis-alignment rotation
-            // This handles cases where the shape's natural edges are at 45-degree angles
-            double alignmentAngle = ComputeAxisAlignmentAngle(outer2D);
-            if (Math.Abs(alignmentAngle) > 0.01) // More than ~0.5 degrees
+            var outer2DPoints = outer2DSegments.Select(s => s.Start).ToList();
+            double alignmentAngle = ComputeAxisAlignmentAngle(outer2DPoints);
+            if (Math.Abs(alignmentAngle) > 0.01)
             {
                 DebugLog(results, options, $"[ALIGN] {name}: Rotating by {alignmentAngle * 180 / Math.PI:F1} degrees for axis alignment");
-                outer2D = RotatePoints2D(outer2D, alignmentAngle);
-                holes2D = holes2D.Select(h => RotatePoints2D(h, alignmentAngle)).ToList();
+                double cx = outer2DPoints.Average(p => p.X);
+                double cy = outer2DPoints.Average(p => p.Y);
+                outer2DSegments = outer2DSegments.Select(s => s.Rotate(alignmentAngle, cx, cy)).ToList();
+                holes2DSegments = holes2DSegments.Select(h => 
+                    h.Select(s => s.Rotate(alignmentAngle, cx, cy)).ToList()
+                ).ToList();
             }
             
-            // Normalize to origin and round
-            var minX = outer2D.Min(p => p.X);
-            var minY = outer2D.Min(p => p.Y);
+            // Normalize to origin
+            var allStartPoints = outer2DSegments.Select(s => s.Start).ToList();
+            var minX = allStartPoints.Min(p => p.X);
+            var minY = allStartPoints.Min(p => p.Y);
             
-            // Use MidpointRounding.AwayFromZero to ensure consistent rounding (e.g., 2.5 -> 3, not 2)
-            var normalizedOuter = outer2D.Select(p => (
-                (long)Math.Round(p.X - minX, MidpointRounding.AwayFromZero), 
-                (long)Math.Round(p.Y - minY, MidpointRounding.AwayFromZero)
-            )).ToList();
-            var normalizedHoles = holes2D.Select(h => 
-                h.Select(p => (
-                    (long)Math.Round(p.X - minX, MidpointRounding.AwayFromZero), 
-                    (long)Math.Round(p.Y - minY, MidpointRounding.AwayFromZero)
-                )).ToList()
+            outer2DSegments = outer2DSegments.Select(s => s.Translate(-minX, -minY)).ToList();
+            holes2DSegments = holes2DSegments.Select(h => 
+                h.Select(s => s.Translate(-minX, -minY)).ToList()
             ).ToList();
-
-            // Remove consecutive duplicates (but preserve order!)
-            normalizedOuter = RemoveConsecutiveDuplicates(normalizedOuter);
-
-            // DO NOT REORDER - vertices are already in correct edge order from STEP file
-            var orderedOuter = normalizedOuter;
-
-            // Output to SVG
-            if (orderedOuter.Count >= 3)
+            
+            // Build SVG path from segments
+            if (outer2DSegments.Count >= 2)
             {
-                var outerPath = SvgPathBuilder.BuildPath(orderedOuter);
-                svg.Path(outerPath, 0.2, "none", "#9600c8");
-                DebugLog(results, options, $"[SVG] {name}: Generated outline from {orderedOuter.Count} vertices");
+                var outerPath = SvgPathBuilder.BuildPathFromSegments(outer2DSegments);
+                svg.Path(outerPath, 0.2, "none", "#9600c8");  // Purple for outer walls
+                DebugLog(results, options, $"[SVG] {name}: Generated outline from {outer2DSegments.Count} curve segments");
 
-                // Process holes - also preserve their original order
-                foreach (var hole2D in normalizedHoles)
+                // Process holes - use red color for cutouts
+                foreach (var holeSegments in holes2DSegments)
                 {
-                    var dedupedHole = RemoveConsecutiveDuplicates(hole2D);
-                    if (dedupedHole.Count >= 3)
+                    if (holeSegments.Count >= 2)
                     {
-                        var holePath = SvgPathBuilder.BuildPath(dedupedHole);
-                        svg.Path(holePath, 0.2, "none", "#960000");
+                        var holePath = SvgPathBuilder.BuildPathFromSegments(holeSegments);
+                        svg.Path(holePath, 0.2, "none", "#960000");  // Red for cutouts/holes
                     }
                 }
             }

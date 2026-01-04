@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="482mm" height="266mm" viewBox="0 0 482 266">
 <defs/>
   <g id="Box2">
-    <path d="M 0,0 L 170,0 L 170,110 L 0,110 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0.000,0.000 l 170.000,0.000 l 0.000,110.215 l -170.000,0.000 l 0.000,-110.215" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box4">
-    <path d="M 0,0 L 75,0 L 75,67 L 0,67 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0.000,0.000 l 74.819,0.000 l 0.000,67.488 l -74.819,0.000 l 0.000,-67.488" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
   <g id="Box1">
-    <path d="M 0,0 L 170,0 L 170,150 L 0,150 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0.000,0.000 l 170.000,0.000 l 0.000,150.000 l -170.000,0.000 l 0.000,-150.000" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>

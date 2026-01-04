@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="482mm" height="266mm" viewBox="0 0 482 266">
 <defs/>
   <g id="CBox">
-    <path d="M 0,0 L 40,0 L 40,50 L 0,50 Z" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
-    <path d="M 15,35 L 5,35 L 5,45 L 15,45 Z" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 0.000,0.000 l 40.000,0.000 l 0.000,50.000 l -40.000,0.000 l 0.000,-50.000" stroke="#9600c8" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
+    <path d="M 15.000,35.000 l -10.000,0.000 l 0.000,10.000 l 10.000,0.000 l 0.000,-10.000" stroke="#960000" stroke-width="0.2" fill="none" vector-effect="non-scaling-stroke"/>
   </g>
 </svg>

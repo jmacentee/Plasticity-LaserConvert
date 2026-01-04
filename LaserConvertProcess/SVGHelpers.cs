@@ -76,6 +76,61 @@ namespace LaserConvertProcess
             return sb.ToString();
         }
 
-       
+        /// <summary>
+        /// Build an SVG path from 2D curve segments (lines and arcs).
+        /// </summary>
+        public static string BuildPathFromSegments(List<CurveSegment2D> segments)
+        {
+            if (segments == null || segments.Count == 0) return string.Empty;
+            
+            var sb = new StringBuilder();
+            
+            // Start at the first segment's start point
+            var first = segments[0];
+            sb.Append(FormatPoint("M", first.Start.X, first.Start.Y));
+            
+            // Add each segment
+            foreach (var segment in segments)
+            {
+                sb.Append(" ");
+                sb.Append(segment.ToSvgPathCommand());
+            }
+            
+            // Close the path
+            // Check if we need to close (if last end != first start)
+            var last = segments[segments.Count - 1];
+            var dx = Math.Abs(last.End.X - first.Start.X);
+            var dy = Math.Abs(last.End.Y - first.Start.Y);
+            if (dx > 0.001 || dy > 0.001)
+            {
+                // Add a line to close if not already closed
+                sb.Append(" Z");
+            }
+            
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Build an SVG path from 2D points (double precision).
+        /// </summary>
+        public static string BuildPathFromPoints(List<(double X, double Y)> points)
+        {
+            if (points == null || points.Count < 3) return string.Empty;
+            
+            var sb = new StringBuilder();
+            sb.Append(FormatPoint("M", points[0].X, points[0].Y));
+            for (int i = 1; i < points.Count; i++)
+            {
+                sb.Append(" ");
+                sb.Append(FormatPoint("L", points[i].X, points[i].Y));
+            }
+            sb.Append(" Z");
+            return sb.ToString();
+        }
+
+        private static string FormatPoint(string command, double x, double y)
+        {
+            return $"{command} {x.ToString("F3", CultureInfo.InvariantCulture)},{y.ToString("F3", CultureInfo.InvariantCulture)}";
+        }
     }
 }

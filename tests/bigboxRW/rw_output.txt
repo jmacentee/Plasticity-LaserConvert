@@ -16,109 +16,131 @@ Found 1 solids
 [TOPO] Vertex ranges: X[82.0,85.0] Y[-82.0,82.0] Z[78.0,150.0]
 [TOPO] Computed dimensions: 3.0 x 164.0 x 72.0
 [FILTER] RightWall: dimensions [3.0, 164.0, 72.0] - PASS (target thickness: 3mm)
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x164.0x0.0 (area=492.0): (82.0,82.0,150.0), (82.0,-82.0,150.0), (85.0,-82.0,150.0), (85.0,82.0,150.0)...
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 3.0x164.0x0.0 (area=492.0)
 [EXTRACT] Identified bound 0 as outer loop (largest area=492.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 5 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x50.0x3.0 (area=150.0): (82.0,25.0,83.0), (82.0,-25.0,83.0), (82.0,-25.0,80.0), (82.0,25.0,80.0)...
-[EXTRACT] Bound 1 has 4 vertices, bbox 0.0x28.0x3.0 (area=84.0): (82.0,-25.0,143.5), (82.0,-53.0,143.5), (82.0,-53.0,140.5), (82.0,-25.0,140.5)...
-[EXTRACT] Bound 2 has 4 vertices, bbox 0.0x28.0x3.0 (area=84.0): (82.0,53.0,143.5), (82.0,25.0,143.5), (82.0,25.0,140.5), (82.0,53.0,140.5)...
-[EXTRACT] Bound 3 has 4 vertices, bbox 0.0x50.0x3.0 (area=150.0): (82.0,25.0,144.0), (82.0,25.0,147.0), (82.0,-25.0,147.0), (82.0,-25.0,144.0)...
-[EXTRACT] Bound 4 has 4 vertices, bbox 0.0x164.0x72.0 (area=11808.0): (82.0,-82.0,78.0), (82.0,-82.0,150.0), (82.0,82.0,150.0), (82.0,82.0,78.0)...
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] RightWall: Planar face with 4 segments, area=492.0
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 5 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 0.0x50.0x3.0 (area=150.0)
+[EXTRACT] Bound 1 has 4 curve segments, bbox 0.0x28.0x3.0 (area=84.0)
+[EXTRACT] Bound 2 has 4 curve segments, bbox 0.0x28.0x3.0 (area=84.0)
+[EXTRACT] Bound 3 has 4 curve segments, bbox 0.0x50.0x3.0 (area=150.0)
+[EXTRACT] Bound 4 has 4 curve segments, bbox 0.0x164.0x72.0 (area=11808.0)
 [EXTRACT] Identified bound 4 as outer loop (largest area=11808.0)
 [EXTRACT] Identified bound 0 as hole loop 1 (area=150.0)
 [EXTRACT] Identified bound 3 as hole loop 2 (area=150.0)
 [EXTRACT] Identified bound 1 as hole loop 3 (area=84.0)
 [EXTRACT] Identified bound 2 as hole loop 4 (area=84.0)
-[EXTRACT] Returning 4 outer verts and 4 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x72.0 (area=216.0): (82.0,82.0,78.0), (82.0,82.0,150.0), (85.0,82.0,150.0), (85.0,82.0,78.0)...
+[EXTRACT] Returning 4 outer segments and 4 hole loops
+[FACE] RightWall: Planar face with 4 segments, area=11808.0
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 3.0x0.0x72.0 (area=216.0)
 [EXTRACT] Identified bound 0 as outer loop (largest area=216.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 5 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x50.0x3.0 (area=150.0): (85.0,25.0,83.0), (85.0,25.0,80.0), (85.0,-25.0,80.0), (85.0,-25.0,83.0)...
-[EXTRACT] Bound 1 has 4 vertices, bbox 0.0x28.0x3.0 (area=84.0): (85.0,-53.0,143.5), (85.0,-25.0,143.5), (85.0,-25.0,140.5), (85.0,-53.0,140.5)...
-[EXTRACT] Bound 2 has 4 vertices, bbox 0.0x28.0x3.0 (area=84.0): (85.0,25.0,143.5), (85.0,53.0,143.5), (85.0,53.0,140.5), (85.0,25.0,140.5)...
-[EXTRACT] Bound 3 has 4 vertices, bbox 0.0x50.0x3.0 (area=150.0): (85.0,25.0,147.0), (85.0,25.0,144.0), (85.0,-25.0,144.0), (85.0,-25.0,147.0)...
-[EXTRACT] Bound 4 has 4 vertices, bbox 0.0x164.0x72.0 (area=11808.0): (85.0,82.0,78.0), (85.0,82.0,150.0), (85.0,-82.0,150.0), (85.0,-82.0,78.0)...
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] RightWall: Planar face with 4 segments, area=216.0
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 5 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 0.0x50.0x3.0 (area=150.0)
+[EXTRACT] Bound 1 has 4 curve segments, bbox 0.0x28.0x3.0 (area=84.0)
+[EXTRACT] Bound 2 has 4 curve segments, bbox 0.0x28.0x3.0 (area=84.0)
+[EXTRACT] Bound 3 has 4 curve segments, bbox 0.0x50.0x3.0 (area=150.0)
+[EXTRACT] Bound 4 has 4 curve segments, bbox 0.0x164.0x72.0 (area=11808.0)
 [EXTRACT] Identified bound 4 as outer loop (largest area=11808.0)
 [EXTRACT] Identified bound 0 as hole loop 1 (area=150.0)
 [EXTRACT] Identified bound 3 as hole loop 2 (area=150.0)
 [EXTRACT] Identified bound 1 as hole loop 3 (area=84.0)
 [EXTRACT] Identified bound 2 as hole loop 4 (area=84.0)
-[EXTRACT] Returning 4 outer verts and 4 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x164.0x0.0 (area=492.0): (85.0,-82.0,78.0), (82.0,-82.0,78.0), (82.0,82.0,78.0), (85.0,82.0,78.0)...
+[EXTRACT] Returning 4 outer segments and 4 hole loops
+[FACE] RightWall: Planar face with 4 segments, area=11808.0
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 3.0x164.0x0.0 (area=492.0)
 [EXTRACT] Identified bound 0 as outer loop (largest area=492.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x72.0 (area=216.0): (82.0,-82.0,78.0), (85.0,-82.0,78.0), (85.0,-82.0,150.0), (82.0,-82.0,150.0)...
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] RightWall: Planar face with 4 segments, area=492.0
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 3.0x0.0x72.0 (area=216.0)
 [EXTRACT] Identified bound 0 as outer loop (largest area=216.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x50.0x0.0 (area=150.0): (85.0,25.0,147.0), (85.0,-25.0,147.0), (82.0,-25.0,147.0), (82.0,25.0,147.0)...
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] RightWall: Planar face with 4 segments, area=216.0
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 3.0x50.0x0.0 (area=150.0)
 [EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x50.0x0.0 (area=150.0): (82.0,-25.0,144.0), (85.0,-25.0,144.0), (85.0,25.0,144.0), (82.0,25.0,144.0)...
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] RightWall: Planar face with 4 segments, area=150.0
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 3.0x50.0x0.0 (area=150.0)
 [EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (82.0,25.0,144.0), (85.0,25.0,144.0), (85.0,25.0,147.0), (82.0,25.0,147.0)...
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] RightWall: Planar face with 4 segments, area=150.0
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 3.0x0.0x3.0 (area=9.0)
 [EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (82.0,-25.0,147.0), (85.0,-25.0,147.0), (85.0,-25.0,144.0), (82.0,-25.0,144.0)...
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] RightWall: Planar face with 4 segments, area=9.0
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 3.0x0.0x3.0 (area=9.0)
 [EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x28.0x0.0 (area=84.0): (82.0,25.0,143.5), (82.0,53.0,143.5), (85.0,53.0,143.5), (85.0,25.0,143.5)...
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] RightWall: Planar face with 4 segments, area=9.0
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 3.0x28.0x0.0 (area=84.0)
 [EXTRACT] Identified bound 0 as outer loop (largest area=84.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x28.0x0.0 (area=84.0): (82.0,53.0,140.5), (82.0,25.0,140.5), (85.0,25.0,140.5), (85.0,53.0,140.5)...
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] RightWall: Planar face with 4 segments, area=84.0
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 3.0x28.0x0.0 (area=84.0)
 [EXTRACT] Identified bound 0 as outer loop (largest area=84.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (82.0,25.0,140.5), (82.0,25.0,143.5), (85.0,25.0,143.5), (85.0,25.0,140.5)...
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] RightWall: Planar face with 4 segments, area=84.0
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 3.0x0.0x3.0 (area=9.0)
 [EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (82.0,53.0,143.5), (82.0,53.0,140.5), (85.0,53.0,140.5), (85.0,53.0,143.5)...
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] RightWall: Planar face with 4 segments, area=9.0
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 3.0x0.0x3.0 (area=9.0)
 [EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x28.0x0.0 (area=84.0): (82.0,-53.0,143.5), (82.0,-25.0,143.5), (85.0,-25.0,143.5), (85.0,-53.0,143.5)...
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] RightWall: Planar face with 4 segments, area=9.0
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 3.0x28.0x0.0 (area=84.0)
 [EXTRACT] Identified bound 0 as outer loop (largest area=84.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (82.0,-53.0,140.5), (82.0,-53.0,143.5), (85.0,-53.0,143.5), (85.0,-53.0,140.5)...
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] RightWall: Planar face with 4 segments, area=84.0
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 3.0x0.0x3.0 (area=9.0)
 [EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (82.0,-25.0,143.5), (82.0,-25.0,140.5), (85.0,-25.0,140.5), (85.0,-25.0,143.5)...
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] RightWall: Planar face with 4 segments, area=9.0
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 3.0x0.0x3.0 (area=9.0)
 [EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x28.0x0.0 (area=84.0): (82.0,-25.0,140.5), (82.0,-53.0,140.5), (85.0,-53.0,140.5), (85.0,-25.0,140.5)...
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] RightWall: Planar face with 4 segments, area=9.0
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 3.0x28.0x0.0 (area=84.0)
 [EXTRACT] Identified bound 0 as outer loop (largest area=84.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x50.0x0.0 (area=150.0): (82.0,-25.0,83.0), (82.0,25.0,83.0), (85.0,25.0,83.0), (85.0,-25.0,83.0)...
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] RightWall: Planar face with 4 segments, area=84.0
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 3.0x50.0x0.0 (area=150.0)
 [EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x50.0x0.0 (area=150.0): (82.0,25.0,80.0), (82.0,-25.0,80.0), (85.0,-25.0,80.0), (85.0,25.0,80.0)...
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] RightWall: Planar face with 4 segments, area=150.0
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 3.0x50.0x0.0 (area=150.0)
 [EXTRACT] Identified bound 0 as outer loop (largest area=150.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (82.0,25.0,80.0), (85.0,25.0,80.0), (85.0,25.0,83.0), (82.0,25.0,83.0)...
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] RightWall: Planar face with 4 segments, area=150.0
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 3.0x0.0x3.0 (area=9.0)
 [EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 3.0x0.0x3.0 (area=9.0): (85.0,-25.0,83.0), (85.0,-25.0,80.0), (82.0,-25.0,80.0), (82.0,-25.0,83.0)...
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] RightWall: Planar face with 4 segments, area=9.0
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 3.0x0.0x3.0 (area=9.0)
 [EXTRACT] Identified bound 0 as outer loop (largest area=9.0)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[SVG] RightWall: Generated outline from 4 vertices
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] RightWall: Planar face with 4 segments, area=9.0
+[SVG] RightWall: Generated outline from 4 curve segments
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\bigboxRW\rw.svg

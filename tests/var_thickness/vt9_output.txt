@@ -40,29 +40,35 @@ Warning! [FILTER] Three: dimensions [28.7, 23.5, 26.1] - FAIL (target thickness:
 [TOPO] Rotated solid detected: bounding box smallest dim (51.4mm) not thin, but face separation (9.0mm) is valid
 [TOPO] Adjusted dimensions for rotated solid: 9.0 x 88.6 x 95.0
 [FILTER] Nine: dimensions [9.0, 88.6, 95.0] - PASS (target thickness: 9mm)
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 95.0x43.4x84.5 (area=15818.8): (-164.4,158.9,46.4), (-69.4,158.9,46.4), (-69.4,202.3,-38.1), (-164.4,202.3,-38.1)...
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 95.0x43.4x84.5 (area=15818.8)
 [EXTRACT] Identified bound 0 as outer loop (largest area=15818.8)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 95.0x8.0x4.1 (area=1184.1): (-69.4,150.9,42.3), (-69.4,158.9,46.4), (-164.4,158.9,46.4), (-164.4,150.9,42.3)...
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] Nine: Planar face with 4 segments, area=9025.0
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 95.0x8.0x4.1 (area=1184.1)
 [EXTRACT] Identified bound 0 as outer loop (largest area=1184.1)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x51.4x88.6 (area=4555.5): (-164.4,150.9,42.3), (-164.4,158.9,46.4), (-164.4,202.3,-38.1), (-164.4,194.3,-42.3)...
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] Nine: Planar face with 4 segments, area=855.0
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 0.0x51.4x88.6 (area=4555.5)
 [EXTRACT] Identified bound 0 as outer loop (largest area=4555.5)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 95.0x8.0x4.1 (area=1184.1): (-164.4,194.3,-42.3), (-164.4,202.3,-38.1), (-69.4,202.3,-38.1), (-69.4,194.3,-42.3)...
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] Nine: Planar face with 4 segments, area=855.0
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 95.0x8.0x4.1 (area=1184.1)
 [EXTRACT] Identified bound 0 as outer loop (largest area=1184.1)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 95.0x43.4x84.5 (area=15818.8): (-69.4,194.3,-42.3), (-69.4,150.9,42.3), (-164.4,150.9,42.3), (-164.4,194.3,-42.3)...
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] Nine: Planar face with 4 segments, area=855.0
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 95.0x43.4x84.5 (area=15818.8)
 [EXTRACT] Identified bound 0 as outer loop (largest area=15818.8)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[EXTRACT] ExtractFaceWithHoles: face has 1 bounds
-[EXTRACT] Bound 0 has 4 vertices, bbox 0.0x51.4x88.6 (area=4555.5): (-69.4,150.9,42.3), (-69.4,194.3,-42.3), (-69.4,202.3,-38.1), (-69.4,158.9,46.4)...
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] Nine: Planar face with 4 segments, area=9025.0
+[EXTRACT] ExtractFaceWithHolesAsSegments: face has 1 bounds
+[EXTRACT] Bound 0 has 4 curve segments, bbox 0.0x51.4x88.6 (area=4555.5)
 [EXTRACT] Identified bound 0 as outer loop (largest area=4555.5)
-[EXTRACT] Returning 4 outer verts and 0 hole loops
-[SVG] Nine: Generated outline from 4 vertices
+[EXTRACT] Returning 4 outer segments and 0 hole loops
+[FACE] Nine: Planar face with 4 segments, area=855.0
+[SVG] Nine: Generated outline from 4 curve segments
 Wrote SVG: C:\Users\jdm\source\repos\Plasticity-LaserConvert\tests\var_thickness\vt9.svg
