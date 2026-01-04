@@ -49,6 +49,7 @@
     <File Path="tests/campipe/SNAG-0863.png" />
     <File Path="tests/campipe/SNAG-0864.png" />
     <File Path="tests/campipe/SNAG-0866.png" />
+    <File Path="tests/campipe/SNAG-0867.png" />
     <File Path="tests/campipe/testrun_campipe.bat" />
   </Folder>
   <Folder Name="/Solution Items/tests/main/">

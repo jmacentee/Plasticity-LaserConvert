@@ -89,21 +89,37 @@ namespace LaserConvertProcess
             var first = segments[0];
             sb.Append(FormatPoint("M", first.Start.X, first.Start.Y));
             
+            // Track current position to detect discontinuities
+            double currentX = first.Start.X;
+            double currentY = first.Start.Y;
+            
             // Add each segment
             foreach (var segment in segments)
             {
+                // Check if this segment's start matches current position
+                var gapX = Math.Abs(segment.Start.X - currentX);
+                var gapY = Math.Abs(segment.Start.Y - currentY);
+                if (gapX > 0.1 || gapY > 0.1)
+                {
+                    // Discontinuity - add a move command
+                    // This shouldn't happen in a properly closed loop, but log it for debugging
+                    Console.WriteLine($"[PATH] Discontinuity detected: current=({currentX:F2},{currentY:F2}), segment.Start=({segment.Start.X:F2},{segment.Start.Y:F2})");
+                }
+                
                 sb.Append(" ");
                 sb.Append(segment.ToSvgPathCommand());
+                
+                // Update current position
+                currentX = segment.End.X;
+                currentY = segment.End.Y;
             }
             
-            // Close the path
-            // Check if we need to close (if last end != first start)
+            // Close the path if needed
             var last = segments[segments.Count - 1];
-            var dx = Math.Abs(last.End.X - first.Start.X);
-            var dy = Math.Abs(last.End.Y - first.Start.Y);
-            if (dx > 0.001 || dy > 0.001)
+            var closeDx = Math.Abs(last.End.X - first.Start.X);
+            var closeDy = Math.Abs(last.End.Y - first.Start.Y);
+            if (closeDx > 0.001 || closeDy > 0.001)
             {
-                // Add a line to close if not already closed
                 sb.Append(" Z");
             }
             
