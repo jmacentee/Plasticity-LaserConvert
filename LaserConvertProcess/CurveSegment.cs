@@ -105,7 +105,7 @@ namespace LaserConvertProcess
             var dyS = start2D.Y - center2D.Y;
             var radius2D = Math.Sqrt(dxS * dxS + dyS * dyS);
 
-            // Compute the 2D angles of start and end points relative to center
+            // Compute 2D angles
             var startAngle2D = Math.Atan2(dyS, dxS);
             var dxE = end2D.X - center2D.X;
             var dyE = end2D.Y - center2D.Y;
@@ -120,42 +120,32 @@ namespace LaserConvertProcess
             // Dot product of arc normal with frame normal
             var dot = Normal.X * frameNormalX + Normal.Y * frameNormalY + Normal.Z * frameNormalZ;
 
-            // Determine if we should go CW or CCW in 2D
-            // In 3D: if Clockwise=false, we go CCW when viewed from normal
-            //        if Clockwise=true, we go CW when viewed from normal
-            // 
-            // If dot > 0: viewing from same side as normal, direction preserved
-            // If dot < 0: viewing from opposite side, direction flipped
-            bool goClockwiseIn2D;
-            if (dot >= 0)
-            {
-                goClockwiseIn2D = Clockwise;
-            }
-            else
-            {
-                goClockwiseIn2D = !Clockwise;
-            }
+            // Determine the direction in 2D
+            // In 3D: Clockwise=false means CCW when viewed from normal
+            // If dot > 0: normal aligns with view, direction preserved
+            // If dot < 0: normal opposes view, direction flipped
+            bool goClockwiseIn2D = (dot >= 0) ? Clockwise : !Clockwise;
 
-            // Compute the angular sweep in 2D
-            double sweep2D;
+            // Compute the angular sweep from start to end
+            double angularSweep;
             if (goClockwiseIn2D)
             {
-                // CW: sweep from start to end going clockwise (decreasing angle)
-                sweep2D = startAngle2D - endAngle2D;
-                while (sweep2D <= 0) sweep2D += 2 * Math.PI;
+                // Clockwise: go from startAngle to endAngle in decreasing direction
+                angularSweep = startAngle2D - endAngle2D;
+                while (angularSweep <= 0) angularSweep += 2 * Math.PI;
+                angularSweep = -angularSweep;  // Negative for clockwise
             }
             else
             {
-                // CCW: sweep from start to end going counter-clockwise (increasing angle)
-                sweep2D = endAngle2D - startAngle2D;
-                while (sweep2D <= 0) sweep2D += 2 * Math.PI;
+                // Counter-clockwise: go from startAngle to endAngle in increasing direction
+                angularSweep = endAngle2D - startAngle2D;
+                while (angularSweep <= 0) angularSweep += 2 * Math.PI;
+                // Positive for CCW
             }
 
-            // Large arc flag: true if we're traversing more than half the circle
-            bool largeArc = sweep2D > Math.PI;
-
-            // SVG sweep flag: 0 = CCW, 1 = CW
-            bool sweepFlag = goClockwiseIn2D;
+            // Compute flags for SVG
+            bool largeArc = Math.Abs(angularSweep) > Math.PI;
+            bool sweepFlag = goClockwiseIn2D;  // SVG: sweep=1 is CW
 
             return new ArcSegment2D
             {
@@ -165,7 +155,8 @@ namespace LaserConvertProcess
                 RadiusX = radius2D,
                 RadiusY = radius2D,
                 LargeArcFlag = largeArc,
-                SweepFlag = sweepFlag
+                SweepFlag = sweepFlag,
+                AngularSweep = angularSweep
             };
         }
 
@@ -261,6 +252,12 @@ namespace LaserConvertProcess
         /// Center of the arc (used for rotation calculations).
         /// </summary>
         public (double X, double Y) Center { get; set; }
+        
+        /// <summary>
+        /// The angular sweep in radians (positive = CCW, negative = CW).
+        /// This is computed during projection and preserved through transformations.
+        /// </summary>
+        public double AngularSweep { get; set; }
 
         public override CurveSegment2D Rotate(double angle, double cx, double cy)
         {
@@ -268,6 +265,7 @@ namespace LaserConvertProcess
             var newEnd = RotatePoint(End, angle, cx, cy);
             var newCenter = RotatePoint(Center, angle, cx, cy);
             
+            // Angular sweep direction is preserved through rotation
             return new ArcSegment2D
             {
                 Start = newStart,
@@ -277,7 +275,8 @@ namespace LaserConvertProcess
                 RadiusY = RadiusY,
                 XAxisRotation = XAxisRotation + angle * 180 / Math.PI,
                 LargeArcFlag = LargeArcFlag,
-                SweepFlag = SweepFlag
+                SweepFlag = SweepFlag,
+                AngularSweep = AngularSweep
             };
         }
 
@@ -292,22 +291,27 @@ namespace LaserConvertProcess
                 RadiusY = RadiusY,
                 XAxisRotation = XAxisRotation,
                 LargeArcFlag = LargeArcFlag,
-                SweepFlag = SweepFlag
+                SweepFlag = SweepFlag,
+                AngularSweep = AngularSweep
             };
         }
 
         public override string ToSvgPathCommand()
         {
-            // Sample the arc as a series of line segments for more reliable output
-            // This avoids SVG arc flag issues while still producing smooth curves
-            var points = SampleArcPoints(16);  // 16 segments for smooth arcs
+            // Sample the arc as a series of line segments
+            // This avoids complex SVG arc flag issues with 3D->2D projection
+            // Use adaptive sampling based on arc size
+            int numSegments = Math.Max(8, (int)(Math.Abs(AngularSweep) * RadiusX / 2));
+            numSegments = Math.Min(numSegments, 32); // Cap at 32 segments
+            
+            var points = SampleArcPoints(numSegments);
             
             if (points.Count <= 1)
             {
                 // Fallback to straight line
-                var dx = End.X - Start.X;
-                var dy = End.Y - Start.Y;
-                return $"l {dx:F3},{dy:F3}";
+                var dxLine = End.X - Start.X;
+                var dyLine = End.Y - Start.Y;
+                return $"l {dxLine:F3},{dyLine:F3}";
             }
             
             var sb = new System.Text.StringBuilder();
@@ -322,42 +326,27 @@ namespace LaserConvertProcess
         }
         
         /// <summary>
-        /// Sample points along the arc.
+        /// Sample points along the arc using the stored angular sweep.
         /// </summary>
         private List<(double X, double Y)> SampleArcPoints(int numSegments)
         {
             var points = new List<(double X, double Y)>();
             points.Add(Start);
             
-            // Compute angles from center
+            if (Math.Abs(AngularSweep) < 0.01)
+            {
+                points.Add(End);
+                return points;
+            }
+            
+            // Compute start angle from center
             var startAngle = Math.Atan2(Start.Y - Center.Y, Start.X - Center.X);
-            var endAngle = Math.Atan2(End.Y - Center.Y, End.X - Center.X);
             
-            // Determine angular sweep based on flags
-            double sweep;
-            if (SweepFlag)
-            {
-                // Clockwise - decreasing angle
-                sweep = startAngle - endAngle;
-                while (sweep <= 0) sweep += 2 * Math.PI;
-                if (LargeArcFlag && sweep < Math.PI) sweep = 2 * Math.PI - sweep;
-                if (!LargeArcFlag && sweep > Math.PI) sweep = 2 * Math.PI - sweep;
-                sweep = -sweep;  // Negative for CW
-            }
-            else
-            {
-                // Counter-clockwise - increasing angle
-                sweep = endAngle - startAngle;
-                while (sweep <= 0) sweep += 2 * Math.PI;
-                if (LargeArcFlag && sweep < Math.PI) sweep = 2 * Math.PI - sweep;
-                if (!LargeArcFlag && sweep > Math.PI) sweep = 2 * Math.PI - sweep;
-            }
-            
-            // Sample intermediate points
+            // Sample intermediate points using the angular sweep
             for (int i = 1; i < numSegments; i++)
             {
                 double t = (double)i / numSegments;
-                double angle = startAngle + sweep * t;
+                double angle = startAngle + AngularSweep * t;
                 double x = Center.X + RadiusX * Math.Cos(angle);
                 double y = Center.Y + RadiusY * Math.Sin(angle);
                 points.Add((x, y));

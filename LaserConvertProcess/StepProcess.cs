@@ -200,6 +200,72 @@ namespace LaserConvertProcess
         }
 
         /// <summary>
+        /// Build a coordinate frame from a StepPlane's own coordinate system.
+        /// This ensures the projection is consistent with how curves are defined on the plane.
+        /// </summary>
+        private static (double OX, double OY, double OZ, double UX, double UY, double UZ, double VX, double VY, double VZ) BuildCoordinateFrameFromPlane(StepPlane plane)
+        {
+            var placement = plane.Position as StepAxis2Placement3D;
+            if (placement == null)
+            {
+                return (0, 0, 0, 1, 0, 0, 0, 1, 0);
+            }
+            
+            // Origin
+            double ox = placement.Location?.X ?? 0;
+            double oy = placement.Location?.Y ?? 0;
+            double oz = placement.Location?.Z ?? 0;
+            
+            // Z axis (normal to plane)
+            double nz_x = placement.Axis?.X ?? 0;
+            double nz_y = placement.Axis?.Y ?? 0;
+            double nz_z = placement.Axis?.Z ?? 1;
+            double nzLen = Math.Sqrt(nz_x * nz_x + nz_y * nz_y + nz_z * nz_z);
+            if (nzLen > 1e-10) { nz_x /= nzLen; nz_y /= nzLen; nz_z /= nzLen; }
+            
+            // X axis (RefDirection)
+            double ux = placement.RefDirection?.X ?? 1;
+            double uy = placement.RefDirection?.Y ?? 0;
+            double uz = placement.RefDirection?.Z ?? 0;
+            double uLen = Math.Sqrt(ux * ux + uy * uy + uz * uz);
+            if (uLen > 1e-10) { ux /= uLen; uy /= uLen; uz /= uLen; }
+            
+            // Y axis = Z cross X (ensures right-handed system)
+            double vx = nz_y * uz - nz_z * uy;
+            double vy = nz_z * ux - nz_x * uz;
+            double vz = nz_x * uy - nz_y * ux;
+            double vLen = Math.Sqrt(vx * vx + vy * vy + vz * vz);
+            if (vLen > 1e-10) { vx /= vLen; vy /= vLen; vz /= vLen; }
+            
+            return (ox, oy, oz, ux, uy, uz, vx, vy, vz);
+        }
+
+        /// <summary>
+        /// Compute projected area using a specific frame.
+        /// </summary>
+        private static double ComputeProjectedAreaWithFrame(
+            List<(double X, double Y, double Z)> vertices,
+            (double OX, double OY, double OZ, double UX, double UY, double UZ, double VX, double VY, double VZ) frame)
+        {
+            if (vertices.Count < 3)
+                return 0;
+            
+            var projected = ProjectWithFrame(vertices, frame);
+            
+            // Compute polygon area using shoelace formula
+            double area = 0;
+            int n = projected.Count;
+            for (int i = 0; i < n; i++)
+            {
+                int j = (i + 1) % n;
+                area += projected[i].X * projected[j].Y;
+                area -= projected[j].X * projected[i].Y;
+            }
+            
+            return Math.Abs(area) / 2.0;
+        }
+
+        /// <summary>
         /// Compute the angle needed to align the shape's dominant edges with the X or Y axis.
         /// Returns the rotation angle in radians.
         /// </summary>
